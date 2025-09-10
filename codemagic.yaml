@@ -1,5 +1,76 @@
 workflows:
   ios-simulator:
+    name: iOS Simulator (Debug)
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      flutter: stable
+      xcode: 15.4
+      cocoapods: default
+      vars:
+        # Optional: set in Codemagic UI → Environment variables (as secure)
+        # APPETIZE_API_TOKEN: ""
+    cache:
+      cache_paths:
+        - "$HOME/.pub-cache"
+        - "$FLUTTER_ROOT/.pub-cache"
+        - "~/.cocoapods"
+        - "ios/Pods"
+    scripts:
+      - name: Flutter version
+        script: |
+          flutter --version
+      - name: Install dependencies
+        script: |
+          flutter pub get
+      - name: Build iOS Simulator .app (Debug, no codesign)
+        script: |
+          flutter config --enable-ios
+          flutter build ios --debug --simulator --no-codesign
+      - name: Zip .app for sharing/testing
+        script: |
+          set -euo pipefail
+          APP_DIR="build/ios/iphonesimulator/Runner.app"
+          if [ ! -d "$APP_DIR" ]; then
+            echo "Runner.app not found at $APP_DIR" >&2
+            exit 1
+          fi
+          pushd "$(dirname "$APP_DIR")" >/dev/null
+          zip -r -y Runner.app.zip "$(basename "$APP_DIR")"
+          popd >/dev/null
+      - name: Optional upload to Appetize.io
+        script: |
+          set -euo pipefail
+          ZIP_PATH="build/ios/iphonesimulator/Runner.app.zip"
+          if [ -n "${APPETIZE_API_TOKEN:-}" ]; then
+            echo "Uploading simulator build to Appetize.io..."
+            curl -fsSL -X POST https://api.appetize.io/v1/apps \
+              -H "Authorization: Bearer ${APPETIZE_API_TOKEN}" \
+              -F "file=@${ZIP_PATH}" \
+              -F "platform=ios" \
+              -F "note=Celia iOS simulator build $(date +%Y-%m-%dT%H:%M:%S)" \
+              -F "publicKey=${APPETIZE_PUBLIC_KEY:-}" \
+              -F "privateKey=${APPETIZE_PRIVATE_KEY:-}" \
+              -F "buttonText=Open Celia" \
+              -F "launchUrl=${APPETIZE_LAUNCH_URL:-}" || {
+                echo "Appetize upload failed (non-fatal)." >&2
+              }
+          else
+            echo "APPETIZE_API_TOKEN not set; skipping Appetize upload."
+          fi
+    artifacts:
+      - build/ios/iphonesimulator/Runner.app
+      - build/ios/iphonesimulator/Runner.app.zip
+    publishing:
+      email:
+        recipients:
+          - "${CM_EMAIL:-}"  # Set your email in Codemagic env vars if you want notifications
+        notify:
+          success: true
+          failure: true
+
+workflows:
+  ios-simulator:
     name: iOS Simulator (unsigned)
     environment:
       flutter: stable

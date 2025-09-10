@@ -123,9 +123,9 @@
     },
     {
       "name": "code_builder",
-      "rootUri": "file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/code_builder-4.10.1",
+      "rootUri": "file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/code_builder-4.11.0",
       "packageUri": "lib/",
-      "languageVersion": "3.5"
+      "languageVersion": "3.7"
     },
     {
       "name": "collection",
@@ -357,9 +357,9 @@
     },
     {
       "name": "google_sign_in_platform_interface",
-      "rootUri": "file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_platform_interface-3.0.0",
+      "rootUri": "file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/google_sign_in_platform_interface-3.1.0",
       "packageUri": "lib/",
-      "languageVersion": "3.6"
+      "languageVersion": "3.7"
     },
     {
       "name": "google_sign_in_web",
@@ -405,9 +405,9 @@
     },
     {
       "name": "image_picker_android",
-      "rootUri": "file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_android-0.8.13+1",
+      "rootUri": "file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/image_picker_android-0.8.13+2",
       "packageUri": "lib/",
-      "languageVersion": "3.7"
+      "languageVersion": "3.9"
     },
     {
       "name": "image_picker_for_web",
@@ -735,9 +735,9 @@
     },
     {
       "name": "url_launcher_android",
-      "rootUri": "file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_android-6.3.18",
+      "rootUri": "file:///C:/Users/ADMIN/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_android-6.3.21",
       "packageUri": "lib/",
-      "languageVersion": "3.7"
+      "languageVersion": "3.9"
     },
     {
       "name": "url_launcher_ios",

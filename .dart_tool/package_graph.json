@@ -183,14 +183,6 @@
       ]
     },
     {
-      "name": "google_sign_in_platform_interface",
-      "version": "3.0.0",
-      "dependencies": [
-        "flutter",
-        "plugin_platform_interface"
-      ]
-    },
-    {
       "name": "sky_engine",
       "version": "0.0.0",
       "dependencies": []
@@ -392,6 +384,14 @@
       ]
     },
     {
+      "name": "google_sign_in_platform_interface",
+      "version": "3.1.0",
+      "dependencies": [
+        "flutter",
+        "plugin_platform_interface"
+      ]
+    },
+    {
       "name": "leak_tracker_testing",
       "version": "3.0.2",
       "dependencies": [
@@ -589,7 +589,7 @@
     },
     {
       "name": "image_picker_android",
-      "version": "0.8.13+1",
+      "version": "0.8.13+2",
       "dependencies": [
         "flutter",
         "flutter_plugin_android_lifecycle",
@@ -1128,7 +1128,7 @@
     },
     {
       "name": "url_launcher_android",
-      "version": "6.3.18",
+      "version": "6.3.21",
       "dependencies": [
         "flutter",
         "url_launcher_platform_interface"
@@ -1284,7 +1284,7 @@
     },
     {
       "name": "code_builder",
-      "version": "4.10.1",
+      "version": "4.11.0",
       "dependencies": [
         "built_collection",
         "built_value",

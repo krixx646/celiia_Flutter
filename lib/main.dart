@@ -7,6 +7,10 @@ import 'screens/auth_screen.dart';
 import 'screens/email_verification_screen.dart';
 import 'screens/chat_screen.dart';
 
+// Enable UI-only testing on restricted simulators (e.g., Appetize) by passing:
+// --dart-define=BYPASS_AUTH=1 to flutter build/run.
+const bool kBypassAuth = String.fromEnvironment('BYPASS_AUTH') == '1';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FirebaseService.initialize();
@@ -45,7 +49,9 @@ class AppNavigator extends StatelessWidget {
       builder: (context, authProvider, child) {
         final uiState = authProvider.uiState;
         
-        if (!uiState.isAuthenticated) {
+        if (kBypassAuth) {
+          return const ChatScreen();
+        } else if (!uiState.isAuthenticated) {
           return const AuthScreen();
         } else if (!uiState.isEmailVerified) {
           return const EmailVerificationScreen();

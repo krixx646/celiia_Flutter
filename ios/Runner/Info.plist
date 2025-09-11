@@ -65,5 +65,14 @@
             </array>
         </dict>
     </array>
+    <!-- iOS privacy usage descriptions required by App Store -->
+    <key>NSCameraUsageDescription</key>
+    <string>This app uses the camera to capture photos or videos you choose to upload.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app needs access to your photo library to select images to share.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>This app saves images to your library when you export or download media.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>The microphone may be used when recording videos from the camera.</string>
 </dict>
 </plist>

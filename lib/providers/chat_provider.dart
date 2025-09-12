@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
+import 'dart:collection';
 import '../models/chat_models.dart';
 // ignore: depend_on_referenced_packages
 import 'package:shared_preferences/shared_preferences.dart';
@@ -309,9 +310,16 @@ class ChatProvider extends ChangeNotifier {
         _uiState.currentConversationId!,
       );
       
+      // Deduplicate by id while preserving order
+      final LinkedHashMap<String, Message> uniqueById = LinkedHashMap<String, Message>();
+      for (final m in messages) {
+        uniqueById[m.id] = m;
+      }
+      final deduped = uniqueById.values.toList();
+
       // Track message directions based on the pattern
       // We'll use a simple algorithm: user messages are at even indices when sorted
-      final fetchedSorted = [...messages]..sort((a, b) {
+      final fetchedSorted = [...deduped]..sort((Message a, Message b) {
         final aTime = DateTime.tryParse(a.created) ?? DateTime.fromMillisecondsSinceEpoch(0);
         final bTime = DateTime.tryParse(b.created) ?? DateTime.fromMillisecondsSinceEpoch(0);
         return aTime.compareTo(bTime);

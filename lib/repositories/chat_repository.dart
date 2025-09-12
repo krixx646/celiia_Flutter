@@ -94,6 +94,18 @@ class ChatRepository {
             ? "user_${botpressMessage.userId ?? userKey}"
             : "bot_${botpressMessage.userId ?? "botpress"}";
         
+        // Deduplicate options if the bot returns repeated entries
+        final rawOptions = botpressMessage.payload.options ?? const <MessageOption>[];
+        final seen = <String>{};
+        final uniqueOptions = <MessageOption>[];
+        for (final opt in rawOptions) {
+          final key = '${opt.label}|${opt.value}';
+          if (!seen.contains(key)) {
+            seen.add(key);
+            uniqueOptions.add(opt);
+          }
+        }
+
         return Message(
           id: botpressMessage.id,
           conversationId: botpressMessage.conversationId,
@@ -102,7 +114,7 @@ class ChatRepository {
           type: messageType,
           created: botpressMessage.createdAt,
           imageUrl: botpressMessage.payload.imageUrl,
-          options: botpressMessage.payload.options,
+          options: uniqueOptions,
         );
       }).toList();
       

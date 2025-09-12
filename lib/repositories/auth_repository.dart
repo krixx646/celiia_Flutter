@@ -34,7 +34,15 @@ class AuthRepository {
       );
       if (result.user != null) {
         try {
-          await result.user!.sendEmailVerification();
+          // Send verification with explicit ActionCodeSettings to avoid invalid/expired links
+          final ActionCodeSettings actionCodeSettings = ActionCodeSettings(
+            url: 'https://the-fit-87c3d.web.app', // authorized domain in your project
+            handleCodeInApp: false, // let Firebase hosted page complete verification
+            androidPackageName: 'eu.thefit.celia',
+            androidInstallApp: false,
+            iOSBundleId: 'eu.thefit.celia',
+          );
+          await result.user!.sendEmailVerification(actionCodeSettings);
         } catch (e) {
           // ignore send verification errors here
         }
@@ -79,7 +87,14 @@ class AuthRepository {
     try {
       final user = _auth.currentUser;
       if (user != null) {
-        await user.sendEmailVerification();
+        final ActionCodeSettings actionCodeSettings = ActionCodeSettings(
+          url: 'https://the-fit-87c3d.web.app',
+          handleCodeInApp: false,
+          androidPackageName: 'eu.thefit.celia',
+          androidInstallApp: false,
+          iOSBundleId: 'eu.thefit.celia',
+        );
+        await user.sendEmailVerification(actionCodeSettings);
       } else {
         throw Exception('No user logged in');
       }

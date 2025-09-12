@@ -34,17 +34,18 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
+	<!-- Make the app iPhone-only to remove iPad screenshot requirements -->
+	<key>UIDeviceFamily</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
+		<integer>1</integer>
 	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<!-- Declare that the app does not use non-exempt encryption (HTTPS only) -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
     <key>LSApplicationQueriesSchemes</key>
     <array>
         <string>com.googleusercontent.apps</string>

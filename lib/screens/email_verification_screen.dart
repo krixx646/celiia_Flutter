@@ -26,10 +26,14 @@ class EmailVerificationScreen extends StatelessWidget {
                   Text(ui.authError!, style: const TextStyle(color: Colors.red)),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: ui.isLoading ? null : auth.sendVerificationEmail,
+                  onPressed: (ui.isLoading || ui.resendCooldownSeconds > 0)
+                      ? null
+                      : auth.sendVerificationEmail,
                   child: ui.isLoading
                       ? const LoadingIndicator(message: 'Sending...')
-                      : const Text('Resend verification email'),
+                      : Text(ui.resendCooldownSeconds > 0
+                          ? 'Resend in ${ui.resendCooldownSeconds}s'
+                          : 'Resend verification email'),
                 ),
                 const SizedBox(height: 8),
                 ElevatedButton(

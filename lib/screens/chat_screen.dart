@@ -4,7 +4,6 @@ import '../providers/auth_provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../providers/chat_provider.dart';
 import '../widgets/loading_indicator.dart';
 import 'package:file_picker/file_picker.dart';
@@ -14,6 +13,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../config/env.dart';
 import 'package:image_picker/image_picker.dart';
+import '../models/chat_models.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -86,7 +86,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<String?> _uploadImageToImgbb(List<int> bytes, String filename) async {
-    final runtimeKey = const String.fromEnvironment('IMGBB_API_KEY');
+    const runtimeKey = String.fromEnvironment('IMGBB_API_KEY');
     final apiKey = runtimeKey.isNotEmpty ? runtimeKey : Env.imgbbKey;
     if (apiKey.isEmpty) return null;
     final uri = Uri.parse('https://api.imgbb.com/1/upload?key=$apiKey');
@@ -323,7 +323,14 @@ class _ChatScreenState extends State<ChatScreen> {
                           Wrap(
                             spacing: 8,
                             runSpacing: 8,
-                            children: options.map((opt) => OutlinedButton(
+                            children: options
+                                .fold<Map<String, MessageOption>>(<String, MessageOption>{}, (map, opt) {
+                                  final key = '${opt.label}|${opt.value}';
+                                  map[key] = opt; // last one wins but keys unique
+                                  return map;
+                                })
+                                .values
+                                .map((opt) => OutlinedButton(
                               style: OutlinedButton.styleFrom(
                                 foregroundColor: hasInteracted ? Colors.grey : (isUser ? Colors.white : Colors.deepPurple),
                                 side: BorderSide(color: hasInteracted ? Colors.grey : const Color(0xFFBDBDBD)),

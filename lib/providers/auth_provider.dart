@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../repositories/auth_repository.dart';
 
@@ -12,6 +13,7 @@ class AuthUiState {
   final String? authError;
   final bool passwordResetEmailSent;
   final String lastUsedEmail;
+  final int resendCooldownSeconds;
 
   AuthUiState({
     this.isAuthenticated = false,
@@ -23,6 +25,7 @@ class AuthUiState {
     this.authError,
     this.passwordResetEmailSent = false,
     this.lastUsedEmail = '',
+    this.resendCooldownSeconds = 0,
   });
 
   AuthUiState copyWith({
@@ -35,6 +38,7 @@ class AuthUiState {
     String? authError,
     bool? passwordResetEmailSent,
     String? lastUsedEmail,
+    int? resendCooldownSeconds,
   }) {
     return AuthUiState(
       isAuthenticated: isAuthenticated ?? this.isAuthenticated,
@@ -46,6 +50,7 @@ class AuthUiState {
       authError: authError,
       passwordResetEmailSent: passwordResetEmailSent ?? this.passwordResetEmailSent,
       lastUsedEmail: lastUsedEmail ?? this.lastUsedEmail,
+      resendCooldownSeconds: resendCooldownSeconds ?? this.resendCooldownSeconds,
     );
   }
 }
@@ -55,6 +60,8 @@ class AuthProvider extends ChangeNotifier {
   
   AuthUiState _uiState = AuthUiState();
   AuthUiState get uiState => _uiState;
+  Timer? _cooldownTimer;
+  DateTime? _resendNotBefore;
 
   bool get isUserAuthenticated => _authRepository.isUserAuthenticated;
   bool get isEmailVerified => _authRepository.isEmailVerified;
@@ -176,6 +183,17 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> sendVerificationEmail() async {
+    // Local cooldown to avoid Firebase rate limit
+    final now = DateTime.now();
+    if (_resendNotBefore != null && now.isBefore(_resendNotBefore!)) {
+      final remaining = _resendNotBefore!.difference(now).inSeconds;
+      _uiState = _uiState.copyWith(
+        authError: 'Please wait ${remaining}s before requesting another email.',
+      );
+      notifyListeners();
+      return;
+    }
+
     _uiState = _uiState.copyWith(
       isLoading: true,
       verificationEmailSent: false,
@@ -188,11 +206,28 @@ class AuthProvider extends ChangeNotifier {
       _uiState = _uiState.copyWith(
         isLoading: false,
         verificationEmailSent: true,
+        resendCooldownSeconds: 60,
       );
+      _resendNotBefore = DateTime.now().add(const Duration(seconds: 60));
+      _cooldownTimer?.cancel();
+      _cooldownTimer = Timer.periodic(const Duration(seconds: 1), (t) {
+        final secs = _resendNotBefore!.difference(DateTime.now()).inSeconds;
+        if (secs <= 0) {
+          _uiState = _uiState.copyWith(resendCooldownSeconds: 0);
+          t.cancel();
+        } else {
+          _uiState = _uiState.copyWith(resendCooldownSeconds: secs);
+        }
+        notifyListeners();
+      });
     } catch (e) {
+      // Surface friendly rate-limit message
+      final message = e.toString().contains('too-many-requests')
+          ? 'Too many attempts. Please wait a minute and try again.'
+          : e.toString();
       _uiState = _uiState.copyWith(
         isLoading: false,
-        authError: e.toString(),
+        authError: message,
       );
     }
     notifyListeners();

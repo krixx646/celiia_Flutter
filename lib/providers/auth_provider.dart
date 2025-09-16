@@ -279,6 +279,33 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> signInWithApple() async {
+    _uiState = _uiState.copyWith(
+      isLoading: true,
+      authError: null,
+    );
+    notifyListeners();
+
+    try {
+      final user = await _authRepository.signInWithApple();
+      _uiState = _uiState.copyWith(
+        isAuthenticated: true,
+        isLoading: false,
+        currentUser: user,
+        isEmailVerified: true,
+        needsEmailVerification: false,
+        authError: null,
+      );
+    } catch (e) {
+      _uiState = _uiState.copyWith(
+        isAuthenticated: false,
+        isLoading: false,
+        authError: e.toString(),
+      );
+    }
+    notifyListeners();
+  }
+
   void clearError() {
     _uiState = _uiState.copyWith(authError: null);
     notifyListeners();

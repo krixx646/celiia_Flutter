@@ -5,7 +5,7 @@
   "packages": [
     {
       "name": "celia_flutter",
-      "version": "1.1.4+7",
+      "version": "1.1.4+16",
       "dependencies": [
         "cloud_firestore",
         "cupertino_icons",

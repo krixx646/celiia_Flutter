@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:io' show Platform;
 import '../providers/auth_provider.dart';
 import '../widgets/loading_indicator.dart';
 import 'forgot_password_screen.dart';
@@ -163,6 +164,21 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ],
                               ),
                             ),
+                            const SizedBox(height: 10),
+                            if (Platform.isIOS)
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(backgroundColor: Colors.white10, foregroundColor: Colors.white, shape: const StadiumBorder(), padding: const EdgeInsets.symmetric(vertical: 14)),
+                                onPressed: auth.signInWithApple,
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    FaIcon(FontAwesomeIcons.apple),
+                                    SizedBox(width: 8),
+                                    Text('Continue with Apple'),
+                                  ],
+                                ),
+                              ),
                             const SizedBox(height: 12),
                             Center(
                               child: InkWell(

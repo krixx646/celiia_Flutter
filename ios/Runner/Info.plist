@@ -68,12 +68,12 @@
     </array>
     <!-- iOS privacy usage descriptions required by App Store -->
     <key>NSCameraUsageDescription</key>
-    <string>This app uses the camera to capture photos or videos you choose to upload.</string>
+    <string>Celia uses the camera so you can take a food photo to analyze calories and upload it in chat.</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>This app needs access to your photo library to select images to share.</string>
+    <string>Celia needs photo library access so you can choose an existing meal image to upload for calorie analysis.</string>
     <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>This app saves images to your library when you export or download media.</string>
+    <string>Celia may save processed images (e.g., analysis snapshots) back to your library when you choose to download them.</string>
     <key>NSMicrophoneUsageDescription</key>
-    <string>The microphone may be used when recording videos from the camera.</string>
+    <string>Celia uses the microphone only when you record video with sound for upload; audio is not recorded otherwise.</string>
 </dict>
 </plist>

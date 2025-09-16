@@ -1,0 +1,1 @@
+ C:\\Users\\ADMIN\\Desktop\\celia_IOS\\.dart_tool\\flutter_build\\c95c142d0b5e8f93d28d505df1b4d53e\\native_assets.json: 

@@ -165,16 +165,19 @@ class AuthRepository {
           ),
         );
       } else {
-        // iOS native flow
-        appleCredential = await SignInWithApple.getAppleIDCredential(
-          scopes: const [
-            AppleIDAuthorizationScopes.email,
-            AppleIDAuthorizationScopes.fullName,
-          ],
-          nonce: nonce,
-        );
+        // Prefer Firebase's native provider on iOS to avoid token/nonce mismatches
+        final provider = AppleAuthProvider();
+        provider.addScope('email');
+        provider.addScope('name');
+        final result = await _auth.signInWithProvider(provider);
+        if (result.user != null) {
+          return result.user!;
+        } else {
+          throw Exception('Apple sign-in failed');
+        }
       }
 
+      // Android path continues here (web flow returns identityToken)
       final oauth = OAuthProvider('apple.com').credential(
         idToken: appleCredential.identityToken,
         rawNonce: rawNonce,

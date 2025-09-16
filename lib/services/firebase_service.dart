@@ -14,11 +14,11 @@ class FirebaseService {
     } catch (_) {
       // Fallback for iOS simulator builds where GoogleService-Info.plist is not included.
       if (Platform.isIOS) {
-        final apiKey = const String.fromEnvironment('FIREBASE_API_KEY');
-        final appId = const String.fromEnvironment('FIREBASE_IOS_APP_ID');
-        final messagingSenderId = const String.fromEnvironment('FIREBASE_MESSAGING_SENDER_ID');
-        final projectId = const String.fromEnvironment('FIREBASE_PROJECT_ID');
-        final storageBucket = const String.fromEnvironment('FIREBASE_STORAGE_BUCKET');
+        const apiKey = String.fromEnvironment('FIREBASE_API_KEY');
+        const appId = String.fromEnvironment('FIREBASE_IOS_APP_ID');
+        const messagingSenderId = String.fromEnvironment('FIREBASE_MESSAGING_SENDER_ID');
+        const projectId = String.fromEnvironment('FIREBASE_PROJECT_ID');
+        const storageBucket = String.fromEnvironment('FIREBASE_STORAGE_BUCKET');
 
         if (apiKey.isEmpty || appId.isEmpty || messagingSenderId.isEmpty || projectId.isEmpty) {
           // Re-throw with a clear message so the UI can still boot and we can see logs on simulator

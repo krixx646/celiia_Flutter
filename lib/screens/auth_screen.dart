@@ -114,7 +114,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             const SizedBox(height: 16),
                             if (ui.authError != null &&
                                 !(ui.authError!.toLowerCase().contains('canceled') || ui.authError!.toLowerCase().contains('cancelled')))
-                              const Text('Sign-in failed. Please try again.', style: TextStyle(color: Colors.red)),
+                              Text(ui.authError!, style: const TextStyle(color: Colors.red)),
                             const SizedBox(height: 8),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(backgroundColor: Colors.white10, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)), padding: const EdgeInsets.symmetric(vertical: 14)),
@@ -165,7 +165,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            if (Platform.isIOS)
+                            if (Platform.isIOS || Platform.isAndroid)
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(backgroundColor: Colors.white10, foregroundColor: Colors.white, shape: const StadiumBorder(), padding: const EdgeInsets.symmetric(vertical: 14)),
                                 onPressed: auth.signInWithApple,

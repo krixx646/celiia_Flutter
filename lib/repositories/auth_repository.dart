@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -143,14 +144,36 @@ class AuthRepository {
     try {
       final rawNonce = _generateNonce();
       final nonce = _sha256ofString(rawNonce);
+      AuthorizationCredentialAppleID appleCredential;
 
-      final appleCredential = await SignInWithApple.getAppleIDCredential(
-        scopes: [
-          AppleIDAuthorizationScopes.email,
-          AppleIDAuthorizationScopes.fullName,
-        ],
-        nonce: nonce,
-      );
+      if (Platform.isAndroid) {
+        // Android uses the web flow. Requires Apple Service ID and redirect URI.
+        const serviceId = String.fromEnvironment('APPLE_SERVICE_ID');
+        const redirectUri = String.fromEnvironment('APPLE_REDIRECT_URI');
+        if (serviceId.isEmpty || redirectUri.isEmpty) {
+          throw Exception('Missing APPLE_SERVICE_ID or APPLE_REDIRECT_URI. Provide as --dart-define.');
+        }
+        appleCredential = await SignInWithApple.getAppleIDCredential(
+          scopes: const [
+            AppleIDAuthorizationScopes.email,
+            AppleIDAuthorizationScopes.fullName,
+          ],
+          nonce: nonce,
+          webAuthenticationOptions: WebAuthenticationOptions(
+            clientId: serviceId,
+            redirectUri: Uri.parse(redirectUri),
+          ),
+        );
+      } else {
+        // iOS native flow
+        appleCredential = await SignInWithApple.getAppleIDCredential(
+          scopes: const [
+            AppleIDAuthorizationScopes.email,
+            AppleIDAuthorizationScopes.fullName,
+          ],
+          nonce: nonce,
+        );
+      }
 
       final oauth = OAuthProvider('apple.com').credential(
         idToken: appleCredential.identityToken,

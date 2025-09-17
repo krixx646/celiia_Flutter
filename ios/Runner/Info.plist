@@ -43,6 +43,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<!-- Force full-screen phone UI; clarifies we don't support iPad multitasking -->
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<!-- Declare that the app does not use non-exempt encryption (HTTPS only) -->
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>

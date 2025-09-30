@@ -2,6 +2,8 @@ import 'dart:io' show Platform;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:flutter/foundation.dart' show kReleaseMode;
 
 class FirebaseService {
   static FirebaseAuth get auth => FirebaseAuth.instance;
@@ -44,6 +46,17 @@ class FirebaseService {
     }
     // Initialize Google Sign-In once per app start (required in v7+)
     await GoogleSignIn.instance.initialize();
+
+    // Initialize Firebase App Check (protects Firestore/Storage in production)
+    try {
+      await FirebaseAppCheck.instance.activate(
+        androidProvider: kReleaseMode ? AndroidProvider.playIntegrity : AndroidProvider.debug,
+        appleProvider: kReleaseMode ? AppleProvider.appAttest : AppleProvider.debug,
+        webProvider: ReCaptchaV3Provider('unused'),
+      );
+    } catch (_) {
+      // If App Check init fails, proceed to avoid blocking startup; server rules may allow debug
+    }
   }
 
   static User? get currentUser => auth.currentUser;

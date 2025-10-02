@@ -432,7 +432,9 @@ class _ChatScreenState extends State<ChatScreen> {
                   },
                 ),
               ),
-              if (ui.error != null && !ui.error!.toLowerCase().contains('not a participant'))
+              if (ui.error != null && 
+                  !ui.error!.toLowerCase().contains('not a participant') &&
+                  !ui.error!.toLowerCase().contains('unavailable'))
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(ui.error!, style: const TextStyle(color: Colors.red)),

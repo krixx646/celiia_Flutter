@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="eu.thefit.celia">
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="Celia"
         android:name="${applicationName}"

@@ -1,0 +1,267 @@
+import 'package:flutter/foundation.dart';
+import '../models/routine.dart';
+import '../services/supabase_service.dart';
+import '../services/openai_service.dart';
+
+/// Provider for managing routine state and operations
+class RoutineProvider extends ChangeNotifier {
+  final SupabaseService _supabase = SupabaseService.instance;
+  final OpenAIService _openai = OpenAIService();
+
+  // State
+  List<Routine> _routines = [];
+  List<Routine> _curatedRoutines = [];
+  List<Routine> _aiRoutines = [];
+  List<UserRoutine> _userRoutines = [];
+  Routine? _selectedRoutine;
+  bool _isLoading = false;
+  bool _isLoadingUserRoutines = false;
+  bool _isGenerating = false;
+  String? _error;
+
+  // Getters
+  List<Routine> get routines => _routines;
+  List<Routine> get curatedRoutines => _curatedRoutines;
+  List<Routine> get aiRoutines => _aiRoutines;
+  List<UserRoutine> get userRoutines => _userRoutines;
+  Routine? get selectedRoutine => _selectedRoutine;
+  bool get isLoading => _isLoading;
+  bool get isLoadingUserRoutines => _isLoadingUserRoutines;
+  bool get isGenerating => _isGenerating;
+  String? get error => _error;
+
+  /// Load all published routines from Supabase
+  Future<void> loadRoutines({bool refresh = false}) async {
+    if (_isLoading && !refresh) return;
+
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      _routines = await _supabase.getPublishedRoutines();
+      _curatedRoutines = _routines.where((r) => r.isCurated).toList();
+      _aiRoutines = _routines.where((r) => !r.isCurated).toList();
+    } catch (e) {
+      _error = 'Failed to load routines: $e';
+      debugPrint(_error);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  /// Load routines filtered by category
+  Future<void> loadRoutinesByCategory(RoutineCategory category) async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      _routines = await _supabase.getPublishedRoutines(category: category);
+      _curatedRoutines = _routines.where((r) => r.isCurated).toList();
+      _aiRoutines = _routines.where((r) => !r.isCurated).toList();
+    } catch (e) {
+      _error = 'Failed to load routines: $e';
+      debugPrint(_error);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  /// Load user's saved routines
+  Future<void> loadUserRoutines(String userId) async {
+    if (_isLoadingUserRoutines) return;
+    _isLoadingUserRoutines = true;
+    notifyListeners();
+    try {
+      _userRoutines = await _supabase.getUserRoutines(userId);
+    } catch (e) {
+      _error = 'Failed to load saved routines: $e';
+      debugPrint(_error);
+    } finally {
+      _isLoadingUserRoutines = false;
+      notifyListeners();
+    }
+  }
+
+  /// Select a routine to view/play
+  void selectRoutine(Routine routine) {
+    _selectedRoutine = routine;
+    notifyListeners();
+  }
+
+  /// Clear selected routine
+  void clearSelection() {
+    _selectedRoutine = null;
+    notifyListeners();
+  }
+
+  /// Generate a new AI routine based on user request
+  Future<Routine?> generateRoutine({
+    required String request,
+    int? durationMinutes,
+    RoutineDifficulty? difficulty,
+    List<String>? equipment,
+  }) async {
+    _isGenerating = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      final routine = await _openai.generateRoutine(
+        userRequest: request,
+        targetDurationMinutes: durationMinutes,
+        preferredDifficulty: difficulty,
+        availableEquipment: equipment,
+      );
+
+      // Save to Supabase (unpublished for review)
+      final savedRoutine = await _supabase.createRoutine(routine);
+      
+      // Add to local AI routines list
+      _aiRoutines.insert(0, savedRoutine);
+      _routines.insert(0, savedRoutine);
+      
+      notifyListeners();
+      return savedRoutine;
+    } catch (e) {
+      _error = 'Failed to generate routine: $e';
+      debugPrint(_error);
+      return null;
+    } finally {
+      _isGenerating = false;
+      notifyListeners();
+    }
+  }
+
+  /// Save a routine to user's library
+  Future<bool> saveRoutine(String userId, String routineId) async {
+    try {
+      final userRoutine = await _supabase.saveRoutine(userId, routineId);
+      _userRoutines.insert(0, userRoutine);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      debugPrint('Failed to save routine: $e');
+      return false;
+    }
+  }
+
+  /// Remove a routine from user's library
+  Future<bool> unsaveRoutine(String userId, String routineId) async {
+    try {
+      await _supabase.unsaveRoutine(userId, routineId);
+      _userRoutines.removeWhere((ur) => ur.routineId == routineId);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      debugPrint('Failed to unsave routine: $e');
+      return false;
+    }
+  }
+
+  /// Toggle favorite status
+  Future<void> toggleFavorite(String userRoutineId) async {
+    final index = _userRoutines.indexWhere((ur) => ur.id == userRoutineId);
+    if (index == -1) return;
+
+    final current = _userRoutines[index];
+    final newFavorite = !current.isFavorite;
+
+    try {
+      await _supabase.toggleFavorite(userRoutineId, newFavorite);
+      // Update local state
+      _userRoutines[index] = UserRoutine(
+        id: current.id,
+        userId: current.userId,
+        routineId: current.routineId,
+        savedAt: current.savedAt,
+        lastPlayedAt: current.lastPlayedAt,
+        timesCompleted: current.timesCompleted,
+        isFavorite: newFavorite,
+      );
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Failed to toggle favorite: $e');
+    }
+  }
+
+  /// Toggle favorite status by routine id (convenience helper for UI)
+  Future<void> toggleFavoriteByRoutineId(String routineId) async {
+    final ur = getUserRoutine(routineId);
+    if (ur == null) return;
+    await toggleFavorite(ur.id);
+  }
+
+  /// Record routine completion
+  Future<void> recordCompletion(String userRoutineId) async {
+    try {
+      await _supabase.recordCompletion(userRoutineId);
+      // Refresh user routines to get updated count
+      final index = _userRoutines.indexWhere((ur) => ur.id == userRoutineId);
+      if (index != -1) {
+        final current = _userRoutines[index];
+        _userRoutines[index] = UserRoutine(
+          id: current.id,
+          userId: current.userId,
+          routineId: current.routineId,
+          savedAt: current.savedAt,
+          lastPlayedAt: DateTime.now(),
+          timesCompleted: current.timesCompleted + 1,
+          isFavorite: current.isFavorite,
+        );
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint('Failed to record completion: $e');
+    }
+  }
+
+  /// Record a completion for a routine id (creates a user_routines row if needed).
+  /// This is what makes streak/level real.
+  Future<void> recordCompletionForRoutine({
+    required String userId,
+    required String routineId,
+  }) async {
+    // Ensure saved row exists so completion can be tracked.
+    var ur = getUserRoutine(routineId);
+    if (ur == null) {
+      try {
+        final created = await _supabase.saveRoutine(userId, routineId);
+        _userRoutines.insert(0, created);
+        ur = created;
+        notifyListeners();
+      } catch (_) {
+        // If insert fails due to unique constraint, reload and try again.
+        await loadUserRoutines(userId);
+        ur = getUserRoutine(routineId);
+      }
+    }
+
+    if (ur == null) return;
+    await recordCompletion(ur.id);
+  }
+
+  /// Check if a routine is saved by the user
+  bool isRoutineSaved(String routineId) {
+    return _userRoutines.any((ur) => ur.routineId == routineId);
+  }
+
+  /// Get user routine by routine ID
+  UserRoutine? getUserRoutine(String routineId) {
+    try {
+      return _userRoutines.firstWhere((ur) => ur.routineId == routineId);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Clear error
+  void clearError() {
+    _error = null;
+    notifyListeners();
+  }
+}
+

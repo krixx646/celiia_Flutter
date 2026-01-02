@@ -70,6 +70,26 @@ class AuthProvider extends ChangeNotifier {
     _initialize();
   }
 
+  Future<void> reloadCurrentUser() async {
+    try {
+      final user = await _authRepository.reloadUser();
+      _uiState = _uiState.copyWith(
+        isAuthenticated: true,
+        currentUser: user,
+        isEmailVerified: user.emailVerified,
+        needsEmailVerification: !user.emailVerified,
+      );
+      notifyListeners();
+    } catch (_) {
+      // ignore
+    }
+  }
+
+  Future<void> updateProfile({String? displayName, String? photoUrl}) async {
+    await _authRepository.updateProfile(displayName: displayName, photoUrl: photoUrl);
+    await reloadCurrentUser();
+  }
+
   void _initialize() {
     final currentUser = _authRepository.currentUser;
     if (currentUser != null) {

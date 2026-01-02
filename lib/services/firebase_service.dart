@@ -52,7 +52,7 @@ class FirebaseService {
       await FirebaseAppCheck.instance.activate(
         androidProvider: kReleaseMode ? AndroidProvider.playIntegrity : AndroidProvider.debug,
         appleProvider: kReleaseMode ? AppleProvider.appAttest : AppleProvider.debug,
-        webProvider: ReCaptchaV3Provider('unused'),
+        // webProvider: ReCaptchaV3Provider('unused'), 
       );
     } catch (_) {
       // If App Check init fails, proceed to avoid blocking startup; server rules may allow debug

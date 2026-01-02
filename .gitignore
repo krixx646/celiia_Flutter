@@ -15,3 +15,15 @@
 local.properties
 app/release/
 
+# Flutter / Dart
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.kotlin/
+android/.kotlin/
+.pub-cache/
+pubspec.lock
+**/*.log
+**/*.tmp
+

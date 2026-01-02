@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import '../providers/chat_provider.dart';
+import '../providers/theme_provider.dart';
 import '../widgets/loading_indicator.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -119,9 +120,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.watch<ThemeProvider>();
     return Scaffold(
+      backgroundColor: theme.background,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFF9800),
+        backgroundColor: theme.isDarkMode ? theme.accentOrange.withValues(alpha: 0.15) : const Color(0xFFFF9800),
         title: const Text('Coach Celia', style: TextStyle(color: Colors.white)),
         actions: [
           IconButton(
@@ -313,12 +316,14 @@ class _ChatScreenState extends State<ChatScreen> {
                           if ((msg.text ?? '').isNotEmpty)
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8),
-                              child: Text(
-                                msg.text!,
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: isUser ? Colors.white : Colors.black87,
-                                ),
+                            child: Text(
+                              msg.text!,
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: isUser
+                                    ? Colors.white
+                                    : (theme.isDarkMode ? Colors.white : Colors.black87),
                               ),
+                            ),
                             ),
                           Wrap(
                             spacing: 8,
@@ -330,20 +335,44 @@ class _ChatScreenState extends State<ChatScreen> {
                                   return map;
                                 })
                                 .values
-                                .map((opt) => OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: hasInteracted ? Colors.grey : (isUser ? Colors.white : Colors.deepPurple),
-                                side: BorderSide(color: hasInteracted ? Colors.grey : const Color(0xFFBDBDBD)),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                              ),
-                              onPressed: hasInteracted
-                                  ? null
-                                  : () async {
-                                      await context.read<ChatProvider>().sendMessageWithInteraction(opt.value, msg.id);
-                                    },
-                              child: Text(opt.label),
-                            )).toList(),
+                                .map(
+                                  (opt) => OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      foregroundColor: hasInteracted
+                                          ? Colors.grey
+                                          : (theme.isDarkMode
+                                              ? theme.accentOrange
+                                              : (isUser ? Colors.white : Colors.deepPurple)),
+                                      side: BorderSide(
+                                        color: hasInteracted
+                                            ? Colors.grey
+                                            : (theme.isDarkMode
+                                                ? theme.accentOrange.withValues(alpha: 0.4)
+                                                : const Color(0xFFBDBDBD)),
+                                      ),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+                                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                                    ),
+                                    onPressed: hasInteracted
+                                        ? null
+                                        : () async {
+                                            await context
+                                                .read<ChatProvider>()
+                                                .sendMessageWithInteraction(opt.value, msg.id);
+                                          },
+                                    child: Text(
+                                      opt.label,
+                                      style: TextStyle(
+                                        color: hasInteracted
+                                            ? Colors.grey
+                                            : (theme.isDarkMode
+                                                ? Colors.white
+                                                : (isUser ? Colors.white : Colors.deepPurple)),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
                           )
                         ],
                       );
@@ -450,7 +479,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     margin: const EdgeInsets.all(12),
                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: theme.isDarkMode ? theme.surfaceGlass : Colors.white,
                       borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
                       boxShadow: [
                         BoxShadow(
@@ -465,18 +494,24 @@ class _ChatScreenState extends State<ChatScreen> {
                         Expanded(
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
+                              color: theme.isDarkMode ? Colors.white.withValues(alpha: 0.05) : Colors.grey.shade100,
                               borderRadius: BorderRadius.circular(24),
-                              border: Border.all(color: Colors.grey.shade300),
+                              border: Border.all(
+                                color: theme.isDarkMode ? Colors.white.withValues(alpha: 0.1) : Colors.grey.shade300,
+                              ),
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 12),
                             child: TextField(
                               controller: _controller,
                               minLines: 1,
                               maxLines: 4,
-                              decoration: const InputDecoration(
+                              style: TextStyle(color: theme.isDarkMode ? Colors.white : Colors.black87),
+                              decoration: InputDecoration(
                                 hintText: 'Type a message',
                                 border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                  color: theme.isDarkMode ? Colors.white54 : Colors.grey,
+                                ),
                               ),
                             ),
                           ),
@@ -484,7 +519,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         const SizedBox(width: 4),
                         IconButton(
                           tooltip: 'Attach file',
-                          icon: const Icon(Icons.attach_file, color: Colors.black87),
+                          icon: Icon(Icons.attach_file, color: theme.isDarkMode ? Colors.white70 : Colors.black87),
                           onPressed: () async {
                             final messenger = ScaffoldMessenger.of(context);
                             try {
@@ -513,7 +548,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                         IconButton(
                           tooltip: 'Camera',
-                          icon: const Icon(Icons.photo_camera, color: Colors.black87),
+                          icon: Icon(Icons.photo_camera, color: theme.isDarkMode ? Colors.white70 : Colors.black87),
                           onPressed: () async {
                             final messenger = ScaffoldMessenger.of(context);
                             try {
@@ -539,8 +574,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                         const SizedBox(width: 4),
                         Container(
-                          decoration: const BoxDecoration(
-                            color: Color(0xFFFF9800),
+                          decoration: BoxDecoration(
+                            color: theme.accentOrange,
                             shape: BoxShape.circle,
                           ),
                           child: IconButton(

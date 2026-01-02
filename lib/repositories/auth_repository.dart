@@ -127,6 +127,19 @@ class AuthRepository {
     await _googleSignIn.signOut();
   }
 
+  Future<void> updateProfile({String? displayName, String? photoUrl}) async {
+    final user = _auth.currentUser;
+    if (user == null) throw Exception('No user logged in');
+
+    if (displayName != null) {
+      await user.updateDisplayName(displayName);
+    }
+    if (photoUrl != null) {
+      await user.updatePhotoURL(photoUrl);
+    }
+    await user.reload();
+  }
+
   // ----- Sign in with Apple -----
   String _generateNonce([int length = 32]) {
     const charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';

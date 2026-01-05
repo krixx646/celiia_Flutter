@@ -17,6 +17,14 @@ class Env {
   );
 
   // ─────────────────────────────────────────────────────────────────────────
+  // Celia backend (Vercel/Next.js) - used by the mobile app
+  // ─────────────────────────────────────────────────────────────────────────
+  static const String celiaBackendBaseUrl = String.fromEnvironment(
+    'CELIA_BACKEND_BASE_URL',
+    defaultValue: '',
+  );
+
+  // ─────────────────────────────────────────────────────────────────────────
   // Cloudflare Stream (Video Hosting & CDN)
   // ─────────────────────────────────────────────────────────────────────────
   static const String cloudflareAccountId = String.fromEnvironment(

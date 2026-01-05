@@ -10,6 +10,12 @@ function unauthorized() {
 }
 
 export function middleware(req: NextRequest) {
+  // Mobile app endpoints must not be behind dashboard Basic Auth.
+  // They have their own auth (Firebase ID token verification) in the route handler.
+  if (req.nextUrl.pathname.startsWith('/api/mobile/')) {
+    return NextResponse.next();
+  }
+
   const user = process.env.ADMIN_BASIC_AUTH_USER;
   const pass = process.env.ADMIN_BASIC_AUTH_PASS;
 

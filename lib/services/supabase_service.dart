@@ -1,4 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../config/env.dart';
 import '../models/routine.dart';
 import '../models/video.dart';
@@ -98,6 +101,61 @@ class SupabaseService {
         .single();
 
     return Routine.fromJson(response);
+  }
+
+  /// Generate a personalized routine on the server (Next.js / Vercel) using the clip library.
+  /// This keeps OpenAI keys off the device.
+  Future<Routine> generateRoutineOnServer({
+    required String request,
+    required int durationMinutes,
+    required RoutineDifficulty difficulty,
+    required List<String> equipment,
+  }) async {
+    final base = Env.celiaBackendBaseUrl.trim();
+    if (base.isEmpty) {
+      throw SupabaseException(
+        'Backend not configured',
+        'Provide CELIA_BACKEND_BASE_URL via --dart-define (e.g. https://your-vercel-app.vercel.app)',
+      );
+    }
+
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      throw SupabaseException('Not signed in', 'Please sign in before generating a routine');
+    }
+
+    final idToken = await user.getIdToken();
+    final uri = Uri.parse('$base/api/mobile/generate-routine');
+
+    final res = await http.post(
+      uri,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $idToken',
+      },
+      body: jsonEncode({
+        'request': request,
+        'durationMinutes': durationMinutes,
+        'difficulty': difficulty.name,
+        'equipment': equipment,
+      }),
+    );
+
+    final raw = await res.bodyBytes;
+    final text = utf8.decode(raw);
+    final json = text.isNotEmpty ? jsonDecode(text) : {};
+
+    if (res.statusCode < 200 || res.statusCode >= 300) {
+      final msg = (json is Map && json['error'] != null) ? json['error'].toString() : 'Failed to generate routine';
+      throw SupabaseException(msg, text);
+    }
+
+    final routineJson = (json is Map) ? json['routine'] : null;
+    if (routineJson is! Map<String, dynamic>) {
+      throw SupabaseException('Invalid server response', text);
+    }
+
+    return Routine.fromJson(routineJson);
   }
 
   /// Update an existing routine

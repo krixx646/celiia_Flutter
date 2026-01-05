@@ -1,12 +1,10 @@
 import 'package:flutter/foundation.dart';
 import '../models/routine.dart';
 import '../services/supabase_service.dart';
-import '../services/openai_service.dart';
 
 /// Provider for managing routine state and operations
 class RoutineProvider extends ChangeNotifier {
   final SupabaseService _supabase = SupabaseService.instance;
-  final OpenAIService _openai = OpenAIService();
 
   // State
   List<Routine> _routines = [];
@@ -110,15 +108,12 @@ class RoutineProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final routine = await _openai.generateRoutine(
-        userRequest: request,
-        targetDurationMinutes: durationMinutes,
-        preferredDifficulty: difficulty,
-        availableEquipment: equipment,
+      final savedRoutine = await _supabase.generateRoutineOnServer(
+        request: request,
+        durationMinutes: durationMinutes ?? 15,
+        difficulty: difficulty ?? RoutineDifficulty.medium,
+        equipment: equipment ?? const ['None'],
       );
-
-      // Save to Supabase (unpublished for review)
-      final savedRoutine = await _supabase.createRoutine(routine);
       
       // Add to local AI routines list
       _aiRoutines.insert(0, savedRoutine);

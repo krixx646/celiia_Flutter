@@ -17,8 +17,53 @@ function mapCloudflareState(state: unknown): 'pending' | 'processing' | 'ready' 
   return 'processing';
 }
 
+async function fetchCloudflareDetailsWithRetry(uid: string, attempts = 3, delayMs = 1000) {
+  if (!CLOUDFLARE_ACCOUNT_ID || !CLOUDFLARE_API_TOKEN) {
+    return { ok: false as const, status: 0, json: null, error: 'Cloudflare env not configured' };
+  }
+
+  let lastErr: any = null;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      const res = await fetch(
+        `https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/stream/${uid}`,
+        { headers: { Authorization: `Bearer ${CLOUDFLARE_API_TOKEN}` } }
+      );
+
+      const text = await res.text().catch(() => '');
+      let json: any = null;
+      try {
+        json = text ? JSON.parse(text) : null;
+      } catch {
+        json = null;
+      }
+
+      if (res.ok && json?.success) {
+        return { ok: true as const, status: res.status, json, error: null };
+      }
+
+      lastErr = {
+        status: res.status,
+        body: json || text,
+      };
+    } catch (e: any) {
+      lastErr = { error: e?.message ?? String(e) };
+    }
+
+    // brief backoff (Cloudflare can be eventually consistent right after upload)
+    if (i < attempts - 1) {
+      await new Promise((r) => setTimeout(r, delayMs));
+    }
+  }
+
+  return { ok: false as const, status: 0, json: null, error: lastErr };
+}
+
 export async function POST(req: NextRequest) {
   try {
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return NextResponse.json({ error: 'Supabase is not configured' }, { status: 500 });
+    }
     if (!CLOUDFLARE_ACCOUNT_ID || !CLOUDFLARE_API_TOKEN) {
       return NextResponse.json(
         { error: 'Cloudflare Stream is not configured (missing CLOUDFLARE_ACCOUNT_ID or CLOUDFLARE_STREAM_API_TOKEN)' },
@@ -37,25 +82,22 @@ export async function POST(req: NextRequest) {
     const difficulty = body?.difficulty != null ? String(body.difficulty).toLowerCase() : 'beginner';
     const equipment = Array.isArray(body?.equipment) ? body.equipment : [];
 
-    const detailsRes = await fetch(
-      `https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/stream/${uid}`,
-      { headers: { Authorization: `Bearer ${CLOUDFLARE_API_TOKEN}` } }
-    );
-    const detailsJson: any = await detailsRes.json();
-    if (!detailsJson?.success) {
-      return NextResponse.json({ error: 'Failed to fetch Cloudflare video details', cloudflare: detailsJson }, { status: 500 });
-    }
+    // Cloudflare can be eventually consistent right after upload. Also, some API tokens may allow creating uploads
+    // but not reading details. We should still save the clip as "processing" so it shows up in the dashboard.
+    const details = await fetchCloudflareDetailsWithRetry(uid, 3, 1000);
 
-    const result = detailsJson.result || {};
+    const cfResult = details.ok ? (details.json?.result || {}) : {};
     const playbackUrl =
-      (result?.playback?.hls as string | undefined) ||
+      (cfResult?.playback?.hls as string | undefined) ||
       `https://customer-${CLOUDFLARE_ACCOUNT_ID}.cloudflarestream.com/${uid}/manifest/video.m3u8`;
     const thumbnailUrl =
-      (result?.thumbnail as string | undefined) || `https://videodelivery.net/${uid}/thumbnails/thumbnail.jpg`;
-    const durationRaw = result?.duration ?? 0;
+      (cfResult?.thumbnail as string | undefined) || `https://videodelivery.net/${uid}/thumbnails/thumbnail.jpg`;
+
+    const durationRaw = cfResult?.duration ?? 0;
     const durationNum = typeof durationRaw === 'number' ? durationRaw : Number(durationRaw);
     const durationSeconds = Number.isFinite(durationNum) && durationNum > 0 ? Math.round(durationNum) : 0;
-    const status = mapCloudflareState(result?.status?.state);
+
+    const status = details.ok ? mapCloudflareState(cfResult?.status?.state) : 'processing';
 
     const { data: video, error: dbError } = await supabase
       .from('videos')
@@ -78,10 +120,17 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (dbError) {
-      return NextResponse.json({ error: 'Failed to save video metadata', details: dbError }, { status: 500 });
+      return NextResponse.json(
+        { error: 'Failed to save video metadata', details: dbError?.message || dbError },
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json({ ok: true, video });
+    return NextResponse.json({
+      ok: true,
+      video,
+      cloudflare: details.ok ? { ok: true } : { ok: false, error: details.error },
+    });
   } catch (e: any) {
     return NextResponse.json({ error: e?.message ?? String(e) }, { status: 500 });
   }

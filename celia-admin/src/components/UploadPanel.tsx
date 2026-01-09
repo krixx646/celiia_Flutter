@@ -36,6 +36,7 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
+  const [uploadStep, setUploadStep] = useState<'idle' | 'init' | 'cloudflare' | 'saving'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -83,24 +84,46 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
     }
   };
 
+  const uploadToCloudflareWithProgress = (uploadURL: string, fileToUpload: File) => {
+    return new Promise<void>((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', uploadURL, true);
+
+      // Large uploads can take a while. This is just a safety net; tweak as needed.
+      xhr.timeout = 15 * 60 * 1000; // 15 minutes
+
+      xhr.upload.onprogress = (evt) => {
+        if (!evt.lengthComputable) return;
+        const ratio = evt.total > 0 ? evt.loaded / evt.total : 0;
+        // Use 0-90% for the file transfer portion.
+        const pct = Math.max(0, Math.min(90, Math.round(ratio * 90)));
+        setUploadProgress(pct);
+      };
+
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve();
+        } else {
+          reject(new Error(`Cloudflare upload failed (HTTP ${xhr.status})`));
+        }
+      };
+      xhr.onerror = () => reject(new Error('Cloudflare upload failed (network error)'));
+      xhr.ontimeout = () => reject(new Error('Cloudflare upload timed out'));
+
+      const cfForm = new FormData();
+      cfForm.append('file', fileToUpload);
+      xhr.send(cfForm);
+    });
+  };
+
   const handleUpload = async () => {
     if (!file) return;
 
     setUploading(true);
     setUploadStatus('uploading');
+    setUploadStep('init');
     setUploadProgress(0);
     setErrorMessage('');
-
-    // Simulate progress while uploading
-    const progressInterval = setInterval(() => {
-      setUploadProgress(prev => {
-        if (prev >= 90) {
-          clearInterval(progressInterval);
-          return prev;
-        }
-        return prev + 10;
-      });
-    }, 500);
 
     try {
       // 1) Request a direct upload URL (server-side only stores Cloudflare token; safe for cloud deploy)
@@ -112,20 +135,28 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
           maxDurationSeconds: 3600,
         }),
       });
-      const initJson = await initRes.json();
-      if (!initRes.ok) throw new Error(initJson.error || 'Failed to initialize upload');
+      const initText = await initRes.text();
+      const initJson = (() => {
+        try {
+          return JSON.parse(initText);
+        } catch {
+          return null;
+        }
+      })();
+      if (!initRes.ok) throw new Error(initJson?.error || initText || 'Failed to initialize upload');
 
       const uploadURL = initJson.uploadURL as string;
       const uid = initJson.uid as string;
       if (!uploadURL || !uid) throw new Error('Invalid upload URL response');
 
-      // 2) Upload the file directly to Cloudflare (browser -> Cloudflare)
-      const cfForm = new FormData();
-      cfForm.append('file', file);
-      const cfRes = await fetch(uploadURL, { method: 'POST', body: cfForm });
-      if (!cfRes.ok) throw new Error('Cloudflare upload failed');
+      // 2) Upload the file directly to Cloudflare (browser -> Cloudflare) with real progress
+      setUploadStep('cloudflare');
+      setUploadProgress(1);
+      await uploadToCloudflareWithProgress(uploadURL, file);
 
       // 3) Tell server to save metadata to Supabase (and read Cloudflare duration/status)
+      setUploadStep('saving');
+      setUploadProgress((p) => Math.max(p, 92));
       const completeRes = await fetch('/api/upload-video/complete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -139,9 +170,22 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
           equipment: formData.equipment,
         }),
       });
-      clearInterval(progressInterval);
-      const completeJson = await completeRes.json();
-      if (!completeRes.ok) throw new Error(completeJson.error || 'Upload failed');
+      const completeText = await completeRes.text();
+      const completeJson = (() => {
+        try {
+          return JSON.parse(completeText);
+        } catch {
+          return null;
+        }
+      })();
+      if (!completeRes.ok) {
+        throw new Error(
+          completeJson?.error ||
+            completeJson?.details ||
+            (uid ? `Upload failed (Cloudflare uid: ${uid})` : 'Upload failed') ||
+            completeText
+        );
+      }
 
       setUploadProgress(100);
       setUploadStatus('success');
@@ -154,11 +198,11 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
       }, 1500);
 
     } catch (error: any) {
-      clearInterval(progressInterval);
       console.error('Upload failed:', error);
       setUploadStatus('error');
       setErrorMessage(error.message || 'Upload failed. Please try again.');
       setUploading(false);
+      setUploadStep('idle');
     }
   };
 
@@ -175,6 +219,7 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
     setUploading(false);
     setUploadProgress(0);
     setUploadStatus('idle');
+    setUploadStep('idle');
     setErrorMessage('');
   };
 
@@ -379,7 +424,15 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
           {uploadStatus === 'uploading' && (
             <div className="space-y-2">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-400">Uploading to Cloudflare Stream...</span>
+                <span className="text-gray-400">
+                  {uploadStep === 'init'
+                    ? 'Preparing upload...'
+                    : uploadStep === 'cloudflare'
+                      ? 'Uploading file to Cloudflare Stream...'
+                      : uploadStep === 'saving'
+                        ? 'Saving metadata...'
+                        : 'Uploading...'}
+                </span>
                 <span className="text-orange-500">{uploadProgress}%</span>
               </div>
               <div className="h-2 bg-white/10 rounded-full overflow-hidden">

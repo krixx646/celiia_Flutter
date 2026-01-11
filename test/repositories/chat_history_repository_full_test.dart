@@ -1,3 +1,5 @@
+// ignore_for_file: subtype_of_sealed_class
+
 import 'package:celia_flutter/providers/chat_provider.dart';
 import 'package:celia_flutter/repositories/chat_history_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,7 +27,7 @@ void main() {
     registerFallbackValue(SetOptions(merge: true));
   });
 
-  ChatHistoryRepository _repoWith({
+  ChatHistoryRepository repoWith({
     required FirebaseAuth auth,
     required FirebaseFirestore firestore,
   }) {
@@ -60,7 +62,7 @@ void main() {
     when(() => convs.doc('c1')).thenReturn(convDoc);
     when(() => convDoc.set(any(), any())).thenAnswer((_) async {});
 
-    final repo = _repoWith(auth: auth, firestore: firestore);
+    final repo = repoWith(auth: auth, firestore: firestore);
     await repo.saveConversation(
       SavedConversation(
         id: 'c1',
@@ -109,7 +111,7 @@ void main() {
       'userKey': 'k',
     });
 
-    final repo = _repoWith(auth: auth, firestore: firestore);
+    final repo = repoWith(auth: auth, firestore: firestore);
     final list = await repo.getConversations();
     expect(list.single.id, 'c1');
   });
@@ -150,7 +152,7 @@ void main() {
       'userKey': 'k',
     });
 
-    final repo = _repoWith(auth: auth, firestore: firestore);
+    final repo = repoWith(auth: auth, firestore: firestore);
     final list = await repo.getConversations();
     expect(list.single.id, 'c2');
   });
@@ -183,7 +185,7 @@ void main() {
       }
     });
 
-    final repo = _repoWith(auth: auth, firestore: firestore);
+    final repo = repoWith(auth: auth, firestore: firestore);
     await repo.deleteConversation('c1');
     verify(() => convDoc.delete()).called(2);
   });
@@ -212,7 +214,7 @@ void main() {
       FirebaseException(plugin: 'cloud_firestore', code: 'permission-denied'),
     );
 
-    final repo = _repoWith(auth: auth, firestore: firestore);
+    final repo = repoWith(auth: auth, firestore: firestore);
     expect(() => repo.deleteConversation('c1'), throwsA(isA<FirebaseException>()));
   });
 
@@ -227,7 +229,7 @@ void main() {
       return calls == 1 ? user : null;
     });
 
-    final repo = _repoWith(auth: auth, firestore: MockFirestore());
+    final repo = repoWith(auth: auth, firestore: MockFirestore());
     await expectLater(
       repo.saveConversation(
         SavedConversation(

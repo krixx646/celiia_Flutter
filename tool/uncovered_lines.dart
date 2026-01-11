@@ -68,7 +68,7 @@ void main(List<String> args) {
         .toList()
       ..sort();
 
-    stdout.writeln('${m.file}');
+    stdout.writeln(m.file);
     stdout.writeln('covered: ${m.lh}/${m.lf} = ${(m.lf == 0 ? 100.0 : 100.0 * m.lh / m.lf).toStringAsFixed(2)}%');
     stdout.writeln('uncovered lines: ${uncovered.length}');
     stdout.writeln(uncovered.join(','));

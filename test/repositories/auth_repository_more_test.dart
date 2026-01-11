@@ -20,7 +20,7 @@ void main() {
     final auth = MockFirebaseAuth();
     final google = MockGoogleSignIn();
     when(() => auth.signOut()).thenAnswer((_) async {});
-    when(() => google.signOut()).thenAnswer((_) async => null);
+    when(() => google.signOut()).thenAnswer((_) async {});
 
     final repo = AuthRepository(
       auth: auth,

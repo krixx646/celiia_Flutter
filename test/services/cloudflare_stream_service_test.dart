@@ -18,7 +18,7 @@ void main() {
   test('getDirectUploadUrl parses success response', () async {
     final client = MockClient((req) async {
       if (req.url.toString().contains('/direct_upload')) {
-        final body = jsonDecode((req as http.Request).body) as Map<String, dynamic>;
+        final body = jsonDecode(req.body) as Map<String, dynamic>;
         final meta = body['meta'] as Map<String, dynamic>;
         expect(meta['name'], 'a.mp4');
         expect(meta['foo'], 'bar');

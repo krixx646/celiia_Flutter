@@ -2,7 +2,6 @@ import 'dart:io' show File;
 
 import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';

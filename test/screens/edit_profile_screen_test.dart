@@ -117,7 +117,7 @@ void main() {
   });
 
   testWidgets('save success pops; pick photo triggers upload and updateProfile', (tester) async {
-    final uid = 'u';
+    const uid = 'u';
 
     final repo = MockAuthRepository();
     final fbUser = MockFbUser();
@@ -193,7 +193,7 @@ void main() {
   });
 
   testWidgets('save error shows snackbar and does not pop', (tester) async {
-    final uid = 'u';
+    const uid = 'u';
 
     final repo = MockAuthRepository();
     final fbUser = MockFbUser();

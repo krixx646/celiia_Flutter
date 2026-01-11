@@ -29,7 +29,11 @@ void main() {
   });
 
   test('VideoUploadRequest/Response JSON', () {
-    final req = VideoUploadRequest(filename: 'a.mp4', maxDurationSeconds: 300, metadata: const {'k': 'v'});
+    const req = VideoUploadRequest(
+      filename: 'a.mp4',
+      maxDurationSeconds: 300,
+      metadata: {'k': 'v'},
+    );
     expect(VideoUploadRequest.fromJson(req.toJson()).filename, 'a.mp4');
 
     final res = VideoUploadResponse(

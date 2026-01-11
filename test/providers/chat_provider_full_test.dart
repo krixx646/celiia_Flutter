@@ -89,7 +89,7 @@ void main() {
     expect(p.uiState.currentUserKey, 'uk');
   });
 
-  Future<SharedPreferences> _prefs() async {
+  Future<SharedPreferences> prefsFactory() async {
     SharedPreferences.setMockInitialValues(<String, Object>{});
     return SharedPreferences.getInstance();
   }
@@ -103,7 +103,7 @@ void main() {
     );
     when(() => history.getConversations()).thenAnswer((_) async => []);
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: _prefs);
+    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
     await p.initializeChat();
     expect(p.uiState.currentUserKey, 'uk');
     expect(p.uiState.hasInitialized, isTrue);
@@ -115,7 +115,7 @@ void main() {
     // Error path
     final repo2 = MockChatRepository();
     when(() => repo2.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenThrow(Exception('boom'));
-    final p2 = ChatProvider(chatRepository: repo2, historyRepository: history, prefs: _prefs);
+    final p2 = ChatProvider(chatRepository: repo2, historyRepository: history, prefs: prefsFactory);
     await p2.initializeChat();
     expect(p2.uiState.error, contains('boom'));
     expect(p2.uiState.isLoadingInitial, isFalse);
@@ -135,7 +135,7 @@ void main() {
       when(() => repo.getMessages(any(), any())).thenAnswer((_) async => []);
       when(() => history.getConversations()).thenAnswer((_) async => []);
 
-      final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: _prefs);
+      final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
 
       async.run((_) async {
         await p.initializeChat();
@@ -160,7 +160,7 @@ void main() {
       when(() => repoErr.createConversation(any())).thenThrow(Exception('nope'));
       when(() => history.getConversations()).thenAnswer((_) async => []);
 
-      final pErr = ChatProvider(chatRepository: repoErr, historyRepository: history, prefs: _prefs);
+      final pErr = ChatProvider(chatRepository: repoErr, historyRepository: history, prefs: prefsFactory);
       async.run((_) async {
         await pErr.initializeChat();
         await pErr.startNewConversation();
@@ -185,7 +185,7 @@ void main() {
     );
     when(() => history.getConversations()).thenAnswer((_) async => []);
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: _prefs);
+    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
     await p.startNewConversation();
     expect(p.uiState.currentUserKey, 'uk');
     expect(p.uiState.currentConversationId, 'cid');
@@ -213,7 +213,7 @@ void main() {
       ),
     );
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: _prefs);
+    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
 
     // No active conversation
     await p.sendMessage('x');
@@ -254,7 +254,7 @@ void main() {
       ),
     );
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: _prefs);
+    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
     await p.initializeChat();
     await p.startNewConversation();
 
@@ -285,7 +285,7 @@ void main() {
         ];
       });
 
-      final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: _prefs);
+      final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
 
       async.run((_) async {
         await p.initializeChat();
@@ -338,7 +338,7 @@ void main() {
     when(() => repo.getMessages('uk', 'cid')).thenThrow(Exception('boom'));
     when(() => history.getConversations()).thenAnswer((_) async => []);
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: _prefs);
+    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
     await p.initializeChat();
     await p.startNewConversation();
     await p.loadMessages();
@@ -354,7 +354,7 @@ void main() {
     );
     when(() => history.getConversations()).thenThrow(Exception('boom'));
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: _prefs);
+    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
     await p.initializeChat();
     expect(p.uiState.error, contains('boom'));
     expect(p.uiState.isLoadingHistory, isFalse);
@@ -374,12 +374,12 @@ void main() {
     // Start with empty history then a saved item
     when(() => history.getConversations()).thenAnswer((_) async => []);
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: _prefs);
+    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
     await p.initializeChat();
     await p.startNewConversation();
 
     // saveCurrentConversation false when no conversation id
-    final pNoId = ChatProvider(chatRepository: repo, historyRepository: history, prefs: _prefs);
+    final pNoId = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
     await pNoId.initializeChat();
     expect(await pNoId.saveCurrentConversation(), isFalse);
 
@@ -442,7 +442,7 @@ void main() {
     when(() => history.getConversations()).thenAnswer((_) async => []);
     when(() => history.saveConversation(any())).thenThrow(Exception('boom'));
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: _prefs);
+    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
     await p.initializeChat();
     await p.startNewConversation();
     final ok = await p.saveCurrentConversation();
@@ -472,7 +472,7 @@ void main() {
       ),
     );
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: _prefs);
+    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
     await p.initializeChat();
     await p.startNewConversation();
     p.handleOptionClick('opt');
@@ -495,7 +495,7 @@ void main() {
     when(() => history.saveConversation(any())).thenAnswer((_) async {});
     when(() => repo.getMessages(any(), any())).thenAnswer((_) async => []);
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: _prefs);
+    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
     await p.initializeChat();
     await p.startNewConversation();
 

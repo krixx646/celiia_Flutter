@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:celia_flutter/providers/auth_provider.dart';
 import 'package:celia_flutter/providers/chat_provider.dart';
 import 'package:celia_flutter/providers/navigation_provider.dart';
@@ -252,7 +250,11 @@ void main() {
 
     await tester.pumpWidget(
       _wrap(
-        VideoPlayerScreen(videoUrl: 'https://example.invalid/video.m3u8', title: 'V', initTimeout: const Duration(milliseconds: 1)),
+        const VideoPlayerScreen(
+          videoUrl: 'https://example.invalid/video.m3u8',
+          title: 'V',
+          initTimeout: Duration(milliseconds: 1),
+        ),
         auth: auth,
         routines: routines,
         chat: chat,

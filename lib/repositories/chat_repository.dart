@@ -2,7 +2,9 @@ import '../services/botpress_api.dart';
 import '../models/chat_models.dart';
 
 class ChatRepository {
-  final BotpressApi _api = BotpressApi();
+  final BotpressApi _api;
+
+  ChatRepository({BotpressApi? api}) : _api = api ?? BotpressApi();
 
   Future<User> createUser({String? name, String? email}) async {
     try {

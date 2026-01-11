@@ -1,12 +1,14 @@
 'use client';
 
-import { Play, Dumbbell, Zap } from 'lucide-react';
+import { Play, Dumbbell, Zap, Trash2 } from 'lucide-react';
 import { Video } from '@/lib/supabase';
 import { formatDuration, formatDate, cn, resolveAnyVideoThumbnailUrl } from '@/lib/utils';
 
 interface VideoCardProps {
   video: Video;
   onClick?: () => void;
+  onDelete?: () => void;
+  deleting?: boolean;
 }
 
 const bodyPartLabels: Record<string, string> = {
@@ -26,7 +28,7 @@ const difficultyColors: Record<string, string> = {
   advanced: 'text-red-400',
 };
 
-export default function VideoCard({ video, onClick }: VideoCardProps) {
+export default function VideoCard({ video, onClick, onDelete, deleting }: VideoCardProps) {
   const statusColors = {
     ready: 'status-ready',
     processing: 'status-processing',
@@ -86,6 +88,26 @@ export default function VideoCard({ video, onClick }: VideoCardProps) {
         <div className="absolute bottom-3 right-3 px-2 py-1 bg-black/70 rounded-md text-xs font-medium text-white">
           {formatDuration(video.duration_seconds)}
         </div>
+
+        {/* Delete */}
+        {onDelete && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete();
+            }}
+            disabled={Boolean(deleting)}
+            title="Delete clip"
+            className={cn(
+              "absolute top-3 right-3 p-2 rounded-md bg-black/60 text-red-300 hover:text-red-200 hover:bg-red-500/20 transition-colors",
+              "opacity-0 group-hover:opacity-100",
+              deleting ? "cursor-not-allowed opacity-70" : ""
+            )}
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+        )}
 
         {/* Play overlay on hover */}
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">

@@ -15,10 +15,12 @@ import 'routine_detail_screen.dart';
 
 class RoutinePlayerScreen extends StatefulWidget {
   final Routine routine;
+  final Duration initTimeout;
 
   const RoutinePlayerScreen({
     super.key,
     required this.routine,
+    this.initTimeout = const Duration(seconds: 20),
   });
 
   @override
@@ -179,7 +181,7 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
       final controller = VideoPlayerController.networkUrl(Uri.parse(current.playbackUrl));
       _videoController = controller;
 
-      await controller.initialize().timeout(const Duration(seconds: 20));
+      await controller.initialize().timeout(widget.initTimeout);
       controller.addListener(_onVideoTick);
 
       if (!mounted) return;

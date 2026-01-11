@@ -9,12 +9,15 @@ class CloudflareStreamService {
 
   final String _accountId;
   final String _apiToken;
+  final http.Client _client;
 
   CloudflareStreamService({
     String? accountId,
     String? apiToken,
+    http.Client? client,
   })  : _accountId = accountId ?? Env.cloudflareAccountId,
-        _apiToken = apiToken ?? Env.cloudflareApiToken;
+        _apiToken = apiToken ?? Env.cloudflareApiToken,
+        _client = client ?? http.Client();
 
   String get _streamUrl => '$_baseUrl/$_accountId/stream';
 
@@ -30,7 +33,7 @@ class CloudflareStreamService {
     int maxDurationSeconds = 3600,
     Map<String, String>? metadata,
   }) async {
-    final response = await http.post(
+    final response = await _client.post(
       Uri.parse('$_streamUrl/direct_upload'),
       headers: _headers,
       body: jsonEncode({
@@ -68,7 +71,7 @@ class CloudflareStreamService {
 
   /// Get video details from Cloudflare Stream
   Future<Map<String, dynamic>> getVideoDetails(String streamId) async {
-    final response = await http.get(
+    final response = await _client.get(
       Uri.parse('$_streamUrl/$streamId'),
       headers: _headers,
     );
@@ -123,7 +126,7 @@ class CloudflareStreamService {
     };
     if (after != null) queryParams['after'] = after;
 
-    final response = await http.get(
+    final response = await _client.get(
       Uri.parse(_streamUrl).replace(queryParameters: queryParams),
       headers: _headers,
     );
@@ -148,7 +151,7 @@ class CloudflareStreamService {
 
   /// Delete a video from Cloudflare Stream
   Future<void> deleteVideo(String streamId) async {
-    final response = await http.delete(
+    final response = await _client.delete(
       Uri.parse('$_streamUrl/$streamId'),
       headers: _headers,
     );

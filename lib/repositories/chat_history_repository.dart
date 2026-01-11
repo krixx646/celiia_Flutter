@@ -1,10 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import '../providers/chat_provider.dart';
 
 class ChatHistoryRepository {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  @visibleForTesting
+  static FirebaseFirestore Function() defaultFirestore = () => FirebaseFirestore.instance;
+
+  @visibleForTesting
+  static FirebaseAuth Function() defaultAuth = () => FirebaseAuth.instance;
+
+  final FirebaseFirestore _firestore;
+  final FirebaseAuth _auth;
+  final List<Duration> _retryDelays;
+  final Future<void> Function(Duration) _delay;
+
+  ChatHistoryRepository({
+    FirebaseFirestore? firestore,
+    FirebaseAuth? auth,
+    List<Duration>? retryDelays,
+    Future<void> Function(Duration)? delay,
+  })  : _firestore = firestore ?? defaultFirestore(),
+        _auth = auth ?? defaultAuth(),
+        _retryDelays = retryDelays ?? const <Duration>[
+          Duration(milliseconds: 400),
+          Duration(milliseconds: 900),
+          Duration(milliseconds: 1800),
+        ],
+        _delay = delay ?? Future<void>.delayed;
 
   Future<void> _ensureUserDocument() async {
     final String? userId = _auth.currentUser?.uid;
@@ -91,11 +114,6 @@ class ChatHistoryRepository {
   }
 
   Future<T> _withRetry<T>(Future<T> Function() action) async {
-    const List<Duration> delays = <Duration>[
-      Duration(milliseconds: 400),
-      Duration(milliseconds: 900),
-      Duration(milliseconds: 1800),
-    ];
     int attempt = 0;
     while (true) {
       try {
@@ -103,8 +121,8 @@ class ChatHistoryRepository {
       } on FirebaseException catch (e) {
         final String code = e.code.toLowerCase();
         final bool retryable = code == 'unavailable' || code == 'deadline-exceeded' || code == 'aborted';
-        if (attempt >= delays.length || !retryable) rethrow;
-        await Future<void>.delayed(delays[attempt]);
+        if (attempt >= _retryDelays.length || !retryable) rethrow;
+        await _delay(_retryDelays[attempt]);
         attempt += 1;
       }
     }

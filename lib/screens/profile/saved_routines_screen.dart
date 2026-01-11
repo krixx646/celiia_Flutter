@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/routine.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/routine_provider.dart';
 import '../../providers/theme_provider.dart';
@@ -9,10 +10,14 @@ import '../routines/routine_detail_screen.dart';
 
 class SavedRoutinesScreen extends StatefulWidget {
   final bool showFavoritesOnly;
+  final SupabaseService? supabase;
+  final Widget Function(Routine routine)? routineDetailBuilder;
 
   const SavedRoutinesScreen({
     super.key,
     this.showFavoritesOnly = false,
+    this.supabase,
+    this.routineDetailBuilder,
   });
 
   @override
@@ -20,12 +25,13 @@ class SavedRoutinesScreen extends StatefulWidget {
 }
 
 class _SavedRoutinesScreenState extends State<SavedRoutinesScreen> {
-  final SupabaseService _supabase = SupabaseService.instance;
+  late final SupabaseService _supabase;
   final Map<String, String> _titleCache = {};
 
   @override
   void initState() {
     super.initState();
+    _supabase = widget.supabase ?? SupabaseService.instance;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final user = context.read<AuthProvider>().uiState.currentUser;
       if (user == null) return;
@@ -34,7 +40,7 @@ class _SavedRoutinesScreenState extends State<SavedRoutinesScreen> {
   }
 
   Future<void> _openRoutine(String routineId) async {
-    final routine = await _supabase.getRoutine(routineId);
+    final Routine? routine = await _supabase.getRoutine(routineId);
     if (!mounted) return;
     if (routine == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -43,7 +49,9 @@ class _SavedRoutinesScreenState extends State<SavedRoutinesScreen> {
       return;
     }
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => RoutineDetailScreen(routine: routine)),
+      MaterialPageRoute(
+        builder: (_) => widget.routineDetailBuilder?.call(routine) ?? RoutineDetailScreen(routine: routine),
+      ),
     );
   }
 

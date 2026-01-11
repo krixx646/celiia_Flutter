@@ -235,7 +235,8 @@ Rules:
       thumbnail_url: steps[0]?.thumbnail_url ?? null,
       steps, // JSONB (snake_case) to match Flutter model mapping
       created_by: user.uid,
-      is_published: true,
+      // Personalized routines are private to the user by default (not part of the global library).
+      is_published: false,
       is_curated: false,
       tags: Array.isArray(routineJson?.tags) ? routineJson.tags.map(String) : [],
       calories_burned: routineJson?.caloriesBurned != null ? safeInt(routineJson.caloriesBurned, 0) : null,
@@ -250,6 +251,17 @@ Rules:
 
     if (createErr) {
       return NextResponse.json({ error: 'Failed to save routine', details: createErr.message }, { status: 500 });
+    }
+
+    // Automatically save it to the user's library so it persists across app restarts.
+    try {
+      await supabase.from('user_routines').insert({
+        user_id: user.uid,
+        routine_id: created.id,
+        saved_at: new Date().toISOString(),
+      });
+    } catch {
+      // If RLS/constraints block this insert, it's non-fatal: the routine still exists and is playable immediately.
     }
 
     // Optional: record request history

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../models/routine.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/routine_provider.dart';
 import '../../providers/theme_provider.dart';
+import '../../utils/progress.dart';
 import 'edit_profile_screen.dart';
 import 'saved_routines_screen.dart';
 
@@ -30,30 +30,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-  int _computeStreak(List<UserRoutine> routines) {
-    final days = <DateTime>{};
-    for (final r in routines) {
-      final d = r.lastPlayedAt;
-      if (d == null) continue;
-      days.add(DateTime(d.year, d.month, d.day));
-    }
-    if (days.isEmpty) return 0;
-
-    final now = DateTime.now();
-    var cursor = DateTime(now.year, now.month, now.day);
-    var streak = 0;
-    while (days.contains(cursor)) {
-      streak += 1;
-      cursor = cursor.subtract(const Duration(days: 1));
-    }
-    return streak;
-  }
-
-  int _computeLevel(List<UserRoutine> routines) {
-    final totalCompletions = routines.fold<int>(0, (sum, r) => sum + r.timesCompleted);
-    return 1 + (totalCompletions ~/ 5);
-  }
-
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<AuthProvider>().uiState;
@@ -67,8 +43,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         : 'Member since ${_monthName(createdAt.month)} ${createdAt.year}';
 
     final routinesCount = routineProvider.userRoutines.length;
-    final streak = _computeStreak(routineProvider.userRoutines);
-    final level = _computeLevel(routineProvider.userRoutines);
+    final streak = computeDayStreak(routineProvider.userRoutines);
+    final level = computeLevel(routineProvider.userRoutines);
 
     return Scaffold(
       backgroundColor: theme.background,
@@ -115,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         bottom: 0,
                         child: InkWell(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const EditProfileScreen()));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (_) => EditProfileScreen()));
                           },
                           borderRadius: BorderRadius.circular(999),
                           child: Container(
@@ -149,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 6),
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const EditProfileScreen()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => EditProfileScreen()));
                     },
                     child: Text(
                       'Edit profile',

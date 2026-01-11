@@ -58,6 +58,8 @@ class SavedConversation {
 }
 
 class ChatUiState {
+  static const Object _sentinel = Object();
+
   final List<Message> messages;
   final bool isLoading;
   final bool isLoadingInitial;
@@ -119,9 +121,9 @@ class ChatUiState {
     bool? showSettingsDialog,
     bool? showUserProfileDialog,
     bool? showRestartConfirmation,
-    String? currentConversationId,
-    String? currentUserKey,
-    String? userIdForBotpress,
+    Object? currentConversationId = _sentinel,
+    Object? currentUserKey = _sentinel,
+    Object? userIdForBotpress = _sentinel,
     bool? hasInitialized,
   }) {
     return ChatUiState(
@@ -141,17 +143,35 @@ class ChatUiState {
       showSettingsDialog: showSettingsDialog ?? this.showSettingsDialog,
       showUserProfileDialog: showUserProfileDialog ?? this.showUserProfileDialog,
       showRestartConfirmation: showRestartConfirmation ?? this.showRestartConfirmation,
-      currentConversationId: currentConversationId ?? this.currentConversationId,
-      currentUserKey: currentUserKey ?? this.currentUserKey,
-      userIdForBotpress: userIdForBotpress ?? this.userIdForBotpress,
+      currentConversationId: identical(currentConversationId, _sentinel) ? this.currentConversationId : currentConversationId as String?,
+      currentUserKey: identical(currentUserKey, _sentinel) ? this.currentUserKey : currentUserKey as String?,
+      userIdForBotpress: identical(userIdForBotpress, _sentinel) ? this.userIdForBotpress : userIdForBotpress as String?,
       hasInitialized: hasInitialized ?? this.hasInitialized,
     );
   }
 }
 
 class ChatProvider extends ChangeNotifier {
-  final ChatRepository _chatRepository = ChatRepository();
-  final ChatHistoryRepository _historyRepository = ChatHistoryRepository();
+  @visibleForTesting
+  static ChatRepository Function() defaultChatRepository = () => ChatRepository();
+
+  @visibleForTesting
+  static ChatHistoryRepository Function() defaultHistoryRepository = () => ChatHistoryRepository();
+
+  @visibleForTesting
+  static Future<SharedPreferences> Function() defaultPrefs = SharedPreferences.getInstance;
+
+  final ChatRepository _chatRepository;
+  final ChatHistoryRepository _historyRepository;
+  final Future<SharedPreferences> Function() _prefs;
+
+  ChatProvider({
+    ChatRepository? chatRepository,
+    ChatHistoryRepository? historyRepository,
+    Future<SharedPreferences> Function()? prefs,
+  })  : _chatRepository = chatRepository ?? defaultChatRepository(),
+        _historyRepository = historyRepository ?? defaultHistoryRepository(),
+        _prefs = prefs ?? defaultPrefs;
   
   ChatUiState _uiState = ChatUiState();
   ChatUiState get uiState => _uiState;
@@ -171,7 +191,7 @@ class ChatProvider extends ChangeNotifier {
 
     try {
       // Persist Botpress user key across launches to avoid 403 on history
-      final prefs = await SharedPreferences.getInstance();
+      final prefs = await _prefs();
       String? userKey = prefs.getString('botpress_user_key');
       if (userKey == null) {
         final user = await _chatRepository.createUser();
@@ -280,13 +300,15 @@ class ChatProvider extends ChangeNotifier {
       
       // Replace last optimistic message with the confirmed one
       final current = [..._uiState.messages];
+      // Always append the confirmed message, then remove the last optimistic message if present.
+      // This is equivalent to an in-place replace, but avoids edge cases where the optimistic
+      // message list changes due to polling while awaiting the server response.
+      current.add(sent);
       final lastIndex = current.lastIndexWhere((m) => m.id.startsWith('local_'));
       if (lastIndex != -1) {
         // Remove the optimistic message direction tracking
         _messageDirections.remove(current[lastIndex].id);
-        current[lastIndex] = sent;
-      } else {
-        current.add(sent);
+        current.removeAt(lastIndex);
       }
       _uiState = _uiState.copyWith(messages: current, isSendingMessage: false);
       notifyListeners();

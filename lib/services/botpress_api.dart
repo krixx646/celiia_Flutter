@@ -6,7 +6,14 @@ import '../models/chat_models.dart';
 class BotpressApi {
   static const String _baseUrl = 'https://chat.botpress.cloud/71a1f5b1-470d-483a-a35b-45fab38502f1/';
   
-  final http.Client _client = http.Client();
+  final http.Client _client;
+  final String _base;
+
+  BotpressApi({
+    http.Client? client,
+    String? baseUrl,
+  })  : _client = client ?? http.Client(),
+        _base = (baseUrl ?? _baseUrl);
 
   Map<String, String> _getHeaders({String? userKey}) {
     final headers = {
@@ -29,7 +36,7 @@ class BotpressApi {
   }
 
   Future<BotpressUserResponse> createUser(CreateUserRequest request) async {
-    final url = Uri.parse('${_baseUrl}users');
+    final url = Uri.parse('${_base}users');
     if (kDebugMode) {
       // ignore: avoid_print
       print('[Botpress] POST $url body=${request.toJson()}');
@@ -46,7 +53,7 @@ class BotpressApi {
     String userKey,
     CreateConversationRequest request,
   ) async {
-    final url = Uri.parse('${_baseUrl}conversations');
+    final url = Uri.parse('${_base}conversations');
     if (kDebugMode) {
       // ignore: avoid_print
       print('[Botpress] POST $url headers={X-User-Key:$userKey} body=${request.toJson()}');
@@ -65,7 +72,7 @@ class BotpressApi {
     SimpleMessageRequest request,
   ) async {
     // Use the Kotlin app's direct message route: POST /messages with conversationId + payload
-    final url = Uri.parse('${_baseUrl}messages');
+    final url = Uri.parse('${_base}messages');
     final body = MessageWithConversation(
       conversationId: conversationId,
       payload: MessagePayload(type: request.type, text: request.text),
@@ -87,7 +94,7 @@ class BotpressApi {
     String conversationId,
     MessagePayload payload,
   ) async {
-    final url = Uri.parse('${_baseUrl}messages');
+    final url = Uri.parse('${_base}messages');
     final body = MessageWithConversation(
       conversationId: conversationId,
       payload: payload,
@@ -108,7 +115,7 @@ class BotpressApi {
     String userKey,
     String conversationId,
   ) async {
-    final url = Uri.parse('${_baseUrl}conversations/$conversationId/messages');
+    final url = Uri.parse('${_base}conversations/$conversationId/messages');
     if (kDebugMode) {
       // ignore: avoid_print
       print('[Botpress] GET $url headers={X-User-Key:$userKey}');
@@ -122,7 +129,7 @@ class BotpressApi {
   }
 
   Future<void> deleteConversation(String userKey, String conversationId) async {
-    final url = Uri.parse('${_baseUrl}conversations/$conversationId');
+    final url = Uri.parse('${_base}conversations/$conversationId');
     if (kDebugMode) {
       // ignore: avoid_print
       print('[Botpress] DELETE $url headers={X-User-Key:$userKey}');

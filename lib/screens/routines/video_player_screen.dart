@@ -10,12 +10,14 @@ class VideoPlayerScreen extends StatefulWidget {
   final String videoUrl;
   final String title;
   final String? thumbnailUrl;
+  final Duration initTimeout;
 
   const VideoPlayerScreen({
     super.key,
     required this.videoUrl,
     required this.title,
     this.thumbnailUrl,
+    this.initTimeout = const Duration(seconds: 20),
   });
 
   @override
@@ -40,7 +42,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         Uri.parse(widget.videoUrl),
       );
 
-      await _videoPlayerController!.initialize().timeout(const Duration(seconds: 20));
+      await _videoPlayerController!.initialize().timeout(widget.initTimeout);
 
       if (!mounted) return;
 

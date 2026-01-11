@@ -4,23 +4,48 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/foundation.dart' show kReleaseMode;
+import 'package:flutter/foundation.dart' show visibleForTesting;
 
 class FirebaseService {
   static FirebaseAuth get auth => FirebaseAuth.instance;
   static GoogleSignIn get googleSignIn => GoogleSignIn.instance;
 
+  @visibleForTesting
+  static bool Function() isIOS = () => Platform.isIOS;
+
+  @visibleForTesting
+  static String Function(String key) env = (key) => String.fromEnvironment(key);
+
+  @visibleForTesting
+  static Future<void> Function({FirebaseOptions? options}) firebaseInitializeApp = ({FirebaseOptions? options}) {
+    if (options == null) return Firebase.initializeApp();
+    return Firebase.initializeApp(options: options);
+  };
+
+  @visibleForTesting
+  static Future<void> Function() googleSignInInitialize = () => GoogleSignIn.instance.initialize();
+
+  @visibleForTesting
+  static Future<void> Function({required AndroidProvider androidProvider, required AppleProvider appleProvider}) appCheckActivate =
+      ({required AndroidProvider androidProvider, required AppleProvider appleProvider}) {
+    return FirebaseAppCheck.instance.activate(
+      androidProvider: androidProvider,
+      appleProvider: appleProvider,
+    );
+  };
+
   static Future<void> initialize() async {
     try {
       // Try default init (works when GoogleService-Info.plist / google-services.json are bundled)
-      await Firebase.initializeApp();
+      await firebaseInitializeApp();
     } catch (_) {
       // Fallback for iOS simulator builds where GoogleService-Info.plist is not included.
-      if (Platform.isIOS) {
-        const apiKey = String.fromEnvironment('FIREBASE_API_KEY');
-        const appId = String.fromEnvironment('FIREBASE_IOS_APP_ID');
-        const messagingSenderId = String.fromEnvironment('FIREBASE_MESSAGING_SENDER_ID');
-        const projectId = String.fromEnvironment('FIREBASE_PROJECT_ID');
-        const storageBucket = String.fromEnvironment('FIREBASE_STORAGE_BUCKET');
+      if (isIOS()) {
+        final apiKey = env('FIREBASE_API_KEY');
+        final appId = env('FIREBASE_IOS_APP_ID');
+        final messagingSenderId = env('FIREBASE_MESSAGING_SENDER_ID');
+        final projectId = env('FIREBASE_PROJECT_ID');
+        final storageBucket = env('FIREBASE_STORAGE_BUCKET');
 
         if (apiKey.isEmpty || appId.isEmpty || messagingSenderId.isEmpty || projectId.isEmpty) {
           // Re-throw with a clear message so the UI can still boot and we can see logs on simulator
@@ -30,7 +55,7 @@ class FirebaseService {
           );
         }
 
-        await Firebase.initializeApp(
+        await firebaseInitializeApp(
           options: FirebaseOptions(
             apiKey: apiKey,
             appId: appId,
@@ -45,14 +70,13 @@ class FirebaseService {
       }
     }
     // Initialize Google Sign-In once per app start (required in v7+)
-    await GoogleSignIn.instance.initialize();
+    await googleSignInInitialize();
 
     // Initialize Firebase App Check (protects Firestore/Storage in production)
     try {
-      await FirebaseAppCheck.instance.activate(
+      await appCheckActivate(
         androidProvider: kReleaseMode ? AndroidProvider.playIntegrity : AndroidProvider.debug,
         appleProvider: kReleaseMode ? AppleProvider.appAttest : AppleProvider.debug,
-        // webProvider: ReCaptchaV3Provider('unused'), 
       );
     } catch (_) {
       // If App Check init fails, proceed to avoid blocking startup; server rules may allow debug

@@ -66,7 +66,7 @@ Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'type': instance.type,
       'created': instance.created,
       'imageUrl': instance.imageUrl,
-      'options': instance.options,
+      'options': instance.options?.map((e) => e.toJson()).toList(),
       'metadata': instance.metadata,
       'interacted': instance.interacted,
     };
@@ -126,7 +126,7 @@ BotpressUserResponse _$BotpressUserResponseFromJson(
 Map<String, dynamic> _$BotpressUserResponseToJson(
         BotpressUserResponse instance) =>
     <String, dynamic>{
-      'user': instance.user,
+      'user': instance.user?.toJson(),
       'key': instance.key,
       'id': instance.id,
       'code': instance.code,
@@ -151,7 +151,7 @@ Map<String, dynamic> _$BotpressMessageToJson(BotpressMessage instance) =>
       'conversationId': instance.conversationId,
       'userId': instance.userId,
       'tags': instance.tags,
-      'payload': instance.payload,
+      'payload': instance.payload.toJson(),
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };
@@ -171,7 +171,7 @@ Map<String, dynamic> _$MessagePayloadToJson(MessagePayload instance) =>
       'type': instance.type,
       'text': instance.text,
       'imageUrl': instance.imageUrl,
-      'options': instance.options,
+      'options': instance.options?.map((e) => e.toJson()).toList(),
     };
 
 MessageWithConversation _$MessageWithConversationFromJson(
@@ -185,7 +185,7 @@ Map<String, dynamic> _$MessageWithConversationToJson(
         MessageWithConversation instance) =>
     <String, dynamic>{
       'conversationId': instance.conversationId,
-      'payload': instance.payload,
+      'payload': instance.payload.toJson(),
     };
 
 BotpressMessageResponse _$BotpressMessageResponseFromJson(
@@ -200,7 +200,7 @@ BotpressMessageResponse _$BotpressMessageResponseFromJson(
 Map<String, dynamic> _$BotpressMessageResponseToJson(
         BotpressMessageResponse instance) =>
     <String, dynamic>{
-      'message': instance.message,
+      'message': instance.message.toJson(),
       'error': instance.error,
       'code': instance.code,
     };
@@ -220,7 +220,7 @@ BotpressMessagesResponse _$BotpressMessagesResponseFromJson(
 Map<String, dynamic> _$BotpressMessagesResponseToJson(
         BotpressMessagesResponse instance) =>
     <String, dynamic>{
-      'messages': instance.messages,
+      'messages': instance.messages.map((e) => e.toJson()).toList(),
       'meta': instance.meta,
     };
 
@@ -284,5 +284,5 @@ BotpressConversationResponse _$BotpressConversationResponseFromJson(
 Map<String, dynamic> _$BotpressConversationResponseToJson(
         BotpressConversationResponse instance) =>
     <String, dynamic>{
-      'conversation': instance.conversation,
+      'conversation': instance.conversation.toJson(),
     };

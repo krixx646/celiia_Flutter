@@ -1,10 +1,24 @@
 import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../models/routine.dart';
 import '../services/supabase_service.dart';
 
 /// Provider for managing routine state and operations
 class RoutineProvider extends ChangeNotifier {
-  final SupabaseService _supabase = SupabaseService.instance;
+  @visibleForTesting
+  static SupabaseService Function() defaultSupabase = () => SupabaseService.instance;
+
+  @visibleForTesting
+  static String? Function() defaultCurrentUserId = () => FirebaseAuth.instance.currentUser?.uid;
+
+  final SupabaseService _supabase;
+  final String? Function() _currentUserId;
+
+  RoutineProvider({
+    SupabaseService? supabase,
+    String? Function()? currentUserId,
+  })  : _supabase = supabase ?? defaultSupabase(),
+        _currentUserId = currentUserId ?? defaultCurrentUserId;
 
   // State
   List<Routine> _routines = [];
@@ -37,7 +51,22 @@ class RoutineProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _routines = await _supabase.getPublishedRoutines();
+      final published = await _supabase.getPublishedRoutines();
+
+      // Merge in the signed-in user's private routines (created_by = uid, is_published = false)
+      // so generated routines persist in the Library tab across restarts.
+      final uid = _currentUserId();
+      final mine = (uid == null || uid.isEmpty)
+          ? <Routine>[]
+          : await _supabase.getUserCreatedRoutines(userId: uid);
+
+      // Prefer user-created routines over published ones if the same ID ever appears in both sets.
+      final byId = <String, Routine>{};
+      for (final r in [...published, ...mine]) {
+        byId[r.id] = r;
+      }
+      _routines = byId.values.toList()
+        ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
       _curatedRoutines = _routines.where((r) => r.isCurated).toList();
       _aiRoutines = _routines.where((r) => !r.isCurated).toList();
     } catch (e) {

@@ -53,6 +53,7 @@ export default function RoutinesPage() {
   const [creating, setCreating] = useState(false);
   const [videos, setVideos] = useState<VideoRow[]>([]);
   const [videosLoading, setVideosLoading] = useState(false);
+  const [deletingClipId, setDeletingClipId] = useState<string | null>(null);
   const [videoSearch, setVideoSearch] = useState('');
   const [stepDrafts, setStepDrafts] = useState<StepDraft[]>([]);
   const [form, setForm] = useState({
@@ -119,6 +120,26 @@ export default function RoutinesPage() {
       loadRoutines();
     } catch (error) {
       console.error('Error deleting routine:', error);
+    }
+  }
+
+  function errorMessage(e: unknown): string {
+    return e instanceof Error ? e.message : String(e);
+  }
+
+  async function deleteClip(v: VideoRow) {
+    if (!confirm(`Delete clip "${v.title}"?\n\nThis cannot be undone.`)) return;
+    setDeletingClipId(v.id);
+    setCreateError('');
+    try {
+      const res = await fetch(`/api/admin/videos/${v.id}`, { method: 'DELETE' });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Failed to delete clip');
+      setVideos((prev) => prev.filter((x) => x.id !== v.id));
+    } catch (e: unknown) {
+      setCreateError(errorMessage(e));
+    } finally {
+      setDeletingClipId(null);
     }
   }
 
@@ -459,26 +480,39 @@ export default function RoutinesPage() {
                       filteredVideos.slice(0, 60).map((v) => {
                         const thumb = resolveVideoThumb(v);
                         return (
-                          <button
-                            type="button"
+                          <div
                             key={v.id}
-                            onClick={() => addStepFromVideo(v)}
                             className="w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-white/5 transition-colors"
-                            title="Add to routine"
                           >
-                            {thumb ? (
-                              <img src={thumb} className="w-16 h-10 object-cover rounded-md" alt="" />
-                            ) : (
-                              <div className="w-16 h-10 rounded-md bg-white/5 flex items-center justify-center text-gray-500 text-xs">
-                                no thumb
+                            <button
+                              type="button"
+                              onClick={() => addStepFromVideo(v)}
+                              className="flex items-center gap-3 flex-1 min-w-0 text-left"
+                              title="Add to routine"
+                            >
+                              {thumb ? (
+                                <img src={thumb} className="w-16 h-10 object-cover rounded-md" alt="" />
+                              ) : (
+                                <div className="w-16 h-10 rounded-md bg-white/5 flex items-center justify-center text-gray-500 text-xs">
+                                  no thumb
+                                </div>
+                              )}
+                              <div className="flex-1 min-w-0">
+                                <div className="text-sm text-white truncate">{v.title}</div>
+                                <div className="text-xs text-gray-500">{v.duration_seconds}s</div>
                               </div>
-                            )}
-                            <div className="flex-1 min-w-0">
-                              <div className="text-sm text-white truncate">{v.title}</div>
-                              <div className="text-xs text-gray-500">{v.duration_seconds}s</div>
-                            </div>
-                            <div className="text-xs text-orange-400">+ Add</div>
-                          </button>
+                              <div className="text-xs text-orange-400">+ Add</div>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => deleteClip(v)}
+                              disabled={deletingClipId === v.id}
+                              title="Delete clip"
+                              className="p-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-300 disabled:opacity-60"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
                         );
                       })
                     )}

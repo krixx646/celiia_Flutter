@@ -1,13 +1,17 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Video, ListVideo } from 'lucide-react';
+import { Video, ListVideo, Trash2 } from 'lucide-react';
 import Header from '@/components/Header';
 import VideoCard from '@/components/VideoCard';
 import UploadPanel from '@/components/UploadPanel';
 import { supabase, Video as VideoType } from '@/lib/supabase';
 
 const categories = ['All Videos', 'Yoga', 'HIIT', 'Strength', 'Cardio', 'Pilates', 'Drafts'];
+
+function errorMessage(e: unknown): string {
+  return e instanceof Error ? e.message : String(e);
+}
 
 export default function VideosPage() {
   const [videos, setVideos] = useState<VideoType[]>([]);
@@ -17,6 +21,8 @@ export default function VideosPage() {
   const [activeVideo, setActiveVideo] = useState<VideoType | null>(null);
   const [ingestingActiveVideo, setIngestingActiveVideo] = useState(false);
   const [ingestError, setIngestError] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [deletingVideoId, setDeletingVideoId] = useState<string | null>(null);
   const [cloudflareStatusText, setCloudflareStatusText] = useState<string | null>(null);
   const autoIngestAttemptedRef = useRef<Set<string>>(new Set());
   const autoIngestInProgressRef = useRef(false);
@@ -123,9 +129,9 @@ export default function VideosPage() {
         if (json.video) setActiveVideo(json.video);
         // Refresh grid so thumbnails update right away.
         await loadVideos();
-      } catch (e: any) {
+      } catch (e: unknown) {
         if (cancelled) return;
-        setIngestError(e?.message ?? String(e));
+        setIngestError(errorMessage(e));
       } finally {
         if (!cancelled) setIngestingActiveVideo(false);
       }
@@ -227,6 +233,25 @@ export default function VideosPage() {
     }
   }
 
+  async function deleteVideo(video: VideoType) {
+    if (!confirm(`Delete clip "${video.title}"?\n\nThis cannot be undone.`)) return;
+    setDeleteError(null);
+    setDeletingVideoId(video.id);
+    try {
+      const res = await fetch(`/api/admin/videos/${video.id}`, { method: 'DELETE' });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Failed to delete clip');
+
+      setVideos((prev) => prev.filter((v) => v.id !== video.id));
+      if (activeVideo?.id === video.id) setActiveVideo(null);
+      await loadStats();
+    } catch (e: unknown) {
+      setDeleteError(errorMessage(e));
+    } finally {
+      setDeletingVideoId(null);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#0F1219]">
       <Header 
@@ -236,6 +261,11 @@ export default function VideosPage() {
       />
 
       <div className="p-8">
+        {deleteError && (
+          <div className="mb-6 p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-sm">
+            {deleteError}
+          </div>
+        )}
         {/* Page Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">Video Library</h1>
@@ -275,7 +305,13 @@ export default function VideosPage() {
         ) : videos.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {videos.map((video) => (
-              <VideoCard key={video.id} video={video} onClick={() => setActiveVideo(video)} />
+              <VideoCard
+                key={video.id}
+                video={video}
+                onClick={() => setActiveVideo(video)}
+                onDelete={() => deleteVideo(video)}
+                deleting={deletingVideoId === video.id}
+              />
             ))}
           </div>
         ) : (
@@ -322,12 +358,23 @@ export default function VideosPage() {
                 <p className="text-white font-semibold truncate">{activeVideo.title}</p>
                 <p className="text-xs text-gray-500 truncate">{activeVideo.playback_url || ''}</p>
               </div>
-              <button
-                onClick={() => setActiveVideo(null)}
-                className="px-3 py-1.5 rounded-lg bg-white/5 text-gray-300 hover:bg-white/10"
-              >
-                Close
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => deleteVideo(activeVideo)}
+                  disabled={deletingVideoId === activeVideo.id}
+                  className="px-3 py-1.5 rounded-lg bg-red-500/10 text-red-300 hover:bg-red-500/20 disabled:opacity-60 flex items-center gap-2"
+                  title="Delete clip"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  {deletingVideoId === activeVideo.id ? 'Deleting…' : 'Delete'}
+                </button>
+                <button
+                  onClick={() => setActiveVideo(null)}
+                  className="px-3 py-1.5 rounded-lg bg-white/5 text-gray-300 hover:bg-white/10"
+                >
+                  Close
+                </button>
+              </div>
             </div>
             <div className="bg-black">
               {(ingestingActiveVideo || ingestError) && (

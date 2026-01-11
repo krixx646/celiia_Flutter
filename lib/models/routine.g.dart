@@ -60,7 +60,7 @@ Map<String, dynamic> _$RoutineToJson(Routine instance) => <String, dynamic>{
       'difficulty': _$RoutineDifficultyEnumMap[instance.difficulty]!,
       'category': _$RoutineCategoryEnumMap[instance.category]!,
       'thumbnail_url': instance.thumbnailUrl,
-      'steps': instance.steps,
+      'steps': instance.steps.map((e) => e.toJson()).toList(),
       'created_by': instance.createdBy,
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),

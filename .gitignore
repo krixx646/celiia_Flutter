@@ -24,6 +24,16 @@ app/release/
 android/.kotlin/
 .pub-cache/
 pubspec.lock
+coverage/
 **/*.log
 **/*.tmp
 
+# Next.js
+celia-admin/.next/
+
+# Local env/defines (keep secrets out of git)
+.env
+.env.local
+.env.*.local
+dart_defines.env
+dart_defines.json

@@ -33,7 +33,7 @@ enum RoutineCategory {
 }
 
 /// A single exercise/step within a routine
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class RoutineStep {
   final String id;
   final String title;
@@ -60,7 +60,7 @@ class RoutineStep {
 }
 
 /// A complete fitness routine
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class Routine {
   final String id;
   final String title;
@@ -149,7 +149,7 @@ class Routine {
 }
 
 /// User's saved/favorited routines
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class UserRoutine {
   final String id;
   final String userId;

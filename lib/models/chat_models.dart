@@ -40,7 +40,7 @@ class Conversation {
   Map<String, dynamic> toJson() => _$ConversationToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Message {
   final String id;
   final String conversationId;
@@ -114,7 +114,7 @@ class BotpressUser {
   Map<String, dynamic> toJson() => _$BotpressUserToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class BotpressUserResponse {
   final BotpressUser? user;
   final String? key;
@@ -136,7 +136,7 @@ class BotpressUserResponse {
   Map<String, dynamic> toJson() => _$BotpressUserResponseToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class BotpressMessage {
   final String id;
   final String conversationId;
@@ -160,7 +160,7 @@ class BotpressMessage {
   Map<String, dynamic> toJson() => _$BotpressMessageToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class MessagePayload {
   final String type;
   final String? text;
@@ -178,7 +178,7 @@ class MessagePayload {
   Map<String, dynamic> toJson() => _$MessagePayloadToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class MessageWithConversation {
   final String conversationId;
   final MessagePayload payload;
@@ -192,7 +192,7 @@ class MessageWithConversation {
   Map<String, dynamic> toJson() => _$MessageWithConversationToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class BotpressMessageResponse {
   final BotpressMessage message;
   final String? error;
@@ -208,7 +208,7 @@ class BotpressMessageResponse {
   Map<String, dynamic> toJson() => _$BotpressMessageResponseToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class BotpressMessagesResponse {
   final List<BotpressMessage> messages;
   final Map<String, String> meta;
@@ -268,7 +268,7 @@ class BotpressConversation {
   Map<String, dynamic> toJson() => _$BotpressConversationToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class BotpressConversationResponse {
   final BotpressConversation conversation;
 

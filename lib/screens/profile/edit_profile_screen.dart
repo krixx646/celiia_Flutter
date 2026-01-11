@@ -2,6 +2,7 @@ import 'dart:io' show File;
 
 import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,27 @@ import '../../providers/auth_provider.dart' as app_auth;
 import '../../providers/theme_provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+  @visibleForTesting
+  static FirebaseAuth Function() defaultAuth = () => FirebaseAuth.instance;
+
+  @visibleForTesting
+  static FirebaseStorage Function() defaultStorage = () => FirebaseStorage.instance;
+
+  @visibleForTesting
+  static ImagePicker Function() defaultPicker = () => ImagePicker();
+
+  final FirebaseAuth auth;
+  final FirebaseStorage storage;
+  final ImagePicker picker;
+
+  EditProfileScreen({
+    super.key,
+    FirebaseAuth? auth,
+    FirebaseStorage? storage,
+    ImagePicker? picker,
+  })  : auth = auth ?? defaultAuth(),
+        storage = storage ?? defaultStorage(),
+        picker = picker ?? defaultPicker();
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -18,7 +39,6 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   final _nameController = TextEditingController();
-  final _picker = ImagePicker();
 
   XFile? _picked;
   bool _saving = false;
@@ -26,7 +46,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    final user = FirebaseAuth.instance.currentUser;
+    final user = widget.auth.currentUser;
     _nameController.text = (user?.displayName ?? '').trim();
   }
 
@@ -37,7 +57,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Future<void> _pickPhoto() async {
-    final x = await _picker.pickImage(
+    final x = await widget.picker.pickImage(
       source: ImageSource.gallery,
       imageQuality: 85,
       maxWidth: 1024,
@@ -50,7 +70,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     required String uid,
     required XFile file,
   }) async {
-    final ref = FirebaseStorage.instance.ref().child('profile_photos/$uid.jpg');
+    final ref = widget.storage.ref().child('profile_photos/$uid.jpg');
     final uploadTask = ref.putFile(File(file.path));
     await uploadTask;
     return await ref.getDownloadURL();
@@ -62,7 +82,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     try {
       final authProvider = context.read<app_auth.AuthProvider>();
-      final user = FirebaseAuth.instance.currentUser;
+      final user = widget.auth.currentUser;
       if (user == null) return;
 
       final newName = _nameController.text.trim();
@@ -91,7 +111,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = context.watch<ThemeProvider>();
-    final user = FirebaseAuth.instance.currentUser;
+    final user = widget.auth.currentUser;
     final existingPhoto = user?.photoURL;
 
     ImageProvider? avatar;

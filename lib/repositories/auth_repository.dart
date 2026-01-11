@@ -5,11 +5,77 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import '../services/firebase_service.dart';
 
+abstract class PlatformInfo {
+  bool get isAndroid;
+  bool get isIOS;
+}
+
+class DefaultPlatformInfo implements PlatformInfo {
+  @override
+  bool get isAndroid => Platform.isAndroid;
+  @override
+  bool get isIOS => Platform.isIOS;
+}
+
+abstract class AppleSignInClient {
+  Future<AuthorizationCredentialAppleID> getAppleIDCredential({
+    required List<AppleIDAuthorizationScopes> scopes,
+    required String nonce,
+    required WebAuthenticationOptions webAuthenticationOptions,
+  });
+}
+
+class DefaultAppleSignInClient implements AppleSignInClient {
+  @override
+  Future<AuthorizationCredentialAppleID> getAppleIDCredential({
+    required List<AppleIDAuthorizationScopes> scopes,
+    required String nonce,
+    required WebAuthenticationOptions webAuthenticationOptions,
+  }) {
+    return SignInWithApple.getAppleIDCredential(
+      scopes: scopes,
+      nonce: nonce,
+      webAuthenticationOptions: webAuthenticationOptions,
+    );
+  }
+}
+
 class AuthRepository {
-  final FirebaseAuth _auth = FirebaseService.auth;
-  final GoogleSignIn _googleSignIn = FirebaseService.googleSignIn;
+  @visibleForTesting
+  static FirebaseAuth Function() defaultAuth = () => FirebaseService.auth;
+
+  @visibleForTesting
+  static GoogleSignIn Function() defaultGoogleSignIn = () => FirebaseService.googleSignIn;
+
+  @visibleForTesting
+  static PlatformInfo Function() defaultPlatform = () => DefaultPlatformInfo();
+
+  @visibleForTesting
+  static AppleSignInClient Function() defaultApple = () => DefaultAppleSignInClient();
+
+  final FirebaseAuth _auth;
+  final GoogleSignIn _googleSignIn;
+  final PlatformInfo _platform;
+  final AppleSignInClient _apple;
+  final String _appleServiceId;
+  final String _appleRedirectUri;
+
+  AuthRepository({
+    FirebaseAuth? auth,
+    GoogleSignIn? googleSignIn,
+    PlatformInfo? platform,
+    AppleSignInClient? apple,
+    String? appleServiceId,
+    String? appleRedirectUri,
+  })  : _auth = auth ?? defaultAuth(),
+        _googleSignIn = googleSignIn ?? defaultGoogleSignIn(),
+        _platform = platform ?? defaultPlatform(),
+        _apple = apple ?? defaultApple(),
+        _appleServiceId = appleServiceId ?? const String.fromEnvironment('APPLE_SERVICE_ID'),
+        _appleRedirectUri = appleRedirectUri ?? const String.fromEnvironment('APPLE_REDIRECT_URI');
 
   User? get currentUser => _auth.currentUser;
   bool get isUserAuthenticated => currentUser != null;
@@ -71,7 +137,7 @@ class AuthRepository {
   Future<User> signInWithGoogle() async {
     try {
       // Use new v7 API: authenticate() returns account with tokens
-      final GoogleSignInAccount account = await GoogleSignIn.instance.authenticate();
+      final GoogleSignInAccount account = await _googleSignIn.authenticate();
       final GoogleSignInAuthentication googleAuth = account.authentication;
       final credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
@@ -159,14 +225,14 @@ class AuthRepository {
       final nonce = _sha256ofString(rawNonce);
       AuthorizationCredentialAppleID appleCredential;
 
-      if (Platform.isAndroid) {
+      if (_platform.isAndroid) {
         // Android uses the web flow. Requires Apple Service ID and redirect URI.
-        const serviceId = String.fromEnvironment('APPLE_SERVICE_ID');
-        const redirectUri = String.fromEnvironment('APPLE_REDIRECT_URI');
+        final serviceId = _appleServiceId;
+        final redirectUri = _appleRedirectUri;
         if (serviceId.isEmpty || redirectUri.isEmpty) {
           throw Exception('Missing APPLE_SERVICE_ID or APPLE_REDIRECT_URI. Provide as --dart-define.');
         }
-        appleCredential = await SignInWithApple.getAppleIDCredential(
+        appleCredential = await _apple.getAppleIDCredential(
           scopes: const [
             AppleIDAuthorizationScopes.email,
             AppleIDAuthorizationScopes.fullName,

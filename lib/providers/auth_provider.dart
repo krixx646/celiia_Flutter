@@ -56,7 +56,11 @@ class AuthUiState {
 }
 
 class AuthProvider extends ChangeNotifier {
-  final AuthRepository _authRepository = AuthRepository();
+  @visibleForTesting
+  static AuthRepository Function() defaultAuthRepository = () => AuthRepository();
+
+  final AuthRepository _authRepository;
+  final DateTime Function() _now;
   
   AuthUiState _uiState = AuthUiState();
   AuthUiState get uiState => _uiState;
@@ -66,7 +70,11 @@ class AuthProvider extends ChangeNotifier {
   bool get isUserAuthenticated => _authRepository.isUserAuthenticated;
   bool get isEmailVerified => _authRepository.isEmailVerified;
 
-  AuthProvider() {
+  AuthProvider({
+    AuthRepository? authRepository,
+    DateTime Function()? now,
+  })  : _authRepository = authRepository ?? defaultAuthRepository(),
+        _now = now ?? DateTime.now {
     _initialize();
   }
 
@@ -204,7 +212,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> sendVerificationEmail() async {
     // Local cooldown to avoid Firebase rate limit
-    final now = DateTime.now();
+    final now = _now();
     if (_resendNotBefore != null && now.isBefore(_resendNotBefore!)) {
       final remaining = _resendNotBefore!.difference(now).inSeconds;
       _uiState = _uiState.copyWith(
@@ -228,10 +236,10 @@ class AuthProvider extends ChangeNotifier {
         verificationEmailSent: true,
         resendCooldownSeconds: 60,
       );
-      _resendNotBefore = DateTime.now().add(const Duration(seconds: 60));
+      _resendNotBefore = _now().add(const Duration(seconds: 60));
       _cooldownTimer?.cancel();
       _cooldownTimer = Timer.periodic(const Duration(seconds: 1), (t) {
-        final secs = _resendNotBefore!.difference(DateTime.now()).inSeconds;
+        final secs = _resendNotBefore!.difference(_now()).inSeconds;
         if (secs <= 0) {
           _uiState = _uiState.copyWith(resendCooldownSeconds: 0);
           t.cancel();
@@ -347,6 +355,12 @@ class AuthProvider extends ChangeNotifier {
       isLoading: false,
     );
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _cooldownTimer?.cancel();
+    super.dispose();
   }
 }
 

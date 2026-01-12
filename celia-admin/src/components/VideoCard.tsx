@@ -17,6 +17,7 @@ const bodyPartLabels: Record<string, string> = {
   chest: 'Chest',
   back: 'Back',
   core: 'Core',
+  abs: 'Abs',
   legs: 'Legs',
   glutes: 'Glutes',
   full_body: 'Full Body',

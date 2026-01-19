@@ -36,6 +36,11 @@ export default function VideoCard({ video, onClick, onDelete, deleting }: VideoC
     error: 'status-error',
     pending: 'status-pending',
   };
+  const statusValue =
+    typeof video.status === 'string' && video.status.trim().length > 0
+      ? video.status.toLowerCase()
+      : 'pending';
+  const statusClass = statusColors[statusValue as keyof typeof statusColors] || statusColors.pending;
 
   const categoryColors: Record<string, string> = {
     yoga: 'bg-purple-500/20 text-purple-400',
@@ -69,12 +74,14 @@ export default function VideoCard({ video, onClick, onDelete, deleting }: VideoC
         )}
 
         {/* Status Badge */}
-        <div className={cn(
-          "absolute top-3 left-3 px-2 py-1 rounded-md text-xs font-medium flex items-center gap-1",
-          statusColors[video.status]
-        )}>
+        <div
+          className={cn(
+            "absolute top-3 left-3 px-2 py-1 rounded-md text-xs font-medium flex items-center gap-1",
+            statusClass
+          )}
+        >
           <span className="w-1.5 h-1.5 rounded-full bg-current"></span>
-          {video.status.charAt(0).toUpperCase() + video.status.slice(1)}
+          {statusValue.charAt(0).toUpperCase() + statusValue.slice(1)}
         </div>
 
         {/* AI Generated Badge */}

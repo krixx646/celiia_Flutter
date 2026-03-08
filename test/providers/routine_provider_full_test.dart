@@ -136,7 +136,7 @@ void main() {
       when(() => supa.getPublishedRoutines(category: any(named: 'category'))).thenThrow(Exception('boom'));
       final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
       await rp.loadRoutinesByCategory(RoutineCategory.cardio);
-      expect(rp.error, contains('Failed to load routines'));
+      expect(rp.error, contains('Could not load routines right now'));
     });
   });
 
@@ -147,7 +147,7 @@ void main() {
 
       final rp = RoutineProvider(supabase: supa, currentUserId: () => null);
       await rp.loadRoutines(refresh: true);
-      expect(rp.error, contains('Failed to load routines'));
+      expect(rp.error, contains('Could not load routines right now'));
     });
   });
 
@@ -183,7 +183,7 @@ void main() {
       when(() => supa.getUserRoutines('u')).thenThrow(Exception('boom'));
       final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
       await rp.loadUserRoutines('u');
-      expect(rp.error, contains('Failed to load saved routines'));
+      expect(rp.error, contains('Could not load saved routines right now'));
     });
   });
 

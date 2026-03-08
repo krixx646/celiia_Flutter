@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 import '../config/env.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/chat_models.dart';
+import '../utils/user_facing_error.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -286,6 +287,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     final provider = Provider.of<ChatProvider>(context, listen: false);
                     // Use the reliable message direction tracking from ChatProvider
                     final isUser = provider.isUserMessage(msg.id);
+                    final botBubbleColor = theme.isDarkMode ? theme.surface : Colors.grey.shade200;
+                    final botTextColor = theme.isDarkMode ? Colors.white : Colors.black87;
                     
                     Widget bubble;
                     if (msg.type == 'image' && (msg.imageUrl ?? '').isNotEmpty) {
@@ -299,7 +302,9 @@ class _ChatScreenState extends State<ChatScreen> {
                           cacheWidth: cacheW,
                           headers: const { 'Accept': 'image/*' },
                           errorBuilder: (context, error, stack) {
-                            final baseStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(color: isUser ? Colors.white : Colors.black87);
+                            final baseStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: isUser ? Colors.white : botTextColor,
+                            );
                             return InkWell(
                               onTap: () => launchUrl(Uri.parse(msg.imageUrl!), mode: LaunchMode.externalApplication),
                               child: Text(msg.imageUrl!, style: baseStyle),
@@ -339,16 +344,19 @@ class _ChatScreenState extends State<ChatScreen> {
                                   (opt) => OutlinedButton(
                                     style: OutlinedButton.styleFrom(
                                       foregroundColor: hasInteracted
-                                          ? Colors.grey
+                                          ? (theme.isDarkMode ? Colors.white54 : Colors.grey.shade700)
+                                          : (theme.isDarkMode ? Colors.white : Colors.deepPurple),
+                                      backgroundColor: hasInteracted
+                                          ? (theme.isDarkMode ? Colors.white10 : Colors.grey.shade100)
                                           : (theme.isDarkMode
-                                              ? theme.accentOrange
-                                              : (isUser ? Colors.white : Colors.deepPurple)),
+                                              ? theme.accentOrange.withValues(alpha: 0.24)
+                                              : const Color(0xFFF3E5F5)),
                                       side: BorderSide(
                                         color: hasInteracted
                                             ? Colors.grey
                                             : (theme.isDarkMode
-                                                ? theme.accentOrange.withValues(alpha: 0.4)
-                                                : const Color(0xFFBDBDBD)),
+                                                ? theme.accentOrange.withValues(alpha: 0.7)
+                                                : const Color(0xFFCE93D8)),
                                       ),
                                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -364,10 +372,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                       opt.label,
                                       style: TextStyle(
                                         color: hasInteracted
-                                            ? Colors.grey
-                                            : (theme.isDarkMode
-                                                ? Colors.white
-                                                : (isUser ? Colors.white : Colors.deepPurple)),
+                                            ? (theme.isDarkMode ? Colors.white54 : Colors.grey.shade700)
+                                            : (theme.isDarkMode ? Colors.white : Colors.deepPurple),
                                       ),
                                     ),
                                   ),
@@ -393,13 +399,15 @@ class _ChatScreenState extends State<ChatScreen> {
                             cacheWidth: cacheW,
                             headers: const { 'Accept': 'image/*' },
                             errorBuilder: (_, __, ___) {
-                              final style = Theme.of(context).textTheme.bodyMedium?.copyWith(color: isUser ? Colors.white : Colors.black87);
+                              final style = Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: isUser ? Colors.white : botTextColor,
+                              );
                               return InkWell(onTap: () => launchUrl(Uri.parse(text), mode: LaunchMode.externalApplication), child: Text(text, style: style));
                             },
                           ),
                         );
                       } else if (shouldUseMarkdown) {
-                        final baseColor = isUser ? Colors.white : Colors.black87;
+                        final baseColor = isUser ? Colors.white : botTextColor;
                         bubble = MarkdownBody(
                           data: text,
                           onTapLink: (label, href, title) {
@@ -420,7 +428,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         );
                       } else {
                         final textStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: isUser ? Colors.white : Colors.black87,
+                          color: isUser ? Colors.white : botTextColor,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           height: 1.5,
@@ -440,7 +448,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
                           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 18),
                           decoration: BoxDecoration(
-                            color: isUser ? const Color(0xFFF57C00) : Colors.grey.shade200,
+                            color: isUser ? const Color(0xFFF57C00) : botBubbleColor,
                             borderRadius: BorderRadius.circular(16),
                             boxShadow: [
                               BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 6, offset: const Offset(0, 2)),
@@ -450,7 +458,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: isUser ? Colors.white : Colors.black87,
+                              color: isUser ? Colors.white : botTextColor,
                               height: 1.5,
                             ),
                             child: bubble,
@@ -466,7 +474,13 @@ class _ChatScreenState extends State<ChatScreen> {
                   !ui.error!.toLowerCase().contains('unavailable'))
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(ui.error!, style: const TextStyle(color: Colors.red)),
+                  child: Text(
+                    toUserFriendlyMessage(
+                      ui.error,
+                      fallback: 'Something went wrong. Please try again.',
+                    ),
+                    style: const TextStyle(color: Colors.red),
+                  ),
                 ),
               // Save button fixed at bottom (optional explicit save)
               // moved Save action to app bar; removed bottom button
@@ -539,10 +553,18 @@ class _ChatScreenState extends State<ChatScreen> {
                                 await provider.startNewConversation();
                               }
                               await provider.sendMessage(url);
-                            } on FirebaseException catch (e) {
-                              messenger.showSnackBar(SnackBar(content: Text('Storage error: ${e.code}')));
+                            } on FirebaseException {
+                              messenger.showSnackBar(
+                                const SnackBar(
+                                  content: Text('Upload failed. Please try again.'),
+                                ),
+                              );
                             } catch (_) {
-                              messenger.showSnackBar(const SnackBar(content: Text('Upload error')));
+                              messenger.showSnackBar(
+                                const SnackBar(
+                                  content: Text('Upload failed. Please try again.'),
+                                ),
+                              );
                             }
                           },
                         ),
@@ -568,7 +590,11 @@ class _ChatScreenState extends State<ChatScreen> {
                               }
                               await provider.sendMessage(url);
                             } catch (_) {
-                              messenger.showSnackBar(const SnackBar(content: Text('Camera error')));
+                              messenger.showSnackBar(
+                                const SnackBar(
+                                  content: Text('Could not access camera. Please try again.'),
+                                ),
+                              );
                             }
                           },
                         ),

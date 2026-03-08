@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/auth_provider.dart' as app_auth;
 import '../../providers/theme_provider.dart';
+import '../../utils/user_facing_error.dart';
 
 class EditProfileScreen extends StatefulWidget {
   @visibleForTesting
@@ -100,7 +101,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to update profile: $e')),
+        SnackBar(
+          content: Text(
+            toUserFriendlyMessage(
+              e,
+              fallback: 'Could not update profile. Please try again.',
+            ),
+          ),
+        ),
       );
     } finally {
       if (mounted) setState(() => _saving = false);

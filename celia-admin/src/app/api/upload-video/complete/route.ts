@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
     const cfResult = details.ok ? (details.json?.result || {}) : {};
     const playbackUrl =
       (cfResult?.playback?.hls as string | undefined) ||
-      `https://customer-${CLOUDFLARE_ACCOUNT_ID}.cloudflarestream.com/${uid}/manifest/video.m3u8`;
+      `https://videodelivery.net/${uid}/manifest/video.m3u8`;
     const thumbnailUrl =
       (cfResult?.thumbnail as string | undefined) || `https://videodelivery.net/${uid}/thumbnails/thumbnail.jpg`;
 

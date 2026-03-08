@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
 
     const videoDetails = await videoDetailsResponse.json();
     const playbackUrl = videoDetails.result?.playback?.hls || 
-                        `https://customer-${CLOUDFLARE_ACCOUNT_ID}.cloudflarestream.com/${uid}/manifest/video.m3u8`;
+                        `https://videodelivery.net/${uid}/manifest/video.m3u8`;
     // Prefer videodelivery.net (works across accounts without embedding account id)
     const thumbnailUrl = videoDetails.result?.thumbnail || `https://videodelivery.net/${uid}/thumbnails/thumbnail.jpg`;
     const durationRaw = videoDetails.result?.duration ?? 0;

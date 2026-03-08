@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models/routine.dart';
 import '../services/supabase_service.dart';
+import '../utils/user_facing_error.dart';
 
 /// Provider for managing routine state and operations
 class RoutineProvider extends ChangeNotifier {
@@ -69,9 +70,13 @@ class RoutineProvider extends ChangeNotifier {
         ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
       _curatedRoutines = _routines.where((r) => r.isCurated).toList();
       _aiRoutines = _routines.where((r) => !r.isCurated).toList();
-    } catch (e) {
-      _error = 'Failed to load routines: $e';
-      debugPrint(_error);
+    } catch (e, st) {
+      debugPrint('loadRoutines failed: $e');
+      debugPrint('$st');
+      _error = toUserFriendlyMessage(
+        e,
+        fallback: 'Could not load routines right now. Please try again.',
+      );
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -88,9 +93,13 @@ class RoutineProvider extends ChangeNotifier {
       _routines = await _supabase.getPublishedRoutines(category: category);
       _curatedRoutines = _routines.where((r) => r.isCurated).toList();
       _aiRoutines = _routines.where((r) => !r.isCurated).toList();
-    } catch (e) {
-      _error = 'Failed to load routines: $e';
-      debugPrint(_error);
+    } catch (e, st) {
+      debugPrint('loadRoutinesByCategory failed: $e');
+      debugPrint('$st');
+      _error = toUserFriendlyMessage(
+        e,
+        fallback: 'Could not load routines right now. Please try again.',
+      );
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -104,9 +113,13 @@ class RoutineProvider extends ChangeNotifier {
     notifyListeners();
     try {
       _userRoutines = await _supabase.getUserRoutines(userId);
-    } catch (e) {
-      _error = 'Failed to load saved routines: $e';
-      debugPrint(_error);
+    } catch (e, st) {
+      debugPrint('loadUserRoutines failed: $e');
+      debugPrint('$st');
+      _error = toUserFriendlyMessage(
+        e,
+        fallback: 'Could not load saved routines right now. Please try again.',
+      );
     } finally {
       _isLoadingUserRoutines = false;
       notifyListeners();
@@ -150,9 +163,13 @@ class RoutineProvider extends ChangeNotifier {
       
       notifyListeners();
       return savedRoutine;
-    } catch (e) {
-      _error = 'Failed to generate routine: $e';
-      debugPrint(_error);
+    } catch (e, st) {
+      debugPrint('generateRoutine failed: $e');
+      debugPrint('$st');
+      _error = toUserFriendlyMessage(
+        e,
+        fallback: 'Could not generate a routine right now. Please try again.',
+      );
       return null;
     } finally {
       _isGenerating = false;

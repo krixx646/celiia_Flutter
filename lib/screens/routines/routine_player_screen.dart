@@ -11,6 +11,7 @@ import '../../providers/routine_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/cloudflare_stream_service.dart';
 import '../../services/supabase_service.dart';
+import '../../utils/user_facing_error.dart';
 import 'routine_detail_screen.dart';
 
 class RoutinePlayerScreen extends StatefulWidget {
@@ -95,7 +96,10 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
       _currentIndex = 0;
       await _loadCurrentVideo(autoPlay: true);
     } catch (e) {
-      _error = e.toString();
+      _error = toUserFriendlyMessage(
+        e,
+        fallback: 'Unable to load this routine right now. Please try again.',
+      );
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -194,13 +198,13 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
         allowMuting: true,
         allowPlaybackSpeedChanging: true,
         aspectRatio: controller.value.aspectRatio == 0 ? 16 / 9 : controller.value.aspectRatio,
-        errorBuilder: (context, errorMessage) {
-          return Center(
+        errorBuilder: (context, _) {
+          return const Center(
             child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding: EdgeInsets.all(24),
               child: Text(
-                errorMessage,
-                style: const TextStyle(color: Colors.white70),
+                'This video is not available right now.',
+                style: TextStyle(color: Colors.white70),
                 textAlign: TextAlign.center,
               ),
             ),

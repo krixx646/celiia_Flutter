@@ -7,6 +7,10 @@ export const maxDuration = 60;
 const CLOUDFLARE_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
 const CLOUDFLARE_API_TOKEN = process.env.CLOUDFLARE_STREAM_API_TOKEN;
 
+function isRecord(v: unknown): v is Record<string, unknown> {
+  return typeof v === 'object' && v !== null;
+}
+
 function mapCloudflareState(state: unknown): 'pending' | 'processing' | 'ready' | 'error' {
   const s = (state || '').toString().toLowerCase();
   if (s === 'ready') return 'ready';
@@ -23,6 +27,10 @@ function tryExtractUidFromUrl(url: string): string | null {
   const m2 = u.match(/cloudflarestream\.com\/([^/?#]+)/i);
   if (m2?.[1]) return m2[1];
   return null;
+}
+
+function isLegacyCustomerDomainUrl(url: unknown): boolean {
+  return typeof url === 'string' && /customer-[^.]+\.cloudflarestream\.com/i.test(url);
 }
 
 export async function POST(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -54,6 +62,31 @@ export async function POST(_: NextRequest, { params }: { params: Promise<{ id: s
     if (!cfJson?.success) {
       const errs = Array.isArray(cfJson?.errors) ? cfJson.errors : [];
       const msg = errs.map((e: any) => e?.message || e?.toString?.() || '').filter(Boolean).join(' | ');
+      const notFound = errs.some((e: any) => {
+        const code = isRecord(e) ? e['code'] : null;
+        const message = isRecord(e) ? e['message'] : null;
+        return code === 10003 || (typeof message === 'string' && /not found/i.test(message));
+      });
+
+      if (cfRes.status === 404 || notFound) {
+        const { data: updated, error: updErr } = await supabase
+          .from('videos')
+          .update({ status: 'error' })
+          .eq('id', id)
+          .select()
+          .single();
+        if (updErr) throw updErr;
+
+        return NextResponse.json({
+          ok: false,
+          missing: true,
+          error: 'Cloudflare video asset not found',
+          details: msg || null,
+          video: updated,
+          cloudflare: { errors: errs, uid },
+        });
+      }
+
       return NextResponse.json(
         { error: 'Failed to fetch Cloudflare video details', details: msg || null, cloudflare: { errors: errs } },
         { status: 500 }
@@ -68,7 +101,7 @@ export async function POST(_: NextRequest, { params }: { params: Promise<{ id: s
 
     const playbackUrl =
       (result?.playback?.hls as string | undefined) ||
-      `https://customer-${CLOUDFLARE_ACCOUNT_ID}.cloudflarestream.com/${uid}/manifest/video.m3u8`;
+      `https://videodelivery.net/${uid}/manifest/video.m3u8`;
     const thumbnailUrl =
       (result?.thumbnail as string | undefined) || `https://videodelivery.net/${uid}/thumbnails/thumbnail.jpg`;
 
@@ -76,7 +109,7 @@ export async function POST(_: NextRequest, { params }: { params: Promise<{ id: s
       cloudflare_video_id: uid,
       status,
       playback_url: playbackUrl,
-      thumbnail_url: video.thumbnail_url || thumbnailUrl,
+      thumbnail_url: isLegacyCustomerDomainUrl(video.thumbnail_url) ? thumbnailUrl : (video.thumbnail_url || thumbnailUrl),
     };
     if (durationSeconds != null) patch.duration_seconds = durationSeconds;
 

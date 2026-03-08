@@ -11,6 +11,7 @@ import '../models/video.dart';
 class SupabaseService {
   static SupabaseService? _instance;
   static SupabaseClient? _client;
+  static Future<void>? _initializing;
 
   SupabaseService._();
 
@@ -45,6 +46,7 @@ class SupabaseService {
   static void resetForTesting() {
     _instance = null;
     _client = null;
+    _initializing = null;
   }
 
   static SupabaseService get instance {
@@ -54,6 +56,9 @@ class SupabaseService {
 
   /// Initialize Supabase - call this in main.dart before runApp
   static Future<void> initialize() async {
+    if (_client != null) return;
+    if (_initializing != null) return _initializing!;
+
     final url = supabaseUrl();
     final anonKey = supabaseAnonKey();
     if (url.isEmpty || anonKey.isEmpty) {
@@ -63,8 +68,16 @@ class SupabaseService {
       );
     }
 
-    await supabaseInitialize(url: url, anonKey: anonKey);
-    _client = supabaseClientFactory();
+    _initializing = () async {
+      await supabaseInitialize(url: url, anonKey: anonKey);
+      _client = supabaseClientFactory();
+    }();
+
+    try {
+      await _initializing!;
+    } finally {
+      _initializing = null;
+    }
   }
 
   /// Get the Supabase client
@@ -90,6 +103,7 @@ class SupabaseService {
     RoutineDifficulty? difficulty,
     bool? isCurated,
   }) async {
+    await initialize();
     // Build filter query first (before order/range)
     var filterQuery = client
         .from('routines')
@@ -123,6 +137,7 @@ class SupabaseService {
     int limit = 50,
     int offset = 0,
   }) async {
+    await initialize();
     final response = await client
         .from('routines')
         .select()
@@ -138,6 +153,7 @@ class SupabaseService {
 
   /// Fetch a single routine by ID
   Future<Routine?> getRoutine(String id) async {
+    await initialize();
     final response =
         await client.from('routines').select().eq('id', id).maybeSingle();
 
@@ -147,6 +163,7 @@ class SupabaseService {
 
   /// Create a new routine
   Future<Routine> createRoutine(Routine routine) async {
+    await initialize();
     final response = await client
         .from('routines')
         .insert(routine.toJson())
@@ -213,6 +230,7 @@ class SupabaseService {
 
   /// Update an existing routine
   Future<Routine> updateRoutine(Routine routine) async {
+    await initialize();
     final response = await client
         .from('routines')
         .update(routine.toJson())
@@ -225,6 +243,7 @@ class SupabaseService {
 
   /// Delete a routine
   Future<void> deleteRoutine(String id) async {
+    await initialize();
     await client.from('routines').delete().eq('id', id);
   }
 
@@ -239,6 +258,7 @@ class SupabaseService {
     String? category,
     VideoStatus? status,
   }) async {
+    await initialize();
     // Build filter query first (before order/range)
     var filterQuery = client.from('videos').select();
 
@@ -261,6 +281,7 @@ class SupabaseService {
 
   /// Fetch a single video by ID
   Future<Video?> getVideo(String id) async {
+    await initialize();
     final response =
         await client.from('videos').select().eq('id', id).maybeSingle();
 
@@ -270,6 +291,7 @@ class SupabaseService {
 
   /// Fetch a single video by Cloudflare Stream ID (stream_id column)
   Future<Video?> getVideoByStreamId(String streamId) async {
+    await initialize();
     // Prefer the newer column name (cloudflare_video_id), fall back to legacy (stream_id).
     try {
       final response = await client
@@ -357,6 +379,7 @@ class SupabaseService {
 
   /// Create a new video record
   Future<Video> createVideo(Video video) async {
+    await initialize();
     final response =
         await client.from('videos').insert(video.toJson()).select().single();
 
@@ -365,6 +388,7 @@ class SupabaseService {
 
   /// Update a video record
   Future<Video> updateVideo(Video video) async {
+    await initialize();
     final response = await client
         .from('videos')
         .update(video.toJson())
@@ -377,6 +401,7 @@ class SupabaseService {
 
   /// Delete a video record
   Future<void> deleteVideo(String id) async {
+    await initialize();
     await client.from('videos').delete().eq('id', id);
   }
 
@@ -386,6 +411,7 @@ class SupabaseService {
 
   /// Get user's saved routines
   Future<List<UserRoutine>> getUserRoutines(String oderId) async {
+    await initialize();
     final response = await client
         .from('user_routines')
         .select()
@@ -399,6 +425,7 @@ class SupabaseService {
 
   /// Save a routine for a user
   Future<UserRoutine> saveRoutine(String oderId, String routineId) async {
+    await initialize();
     final response = await client
         .from('user_routines')
         .insert({
@@ -414,6 +441,7 @@ class SupabaseService {
 
   /// Remove a saved routine
   Future<void> unsaveRoutine(String oderId, String routineId) async {
+    await initialize();
     await client
         .from('user_routines')
         .delete()
@@ -423,6 +451,7 @@ class SupabaseService {
 
   /// Toggle favorite status
   Future<void> toggleFavorite(String userRoutineId, bool isFavorite) async {
+    await initialize();
     await client
         .from('user_routines')
         .update({'is_favorite': isFavorite})
@@ -431,6 +460,7 @@ class SupabaseService {
 
   /// Record routine completion
   Future<void> recordCompletion(String userRoutineId) async {
+    await initialize();
     await client.rpc('increment_routine_completion', params: {
       'routine_id': userRoutineId,
     });

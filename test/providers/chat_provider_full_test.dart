@@ -117,7 +117,7 @@ void main() {
     when(() => repo2.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenThrow(Exception('boom'));
     final p2 = ChatProvider(chatRepository: repo2, historyRepository: history, prefs: prefsFactory);
     await p2.initializeChat();
-    expect(p2.uiState.error, contains('boom'));
+    expect(p2.uiState.error, 'Chat is unavailable right now. Please try again.');
     expect(p2.uiState.isLoadingInitial, isFalse);
   });
 
@@ -166,7 +166,7 @@ void main() {
         await pErr.startNewConversation();
       });
       async.flushMicrotasks();
-      expect(pErr.uiState.error, contains('nope'));
+      expect(pErr.uiState.error, 'Could not start a new chat. Please try again.');
 
       p.dispose();
       pErr.dispose();
@@ -229,7 +229,7 @@ void main() {
     // Error
     when(() => repo.sendMessage(any(), any(), any())).thenThrow(Exception('nope'));
     await p.sendMessage('hello2');
-    expect(p.uiState.error, contains('nope'));
+    expect(p.uiState.error, 'Message could not be sent. Please try again.');
   });
 
   test('sendMessageWithInteraction + interaction helpers', () async {
@@ -342,7 +342,7 @@ void main() {
     await p.initializeChat();
     await p.startNewConversation();
     await p.loadMessages();
-    expect(p.uiState.error, contains('boom'));
+    expect(p.uiState.error, 'Unable to refresh messages right now.');
   });
 
   test('loadConversationHistory error path sets uiState.error', () async {
@@ -356,7 +356,7 @@ void main() {
 
     final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
     await p.initializeChat();
-    expect(p.uiState.error, contains('boom'));
+    expect(p.uiState.error, 'Unable to load saved chats right now.');
     expect(p.uiState.isLoadingHistory, isFalse);
   });
 
@@ -426,7 +426,7 @@ void main() {
 
     when(() => history.deleteConversation(any())).thenThrow(Exception('nope'));
     await p.deleteConversationById('cid');
-    expect(p.uiState.error, contains('nope'));
+    expect(p.uiState.error, 'Could not delete this conversation. Please try again.');
   });
 
   test('saveCurrentConversation error path returns false and sets uiState.error', () async {
@@ -447,7 +447,7 @@ void main() {
     await p.startNewConversation();
     final ok = await p.saveCurrentConversation();
     expect(ok, isFalse);
-    expect(p.uiState.error, contains('boom'));
+    expect(p.uiState.error, 'Could not save this chat. Please try again.');
   });
 
   test('handleOptionClick delegates to sendMessage', () async {

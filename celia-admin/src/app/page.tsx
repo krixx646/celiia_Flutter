@@ -87,8 +87,11 @@ export default function VideosPage() {
         const durBad = !Number.isFinite(dur) || dur <= 0;
         const st = (v.status || '').toString().toLowerCase();
         const statusBad = st === 'processing' || st === 'pending';
-        const playbackBad = !v.playback_url;
-        return durBad || statusBad || playbackBad;
+        const playbackBad =
+          !v.playback_url || /customer-[^.]+\.cloudflarestream\.com/i.test(v.playback_url);
+        const thumbBad =
+          !v.thumbnail_url || /customer-[^.]+\.cloudflarestream\.com/i.test(v.thumbnail_url);
+        return durBad || statusBad || playbackBad || thumbBad;
       })
       .filter((v) => !refreshAttemptedRef.current.has(v.id))
       .slice(0, 3);
@@ -420,8 +423,8 @@ function VideoPlayer({ video }: { video: VideoType }) {
   if (status === 'error') {
     return (
       <div className="p-6 text-gray-300">
-        <p className="mb-2">Cloudflare failed to process this clip.</p>
-        <p className="text-xs text-gray-500">See the Cloudflare error reason above and re-upload with the corrected limit/settings.</p>
+        <p className="mb-2">This Cloudflare video is missing or no longer available.</p>
+        <p className="text-xs text-gray-500">The dashboard record still exists, but the hosted asset could not be found. Re-upload the original clip to restore playback.</p>
       </div>
     );
   }

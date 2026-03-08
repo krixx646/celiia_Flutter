@@ -86,7 +86,7 @@ void main() {
     when(() => repo.signIn(any(), any())).thenThrow(Exception('bad'));
     await p.signIn('e2', 'p2');
     expect(p.uiState.isAuthenticated, isFalse);
-    expect(p.uiState.authError, contains('bad'));
+    expect(p.uiState.authError, 'Could not sign in. Please try again.');
   });
 
   test('signUp success sets needsEmailVerification; verification email success + failure branches', () async {
@@ -127,7 +127,7 @@ void main() {
     final p = AuthProvider(authRepository: repo);
     await p.signUp('e', 'p');
     expect(p.uiState.isAuthenticated, isFalse);
-    expect(p.uiState.authError, contains('bad'));
+    expect(p.uiState.authError, 'Could not create your account. Please try again.');
   });
 
   test('resetPassword success + error', () async {
@@ -143,7 +143,7 @@ void main() {
     final p2 = AuthProvider(authRepository: repo);
     await p2.resetPassword('e2');
     expect(p2.uiState.passwordResetEmailSent, isFalse);
-    expect(p2.uiState.authError, contains('bad'));
+    expect(p2.uiState.authError, 'Could not send reset email. Please try again.');
   });
 
   test('sendVerificationEmail: success starts cooldown, timer reaches 0, and early-return cooldown message', () {
@@ -192,14 +192,14 @@ void main() {
     expect(p.uiState.authError, 'Too many attempts. Please wait a minute and try again.');
   });
 
-  test('sendVerificationEmail: non-rate-limit error surfaces raw message', () async {
+  test('sendVerificationEmail: non-rate-limit error shows generic safe message', () async {
     final repo = MockAuthRepository();
     when(() => repo.currentUser).thenReturn(null);
     when(() => repo.sendEmailVerification()).thenThrow(Exception('some-other-error'));
 
     final p = AuthProvider(authRepository: repo);
     await p.sendVerificationEmail();
-    expect(p.uiState.authError, contains('some-other-error'));
+    expect(p.uiState.authError, 'Could not send verification email. Please try again.');
   });
 
   test('uses defaultAuthRepository when authRepository is omitted; getter passthroughs', () async {
@@ -251,7 +251,7 @@ void main() {
     when(() => repo.signInWithGoogle()).thenThrow(Exception('bad'));
     await p1.signInWithGoogle();
     expect(p1.uiState.isAuthenticated, isFalse);
-    expect(p1.uiState.authError, contains('bad'));
+    expect(p1.uiState.authError, 'Google sign-in failed. Please try again.');
 
     when(() => repo.signInWithApple()).thenAnswer((_) async => user);
     final p2 = AuthProvider(authRepository: repo);
@@ -261,7 +261,7 @@ void main() {
     when(() => repo.signInWithApple()).thenThrow(Exception('bad2'));
     await p2.signInWithApple();
     expect(p2.uiState.isAuthenticated, isFalse);
-    expect(p2.uiState.authError, contains('bad2'));
+    expect(p2.uiState.authError, 'Apple sign-in failed. Please try again.');
   });
 
   test('signOut resets uiState to defaults', () async {

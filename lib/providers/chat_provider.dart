@@ -7,6 +7,7 @@ import '../models/chat_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../repositories/chat_repository.dart';
 import '../repositories/chat_history_repository.dart';
+import '../utils/user_facing_error.dart';
 
 class SavedConversation {
   final String id;
@@ -210,7 +211,10 @@ class ChatProvider extends ChangeNotifier {
       await loadConversationHistory();
     } catch (e) {
       _uiState = _uiState.copyWith(
-        error: e.toString(),
+        error: toUserFriendlyMessage(
+          e,
+          fallback: 'Chat is unavailable right now. Please try again.',
+        ),
         isLoadingInitial: false,
       );
       notifyListeners();
@@ -243,7 +247,10 @@ class ChatProvider extends ChangeNotifier {
       _startPolling();
     } catch (e) {
       _uiState = _uiState.copyWith(
-        error: e.toString(),
+        error: toUserFriendlyMessage(
+          e,
+          fallback: 'Could not start a new chat. Please try again.',
+        ),
         isLoading: false,
       );
       notifyListeners();
@@ -266,7 +273,7 @@ class ChatProvider extends ChangeNotifier {
 
   Future<void> sendMessage(String text) async {
     if (_uiState.currentUserKey == null || _uiState.currentConversationId == null) {
-      _uiState = _uiState.copyWith(error: "No active conversation");
+      _uiState = _uiState.copyWith(error: 'No active conversation');
       notifyListeners();
       return;
     }
@@ -314,7 +321,10 @@ class ChatProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _uiState = _uiState.copyWith(
-        error: e.toString(),
+        error: toUserFriendlyMessage(
+          e,
+          fallback: 'Message could not be sent. Please try again.',
+        ),
         isSendingMessage: false,
       );
       notifyListeners();
@@ -367,7 +377,12 @@ class ChatProvider extends ChangeNotifier {
       );
       notifyListeners();
     } catch (e) {
-      _uiState = _uiState.copyWith(error: e.toString());
+      _uiState = _uiState.copyWith(
+        error: toUserFriendlyMessage(
+          e,
+          fallback: 'Unable to refresh messages right now.',
+        ),
+      );
       notifyListeners();
     }
   }
@@ -404,7 +419,10 @@ class ChatProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _uiState = _uiState.copyWith(
-        error: e.toString(),
+        error: toUserFriendlyMessage(
+          e,
+          fallback: 'Unable to load saved chats right now.',
+        ),
         isLoadingHistory: false,
       );
       notifyListeners();
@@ -444,7 +462,12 @@ class ChatProvider extends ChangeNotifier {
       }
       return true;
     } catch (e) {
-      _uiState = _uiState.copyWith(error: e.toString());
+      _uiState = _uiState.copyWith(
+        error: toUserFriendlyMessage(
+          e,
+          fallback: 'Could not save this chat. Please try again.',
+        ),
+      );
       notifyListeners();
       return false;
     }
@@ -495,7 +518,12 @@ class ChatProvider extends ChangeNotifier {
       await _historyRepository.deleteConversation(conversationId);
       await loadConversationHistory();
     } catch (e) {
-      _uiState = _uiState.copyWith(error: e.toString());
+      _uiState = _uiState.copyWith(
+        error: toUserFriendlyMessage(
+          e,
+          fallback: 'Could not delete this conversation. Please try again.',
+        ),
+      );
       notifyListeners();
     }
   }

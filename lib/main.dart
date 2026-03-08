@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'config/env.dart';
 import 'services/firebase_service.dart';
 import 'services/supabase_service.dart';
 import 'providers/auth_provider.dart';
@@ -14,14 +13,25 @@ import 'screens/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Object? initError;
+  Object? fatalInitError;
   try {
     await FirebaseService.initialize();
-    await SupabaseService.initialize();
-  } catch (e) {
-    initError = e;
+  } catch (e, st) {
+    debugPrint('Firebase init failed: $e');
+    debugPrint('$st');
+    fatalInitError = e;
   }
-  runApp(CeliaRoot(initError: initError));
+
+  // Supabase powers routines/library, but app can still boot without it.
+  // Fail softly here and surface friendly errors where those features are used.
+  try {
+    await SupabaseService.initialize();
+  } catch (e, st) {
+    debugPrint('Supabase init failed (non-fatal): $e');
+    debugPrint('$st');
+  }
+
+  runApp(CeliaRoot(initError: fatalInitError));
 }
 
 class CeliaRoot extends StatelessWidget {
@@ -31,9 +41,9 @@ class CeliaRoot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (initError != null) {
-      return MaterialApp(
+      return const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: _InitErrorScreen(error: initError.toString()),
+        home: _InitErrorScreen(),
       );
     }
     return MultiProvider(
@@ -115,73 +125,42 @@ class AppNavigator extends StatelessWidget {
 }
 
 class _InitErrorScreen extends StatelessWidget {
-  final String error;
-  const _InitErrorScreen({required this.error});
+  const _InitErrorScreen();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF0B0B0B),
+    return const Scaffold(
+      backgroundColor: Color(0xFF0B0B0B),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 12),
-              const Text(
-                'App config missing',
+              Spacer(),
+              Icon(
+                Icons.error_outline,
+                color: Colors.orangeAccent,
+                size: 64,
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Unable to start the app',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 12),
-              const Text(
-                'This build is missing required runtime values (Supabase/Backend). '
-                'Add them using --dart-define and relaunch.',
-                style: TextStyle(color: Colors.white70, height: 1.4),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Required (mobile):\n'
-                '- SUPABASE_URL\n'
-                '- SUPABASE_ANON_KEY\n'
-                '\nOptional (for AI routine generation):\n'
-                '- CELIA_BACKEND_BASE_URL (your Vercel/Next.js base URL)\n',
-                style: TextStyle(color: Colors.white70, height: 1.4),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Android Studio:\n'
-                'Run → Edit Configurations… → Additional run args:\n'
-                '--dart-define=SUPABASE_URL=... '
-                '--dart-define=SUPABASE_ANON_KEY=... '
-                '--dart-define=CELIA_BACKEND_BASE_URL=...\n',
-                style: TextStyle(color: Colors.white70, height: 1.4),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Error:',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
+              SizedBox(height: 12),
               Text(
-                'SUPABASE_URL: ${Env.supabaseUrl.isEmpty ? '(empty)' : Env.supabaseUrl}\n'
-                'SUPABASE_ANON_KEY: ${Env.supabaseAnonKey.isEmpty ? '(empty)' : '(set)'}\n'
-                'CELIA_BACKEND_BASE_URL: ${Env.celiaBackendBaseUrl.isEmpty ? '(empty)' : Env.celiaBackendBaseUrl}',
-                style: const TextStyle(color: Colors.white70, height: 1.4),
+                'Please close and reopen the app. '
+                'If this continues, contact support.',
+                style: TextStyle(color: Colors.white70, height: 1.4),
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 12),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Text(
-                    error,
-                    style: const TextStyle(color: Colors.orangeAccent),
-                  ),
-                ),
-              ),
+              Spacer(),
             ],
           ),
         ),

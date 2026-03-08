@@ -5,6 +5,7 @@ import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 import '../../providers/theme_provider.dart';
 import 'package:provider/provider.dart';
+import '../../utils/user_facing_error.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final String videoUrl;
@@ -54,25 +55,25 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         allowMuting: true,
         allowPlaybackSpeedChanging: true,
         aspectRatio: _videoPlayerController!.value.aspectRatio,
-        errorBuilder: (context, errorMessage) {
-          return Center(
+        errorBuilder: (context, _) {
+          return const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
+                Icon(
                   Icons.error_outline,
                   color: Colors.red,
                   size: 48,
                 ),
-                const SizedBox(height: 16),
-                const Text(
+                SizedBox(height: 16),
+                Text(
                   'Error loading video',
                   style: TextStyle(color: Colors.white),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Text(
-                  errorMessage,
-                  style: const TextStyle(color: Colors.white70, fontSize: 12),
+                  'This video is not available right now.',
+                  style: TextStyle(color: Colors.white70, fontSize: 12),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -87,7 +88,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     } catch (e) {
       setState(() {
         _isInitializing = false;
-        _error = e.toString();
+        _error = toUserFriendlyMessage(
+          e,
+          fallback: 'Unable to play this video right now. Please try again.',
+        );
       });
     }
   }

@@ -36,7 +36,7 @@ void main() {
     final p = AuthProvider(authRepository: repo);
     await p.signIn('e', 'p');
     expect(p.uiState.isAuthenticated, isFalse);
-    expect(p.uiState.authError, contains('bad'));
+    expect(p.uiState.authError, 'Could not sign in. Please try again.');
   });
 
   test('sendVerificationEmail enforces local cooldown', () async {

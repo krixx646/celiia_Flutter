@@ -135,14 +135,14 @@ export async function POST(_: NextRequest, { params }: { params: Promise<{ id: s
     }
 
     const thumbnailUrl = `https://videodelivery.net/${uid}/thumbnails/thumbnail.jpg`;
-    const cloudflarePlaybackUrl = `https://customer-${CLOUDFLARE_ACCOUNT_ID}.cloudflarestream.com/${uid}/manifest/video.m3u8`;
+    const cloudflarePlaybackUrl = `https://videodelivery.net/${uid}/manifest/video.m3u8`;
 
     const { data: updated, error: updErr } = await supabase
       .from('videos')
       .update({
         cloudflare_video_id: uid,
-        thumbnail_url: video.thumbnail_url || thumbnailUrl,
-        playback_url: video.playback_url || cloudflarePlaybackUrl,
+        thumbnail_url: thumbnailUrl,
+        playback_url: cloudflarePlaybackUrl,
         status: video.status === 'ready' ? 'ready' : 'processing',
       })
       .eq('id', id)

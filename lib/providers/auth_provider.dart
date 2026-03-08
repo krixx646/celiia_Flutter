@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../repositories/auth_repository.dart';
+import '../utils/user_facing_error.dart';
 
 class AuthUiState {
   final bool isAuthenticated;
@@ -138,7 +139,10 @@ class AuthProvider extends ChangeNotifier {
       _uiState = _uiState.copyWith(
         isAuthenticated: false,
         isLoading: false,
-        authError: e.toString(),
+        authError: toUserFriendlyMessage(
+          e,
+          fallback: 'Could not sign in. Please try again.',
+        ),
       );
     }
     notifyListeners();
@@ -179,7 +183,10 @@ class AuthProvider extends ChangeNotifier {
       _uiState = _uiState.copyWith(
         isAuthenticated: false,
         isLoading: false,
-        authError: e.toString(),
+        authError: toUserFriendlyMessage(
+          e,
+          fallback: 'Could not create your account. Please try again.',
+        ),
       );
     }
     notifyListeners();
@@ -204,7 +211,10 @@ class AuthProvider extends ChangeNotifier {
       _uiState = _uiState.copyWith(
         isLoading: false,
         passwordResetEmailSent: false,
-        authError: e.toString(),
+        authError: toUserFriendlyMessage(
+          e,
+          fallback: 'Could not send reset email. Please try again.',
+        ),
       );
     }
     notifyListeners();
@@ -249,13 +259,12 @@ class AuthProvider extends ChangeNotifier {
         notifyListeners();
       });
     } catch (e) {
-      // Surface friendly rate-limit message
-      final message = e.toString().contains('too-many-requests')
-          ? 'Too many attempts. Please wait a minute and try again.'
-          : e.toString();
       _uiState = _uiState.copyWith(
         isLoading: false,
-        authError: message,
+        authError: toUserFriendlyMessage(
+          e,
+          fallback: 'Could not send verification email. Please try again.',
+        ),
       );
     }
     notifyListeners();
@@ -295,7 +304,10 @@ class AuthProvider extends ChangeNotifier {
       _uiState = _uiState.copyWith(
         isAuthenticated: false,
         isLoading: false,
-        authError: e.toString(),
+        authError: toUserFriendlyMessage(
+          e,
+          fallback: 'Google sign-in failed. Please try again.',
+        ),
       );
     }
     notifyListeners();
@@ -328,7 +340,10 @@ class AuthProvider extends ChangeNotifier {
       _uiState = _uiState.copyWith(
         isAuthenticated: false,
         isLoading: false,
-        authError: e.toString(),
+        authError: toUserFriendlyMessage(
+          e,
+          fallback: 'Apple sign-in failed. Please try again.',
+        ),
       );
     }
     notifyListeners();
@@ -351,7 +366,7 @@ class AuthProvider extends ChangeNotifier {
 
   void setAuthError(String errorMessage) {
     _uiState = _uiState.copyWith(
-      authError: errorMessage,
+      authError: toUserFriendlyMessage(errorMessage),
       isLoading: false,
     );
     notifyListeners();

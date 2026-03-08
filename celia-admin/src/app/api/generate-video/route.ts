@@ -221,7 +221,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Save Cloudflare playback + thumbnail in DB so the mobile app can play HLS.
-    const playbackUrl: string | null = `https://customer-${CLOUDFLARE_ACCOUNT_ID}.cloudflarestream.com/${cloudflareUid}/manifest/video.m3u8`;
+    const playbackUrl: string | null = `https://videodelivery.net/${cloudflareUid}/manifest/video.m3u8`;
     const thumbnailUrl: string | null = `https://videodelivery.net/${cloudflareUid}/thumbnails/thumbnail.jpg`;
 
     // Avoid "ready but not actually playable" (mobile app can hang). Wait briefly for Cloudflare to be ready.

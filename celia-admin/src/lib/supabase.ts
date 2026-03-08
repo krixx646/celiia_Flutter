@@ -17,6 +17,9 @@ export interface Video {
   cloudflare_video_id: string | null;
   playback_url: string | null;
   thumbnail_url: string | null;
+  source_url: string | null;
+  backup_bucket: string | null;
+  backup_path: string | null;
   equipment: string[] | null;
   tags: string[] | null;
   is_ai_generated: boolean;

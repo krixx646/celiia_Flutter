@@ -45,9 +45,22 @@ export default function VideosPage() {
 
     const targets = videos
       .filter((v) => {
+        const playback = (v.playback_url || '').trim();
+        const source = (v.source_url || '').trim();
+        const backupPath = (v.backup_path || '').trim();
+        const playbackIsCloudflare = /cloudflarestream\.com|videodelivery\.net/i.test(playback);
+        const sourceIsCloudflare = /cloudflarestream\.com|videodelivery\.net/i.test(source);
+        const hasRecoverableSource =
+          Boolean(backupPath) ||
+          Boolean(source && !sourceIsCloudflare) ||
+          Boolean(playback && !playbackIsCloudflare);
+        if (!hasRecoverableSource) return false;
+
         const cfId = (v.cloudflare_video_id || '').trim();
         const hasCloudflare = cfId.length > 0 && !cfId.startsWith('fal-');
-        return Boolean(v.playback_url) && !hasCloudflare && (v.is_ai_generated || false);
+        const status = (v.status || '').toString().toLowerCase();
+        // Recover legacy/stale rows when we still have a non-Cloudflare source URL.
+        return !hasCloudflare || status === 'error';
       })
       .filter((v) => !autoIngestAttemptedRef.current.has(v.id))
       .slice(0, 3);
@@ -87,11 +100,8 @@ export default function VideosPage() {
         const durBad = !Number.isFinite(dur) || dur <= 0;
         const st = (v.status || '').toString().toLowerCase();
         const statusBad = st === 'processing' || st === 'pending';
-        const playbackBad =
-          !v.playback_url || /customer-[^.]+\.cloudflarestream\.com/i.test(v.playback_url);
-        const thumbBad =
-          !v.thumbnail_url || /customer-[^.]+\.cloudflarestream\.com/i.test(v.thumbnail_url);
-        return durBad || statusBad || playbackBad || thumbBad;
+        const playbackBad = !v.playback_url;
+        return durBad || statusBad || playbackBad;
       })
       .filter((v) => !refreshAttemptedRef.current.has(v.id))
       .slice(0, 3);
@@ -116,10 +126,20 @@ export default function VideosPage() {
     let cancelled = false;
     async function maybeIngest() {
       if (!activeVideo) return;
+      const playback = (activeVideo.playback_url || '').trim();
+      const source = (activeVideo.source_url || '').trim();
+      const backupPath = (activeVideo.backup_path || '').trim();
+      const playbackIsCloudflare = /cloudflarestream\.com|videodelivery\.net/i.test(playback);
+      const sourceIsCloudflare = /cloudflarestream\.com|videodelivery\.net/i.test(source);
+      const hasRecoverableSource =
+        Boolean(backupPath) ||
+        Boolean(source && !sourceIsCloudflare) ||
+        Boolean(playback && !playbackIsCloudflare);
+      if (!hasRecoverableSource) return;
+
       const cfIdRaw = (activeVideo.cloudflare_video_id || '').trim();
-      const hasCfId = cfIdRaw.length > 0 && !cfIdRaw.startsWith('fal-');
-      if (hasCfId) return;
-      if (!activeVideo.playback_url) return;
+      // Even if a Cloudflare UID exists, it may be stale; ingest route now validates and repairs.
+      if (cfIdRaw.startsWith('fal-')) return;
 
       setIngestError(null);
       setCloudflareStatusText(null);
@@ -146,20 +166,25 @@ export default function VideosPage() {
   }, [activeVideo?.id]);
 
   useEffect(() => {
-    // If the selected video is Cloudflare-backed but not ready yet, refresh its metadata
-    // so we don't attempt playback while processing (Cloudflare iframe shows "unknown error").
+    // Always refresh Cloudflare metadata once when opening a selected Cloudflare-backed video.
+    // This catches stale rows marked "ready" whose Stream asset no longer exists.
     let cancelled = false;
     async function maybeRefresh() {
       if (!activeVideo) return;
       const hasCf = Boolean((activeVideo.cloudflare_video_id || '').trim());
       if (!hasCf) return;
-      const st = (activeVideo.status || '').toString().toLowerCase();
-      if (st === 'ready') return;
 
       try {
         const res = await fetch(`/api/admin/videos/${activeVideo.id}/refresh`, { method: 'POST' });
-        const json = await res.json();
-        if (!res.ok) return;
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          if (cancelled) return;
+          if (json?.video) setActiveVideo(json.video);
+          const details = json?.details || json?.error || 'Cloudflare refresh failed';
+          setCloudflareStatusText(String(details));
+          await loadVideos();
+          return;
+        }
         if (cancelled) return;
         if (json.video) setActiveVideo(json.video);
         const cfState = json.cloudflare?.status?.state;
@@ -418,13 +443,35 @@ function StatItem({ icon: Icon, label, value }: { icon: React.ElementType; label
 }
 
 function VideoPlayer({ video }: { video: VideoType }) {
+  const playbackUrl = (video.playback_url || '').trim();
+  const sourceUrl = (video.source_url || '').trim();
+  const playbackIsCloudflare = /videodelivery\.net|cloudflarestream\.com/i.test(playbackUrl);
+  const sourceIsCloudflare = /videodelivery\.net|cloudflarestream\.com/i.test(sourceUrl);
+  const directUrl =
+    playbackUrl && !playbackIsCloudflare
+      ? playbackUrl
+      : sourceUrl && !sourceIsCloudflare
+        ? sourceUrl
+        : '';
+
+  // Legacy/fallback source: allow direct playback when the source is not Cloudflare.
+  if (directUrl) {
+    return (
+      <video
+        src={directUrl}
+        controls
+        className="w-full aspect-video bg-black"
+      />
+    );
+  }
+
   // Use the same Cloudflare Stream iframe player for everything.
   const status = (video.status || '').toString().toLowerCase();
   if (status === 'error') {
     return (
       <div className="p-6 text-gray-300">
-        <p className="mb-2">This Cloudflare video is missing or no longer available.</p>
-        <p className="text-xs text-gray-500">The dashboard record still exists, but the hosted asset could not be found. Re-upload the original clip to restore playback.</p>
+        <p className="mb-2">Cloudflare failed to process this clip.</p>
+        <p className="text-xs text-gray-500">See the Cloudflare error reason above and re-upload with the corrected limit/settings.</p>
       </div>
     );
   }

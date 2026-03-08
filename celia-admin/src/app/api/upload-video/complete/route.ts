@@ -17,12 +17,32 @@ function mapCloudflareState(state: unknown): 'pending' | 'processing' | 'ready' 
   return 'processing';
 }
 
+function isMissingColumnError(error: unknown): boolean {
+  const msg =
+    typeof error === 'object' && error !== null && 'message' in error
+      ? String((error as { message?: unknown }).message ?? '')
+      : String(error ?? '');
+  return msg.toLowerCase().includes('column') && msg.toLowerCase().includes('does not exist');
+}
+
+async function insertVideoRow(
+  payload: Record<string, unknown>,
+  payloadWithoutBackup: Record<string, unknown>
+) {
+  const first = await supabase.from('videos').insert(payload).select().single();
+  if (!first.error) return first;
+  if (!isMissingColumnError(first.error)) return first;
+
+  // Backward compatibility for DBs that have not yet added backup/source columns.
+  return supabase.from('videos').insert(payloadWithoutBackup).select().single();
+}
+
 async function fetchCloudflareDetailsWithRetry(uid: string, attempts = 3, delayMs = 1000) {
   if (!CLOUDFLARE_ACCOUNT_ID || !CLOUDFLARE_API_TOKEN) {
     return { ok: false as const, status: 0, json: null, error: 'Cloudflare env not configured' };
   }
 
-  let lastErr: any = null;
+  let lastErr: unknown = null;
   for (let i = 0; i < attempts; i++) {
     try {
       const res = await fetch(
@@ -31,14 +51,18 @@ async function fetchCloudflareDetailsWithRetry(uid: string, attempts = 3, delayM
       );
 
       const text = await res.text().catch(() => '');
-      let json: any = null;
+      let json: unknown = null;
       try {
         json = text ? JSON.parse(text) : null;
       } catch {
         json = null;
       }
+      const parsed =
+        typeof json === 'object' && json !== null
+          ? (json as { success?: boolean })
+          : {};
 
-      if (res.ok && json?.success) {
+      if (res.ok && parsed.success) {
         return { ok: true as const, status: res.status, json, error: null };
       }
 
@@ -46,8 +70,8 @@ async function fetchCloudflareDetailsWithRetry(uid: string, attempts = 3, delayM
         status: res.status,
         body: json || text,
       };
-    } catch (e: any) {
-      lastErr = { error: e?.message ?? String(e) };
+    } catch (e: unknown) {
+      lastErr = { error: e instanceof Error ? e.message : String(e) };
     }
 
     // brief backoff (Cloudflare can be eventually consistent right after upload)
@@ -81,15 +105,29 @@ export async function POST(req: NextRequest) {
     const bodyPart = body?.bodyPart != null ? String(body.bodyPart) : 'full_body';
     const difficulty = body?.difficulty != null ? String(body.difficulty).toLowerCase() : 'beginner';
     const equipment = Array.isArray(body?.equipment) ? body.equipment : [];
+    const backupBucket = body?.backupBucket != null ? String(body.backupBucket).trim() : '';
+    const backupPath = body?.backupPath != null ? String(body.backupPath).trim() : '';
+    const sourceUrl = body?.sourceUrl != null ? String(body.sourceUrl).trim() : '';
 
     // Cloudflare can be eventually consistent right after upload. Also, some API tokens may allow creating uploads
     // but not reading details. We should still save the clip as "processing" so it shows up in the dashboard.
     const details = await fetchCloudflareDetailsWithRetry(uid, 3, 1000);
 
-    const cfResult = details.ok ? (details.json?.result || {}) : {};
+    const cfPayload =
+      details.ok && typeof details.json === 'object' && details.json !== null
+        ? (details.json as {
+            result?: {
+              playback?: { hls?: string };
+              thumbnail?: string;
+              duration?: number | string;
+              status?: { state?: string };
+            };
+          })
+        : {};
+    const cfResult = cfPayload.result || {};
     const playbackUrl =
       (cfResult?.playback?.hls as string | undefined) ||
-      `https://videodelivery.net/${uid}/manifest/video.m3u8`;
+      `https://customer-${CLOUDFLARE_ACCOUNT_ID}.cloudflarestream.com/${uid}/manifest/video.m3u8`;
     const thumbnailUrl =
       (cfResult?.thumbnail as string | undefined) || `https://videodelivery.net/${uid}/thumbnails/thumbnail.jpg`;
 
@@ -99,25 +137,32 @@ export async function POST(req: NextRequest) {
 
     const status = details.ok ? mapCloudflareState(cfResult?.status?.state) : 'processing';
 
-    const { data: video, error: dbError } = await supabase
-      .from('videos')
-      .insert({
-        title,
-        description,
-        category,
-        body_part: bodyPart,
-        difficulty,
-        duration_seconds: durationSeconds,
-        cloudflare_video_id: uid,
-        playback_url: playbackUrl,
-        thumbnail_url: thumbnailUrl,
-        equipment,
-        is_ai_generated: false,
-        status,
-        uploaded_at: new Date().toISOString(),
-      })
-      .select()
-      .single();
+    const basePayload: Record<string, unknown> = {
+      title,
+      description,
+      category,
+      body_part: bodyPart,
+      difficulty,
+      duration_seconds: durationSeconds,
+      cloudflare_video_id: uid,
+      playback_url: playbackUrl,
+      thumbnail_url: thumbnailUrl,
+      equipment,
+      is_ai_generated: false,
+      status,
+      uploaded_at: new Date().toISOString(),
+    };
+    const payloadWithBackup: Record<string, unknown> = {
+      ...basePayload,
+      source_url: sourceUrl || null,
+      backup_bucket: backupBucket || null,
+      backup_path: backupPath || null,
+    };
+
+    const { data: video, error: dbError } = await insertVideoRow(
+      payloadWithBackup,
+      basePayload
+    );
 
     if (dbError) {
       return NextResponse.json(
@@ -131,8 +176,11 @@ export async function POST(req: NextRequest) {
       video,
       cloudflare: details.ok ? { ok: true } : { ok: false, error: details.error },
     });
-  } catch (e: any) {
-    return NextResponse.json({ error: e?.message ?? String(e) }, { status: 500 });
+  } catch (e: unknown) {
+    return NextResponse.json(
+      { error: e instanceof Error ? e.message : String(e) },
+      { status: 500 }
+    );
   }
 }
 

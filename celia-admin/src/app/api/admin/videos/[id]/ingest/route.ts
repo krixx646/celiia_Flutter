@@ -1,11 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
+import {
+  createBackupDownloadUrl,
+  DEFAULT_BACKUP_BUCKET,
+} from '@/lib/videoBackup';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
 
 const CLOUDFLARE_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
 const CLOUDFLARE_API_TOKEN = process.env.CLOUDFLARE_STREAM_API_TOKEN;
+
+function tryExtractUidFromUrl(url: string): string | null {
+  const u = (url || '').trim();
+  if (!u) return null;
+  const m1 = u.match(/videodelivery\.net\/([^/?#]+)/i);
+  if (m1?.[1]) return m1[1];
+  const m2 = u.match(/cloudflarestream\.com\/([^/?#]+)/i);
+  if (m2?.[1]) return m2[1];
+  return null;
+}
+
+function looksLikeCloudflareUrl(url: string): boolean {
+  return /videodelivery\.net|cloudflarestream\.com/i.test(url);
+}
+
+async function cloudflareVideoExists(uid: string): Promise<boolean> {
+  if (!CLOUDFLARE_ACCOUNT_ID || !CLOUDFLARE_API_TOKEN) return false;
+  try {
+    const res = await fetch(
+      `https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/stream/${uid}`,
+      { headers: { Authorization: `Bearer ${CLOUDFLARE_API_TOKEN}` } }
+    );
+    const json: unknown = await res.json().catch(() => null);
+    const parsed =
+      typeof json === 'object' && json !== null
+        ? (json as { success?: boolean })
+        : {};
+    return Boolean(res.ok && parsed.success);
+  } catch {
+    return false;
+  }
+}
 
 async function copyToCloudflareStream(url: string, title: string) {
   if (!CLOUDFLARE_ACCOUNT_ID || !CLOUDFLARE_API_TOKEN) return null;
@@ -26,18 +62,30 @@ async function copyToCloudflareStream(url: string, title: string) {
       }
     );
 
-    const json: any = await res.json();
-    if (!json?.success) {
+    const json: unknown = await res.json();
+    const payload =
+      typeof json === 'object' && json !== null
+        ? (json as {
+            success?: boolean;
+            result?: {
+              uid?: string;
+              id?: string;
+              result?: { uid?: string };
+              video?: { uid?: string; id?: string };
+            };
+          })
+        : {};
+    if (!payload.success) {
       console.error('Cloudflare copy failed:', json);
       return null;
     }
 
     const uid =
-      json?.result?.uid ||
-      json?.result?.result?.uid ||
-      json?.result?.id ||
-      json?.result?.video?.uid ||
-      json?.result?.video?.id;
+      payload.result?.uid ||
+      payload.result?.result?.uid ||
+      payload.result?.id ||
+      payload.result?.video?.uid ||
+      payload.result?.video?.id;
     return typeof uid === 'string' && uid.length > 0 ? uid : null;
   } catch (e) {
     console.error('Cloudflare copy failed (fetch error):', e);
@@ -61,13 +109,17 @@ async function createCloudflareDirectUpload(title: string) {
       }),
     }
   );
-  const json: any = await res.json();
-  if (!json?.success) {
+  const json: unknown = await res.json();
+  const payload =
+    typeof json === 'object' && json !== null
+      ? (json as { success?: boolean; result?: { uploadURL?: string; uid?: string } })
+      : {};
+  if (!payload.success) {
     console.error('Cloudflare direct_upload failed:', json);
     return null;
   }
-  const uploadURL = json?.result?.uploadURL;
-  const uid = json?.result?.uid;
+  const uploadURL = payload.result?.uploadURL;
+  const uid = payload.result?.uid;
   if (typeof uploadURL !== 'string' || typeof uid !== 'string') return null;
   return { uploadURL, uid };
 }
@@ -104,6 +156,10 @@ async function ingestIntoCloudflareStream(opts: { sourceUrl: string; title: stri
   return du.uid;
 }
 
+function safeString(v: unknown): string {
+  return typeof v === 'string' ? v.trim() : '';
+}
+
 export async function POST(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     if (!CLOUDFLARE_ACCOUNT_ID || !CLOUDFLARE_API_TOKEN) {
@@ -119,23 +175,81 @@ export async function POST(_: NextRequest, { params }: { params: Promise<{ id: s
     const { data: video, error: readErr } = await supabase.from('videos').select('*').eq('id', id).single();
     if (readErr) throw readErr;
 
-    const existingCfId = (video.cloudflare_video_id || '').trim();
+    const playbackUrl = safeString(video.playback_url);
+    const sourceUrl = safeString(video.source_url);
+    const backupPath = safeString(video.backup_path);
+    const backupBucket = safeString(video.backup_bucket) || DEFAULT_BACKUP_BUCKET;
+    const playbackUid = tryExtractUidFromUrl(playbackUrl);
+    const existingCfId = safeString(video.cloudflare_video_id);
     if (existingCfId && !existingCfId.startsWith('fal-')) {
-      return NextResponse.json({ ok: true, video });
+      const exists = await cloudflareVideoExists(existingCfId);
+      if (exists) {
+        return NextResponse.json({ ok: true, video });
+      }
+
+      // If playback URL points to a different valid Cloudflare UID, repair metadata to that UID.
+      if (playbackUid && playbackUid !== existingCfId) {
+        const playbackUidExists = await cloudflareVideoExists(playbackUid);
+        if (playbackUidExists) {
+          const repairedPlaybackUrl = `https://customer-${CLOUDFLARE_ACCOUNT_ID}.cloudflarestream.com/${playbackUid}/manifest/video.m3u8`;
+          const repairedThumbUrl = `https://videodelivery.net/${playbackUid}/thumbnails/thumbnail.jpg`;
+          const { data: repaired, error: repairErr } = await supabase
+            .from('videos')
+            .update({
+              cloudflare_video_id: playbackUid,
+              playback_url: repairedPlaybackUrl,
+              thumbnail_url: repairedThumbUrl,
+              status: 'processing',
+            })
+            .eq('id', id)
+            .select()
+            .single();
+          if (repairErr) throw repairErr;
+          return NextResponse.json({ ok: true, repaired: true, video: repaired });
+        }
+      }
     }
 
-    const playbackUrl = (video.playback_url || '').trim();
-    if (!playbackUrl) {
-      return NextResponse.json({ error: 'Video has no playback_url to ingest' }, { status: 400 });
+    const backupSignedUrl = backupPath
+      ? await createBackupDownloadUrl(supabase, backupBucket, backupPath)
+      : null;
+    const ingestionSourceUrl =
+      backupSignedUrl ||
+      (sourceUrl && !looksLikeCloudflareUrl(sourceUrl) ? sourceUrl : '') ||
+      (playbackUrl && !looksLikeCloudflareUrl(playbackUrl) ? playbackUrl : '');
+
+    if (!ingestionSourceUrl) {
+      if (!playbackUrl && !sourceUrl && !backupPath) {
+        return NextResponse.json(
+          { error: 'Video has no recoverable source (missing backup, source_url, and playback_url).' },
+          { status: 400 }
+        );
+      }
+      if (looksLikeCloudflareUrl(playbackUrl) || looksLikeCloudflareUrl(sourceUrl)) {
+        return NextResponse.json(
+          {
+            error:
+              'Cloudflare asset is missing and no backup file is stored. Re-upload the original file to restore this video.',
+          },
+          { status: 409 }
+        );
+      }
+      return NextResponse.json(
+        { error: 'Could not determine a recoverable source URL for re-ingestion.' },
+        { status: 400 }
+      );
     }
 
-    const uid = await ingestIntoCloudflareStream({ sourceUrl: playbackUrl, title: video.title || 'Celia video' });
+    const uid = await ingestIntoCloudflareStream({
+      sourceUrl: ingestionSourceUrl,
+      title: safeString(video.title) || 'Celia video',
+    });
     if (!uid) {
       return NextResponse.json({ error: 'Failed to ingest video into Cloudflare Stream' }, { status: 500 });
     }
 
     const thumbnailUrl = `https://videodelivery.net/${uid}/thumbnails/thumbnail.jpg`;
-    const cloudflarePlaybackUrl = `https://videodelivery.net/${uid}/manifest/video.m3u8`;
+    const cloudflarePlaybackUrl = `https://customer-${CLOUDFLARE_ACCOUNT_ID}.cloudflarestream.com/${uid}/manifest/video.m3u8`;
 
     const { data: updated, error: updErr } = await supabase
       .from('videos')
@@ -143,7 +257,7 @@ export async function POST(_: NextRequest, { params }: { params: Promise<{ id: s
         cloudflare_video_id: uid,
         thumbnail_url: thumbnailUrl,
         playback_url: cloudflarePlaybackUrl,
-        status: video.status === 'ready' ? 'ready' : 'processing',
+        status: 'processing',
       })
       .eq('id', id)
       .select()
@@ -151,8 +265,11 @@ export async function POST(_: NextRequest, { params }: { params: Promise<{ id: s
     if (updErr) throw updErr;
 
     return NextResponse.json({ ok: true, video: updated });
-  } catch (e: any) {
-    return NextResponse.json({ error: e?.message ?? String(e) }, { status: 500 });
+  } catch (e: unknown) {
+    return NextResponse.json(
+      { error: e instanceof Error ? e.message : String(e) },
+      { status: 500 }
+    );
   }
 }
 

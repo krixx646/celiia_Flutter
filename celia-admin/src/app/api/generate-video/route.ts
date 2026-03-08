@@ -30,6 +30,14 @@ interface GenerateRequest {
   includeAudio?: boolean;
 }
 
+function isMissingColumnError(error: unknown): boolean {
+  const msg =
+    typeof error === 'object' && error !== null && 'message' in error
+      ? String((error as { message?: unknown }).message ?? '')
+      : String(error ?? '');
+  return msg.toLowerCase().includes('column') && msg.toLowerCase().includes('does not exist');
+}
+
 async function copyToCloudflareStream(url: string, title: string) {
   if (!CLOUDFLARE_ACCOUNT_ID || !CLOUDFLARE_API_TOKEN) return null;
 
@@ -221,7 +229,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Save Cloudflare playback + thumbnail in DB so the mobile app can play HLS.
-    const playbackUrl: string | null = `https://videodelivery.net/${cloudflareUid}/manifest/video.m3u8`;
+    const playbackUrl: string | null = `https://customer-${CLOUDFLARE_ACCOUNT_ID}.cloudflarestream.com/${cloudflareUid}/manifest/video.m3u8`;
     const thumbnailUrl: string | null = `https://videodelivery.net/${cloudflareUid}/thumbnails/thumbnail.jpg`;
 
     // Avoid "ready but not actually playable" (mobile app can hang). Wait briefly for Cloudflare to be ready.
@@ -230,24 +238,39 @@ export async function POST(request: NextRequest) {
       readyCheck.state === 'ready' ? 'ready' : readyCheck.state === 'error' ? 'error' : 'processing';
 
     // Save to Supabase videos table
-    const { data: video, error: dbError } = await supabase
+    const basePayload: Record<string, unknown> = {
+      title: exerciseName,
+      description: prompt,
+      category: exerciseType,
+      body_part: bodyPart,
+      difficulty: difficulty.toLowerCase(),
+      duration_seconds: duration,
+      cloudflare_video_id: cloudflareUid,
+      playback_url: playbackUrl,
+      thumbnail_url: thumbnailUrl,
+      is_ai_generated: true,
+      status,
+      uploaded_at: new Date().toISOString(),
+    };
+
+    const payloadWithSource: Record<string, unknown> = {
+      ...basePayload,
+      source_url: videoUrl,
+      backup_bucket: null,
+      backup_path: null,
+    };
+
+    let insertResult = await supabase
       .from('videos')
-      .insert({
-        title: exerciseName,
-        description: prompt,
-        category: exerciseType,
-        body_part: bodyPart,
-        difficulty: difficulty.toLowerCase(),
-        duration_seconds: duration,
-        cloudflare_video_id: cloudflareUid,
-        playback_url: playbackUrl,
-        thumbnail_url: thumbnailUrl,
-        is_ai_generated: true,
-        status,
-        uploaded_at: new Date().toISOString(),
-      })
+      .insert(payloadWithSource)
       .select()
       .single();
+
+    if (insertResult.error && isMissingColumnError(insertResult.error)) {
+      insertResult = await supabase.from('videos').insert(basePayload).select().single();
+    }
+
+    const { data: video, error: dbError } = insertResult;
 
     if (dbError) {
       console.error('Database error:', dbError);

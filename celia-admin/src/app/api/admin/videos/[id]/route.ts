@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
+import { DEFAULT_BACKUP_BUCKET } from '@/lib/videoBackup';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -61,6 +62,20 @@ async function deleteCloudflareVideo(uid: string): Promise<CloudflareDeleteResul
   return { ok: true, cloudflare: json ?? null };
 }
 
+async function deleteBackupFile(
+  backupBucket: string,
+  backupPath: string
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  const bucket = backupBucket.trim();
+  const path = backupPath.trim();
+  if (!bucket || !path) return { ok: true };
+
+  const supabase = getSupabaseAdmin();
+  const { error } = await supabase.storage.from(bucket).remove([path]);
+  if (error) return { ok: false, error: error.message };
+  return { ok: true };
+}
+
 export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
@@ -72,17 +87,33 @@ export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id:
     const v = (video ?? {}) as Record<string, unknown>;
     const cloudflareVideoId = typeof v['cloudflare_video_id'] === 'string' ? (v['cloudflare_video_id'] as string) : '';
     const playbackUrl = typeof v['playback_url'] === 'string' ? (v['playback_url'] as string) : '';
+    const backupPath = typeof v['backup_path'] === 'string' ? (v['backup_path'] as string) : '';
+    const backupBucket =
+      typeof v['backup_bucket'] === 'string' && (v['backup_bucket'] as string).trim()
+        ? (v['backup_bucket'] as string)
+        : DEFAULT_BACKUP_BUCKET;
 
     const uid =
       (cloudflareVideoId.trim() || tryExtractUidFromUrl(playbackUrl.trim())) ?? '';
 
     const cf = uid ? await deleteCloudflareVideo(uid) : { skipped: true };
     const warning = 'ok' in cf && cf.ok === false ? cf.error : null;
+    const backupDelete = backupPath
+      ? await deleteBackupFile(backupBucket, backupPath)
+      : ({ ok: true } as const);
 
     const { error: delErr } = await supabase.from('videos').delete().eq('id', id);
     if (delErr) throw delErr;
 
-    return NextResponse.json({ ok: true, warning, cloudflare: cf, deletedId: id });
+    const backupWarning = backupDelete.ok ? null : backupDelete.error;
+
+    return NextResponse.json({
+      ok: true,
+      warning,
+      backupWarning,
+      cloudflare: cf,
+      deletedId: id,
+    });
   } catch (e: unknown) {
     return NextResponse.json({ error: errMessage(e) }, { status: 500 });
   }

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { buildBackupPath, ensureBackupBucket } from '@/lib/videoBackup';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -8,6 +9,24 @@ const supabase = createClient(
 
 const CLOUDFLARE_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
 const CLOUDFLARE_API_TOKEN = process.env.CLOUDFLARE_STREAM_API_TOKEN;
+
+function isMissingColumnError(error: unknown): boolean {
+  const msg =
+    typeof error === 'object' && error !== null && 'message' in error
+      ? String((error as { message?: unknown }).message ?? '')
+      : String(error ?? '');
+  return msg.toLowerCase().includes('column') && msg.toLowerCase().includes('does not exist');
+}
+
+function parseEquipment(raw: string): string[] {
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.map((x) => String(x)) : [];
+  } catch {
+    return [];
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,6 +50,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    let backupBucket: string | null = null;
+    let backupPath: string | null = null;
+    try {
+      backupBucket = await ensureBackupBucket(supabase);
+      backupPath = buildBackupPath({
+        title: title || file.name || 'video',
+        originalFileName: file.name,
+      });
+      const arrayBuffer = await file.arrayBuffer();
+      const { error: backupError } = await supabase.storage
+        .from(backupBucket)
+        .upload(backupPath, arrayBuffer, {
+          contentType: file.type || 'video/mp4',
+          upsert: false,
+        });
+      if (backupError) {
+        throw backupError;
+      }
+    } catch (backupErr) {
+      console.error('Backup upload failed:', backupErr);
+      backupBucket = null;
+      backupPath = null;
+    }
+
     // Step 1: Get direct upload URL from Cloudflare
     const directUploadResponse = await fetch(
       `https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/stream/direct_upload`,
@@ -50,9 +93,13 @@ export async function POST(request: NextRequest) {
       }
     );
 
-    const directUploadData = await directUploadResponse.json();
+    const directUploadData: unknown = await directUploadResponse.json();
+    const cfUpload =
+      typeof directUploadData === 'object' && directUploadData !== null
+        ? (directUploadData as { success?: boolean; result?: { uploadURL?: string; uid?: string } })
+        : {};
 
-    if (!directUploadData.success) {
+    if (!cfUpload.success || !cfUpload.result?.uploadURL || !cfUpload.result?.uid) {
       console.error('Cloudflare error:', directUploadData);
       return NextResponse.json(
         { error: 'Failed to get upload URL from Cloudflare' },
@@ -60,7 +107,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { uploadURL, uid } = directUploadData.result;
+    const { uploadURL, uid } = cfUpload.result;
 
     // Step 2: Upload the video to Cloudflare
     const uploadFormData = new FormData();
@@ -91,9 +138,20 @@ export async function POST(request: NextRequest) {
       }
     );
 
-    const videoDetails = await videoDetailsResponse.json();
+    const videoDetailsRaw: unknown = await videoDetailsResponse.json();
+    const videoDetails =
+      typeof videoDetailsRaw === 'object' && videoDetailsRaw !== null
+        ? (videoDetailsRaw as {
+            result?: {
+              playback?: { hls?: string };
+              thumbnail?: string;
+              duration?: number | string;
+              status?: { state?: string };
+            };
+          })
+        : {};
     const playbackUrl = videoDetails.result?.playback?.hls || 
-                        `https://videodelivery.net/${uid}/manifest/video.m3u8`;
+                        `https://customer-${CLOUDFLARE_ACCOUNT_ID}.cloudflarestream.com/${uid}/manifest/video.m3u8`;
     // Prefer videodelivery.net (works across accounts without embedding account id)
     const thumbnailUrl = videoDetails.result?.thumbnail || `https://videodelivery.net/${uid}/thumbnails/thumbnail.jpg`;
     const durationRaw = videoDetails.result?.duration ?? 0;
@@ -107,26 +165,45 @@ export async function POST(request: NextRequest) {
       'processing';
 
     // Step 4: Save to Supabase
-    const { data: video, error: dbError } = await supabase
+    const basePayload: Record<string, unknown> = {
+      title,
+      description,
+      category: category || 'general',
+      body_part: bodyPart || 'full_body',
+      difficulty: difficulty?.toLowerCase() || 'beginner',
+      duration_seconds: Math.round(duration),
+      cloudflare_video_id: uid,
+      playback_url: playbackUrl,
+      thumbnail_url: thumbnailUrl,
+      equipment: parseEquipment(equipment),
+      is_ai_generated: false,
+      // Cloudflare may still be processing right after upload; keep status accurate so the dashboard doesn't try to play too early.
+      status,
+      uploaded_at: new Date().toISOString(),
+    };
+
+    const payloadWithBackup: Record<string, unknown> = {
+      ...basePayload,
+      source_url: null,
+      backup_bucket: backupBucket,
+      backup_path: backupPath,
+    };
+
+    let insertResult = await supabase
       .from('videos')
-      .insert({
-        title,
-        description,
-        category: category || 'general',
-        body_part: bodyPart || 'full_body',
-        difficulty: difficulty?.toLowerCase() || 'beginner',
-        duration_seconds: Math.round(duration),
-        cloudflare_video_id: uid,
-        playback_url: playbackUrl,
-        thumbnail_url: thumbnailUrl,
-        equipment: equipment ? JSON.parse(equipment) : [],
-        is_ai_generated: false,
-        // Cloudflare may still be processing right after upload; keep status accurate so the dashboard doesn't try to play too early.
-        status,
-        uploaded_at: new Date().toISOString(),
-      })
+      .insert(payloadWithBackup)
       .select()
       .single();
+
+    if (insertResult.error && isMissingColumnError(insertResult.error)) {
+      insertResult = await supabase
+        .from('videos')
+        .insert(basePayload)
+        .select()
+        .single();
+    }
+
+    const { data: video, error: dbError } = insertResult;
 
     if (dbError) {
       console.error('Database error:', dbError);
@@ -145,13 +222,17 @@ export async function POST(request: NextRequest) {
         playbackUrl,
         thumbnailUrl,
       },
+      backup: backupBucket && backupPath ? { bucket: backupBucket, path: backupPath } : null,
       message: 'Video uploaded successfully!',
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Upload error:', error);
     return NextResponse.json(
-      { error: 'Upload failed', details: error.message },
+      {
+        error: 'Upload failed',
+        details: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     );
   }

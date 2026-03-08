@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { Upload, X, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/lib/supabase';
 
 interface UploadPanelProps {
   isOpen: boolean;
@@ -33,12 +34,19 @@ const equipmentOptions = [
 ];
 
 export default function UploadPanel({ isOpen, onClose, onUploadComplete }: UploadPanelProps) {
+  type BackupUploadTicket = {
+    bucket: string;
+    path: string;
+    token: string;
+  };
+
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
-  const [uploadStep, setUploadStep] = useState<'idle' | 'init' | 'cloudflare' | 'saving'>('idle');
+  const [uploadStep, setUploadStep] = useState<'idle' | 'init' | 'backup' | 'cloudflare' | 'saving'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [backupWarning, setBackupWarning] = useState('');
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -117,6 +125,16 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
     });
   };
 
+  async function uploadBackupToSupabase(backup: BackupUploadTicket, fileToUpload: File) {
+    const { error } = await supabase.storage
+      .from(backup.bucket)
+      .uploadToSignedUrl(backup.path, backup.token, fileToUpload);
+
+    if (error) {
+      throw new Error(`Backup upload failed: ${error.message}`);
+    }
+  }
+
   const handleUpload = async () => {
     if (!file) return;
 
@@ -125,6 +143,7 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
     setUploadStep('init');
     setUploadProgress(0);
     setErrorMessage('');
+    setBackupWarning('');
 
     try {
       // 1) Request a direct upload URL (server-side only stores Cloudflare token; safe for cloud deploy)
@@ -134,6 +153,7 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
         body: JSON.stringify({
           title: formData.title,
           maxDurationSeconds: 3600,
+          fileName: file.name,
         }),
       });
       const initText = await initRes.text();
@@ -149,13 +169,23 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
       const uploadURL = initJson.uploadURL as string;
       const uid = initJson.uid as string;
       if (!uploadURL || !uid) throw new Error('Invalid upload URL response');
+      const backup = (initJson.backup || null) as BackupUploadTicket | null;
+      const backupWarn = initJson.backupWarning as string | undefined;
+      if (backupWarn) setBackupWarning(backupWarn);
 
-      // 2) Upload the file directly to Cloudflare (browser -> Cloudflare) with real progress
+      // 2) Upload a durable backup copy to Supabase storage when available.
+      if (backup) {
+        setUploadStep('backup');
+        setUploadProgress(1);
+        await uploadBackupToSupabase(backup, file);
+      }
+
+      // 3) Upload the file directly to Cloudflare (browser -> Cloudflare) with real progress
       setUploadStep('cloudflare');
-      setUploadProgress(1);
+      setUploadProgress((p) => Math.max(p, 5));
       await uploadToCloudflareWithProgress(uploadURL, file);
 
-      // 3) Tell server to save metadata to Supabase (and read Cloudflare duration/status)
+      // 4) Tell server to save metadata to Supabase (and read Cloudflare duration/status)
       setUploadStep('saving');
       setUploadProgress((p) => Math.max(p, 92));
       const completeRes = await fetch('/api/upload-video/complete', {
@@ -169,6 +199,8 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
           bodyPart: formData.bodyPart,
           difficulty: formData.difficulty,
           equipment: formData.equipment,
+          backupBucket: backup?.bucket || null,
+          backupPath: backup?.path || null,
         }),
       });
       const completeText = await completeRes.text();
@@ -222,6 +254,7 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
     setUploadStatus('idle');
     setUploadStep('idle');
     setErrorMessage('');
+    setBackupWarning('');
   };
 
   const toggleEquipment = (item: string) => {
@@ -428,6 +461,8 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
                 <span className="text-gray-400">
                   {uploadStep === 'init'
                     ? 'Preparing upload...'
+                    : uploadStep === 'backup'
+                      ? 'Saving backup copy...'
                     : uploadStep === 'cloudflare'
                       ? 'Uploading file to Cloudflare Stream...'
                       : uploadStep === 'saving'
@@ -459,6 +494,15 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
             </div>
           )}
 
+          {backupWarning && uploadStatus !== 'error' && (
+            <div className="flex items-center gap-3 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-xl">
+              <AlertCircle className="w-5 h-5 text-yellow-400" />
+              <p className="text-sm text-yellow-300">
+                Backup warning: {backupWarning}
+              </p>
+            </div>
+          )}
+
           {/* Upload Button */}
           <button
             onClick={handleUpload}
@@ -485,7 +529,7 @@ export default function UploadPanel({ isOpen, onClose, onUploadComplete }: Uploa
 
           {/* Help Text */}
           <p className="text-xs text-gray-500 text-center">
-            Videos are uploaded to Cloudflare Stream and metadata is saved to Supabase.
+            Videos are uploaded to Cloudflare Stream, and a backup copy is stored in Supabase Storage.
             <br />
             Supported formats: MP4, MOV, WebM (max 200MB)
           </p>

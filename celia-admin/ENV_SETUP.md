@@ -25,8 +25,20 @@ SUPABASE_VIDEO_BACKUP_BUCKET=video-backups
 # fal.ai
 FAL_KEY=...
 
-# Mobile app AI routine generation (server-side)
+# Mobile app AI routine generation (server-side text model)
+DEEPSEEK_API_KEY=...
+DEEPSEEK_TEXT_MODEL=deepseek-v4-pro
+# Optional override; defaults to DeepSeek's OpenAI-compatible endpoint.
+# DEEPSEEK_TEXT_ENDPOINT=https://api.deepseek.com/v1/chat/completions
+# Optional: while the real filmed-video pipeline is suspended (default),
+# "Create Routine" builds routines only from the `exercise_media` stock GIF
+# library. Set to "false" once enough real videos are uploaded and ready,
+# so generated routines prefer a real video per exercise when one exists.
+# SUSPEND_REAL_VIDEOS=true
+
+# Mobile calorie scanner vision fallback
 OPENAI_API_KEY=...
+OPENAI_VISION_MODEL=gpt-5.4-mini
 FIREBASE_PROJECT_ID=...
 ```
 

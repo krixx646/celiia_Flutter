@@ -43,6 +43,11 @@ class RoutineStep {
   final String? thumbnailUrl;
   final int orderIndex;
 
+  /// Stable slug identifying the exercise (e.g. "squat", "pull-up"), used to
+  /// look up a temporary stock GIF in `exercise_media` when no real video is
+  /// ready yet. Optional — if absent, it's derived from [title] at runtime.
+  final String? exerciseSlug;
+
   const RoutineStep({
     required this.id,
     required this.title,
@@ -51,6 +56,7 @@ class RoutineStep {
     this.videoId,
     this.thumbnailUrl,
     required this.orderIndex,
+    this.exerciseSlug,
   });
 
   factory RoutineStep.fromJson(Map<String, dynamic> json) =>
@@ -174,4 +180,3 @@ class UserRoutine {
 
   Map<String, dynamic> toJson() => _$UserRoutineToJson(this);
 }
-

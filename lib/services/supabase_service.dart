@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show visibleForTesting;
 import '../config/env.dart';
+import '../models/exercise_media.dart';
+import '../models/meal_log.dart';
 import '../models/routine.dart';
 import '../models/video.dart';
 
@@ -25,17 +27,20 @@ class SupabaseService {
   static String Function() backendBaseUrl = () => Env.celiaBackendBaseUrl;
 
   @visibleForTesting
-  static Future<void> Function({required String url, required String anonKey}) supabaseInitialize =
-      ({required String url, required String anonKey}) => Supabase.initialize(url: url, anonKey: anonKey);
+  static Future<void> Function({required String url, required String anonKey})
+  supabaseInitialize = ({required String url, required String anonKey}) =>
+      Supabase.initialize(url: url, anonKey: anonKey);
 
   @visibleForTesting
-  static SupabaseClient Function() supabaseClientFactory = () => Supabase.instance.client;
+  static SupabaseClient Function() supabaseClientFactory = () =>
+      Supabase.instance.client;
 
   @visibleForTesting
   static http.Client httpClient = http.Client();
 
   @visibleForTesting
-  static FirebaseAuth Function() firebaseAuthFactory = () => FirebaseAuth.instance;
+  static FirebaseAuth Function() firebaseAuthFactory = () =>
+      FirebaseAuth.instance;
 
   @visibleForTesting
   static void setClientForTesting(SupabaseClient client) {
@@ -105,10 +110,7 @@ class SupabaseService {
   }) async {
     await initialize();
     // Build filter query first (before order/range)
-    var filterQuery = client
-        .from('routines')
-        .select()
-        .eq('is_published', true);
+    var filterQuery = client.from('routines').select().eq('is_published', true);
 
     if (category != null) {
       filterQuery = filterQuery.eq('category', category.name);
@@ -154,8 +156,11 @@ class SupabaseService {
   /// Fetch a single routine by ID
   Future<Routine?> getRoutine(String id) async {
     await initialize();
-    final response =
-        await client.from('routines').select().eq('id', id).maybeSingle();
+    final response = await client
+        .from('routines')
+        .select()
+        .eq('id', id)
+        .maybeSingle();
 
     if (response == null) return null;
     return Routine.fromJson(response);
@@ -191,7 +196,10 @@ class SupabaseService {
 
     final user = firebaseAuthFactory().currentUser;
     if (user == null) {
-      throw SupabaseException('Not signed in', 'Please sign in before generating a routine');
+      throw SupabaseException(
+        'Not signed in',
+        'Please sign in before generating a routine',
+      );
     }
 
     final idToken = await user.getIdToken();
@@ -216,7 +224,9 @@ class SupabaseService {
     final json = text.isNotEmpty ? jsonDecode(text) : {};
 
     if (res.statusCode < 200 || res.statusCode >= 300) {
-      final msg = (json is Map && json['error'] != null) ? json['error'].toString() : 'Failed to generate routine';
+      final msg = (json is Map && json['error'] != null)
+          ? json['error'].toString()
+          : 'Failed to generate routine';
       throw SupabaseException(msg, text);
     }
 
@@ -282,8 +292,11 @@ class SupabaseService {
   /// Fetch a single video by ID
   Future<Video?> getVideo(String id) async {
     await initialize();
-    final response =
-        await client.from('videos').select().eq('id', id).maybeSingle();
+    final response = await client
+        .from('videos')
+        .select()
+        .eq('id', id)
+        .maybeSingle();
 
     if (response == null) return null;
     return _videoFromSupabaseRow(response);
@@ -291,13 +304,21 @@ class SupabaseService {
 
   /// Fetch a single video by Cloudflare Stream ID (stream_id column)
   Future<Video?> getVideoByStreamId(String streamId) async {
-    await initialize();
+    final value = streamId.trim();
+    if (value.isEmpty) return null;
+
+    try {
+      await initialize();
+    } catch (_) {
+      return null;
+    }
+
     // Prefer the newer column name (cloudflare_video_id), fall back to legacy (stream_id).
     try {
       final response = await client
           .from('videos')
           .select()
-          .eq('cloudflare_video_id', streamId)
+          .eq('cloudflare_video_id', value)
           .maybeSingle();
       if (response != null) return _videoFromSupabaseRow(response);
     } catch (_) {
@@ -308,7 +329,7 @@ class SupabaseService {
       final response = await client
           .from('videos')
           .select()
-          .eq('stream_id', streamId)
+          .eq('stream_id', value)
           .maybeSingle();
       if (response != null) return _videoFromSupabaseRow(response);
     } catch (_) {
@@ -343,6 +364,22 @@ class SupabaseService {
     return null;
   }
 
+  /// Fetch the full `exercise_media` reference library (stock GIF fallbacks).
+  ///
+  /// It's a small, public, rarely-changing table, so callers should cache
+  /// this in memory for the app session (see [ExerciseMediaResolver]) rather
+  /// than calling it per routine step.
+  Future<List<ExerciseMedia>> getExerciseMediaLibrary() async {
+    final rows = await client
+        .from('exercise_media')
+        .select(
+          'slug, display_name, muscle_group, category, gif_url, is_placeholder',
+        );
+    return (rows as List)
+        .map((row) => ExerciseMedia.fromJson(row as Map<String, dynamic>))
+        .toList();
+  }
+
   /// Convert Supabase row (snake_case) to Video model (camelCase)
   Video _videoFromSupabaseRow(Map<String, dynamic> row) {
     final uploadedAtRaw = row['uploaded_at'] ?? row['created_at'];
@@ -353,18 +390,21 @@ class SupabaseService {
     // Map snake_case from Supabase to camelCase for Video model
     final mapped = <String, dynamic>{
       'id': row['id']?.toString() ?? '',
-      'streamId': (row['cloudflare_video_id'] ??
-              row['stream_id'] ??
-              row['streamId'] ??
-              '')
-          .toString(),
+      'streamId':
+          (row['cloudflare_video_id'] ??
+                  row['stream_id'] ??
+                  row['streamId'] ??
+                  '')
+              .toString(),
       'title': row['title']?.toString() ?? '',
       'description': row['description']?.toString(),
       'durationSeconds': row['duration_seconds'] ?? row['durationSeconds'] ?? 0,
       'thumbnailUrl': row['thumbnail_url'] ?? row['thumbnailUrl'],
-      'playbackUrl': (row['playback_url'] ?? row['playbackUrl'] ?? '').toString(),
+      'playbackUrl': (row['playback_url'] ?? row['playbackUrl'] ?? '')
+          .toString(),
       'status': (row['status'] ?? 'processing').toString(),
-      'uploadedBy': (row['uploaded_by'] ?? row['uploadedBy'] ?? 'admin').toString(),
+      'uploadedBy': (row['uploaded_by'] ?? row['uploadedBy'] ?? 'admin')
+          .toString(),
       'uploadedAt': uploadedAtIso,
       'tags': row['tags'] ?? [],
       'category': row['category']?.toString(),
@@ -375,13 +415,17 @@ class SupabaseService {
   }
 
   @visibleForTesting
-  Video videoFromSupabaseRowForTesting(Map<String, dynamic> row) => _videoFromSupabaseRow(row);
+  Video videoFromSupabaseRowForTesting(Map<String, dynamic> row) =>
+      _videoFromSupabaseRow(row);
 
   /// Create a new video record
   Future<Video> createVideo(Video video) async {
     await initialize();
-    final response =
-        await client.from('videos').insert(video.toJson()).select().single();
+    final response = await client
+        .from('videos')
+        .insert(video.toJson())
+        .select()
+        .single();
 
     return _videoFromSupabaseRow(response);
   }
@@ -461,9 +505,45 @@ class SupabaseService {
   /// Record routine completion
   Future<void> recordCompletion(String userRoutineId) async {
     await initialize();
-    await client.rpc('increment_routine_completion', params: {
-      'routine_id': userRoutineId,
-    });
+    await client.rpc(
+      'increment_routine_completion',
+      params: {'routine_id': userRoutineId},
+    );
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // MEAL LOGS
+  // ─────────────────────────────────────────────────────────────────────────
+
+  /// Save a calorie scanner result for a user.
+  Future<MealLog> saveMealLog(MealLog mealLog) async {
+    await initialize();
+    final response = await client
+        .from('user_meals')
+        .insert(mealLog.toInsertJson())
+        .select()
+        .single();
+
+    return MealLog.fromJson(response);
+  }
+
+  /// Fetch the latest logged meals for a user.
+  Future<List<MealLog>> getMealLogs(
+    String userId, {
+    int limit = 30,
+    int offset = 0,
+  }) async {
+    await initialize();
+    final response = await client
+        .from('user_meals')
+        .select()
+        .eq('user_id', userId)
+        .order('logged_at', ascending: false)
+        .range(offset, offset + limit - 1);
+
+    return (response as List<dynamic>)
+        .map((json) => MealLog.fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 }
 
@@ -477,4 +557,3 @@ class SupabaseException implements Exception {
   @override
   String toString() => details != null ? '$message: $details' : message;
 }
-

@@ -5,7 +5,8 @@ import '../models/video.dart';
 
 /// Service for interacting with Cloudflare Stream API
 class CloudflareStreamService {
-  static const String _baseUrl = 'https://api.cloudflare.com/client/v4/accounts';
+  static const String _baseUrl =
+      'https://api.cloudflare.com/client/v4/accounts';
 
   final String _accountId;
   final String _apiToken;
@@ -15,16 +16,16 @@ class CloudflareStreamService {
     String? accountId,
     String? apiToken,
     http.Client? client,
-  })  : _accountId = accountId ?? Env.cloudflareAccountId,
-        _apiToken = apiToken ?? Env.cloudflareApiToken,
-        _client = client ?? http.Client();
+  }) : _accountId = accountId ?? Env.cloudflareAccountId,
+       _apiToken = apiToken ?? Env.cloudflareApiToken,
+       _client = client ?? http.Client();
 
   String get _streamUrl => '$_baseUrl/$_accountId/stream';
 
   Map<String, String> get _headers => {
-        'Authorization': 'Bearer $_apiToken',
-        'Content-Type': 'application/json',
-      };
+    'Authorization': 'Bearer $_apiToken',
+    'Content-Type': 'application/json',
+  };
 
   /// Get a direct upload URL for uploading a video
   /// This allows clients to upload directly to Cloudflare without going through our server
@@ -38,10 +39,7 @@ class CloudflareStreamService {
       headers: _headers,
       body: jsonEncode({
         'maxDurationSeconds': maxDurationSeconds,
-        'meta': {
-          'name': filename,
-          ...?metadata,
-        },
+        'meta': {'name': filename, ...?metadata},
         'requireSignedURLs': false, // Set to true for private videos
       }),
     );
@@ -105,14 +103,20 @@ class CloudflareStreamService {
   }
 
   /// Get thumbnail URL for a video
-  String getThumbnailUrl(String streamId, {int? time, int? width, int? height}) {
+  String getThumbnailUrl(
+    String streamId, {
+    int? time,
+    int? width,
+    int? height,
+  }) {
     final params = <String, String>{};
     if (time != null) params['time'] = '${time}s';
     if (width != null) params['width'] = width.toString();
     if (height != null) params['height'] = height.toString();
 
-    final queryString =
-        params.isNotEmpty ? '?${Uri(queryParameters: params).query}' : '';
+    final queryString = params.isNotEmpty
+        ? '?${Uri(queryParameters: params).query}'
+        : '';
     return 'https://customer-$_accountId.cloudflarestream.com/$streamId/thumbnails/thumbnail.jpg$queryString';
   }
 
@@ -121,9 +125,7 @@ class CloudflareStreamService {
     int limit = 50,
     String? after,
   }) async {
-    final queryParams = <String, String>{
-      'limit': limit.toString(),
-    };
+    final queryParams = <String, String>{'limit': limit.toString()};
     if (after != null) queryParams['after'] = after;
 
     final response = await _client.get(
@@ -169,9 +171,9 @@ class CloudflareStreamService {
     try {
       final details = await getVideoDetails(streamId);
       final status = details['status'] as Map<String, dynamic>?;
-      
+
       if (status == null) return VideoStatus.pending;
-      
+
       final state = status['state'] as String?;
       switch (state) {
         case 'ready':
@@ -200,4 +202,3 @@ class CloudflareException implements Exception {
   @override
   String toString() => details != null ? '$message: $details' : message;
 }
-

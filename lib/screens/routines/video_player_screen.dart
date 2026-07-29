@@ -60,11 +60,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.error_outline,
-                  color: Colors.red,
-                  size: 48,
-                ),
+                Icon(Icons.error_outline, color: Colors.red, size: 48),
                 SizedBox(height: 16),
                 Text(
                   'Error loading video',
@@ -141,63 +137,58 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               ),
             )
           : _error != null
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        color: Colors.red,
-                        size: 64,
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Failed to load video',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 32),
-                        child: Text(
-                          _error!,
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _isInitializing = true;
-                            _error = null;
-                          });
-                          _initializePlayer();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: theme.accentOrange,
-                          foregroundColor: Colors.white,
-                        ),
-                        child: const Text('Retry'),
-                      ),
-                    ],
-                  ),
-                )
-              : _chewieController != null
-                  ? Chewie(controller: _chewieController!)
-                  : const Center(
-                      child: Text(
-                        'Video player not initialized',
-                        style: TextStyle(color: Colors.white70),
-                      ),
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.error_outline, color: Colors.red, size: 64),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Failed to load video',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Text(
+                      _error!,
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _isInitializing = true;
+                        _error = null;
+                      });
+                      _initializePlayer();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: theme.accentOrange,
+                      foregroundColor: Colors.white,
+                    ),
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
+            )
+          : _chewieController != null
+          ? Chewie(controller: _chewieController!)
+          : const Center(
+              child: Text(
+                'Video player not initialized',
+                style: TextStyle(color: Colors.white70),
+              ),
+            ),
     );
   }
 }
-

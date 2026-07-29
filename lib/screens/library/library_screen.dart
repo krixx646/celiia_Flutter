@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/routine.dart';
+import '../../providers/auth_provider.dart';
 import '../../providers/routine_provider.dart';
 import '../../providers/theme_provider.dart';
-import '../../services/cloudflare_stream_service.dart';
-import '../../services/supabase_service.dart';
+import '../../services/routine_thumbnail_resolver.dart';
 import '../routines/routine_detail_screen.dart';
-import '../routines/routine_player_screen.dart';
+import 'dart:ui';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
@@ -17,16 +17,13 @@ class LibraryScreen extends StatefulWidget {
 
 class _LibraryScreenState extends State<LibraryScreen> {
   int _selectedIndex = 0;
-  final SupabaseService _supabaseService = SupabaseService.instance;
-  final CloudflareStreamService _cloudflareService = CloudflareStreamService();
-  final Map<String, String?> _resolvedRoutineThumbs = {};
-  final Set<String> _thumbRequestsInFlight = {};
+  final RoutineThumbnailResolver _thumbnailResolver =
+      RoutineThumbnailResolver();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Load routines once when screen mounts
       context.read<RoutineProvider>().loadRoutines();
     });
   }
@@ -39,104 +36,117 @@ class _LibraryScreenState extends State<LibraryScreen> {
     final routines = _selectedIndex == 0
         ? routineProvider.curatedRoutines
         : routineProvider.aiRoutines;
-    
+
     return Scaffold(
       backgroundColor: theme.background,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          'ROUTINE LIBRARY',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.2,
-            fontSize: 22,
-          ),
-        ),
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFFFFB74D), Color(0xFFF57C00)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          children: [
+            // TopAppBar
+            _buildHeader(
+              theme,
+              context.watch<AuthProvider>().uiState.currentUser?.photoURL,
             ),
-          ),
-        ),
-      ),
-      body: Stack(
-        children: [
-          // Top extension
-          Container(
-            height: 60,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFFF57C00), Color(0xFFEF6C00)],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(32)),
-            ),
-          ),
-          
-          Column(
-            children: [
-              const SizedBox(height: 16),
-              // Custom Pill Tabs
-              Center(child: _buildPillTabs(theme)),
-              const SizedBox(height: 24),
-              
-              // List
-              Expanded(
-                child: routineProvider.isLoading
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation(theme.accentOrange),
-                        ),
-                      )
-                    : routineProvider.error != null
+
+            // Main Content
+            Expanded(
+              child: Column(
+                children: [
+                  // Tab Bar
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 8,
+                    ),
+                    child: Row(
+                      children: [
+                        _buildTabItem('Curated', 0, theme),
+                        const SizedBox(width: 8),
+                        _buildTabItem('AI-Generated', 1, theme),
+                      ],
+                    ),
+                  ),
+
+                  // Grid
+                  Expanded(
+                    child: routineProvider.isLoading
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation(
+                                theme.accentOrange,
+                              ),
+                            ),
+                          )
+                        : routineProvider.error != null
                         ? _buildErrorState(theme, routineProvider.error!)
                         : routines.isEmpty
-                            ? _buildEmptyState(theme)
-                            : GridView.builder(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 8,
+                        ? _buildEmptyState(theme)
+                        : GridView.builder(
+                            padding: const EdgeInsets.fromLTRB(24, 8, 24, 120),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount:
+                                      1, // Full width on mobile, could be 2 on tablet
+                                  mainAxisSpacing: 16,
+                                  childAspectRatio: 1.3,
                                 ),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 14,
-                                  mainAxisSpacing: 14,
-                                  childAspectRatio: 0.72,
-                                ),
-                                itemCount: routines.length,
-                                itemBuilder: (context, index) {
-                                  final routine = routines[index];
-                                  return _buildRoutineTile(routine, theme);
-                                },
-                              ),
+                            itemCount: routines.length,
+                            itemBuilder: (context, index) {
+                              final routine = routines[index];
+                              return _buildRoutineCard(routine, theme);
+                            },
+                          ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildPillTabs(ThemeProvider theme) {
-    return Container(
-      padding: const EdgeInsets.all(4),
-      decoration: theme.glassDecoration.copyWith(
-        borderRadius: BorderRadius.circular(30),
-      ),
+  Widget _buildHeader(ThemeProvider theme, String? photoUrl) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildTabItem('Curated', 0, theme),
-          const SizedBox(width: 4),
-          _buildTabItem('AI-generated', 1, theme),
+          Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: theme.border),
+                  image: (photoUrl != null && photoUrl.isNotEmpty)
+                      ? DecorationImage(
+                          image: NetworkImage(photoUrl),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                ),
+                child: (photoUrl == null || photoUrl.isEmpty)
+                    ? Icon(Icons.person, color: theme.textSecondary)
+                    : null,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'Routine Library',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                  color: theme.accentOrange,
+                ),
+              ),
+            ],
+          ),
+          IconButton(
+            icon: Icon(Icons.notifications, color: theme.accentOrange),
+            onPressed: () {},
+          ),
         ],
       ),
     );
@@ -148,39 +158,29 @@ class _LibraryScreenState extends State<LibraryScreen> {
       onTap: () => setState(() => _selectedIndex = index),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? theme.accentOrange : Colors.transparent,
-          borderRadius: BorderRadius.circular(24),
+          color: isSelected ? theme.accentOrange : theme.surface,
+          borderRadius: BorderRadius.circular(999),
+          border: Border.all(
+            color: isSelected ? theme.accentOrange : theme.border,
+          ),
         ),
         child: Text(
           text,
           style: TextStyle(
-            color: isSelected 
-                ? Colors.white 
-                : (theme.isDarkMode ? Colors.white70 : const Color(0xFFF57C00)),
+            color: isSelected ? Colors.black87 : Colors.white70,
             fontWeight: FontWeight.bold,
-            fontSize: 15,
+            fontSize: 16,
           ),
         ),
       ),
     );
   }
 
-  Widget _buildRoutineTile(Routine routine, ThemeProvider theme) {
-    final thumb = _getRoutineThumbnail(routine);
-    final difficultyColor = _difficultyColor(theme, routine.difficulty);
-
+  Widget _buildRoutineCard(Routine routine, ThemeProvider theme) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => RoutinePlayerScreen(routine: routine),
-          ),
-        );
-      },
-      onLongPress: () {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -189,8 +189,17 @@ class _LibraryScreenState extends State<LibraryScreen> {
         );
       },
       child: Container(
-        decoration: theme.glassDecoration.copyWith(
-          borderRadius: BorderRadius.circular(18),
+        decoration: BoxDecoration(
+          color: theme.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: theme.border),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -201,75 +210,88 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 children: [
                   ClipRRect(
                     borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(18),
+                      top: Radius.circular(16),
                     ),
-                    child: thumb != null && thumb.isNotEmpty
-                        ? Image.network(
+                    child: FutureBuilder<String?>(
+                      future: _getRoutineThumbnail(routine),
+                      builder: (context, snapshot) {
+                        final thumb = snapshot.data;
+                        if (thumb != null && thumb.isNotEmpty) {
+                          return Image.network(
                             thumb,
                             fit: BoxFit.cover,
                             errorBuilder: (_, __, ___) =>
                                 _routineThumbPlaceholder(theme),
-                          )
-                        : _routineThumbPlaceholder(theme),
+                          );
+                        }
+                        return _routineThumbPlaceholder(theme);
+                      },
+                    ),
                   ),
-                  // Dark gradient for readability
+                  // Gradient Overlay
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(18),
+                        top: Radius.circular(16),
                       ),
                       gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
                         colors: [
-                          Colors.black.withValues(alpha: 0.1),
-                          Colors.black.withValues(alpha: 0.75),
+                          theme.background.withValues(alpha: 0.8),
+                          Colors.transparent,
                         ],
                       ),
                     ),
                   ),
-                  // Play button
+                  // Glassmorphic Play Button
                   Center(
-                    child: Container(
-                      width: 52,
-                      height: 52,
-                      decoration: BoxDecoration(
-                        color: theme.accentOrange.withValues(alpha: 0.95),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.3),
-                            blurRadius: 10,
-                            offset: const Offset(0, 3),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(999),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                        child: Container(
+                          width: 64,
+                          height: 64,
+                          decoration: BoxDecoration(
+                            color: theme.isDarkMode
+                                ? const Color(0xFF1E2235).withValues(alpha: 0.6)
+                                : Colors.white.withValues(alpha: 0.8),
+                            shape: BoxShape.circle,
+                            border: Border.all(color: theme.border),
                           ),
-                        ],
-                      ),
-                      child: const Icon(
-                        Icons.play_arrow,
-                        color: Colors.white,
-                        size: 32,
+                          child: Icon(
+                            Icons.play_arrow,
+                            color: theme.accentOrange,
+                            size: 32,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  // Badges
+                  // Duration Pill
                   Positioned(
-                    top: 10,
-                    right: 10,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        color: difficultyColor,
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: Text(
-                        routine.difficultyLabel,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
+                    bottom: 12,
+                    right: 12,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          color: Colors.black.withValues(alpha: 0.6),
+                          child: Text(
+                            routine.durationLabel.toUpperCase(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -278,35 +300,31 @@ class _LibraryScreenState extends State<LibraryScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     routine.title,
-                    maxLines: 2,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: theme.textPrimary,
-                      fontSize: 14.5,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 6,
-                    crossAxisAlignment: WrapCrossAlignment.center,
+                  Row(
                     children: [
-                      _metaItem(
-                        icon: Icons.timer,
-                        label: routine.durationLabel,
-                        theme: theme,
-                      ),
-                      _metaItem(
-                        icon: Icons.list,
-                        label: '${routine.steps.length} steps',
-                        theme: theme,
+                      _buildDifficultyPill(theme, routine.difficulty),
+                      const SizedBox(width: 8),
+                      Text(
+                        '•  ${routine.steps.length} steps',
+                        style: TextStyle(
+                          color: theme.textSecondary,
+                          fontSize: 14,
+                        ),
                       ),
                     ],
                   ),
@@ -319,113 +337,61 @@ class _LibraryScreenState extends State<LibraryScreen> {
     );
   }
 
-  Widget _metaItem({
-    required IconData icon,
-    required String label,
-    required ThemeProvider theme,
-  }) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, size: 14, color: theme.textSecondary),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: TextStyle(
-            color: theme.textSecondary,
-            fontSize: 12.5,
-          ),
-        ),
-      ],
-    );
-  }
+  Widget _buildDifficultyPill(
+    ThemeProvider theme,
+    RoutineDifficulty difficulty,
+  ) {
+    Color bgColor;
+    Color textColor;
 
-  Widget _routineThumbPlaceholder(ThemeProvider theme) {
+    switch (difficulty) {
+      case RoutineDifficulty.easy:
+        textColor = const Color(0xFF00E676);
+        bgColor = const Color(0xFF00b25a).withValues(alpha: 0.2);
+        break;
+      case RoutineDifficulty.medium:
+        textColor = const Color(0xFFFFB74D);
+        bgColor = const Color(0xFFc3841b).withValues(alpha: 0.2);
+        break;
+      case RoutineDifficulty.hard:
+        textColor = const Color(0xFFFFb4ab);
+        bgColor = const Color(0xFF93000a).withValues(alpha: 0.2);
+        break;
+    }
+
     return Container(
-      color: theme.isDarkMode ? const Color(0xFF151829) : Colors.grey[200],
-      child: Center(
-        child: Icon(
-          Icons.video_library_outlined,
-          color: theme.textSecondary,
-          size: 42,
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        difficulty.name.substring(0, 1).toUpperCase() +
+            difficulty.name.substring(1),
+        style: TextStyle(
+          color: textColor,
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
         ),
       ),
     );
   }
 
-  String? _getRoutineThumbnail(Routine routine) {
-    // 1) Cached resolution (async)
-    if (_resolvedRoutineThumbs.containsKey(routine.id)) {
-      return _resolvedRoutineThumbs[routine.id];
-    }
-
-    // 2) Routine-level thumbnail from DB
-    final routineThumb = routine.thumbnailUrl;
-    if (routineThumb != null && routineThumb.isNotEmpty) {
-      return routineThumb;
-    }
-
-    // 3) Step-level thumbnail (often stored in steps JSON)
-    for (final step in routine.steps) {
-      final stepThumb = step.thumbnailUrl;
-      if (stepThumb != null && stepThumb.isNotEmpty) {
-        _resolvedRoutineThumbs[routine.id] = stepThumb;
-        return stepThumb;
-      }
-    }
-
-    // 4) Resolve from step video_id (can be videos.id or Cloudflare UID)
-    final firstWithVideo = routine.steps
-        .where((s) => (s.videoId ?? '').trim().isNotEmpty)
-        .cast<RoutineStep?>()
-        .firstWhere((_) => true, orElse: () => null);
-
-    final stepVideoId = firstWithVideo?.videoId?.trim();
-    if (stepVideoId == null || stepVideoId.isEmpty) {
-      _resolvedRoutineThumbs[routine.id] = null;
-      return null;
-    }
-
-    if (_thumbRequestsInFlight.contains(routine.id)) return null;
-    _thumbRequestsInFlight.add(routine.id);
-
-    () async {
-      try {
-        final video = await _supabaseService.getVideoByAnyId(stepVideoId);
-        final cloudflareId = (video != null && video.streamId.isNotEmpty)
-            ? video.streamId
-            : stepVideoId;
-
-        final resolved = (video?.thumbnailUrl?.isNotEmpty ?? false)
-            ? video!.thumbnailUrl
-            : _cloudflareService.getThumbnailUrl(cloudflareId);
-
-        if (!mounted) return;
-        setState(() {
-          _resolvedRoutineThumbs[routine.id] = resolved;
-          _thumbRequestsInFlight.remove(routine.id);
-        });
-      } catch (_) {
-        if (!mounted) return;
-        setState(() {
-          _resolvedRoutineThumbs[routine.id] = null;
-          _thumbRequestsInFlight.remove(routine.id);
-        });
-      }
-    }();
-
-    return null;
+  Widget _routineThumbPlaceholder(ThemeProvider theme) {
+    return Container(
+      color: const Color(0xFF1A1D2D),
+      child: Center(
+        child: Icon(
+          Icons.video_library_outlined,
+          color: theme.textSecondary,
+          size: 48,
+        ),
+      ),
+    );
   }
 
-  Color _difficultyColor(ThemeProvider theme, RoutineDifficulty difficulty) {
-    switch (difficulty) {
-      case RoutineDifficulty.easy:
-        return Colors.green.withValues(alpha: theme.isDarkMode ? 0.45 : 0.8);
-      case RoutineDifficulty.medium:
-        return Colors.orange.withValues(alpha: theme.isDarkMode ? 0.45 : 0.8);
-      case RoutineDifficulty.hard:
-        return Colors.red.withValues(alpha: theme.isDarkMode ? 0.45 : 0.8);
-    }
+  Future<String?> _getRoutineThumbnail(Routine routine) {
+    return _thumbnailResolver.resolve(routine);
   }
 
   Widget _buildEmptyState(ThemeProvider theme) {
@@ -486,7 +452,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
             ),
             const SizedBox(height: 18),
             ElevatedButton(
-              onPressed: () => context.read<RoutineProvider>().loadRoutines(refresh: true),
+              onPressed: () =>
+                  context.read<RoutineProvider>().loadRoutines(refresh: true),
               style: ElevatedButton.styleFrom(
                 backgroundColor: theme.accentOrange,
                 foregroundColor: Colors.white,

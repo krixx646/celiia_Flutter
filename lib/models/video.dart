@@ -108,4 +108,3 @@ class VideoUploadResponse {
 
   Map<String, dynamic> toJson() => _$VideoUploadResponseToJson(this);
 }
-

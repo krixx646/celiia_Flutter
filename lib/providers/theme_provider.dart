@@ -35,15 +35,18 @@ class ThemeProvider extends ChangeNotifier {
   Color get surfaceGlass => isDarkMode ? darkSurfaceGlass : lightSurface;
   Color get accentOrange => isDarkMode ? darkAccentOrange : lightAccentOrange;
   Color get textPrimary => isDarkMode ? darkTextPrimary : lightTextPrimary;
-  Color get textSecondary => isDarkMode ? darkTextSecondary : lightTextSecondary;
+  Color get textSecondary =>
+      isDarkMode ? darkTextSecondary : lightTextSecondary;
   Color get border => isDarkMode ? darkBorder : Colors.grey[200]!;
-  
+
   // Helper for glass decoration
-  BoxDecoration get glassDecoration => isDarkMode 
+  BoxDecoration get glassDecoration => isDarkMode
       ? BoxDecoration(
           color: const Color(0xFF1E2235).withValues(alpha: 0.6),
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: const Color(0xFF363D52).withValues(alpha: 0.5)),
+          border: Border.all(
+            color: const Color(0xFF363D52).withValues(alpha: 0.5),
+          ),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.3),
@@ -64,4 +67,3 @@ class ThemeProvider extends ChangeNotifier {
           ],
         );
 }
-

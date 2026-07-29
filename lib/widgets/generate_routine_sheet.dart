@@ -78,7 +78,11 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.auto_awesome, color: Colors.white, size: 24),
+                  child: const Icon(
+                    Icons.auto_awesome,
+                    color: Colors.white,
+                    size: 24,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Text(
@@ -108,8 +112,11 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
               maxLines: 3,
               style: TextStyle(color: theme.textPrimary),
               decoration: InputDecoration(
-                hintText: 'e.g., "A quick morning stretch to wake up" or "Full body strength training for beginners"',
-                hintStyle: TextStyle(color: theme.textSecondary.withValues(alpha: 0.6)),
+                hintText:
+                    'e.g., "A quick morning stretch to wake up" or "Full body strength training for beginners"',
+                hintStyle: TextStyle(
+                  color: theme.textSecondary.withValues(alpha: 0.6),
+                ),
                 filled: true,
                 fillColor: theme.isDarkMode
                     ? Colors.white.withValues(alpha: 0.05)
@@ -174,7 +181,9 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
             Row(
               children: RoutineDifficulty.values.map((difficulty) {
                 final isSelected = _selectedDifficulty == difficulty;
-                final label = difficulty.name[0].toUpperCase() + difficulty.name.substring(1);
+                final label =
+                    difficulty.name[0].toUpperCase() +
+                    difficulty.name.substring(1);
                 return Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -357,4 +366,3 @@ Future<Routine?> showGenerateRoutineSheet(BuildContext context) {
     builder: (context) => const GenerateRoutineSheet(),
   );
 }
-

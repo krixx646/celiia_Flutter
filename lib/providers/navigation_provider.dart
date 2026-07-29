@@ -12,4 +12,3 @@ class NavigationProvider extends ChangeNotifier {
     }
   }
 }
-

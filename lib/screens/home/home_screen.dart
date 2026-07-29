@@ -3,13 +3,17 @@ import 'package:provider/provider.dart';
 import '../../models/routine.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/navigation_provider.dart';
+import '../../providers/nutrition_tracker_provider.dart';
 import '../../providers/routine_provider.dart';
 import '../../providers/theme_provider.dart';
-import '../../services/cloudflare_stream_service.dart';
+import '../../services/routine_thumbnail_resolver.dart';
 import '../../services/supabase_service.dart';
+import '../../utils/progress.dart';
 import '../../widgets/generate_routine_sheet.dart';
 import '../routines/routine_detail_screen.dart';
 import '../routines/routine_player_screen.dart';
+import '../tools/calorie_scanner_screen.dart';
+import '../tools/nutrition_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,17 +23,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  static const String _heroImageAsset = 'assets/images/home_hero_fitness.jpg';
   final SupabaseService _supabase = SupabaseService.instance;
-  final CloudflareStreamService _cloudflare = CloudflareStreamService();
-
-  final Map<String, String?> _resolvedThumbs = {};
-  final Map<String, Future<String?>> _thumbFutures = {};
+  final RoutineThumbnailResolver _thumbnailResolver =
+      RoutineThumbnailResolver();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // Capture dependencies up-front to avoid using BuildContext across async gaps.
+      if (!mounted) return;
+      precacheImage(const AssetImage(_heroImageAsset), context);
+
       final rp = context.read<RoutineProvider>();
       final userId = context.read<AuthProvider>().uiState.currentUser?.uid;
 
@@ -48,228 +53,581 @@ class _HomeScreenState extends State<HomeScreen> {
     final user = context.watch<AuthProvider>().uiState.currentUser;
     final theme = context.watch<ThemeProvider>();
     final rp = context.watch<RoutineProvider>();
-    final userName = user?.displayName ?? user?.email?.split('@')[0] ?? 'Friend';
+    final tracker = context.watch<NutritionTrackerProvider>();
+    final userName =
+        user?.displayName ?? user?.email?.split('@')[0] ?? 'Friend';
+
+    final streakStats = computeActiveStreakStats(
+      routines: rp.userRoutines,
+      meals: tracker.meals,
+    );
 
     return Scaffold(
       backgroundColor: theme.background,
-      body: SingleChildScrollView(
+      body: SafeArea(
+        bottom: false,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Top Section
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                // Background Header
-                Container(
-                  height: 320,
-                  width: double.infinity,
-                  padding: const EdgeInsets.fromLTRB(24, 60, 24, 24),
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFFFFB74D), Color(0xFFF57C00)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.vertical(bottom: Radius.circular(32)),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Header
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 20,
-                            backgroundColor:
-                                theme.isDarkMode ? Colors.white.withValues(alpha: 0.1) : Colors.white24,
-                            child: const Icon(Icons.emoji_emotions, color: Colors.white),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              'Good Morning, $userName!',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          const Icon(Icons.notifications, color: Colors.white),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-
-                // "Ask Celia" Promo Card (Overlapping)
-                Positioned(
-                  top: 120,
-                  left: 24,
-                  right: 24,
-                  child: Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: theme.isDarkMode
-                        ? BoxDecoration(
-                            color: const Color(0xFF1E2235).withValues(alpha: 0.6),
-                            borderRadius: BorderRadius.circular(24),
-                            border: Border.all(color: theme.accentOrange.withValues(alpha: 0.3)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: theme.accentOrange.withValues(alpha: 0.15),
-                                blurRadius: 24,
-                                offset: const Offset(0, 8),
-                              ),
-                            ],
-                          )
-                        : BoxDecoration(
-                            color: const Color(0xFFF57C00),
-                            borderRadius: BorderRadius.circular(24),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.1),
-                                blurRadius: 16,
-                                offset: const Offset(0, 8),
-                              ),
-                            ],
-                            gradient: LinearGradient(
-                              colors: [
-                                Colors.white.withValues(alpha: 0.2),
-                                Colors.white.withValues(alpha: 0.0)
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                          ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Row(
-                          children: [
-                            Icon(Icons.auto_awesome, color: Colors.white, size: 20),
-                            SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                'Generate your personalized routine with AI',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 24),
-                        ElevatedButton(
-                          onPressed: () async {
-                            final routine = await showGenerateRoutineSheet(context);
-                            if (!context.mounted || routine == null) return;
-
-                            // Ensure the new routine shows up in the Library tab immediately.
-                            context.read<NavigationProvider>().setIndex(1);
-
-                            // Open details on the root navigator so the sheet/tab nesting can't swallow the push.
-                            Navigator.of(context, rootNavigator: true).push(
-                              MaterialPageRoute(
-                                builder: (_) => RoutineDetailScreen(routine: routine),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                theme.isDarkMode ? theme.accentOrange : const Color(0xFFE65100),
-                            foregroundColor: Colors.white,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                          ),
-                          child: const Text('Create Routine', style: TextStyle(fontWeight: FontWeight.bold)),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+            // TopAppBar
+            _buildHeader(
+              theme,
+              userName,
+              user?.photoURL,
+              streakStats.streak,
             ),
 
-            const SizedBox(height: 60), // Space for overlapping card
+            // Main Content
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 16),
+                    _buildHeroSection(theme),
+                    const SizedBox(height: 24),
+                    _buildDailyDashboard(theme, tracker, streakStats),
+                    const SizedBox(height: 32),
 
-            // Up Next Section (REAL DATA)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Up Next',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: theme.textPrimary),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 200,
-                    child: _buildUpNextList(theme, rp, userId: user?.uid),
-                  ),
-                ],
+                    // Up Next Section
+                    _buildUpNextHeader(theme),
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      height: 220,
+                      child: _buildUpNextList(theme, rp, userId: user?.uid),
+                    ),
+
+                    const SizedBox(height: 32),
+
+                    // Quick Actions Bento Grid
+                    Text(
+                      'Quick Actions',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: theme.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    _buildQuickActionsGrid(theme),
+
+                    const SizedBox(height: 120), // Padding for bottom nav
+                  ],
+                ),
               ),
             ),
-
-            const SizedBox(height: 32),
-
-            // Quick Actions
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Quick Actions',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: theme.textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildQuickActionBtn(
-                          context,
-                          'Browse Library',
-                          Icons.book_outlined,
-                          () => context.read<NavigationProvider>().setIndex(1),
-                          theme,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: _buildQuickActionBtn(
-                          context,
-                          'Chat with Celia',
-                          Icons.chat_bubble_outline,
-                          () => context.read<NavigationProvider>().setIndex(2),
-                          theme,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 40),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildUpNextList(ThemeProvider theme, RoutineProvider rp, {required String? userId}) {
-    // 1) Continue: most recently played routine
+  Widget _buildHeader(
+    ThemeProvider theme,
+    String userName,
+    String? photoUrl,
+    int streak,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                _buildUserAvatar(theme, photoUrl),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Good Morning,',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: theme.textSecondary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        userName,
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                          color: theme.textPrimary,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            decoration: BoxDecoration(
+              color: theme.accentOrange.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(999),
+              border: Border.all(
+                color: theme.accentOrange.withValues(alpha: 0.2),
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.local_fire_department,
+                  color: theme.accentOrange,
+                  size: 14,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  '$streak',
+                  style: TextStyle(
+                    color: theme.accentOrange,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: theme.isDarkMode
+                  ? const Color(0xFF1E2235).withValues(alpha: 0.6)
+                  : Colors.white.withValues(alpha: 0.8),
+              shape: BoxShape.circle,
+              border: Border.all(color: theme.border),
+            ),
+            child: IconButton(
+              icon: Icon(
+                Icons.notifications,
+                color: theme.accentOrange,
+                size: 20,
+              ),
+              onPressed: () {},
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildUserAvatar(ThemeProvider theme, String? photoUrl) {
+    final fallback = Container(
+      color: theme.surface,
+      child: Icon(Icons.person, color: theme.textSecondary),
+    );
+
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: theme.border),
+      ),
+      child: ClipOval(
+        child: photoUrl != null && photoUrl.isNotEmpty
+            ? Image.network(
+                photoUrl,
+                fit: BoxFit.cover,
+                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                  if (wasSynchronouslyLoaded || frame != null) return child;
+                  return fallback;
+                },
+                errorBuilder: (_, __, ___) => fallback,
+              )
+            : fallback,
+      ),
+    );
+  }
+
+  Widget _buildDailyDashboard(
+    ThemeProvider theme,
+    NutritionTrackerProvider tracker,
+    ActiveStreakStats streakStats,
+  ) {
+    final profile = tracker.profile;
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: theme.surface,
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(color: theme.border),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(
+              alpha: theme.isDarkMode ? 0.18 : 0.06,
+            ),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Today\'s Progress',
+            style: TextStyle(
+              color: theme.textPrimary,
+              fontSize: 20,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            buildStreakNudge(streakStats),
+            style: TextStyle(color: theme.textSecondary, height: 1.35),
+          ),
+          const SizedBox(height: 16),
+          if (profile == null)
+            Text(
+              'Set your nutrition goals to unlock calorie and macro tracking.',
+              style: TextStyle(color: theme.textSecondary, height: 1.4),
+            )
+          else ...[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  tracker.todayCalories.round().toString(),
+                  style: TextStyle(
+                    color: theme.textPrimary,
+                    fontSize: 36,
+                    fontWeight: FontWeight.w900,
+                    height: 1,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Text(
+                    '/ ${profile.dailyCalories.round()} kcal',
+                    style: TextStyle(color: theme.textSecondary),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(999),
+              child: LinearProgressIndicator(
+                minHeight: 8,
+                value: (tracker.todayCalories / profile.dailyCalories).clamp(
+                  0,
+                  1,
+                ),
+                backgroundColor: theme.border,
+                color: theme.accentOrange,
+              ),
+            ),
+            const SizedBox(height: 14),
+            Row(
+              children: [
+                _buildDashboardMacro(
+                  theme,
+                  'Protein',
+                  tracker.todayProtein,
+                  profile.dailyProteinGrams,
+                ),
+                const SizedBox(width: 8),
+                _buildDashboardMacro(
+                  theme,
+                  'Carbs',
+                  tracker.todayCarbs,
+                  profile.dailyCarbsGrams,
+                ),
+                const SizedBox(width: 8),
+                _buildDashboardMacro(
+                  theme,
+                  'Fat',
+                  tracker.todayFat,
+                  profile.dailyFatGrams,
+                ),
+              ],
+            ),
+            if (tracker.todayInsight != null) ...[
+              const SizedBox(height: 14),
+              Text(
+                tracker.todayInsight!.message,
+                style: TextStyle(color: theme.textSecondary, height: 1.35),
+              ),
+            ],
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDashboardMacro(
+    ThemeProvider theme,
+    String label,
+    double consumed,
+    double target,
+  ) {
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+          color: theme.background,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: theme.border),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                color: theme.textSecondary,
+                fontSize: 11,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '${consumed.round()}/${target.round()}g',
+              style: TextStyle(
+                color: theme.textPrimary,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeroSection(ThemeProvider theme) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.5),
+            blurRadius: 30,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          // Background Gradient
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFFFF7A00),
+                          Color(0xFFB75014),
+                          Color(0xFF171B2A),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                  ),
+                  Image.asset(
+                    _heroImageAsset,
+                    fit: BoxFit.cover,
+                    filterQuality: FilterQuality.low,
+                    gaplessPlayback: true,
+                    color: Colors.black.withValues(alpha: 0.55),
+                    colorBlendMode: BlendMode.darken,
+                    errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                  ),
+                  Positioned(
+                    right: -42,
+                    top: -34,
+                    child: Container(
+                      width: 190,
+                      height: 190,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withValues(alpha: 0.08),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: -26,
+                    bottom: -34,
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.black.withValues(alpha: 0.18),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.black.withValues(alpha: 0.08),
+                          Colors.black.withValues(alpha: 0.42),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // Content
+          Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: theme.accentOrange.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(
+                      color: theme.accentOrange.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.smart_toy,
+                        color: theme.accentOrange,
+                        size: 16,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'CELIA ACTIVE',
+                        style: TextStyle(
+                          color: theme.accentOrange,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+                const Text(
+                  'Generate your\npersonalized\nroutine with AI',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w700,
+                    height: 1.2,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () async {
+                    final nav = context.read<NavigationProvider>();
+                    final routine = await showGenerateRoutineSheet(context);
+                    if (!mounted || routine == null) return;
+                    nav.setIndex(1);
+                    if (!mounted) return;
+                    Navigator.of(context, rootNavigator: true).push(
+                      MaterialPageRoute(
+                        builder: (_) => RoutineDetailScreen(routine: routine),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: theme.accentOrange,
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(double.infinity, 56),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28),
+                    ),
+                    elevation: 8,
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.auto_awesome),
+                      SizedBox(width: 8),
+                      Text(
+                        'Create Routine',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildUpNextHeader(ThemeProvider theme) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          'Up Next',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: theme.textPrimary,
+          ),
+        ),
+        InkWell(
+          onTap: () => context.read<NavigationProvider>().setIndex(1),
+          child: Text(
+            'See All',
+            style: TextStyle(
+              fontSize: 14,
+              color: theme.accentOrange,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildUpNextList(
+    ThemeProvider theme,
+    RoutineProvider rp, {
+    required String? userId,
+  }) {
     final recentlyPlayed = [...rp.userRoutines]
-      ..sort((a, b) => (b.lastPlayedAt ?? DateTime.fromMillisecondsSinceEpoch(0))
-          .compareTo(a.lastPlayedAt ?? DateTime.fromMillisecondsSinceEpoch(0)));
+      ..sort(
+        (a, b) => (b.lastPlayedAt ?? DateTime.fromMillisecondsSinceEpoch(0))
+            .compareTo(
+              a.lastPlayedAt ?? DateTime.fromMillisecondsSinceEpoch(0),
+            ),
+      );
 
     UserRoutine? continueUr;
     for (final ur in recentlyPlayed) {
@@ -278,45 +636,39 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
       }
     }
-    // Fallback: if user has saved routines but none played yet, show the most recently saved.
     continueUr ??= recentlyPlayed.isNotEmpty ? recentlyPlayed.first : null;
-
     final continueId = continueUr?.routineId;
+    final curated = rp.curatedRoutines
+        .where((r) => r.id != continueId)
+        .toList();
 
-    final curated = rp.curatedRoutines.where((r) => r.id != continueId).toList();
-
-    // If nothing loaded yet, show loading affordance
     if (rp.isLoading && rp.routines.isEmpty) {
       return Center(
-        child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(theme.accentOrange)),
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation(theme.accentOrange),
+        ),
       );
     }
 
-    // Build a list of up to 3 cards: Continue + 2 curated suggestions
     final cards = <Widget>[];
 
     if (continueId != null) {
-      final inMemory = rp.routines.where((r) => r.id == continueId).cast<Routine?>().firstWhere((_) => true, orElse: () => null);
+      final inMemory = rp.routines
+          .where((r) => r.id == continueId)
+          .cast<Routine?>()
+          .firstWhere((_) => true, orElse: () => null);
       cards.add(
         FutureBuilder<Routine?>(
-          future: inMemory != null ? Future.value(inMemory) : _supabase.getRoutine(continueId),
+          future: inMemory != null
+              ? Future.value(inMemory)
+              : _supabase.getRoutine(continueId),
           builder: (context, snap) {
             final routine = snap.data;
-            if (routine == null) {
-              return _buildUpNextCard(
-                'Continue',
-                'Loading…',
-                Icons.play_circle_outline,
-                theme,
-                thumbnailUrl: null,
-                onTap: null,
-              );
-            }
+            if (routine == null) return const SizedBox.shrink();
             return FutureBuilder<String?>(
               future: _getRoutineThumbnail(routine),
               builder: (context, thumbSnap) {
-                return _buildRoutineCard(
-                  label: 'Continue',
+                return _buildNewRoutineCard(
                   routine: routine,
                   theme: theme,
                   thumbnailUrl: thumbSnap.data,
@@ -330,13 +682,12 @@ class _HomeScreenState extends State<HomeScreen> {
       cards.add(const SizedBox(width: 16));
     }
 
-    for (final r in curated.take(2)) {
+    for (final r in curated.take(3)) {
       cards.add(
         FutureBuilder<String?>(
           future: _getRoutineThumbnail(r),
           builder: (context, snap) {
-            return _buildRoutineCard(
-              label: 'Recommended',
+            return _buildNewRoutineCard(
               routine: r,
               theme: theme,
               thumbnailUrl: snap.data,
@@ -349,10 +700,24 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     if (cards.isEmpty) {
-      return _buildEmptyUpNext(theme);
+      return Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: theme.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: theme.border),
+        ),
+        padding: const EdgeInsets.all(16),
+        child: Center(
+          child: Text(
+            'No upcoming routines yet.\nCreate one or browse the library.',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: theme.textSecondary),
+          ),
+        ),
+      );
     }
 
-    // Remove trailing spacer
     if (cards.isNotEmpty && cards.last is SizedBox) {
       cards.removeLast();
     }
@@ -364,19 +729,169 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildEmptyUpNext(ThemeProvider theme) {
-    return Container(
-      width: double.infinity,
-      decoration: theme.glassDecoration,
-      padding: const EdgeInsets.all(16),
-      child: Center(
-        child: Text(
-          'No upcoming routines yet.\nCreate one or browse the library.',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: theme.textSecondary),
+  Widget _buildNewRoutineCard({
+    required Routine routine,
+    required ThemeProvider theme,
+    String? thumbnailUrl,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        width: 280,
+        decoration: BoxDecoration(
+          color: theme.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: theme.border),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image Half
+            SizedBox(
+              height: 128,
+              width: double.infinity,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(16),
+                    ),
+                    child: (thumbnailUrl != null && thumbnailUrl.isNotEmpty)
+                        ? Image.network(
+                            thumbnailUrl,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) =>
+                                _thumbPlaceholder(Icons.fitness_center, theme),
+                          )
+                        : _thumbPlaceholder(Icons.fitness_center, theme),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: 40,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [theme.surface, Colors.transparent],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 12,
+                    right: 12,
+                    child: Container(
+                      width: 32,
+                      height: 32,
+                      decoration: BoxDecoration(
+                        color: theme.isDarkMode
+                            ? const Color(0xFF1E2235).withValues(alpha: 0.6)
+                            : Colors.white.withValues(alpha: 0.8),
+                        shape: BoxShape.circle,
+                        border: Border.all(color: theme.border),
+                      ),
+                      child: Icon(
+                        Icons.bookmark_border,
+                        color: theme.textPrimary,
+                        size: 18,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Details Half
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    routine.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: theme.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.schedule,
+                        size: 16,
+                        color: theme.textSecondary,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        routine.durationLabel,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: theme.textSecondary,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Container(
+                        width: 4,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: theme.textSecondary,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Icon(Icons.speed, size: 16, color: theme.textSecondary),
+                      const SizedBox(width: 4),
+                      Text(
+                        routine.difficultyLabel,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: theme.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  Widget _thumbPlaceholder(IconData icon, ThemeProvider theme) {
+    return Container(
+      color: theme.isDarkMode
+          ? Colors.white.withValues(alpha: 0.05)
+          : Colors.grey[100],
+      child: Center(
+        child: Icon(
+          icon,
+          size: 48,
+          color: theme.isDarkMode ? Colors.white54 : Colors.grey[400],
+        ),
+      ),
+    );
+  }
+
+  Future<String?> _getRoutineThumbnail(Routine routine) {
+    return _thumbnailResolver.resolve(routine);
   }
 
   void _openRoutineDetails(Routine routine) {
@@ -391,188 +906,166 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildUpNextCard(
-    String title,
-    String subtitle,
-    IconData icon,
-    ThemeProvider theme, {
-    String? thumbnailUrl,
-    VoidCallback? onTap,
+  Widget _buildQuickActionsGrid(ThemeProvider theme) {
+    return Column(
+      children: [
+        // Chat Full Width
+        _buildBentoItem(
+          theme: theme,
+          icon: Icons.forum,
+          iconColor: theme.accentOrange,
+          iconBg: theme.accentOrange.withValues(alpha: 0.1),
+          title: 'Chat with Celia',
+          subtitle: 'Ask about your form or diet',
+          onTap: () => context.read<NavigationProvider>().setIndex(2),
+        ),
+        const SizedBox(height: 16),
+        // Scan Full Width
+        _buildBentoItem(
+          theme: theme,
+          icon: Icons.photo_camera,
+          iconColor: const Color(0xFFFFB691),
+          iconBg: const Color(0xFFFF6F00).withValues(alpha: 0.2),
+          title: 'Scan Meal',
+          subtitle: 'Identify food & calories',
+          onTap: () => Navigator.of(context, rootNavigator: true).push(
+            MaterialPageRoute(builder: (_) => const CalorieScannerScreen()),
+          ),
+        ),
+        const SizedBox(height: 16),
+        _buildBentoItem(
+          theme: theme,
+          icon: Icons.restaurant_menu,
+          iconColor: const Color(0xFF00D1FF),
+          iconBg: const Color(0xFF00D1FF).withValues(alpha: 0.12),
+          title: 'Nutrition',
+          subtitle: 'View calories, macros & meals',
+          onTap: () => Navigator.of(
+            context,
+            rootNavigator: true,
+          ).push(MaterialPageRoute(builder: (_) => const NutritionScreen())),
+        ),
+        const SizedBox(height: 16),
+        // Two Half Widths
+        Row(
+          children: [
+            Expanded(
+              child: _buildBentoSquare(
+                theme: theme,
+                icon: Icons.video_library,
+                iconColor: const Color(0xFFFFB954),
+                iconBg: const Color(0xFFFFB954).withValues(alpha: 0.1),
+                title: 'Browse\nLibrary',
+                onTap: () => context.read<NavigationProvider>().setIndex(1),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: _buildBentoSquare(
+                theme: theme,
+                icon: Icons.show_chart,
+                iconColor: const Color(0xFF00E475),
+                iconBg: const Color(0xFF00E475).withValues(alpha: 0.1),
+                title: 'Track\nProgress',
+                onTap: () => context.read<NavigationProvider>().setIndex(3),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBentoItem({
+    required ThemeProvider theme,
+    required IconData icon,
+    required Color iconColor,
+    required Color iconBg,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
   }) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(24),
+      borderRadius: BorderRadius.circular(16),
       child: Container(
-        width: 240,
         padding: const EdgeInsets.all(16),
-        decoration: theme.glassDecoration,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        decoration: BoxDecoration(
+          color: theme.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: theme.border),
+        ),
+        child: Row(
           children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(color: iconBg, shape: BoxShape.circle),
+              child: Icon(icon, color: iconColor),
+            ),
+            const SizedBox(width: 16),
             Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: theme.isDarkMode ? Colors.white.withValues(alpha: 0.05) : Colors.grey[100],
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: (thumbnailUrl != null && thumbnailUrl.isNotEmpty)
-                      ? Image.network(
-                          thumbnailUrl,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => _thumbPlaceholder(icon, theme),
-                        )
-                      : _thumbPlaceholder(icon, theme),
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: theme.textPrimary,
+                    ),
+                  ),
+                  Text(
+                    subtitle,
+                    style: TextStyle(fontSize: 14, color: theme.textSecondary),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 12),
-            Text(
-              title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: theme.textPrimary),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: theme.textSecondary, fontSize: 13),
-            ),
+            Icon(Icons.chevron_right, color: theme.textSecondary),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildRoutineCard({
-    required String label,
-    required Routine routine,
+  Widget _buildBentoSquare({
     required ThemeProvider theme,
-    String? thumbnailUrl,
+    required IconData icon,
+    required Color iconColor,
+    required Color iconBg,
+    required String title,
     required VoidCallback onTap,
   }) {
-    final subtitle = '${routine.durationLabel} • ${routine.difficultyLabel}';
-    return Stack(
-      children: [
-        _buildUpNextCard(
-          routine.title,
-          subtitle,
-          Icons.fitness_center,
-          theme,
-          thumbnailUrl: thumbnailUrl,
-          onTap: onTap,
-        ),
-        Positioned(
-          left: 14,
-          top: 14,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-            decoration: BoxDecoration(
-              color: theme.accentOrange.withValues(alpha: 0.85),
-              borderRadius: BorderRadius.circular(999),
-            ),
-            child: Text(
-              label,
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 11),
-            ),
-          ),
-        ),
-        Positioned(
-          right: 14,
-          bottom: 14,
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(color: theme.accentOrange, shape: BoxShape.circle),
-            child: const Icon(Icons.play_arrow, color: Colors.white, size: 20),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _thumbPlaceholder(IconData icon, ThemeProvider theme) {
-    return Center(
-      child: Icon(icon, size: 48, color: theme.isDarkMode ? Colors.white54 : Colors.grey[400]),
-    );
-  }
-
-  Future<String?> _getRoutineThumbnail(Routine routine) {
-    // 1) Cached
-    if (_resolvedThumbs.containsKey(routine.id)) {
-      return Future.value(_resolvedThumbs[routine.id]);
-    }
-    // 2) In-flight
-    final existing = _thumbFutures[routine.id];
-    if (existing != null) return existing;
-
-    final fut = () async {
-      // a) Routine thumbnail
-      final routineThumb = routine.thumbnailUrl;
-      if (routineThumb != null && routineThumb.isNotEmpty) {
-        _resolvedThumbs[routine.id] = routineThumb;
-        return routineThumb;
-      }
-
-      // b) Step thumbnail
-      for (final step in routine.steps) {
-        final stepThumb = step.thumbnailUrl;
-        if (stepThumb != null && stepThumb.isNotEmpty) {
-          _resolvedThumbs[routine.id] = stepThumb;
-          return stepThumb;
-        }
-      }
-
-      // c) Resolve via video id (DB -> Cloudflare fallback)
-      final stepVideoId = routine.steps
-          .map((s) => (s.videoId ?? '').trim())
-          .firstWhere((v) => v.isNotEmpty, orElse: () => '');
-      if (stepVideoId.isEmpty) {
-        _resolvedThumbs[routine.id] = null;
-        return null;
-      }
-
-      try {
-        final video = await _supabase.getVideoByAnyId(stepVideoId);
-        final cloudflareId = (video != null && video.streamId.isNotEmpty) ? video.streamId : stepVideoId;
-        final resolved = (video?.thumbnailUrl?.isNotEmpty ?? false)
-            ? video!.thumbnailUrl
-            : _cloudflare.getThumbnailUrl(cloudflareId);
-        _resolvedThumbs[routine.id] = resolved;
-        return resolved;
-      } catch (_) {
-        final resolved = _cloudflare.getThumbnailUrl(stepVideoId);
-        _resolvedThumbs[routine.id] = resolved;
-        return resolved;
-      } finally {
-        _thumbFutures.remove(routine.id);
-      }
-    }();
-
-    _thumbFutures[routine.id] = fut;
-    return fut;
-  }
-
-  Widget _buildQuickActionBtn(BuildContext context, String label, IconData icon, VoidCallback onTap, ThemeProvider theme) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        decoration: theme.glassDecoration,
+        height: 140,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: theme.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: theme.border),
+        ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(icon, color: theme.accentOrange),
-            const SizedBox(height: 8),
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(color: iconBg, shape: BoxShape.circle),
+              child: Icon(icon, color: iconColor),
+            ),
             Text(
-              label,
+              title,
               style: TextStyle(
-                fontWeight: FontWeight.bold, 
-                fontSize: 14,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
                 color: theme.textPrimary,
+                height: 1.2,
               ),
             ),
           ],

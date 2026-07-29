@@ -7,10 +7,12 @@ import '../utils/user_facing_error.dart';
 /// Provider for managing routine state and operations
 class RoutineProvider extends ChangeNotifier {
   @visibleForTesting
-  static SupabaseService Function() defaultSupabase = () => SupabaseService.instance;
+  static SupabaseService Function() defaultSupabase = () =>
+      SupabaseService.instance;
 
   @visibleForTesting
-  static String? Function() defaultCurrentUserId = () => FirebaseAuth.instance.currentUser?.uid;
+  static String? Function() defaultCurrentUserId = () =>
+      FirebaseAuth.instance.currentUser?.uid;
 
   final SupabaseService _supabase;
   final String? Function() _currentUserId;
@@ -18,8 +20,8 @@ class RoutineProvider extends ChangeNotifier {
   RoutineProvider({
     SupabaseService? supabase,
     String? Function()? currentUserId,
-  })  : _supabase = supabase ?? defaultSupabase(),
-        _currentUserId = currentUserId ?? defaultCurrentUserId;
+  }) : _supabase = supabase ?? defaultSupabase(),
+       _currentUserId = currentUserId ?? defaultCurrentUserId;
 
   // State
   List<Routine> _routines = [];
@@ -156,11 +158,11 @@ class RoutineProvider extends ChangeNotifier {
         difficulty: difficulty ?? RoutineDifficulty.medium,
         equipment: equipment ?? const ['None'],
       );
-      
+
       // Add to local AI routines list
       _aiRoutines.insert(0, savedRoutine);
       _routines.insert(0, savedRoutine);
-      
+
       notifyListeners();
       return savedRoutine;
     } catch (e, st) {
@@ -305,4 +307,3 @@ class RoutineProvider extends ChangeNotifier {
     notifyListeners();
   }
 }
-

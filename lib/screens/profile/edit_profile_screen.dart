@@ -15,7 +15,8 @@ class EditProfileScreen extends StatefulWidget {
   static FirebaseAuth Function() defaultAuth = () => FirebaseAuth.instance;
 
   @visibleForTesting
-  static FirebaseStorage Function() defaultStorage = () => FirebaseStorage.instance;
+  static FirebaseStorage Function() defaultStorage = () =>
+      FirebaseStorage.instance;
 
   @visibleForTesting
   static ImagePicker Function() defaultPicker = () => ImagePicker();
@@ -29,9 +30,9 @@ class EditProfileScreen extends StatefulWidget {
     FirebaseAuth? auth,
     FirebaseStorage? storage,
     ImagePicker? picker,
-  })  : auth = auth ?? defaultAuth(),
-        storage = storage ?? defaultStorage(),
-        picker = picker ?? defaultPicker();
+  }) : auth = auth ?? defaultAuth(),
+       storage = storage ?? defaultStorage(),
+       picker = picker ?? defaultPicker();
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -72,7 +73,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }) async {
     final ref = widget.storage.ref().child('profile_photos/$uid.jpg');
     final uploadTask = ref.putFile(File(file.path));
-    await uploadTask;
+    await uploadTask.timeout(const Duration(seconds: 30));
     return await ref.getDownloadURL();
   }
 
@@ -136,7 +137,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         iconTheme: IconThemeData(color: theme.textPrimary),
         title: Text(
           'Edit Profile',
-          style: TextStyle(color: theme.textPrimary, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: theme.textPrimary,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         actions: [
           TextButton(
@@ -152,9 +156,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   )
                 : Text(
                     'Save',
-                    style: TextStyle(color: theme.accentOrange, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: theme.accentOrange,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-          )
+          ),
         ],
       ),
       body: Padding(
@@ -166,10 +173,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 children: [
                   CircleAvatar(
                     radius: 54,
-                    backgroundColor: theme.isDarkMode ? Colors.white12 : Colors.black12,
+                    backgroundColor: theme.isDarkMode
+                        ? Colors.white12
+                        : Colors.black12,
                     backgroundImage: avatar,
                     child: avatar == null
-                        ? Icon(Icons.person, size: 54, color: theme.accentOrange)
+                        ? Icon(
+                            Icons.person,
+                            size: 54,
+                            color: theme.accentOrange,
+                          )
                         : null,
                   ),
                   Positioned(
@@ -191,10 +204,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                           ],
                         ),
-                        child: const Icon(Icons.camera_alt, color: Colors.white, size: 18),
+                        child: const Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                          size: 18,
+                        ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -203,7 +220,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               alignment: Alignment.centerLeft,
               child: Text(
                 'Name',
-                style: TextStyle(color: theme.textSecondary, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  color: theme.textSecondary,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             const SizedBox(height: 8),
@@ -213,8 +233,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               decoration: InputDecoration(
                 hintText: 'Your name',
                 filled: true,
-                fillColor: theme.isDarkMode ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.05),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide.none),
+                fillColor: theme.isDarkMode
+                    ? Colors.white.withValues(alpha: 0.05)
+                    : Colors.black.withValues(alpha: 0.05),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide.none,
+                ),
               ),
             ),
             const SizedBox(height: 14),
@@ -228,5 +253,3 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 }
-
-

@@ -10,7 +10,12 @@ plugins {
 
 android {
     namespace = "eu.thefit.celia"
-    compileSdk = flutter.compileSdkVersion
+    // Pinned instead of using flutter.compileSdkVersion/flutter.targetSdkVersion:
+    // Google Play blocks updates from Aug 31, 2026 unless the upload targets
+    // API 36+, and those Flutter values silently follow whichever Flutter SDK
+    // happens to build the release. A machine on an older Flutter previously
+    // shipped an API 35 build that Play flagged. Keep both at 36 or higher.
+    compileSdk = 36
     ndkVersion = "27.0.12077973"
 
     compileOptions {
@@ -26,7 +31,7 @@ android {
         applicationId = "eu.thefit.celia"
         // Firebase Auth v6 requires minSdk 23+
         minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }

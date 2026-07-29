@@ -5,7 +5,8 @@ import '../providers/chat_provider.dart';
 
 class ChatHistoryRepository {
   @visibleForTesting
-  static FirebaseFirestore Function() defaultFirestore = () => FirebaseFirestore.instance;
+  static FirebaseFirestore Function() defaultFirestore = () =>
+      FirebaseFirestore.instance;
 
   @visibleForTesting
   static FirebaseAuth Function() defaultAuth = () => FirebaseAuth.instance;
@@ -20,20 +21,23 @@ class ChatHistoryRepository {
     FirebaseAuth? auth,
     List<Duration>? retryDelays,
     Future<void> Function(Duration)? delay,
-  })  : _firestore = firestore ?? defaultFirestore(),
-        _auth = auth ?? defaultAuth(),
-        _retryDelays = retryDelays ?? const <Duration>[
-          Duration(milliseconds: 400),
-          Duration(milliseconds: 900),
-          Duration(milliseconds: 1800),
-        ],
-        _delay = delay ?? Future<void>.delayed;
+  }) : _firestore = firestore ?? defaultFirestore(),
+       _auth = auth ?? defaultAuth(),
+       _retryDelays =
+           retryDelays ??
+           const <Duration>[
+             Duration(milliseconds: 400),
+             Duration(milliseconds: 900),
+             Duration(milliseconds: 1800),
+           ],
+       _delay = delay ?? Future<void>.delayed;
 
   Future<void> _ensureUserDocument() async {
     final String? userId = _auth.currentUser?.uid;
     if (userId == null) throw Exception('No authenticated user');
-    final DocumentReference<Map<String, dynamic>> userRef =
-        _firestore.collection('users').doc(userId);
+    final DocumentReference<Map<String, dynamic>> userRef = _firestore
+        .collection('users')
+        .doc(userId);
     final DocumentSnapshot<Map<String, dynamic>> snap = await userRef.get();
     if (!snap.exists) {
       await userRef.set(<String, dynamic>{
@@ -120,7 +124,10 @@ class ChatHistoryRepository {
         return await action();
       } on FirebaseException catch (e) {
         final String code = e.code.toLowerCase();
-        final bool retryable = code == 'unavailable' || code == 'deadline-exceeded' || code == 'aborted';
+        final bool retryable =
+            code == 'unavailable' ||
+            code == 'deadline-exceeded' ||
+            code == 'aborted';
         if (attempt >= _retryDelays.length || !retryable) rethrow;
         await _delay(_retryDelays[attempt]);
         attempt += 1;
@@ -128,5 +135,3 @@ class ChatHistoryRepository {
     }
   }
 }
-
-

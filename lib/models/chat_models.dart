@@ -9,12 +9,7 @@ class User {
   final String? email;
   final Map<String, String>? metadata;
 
-  User({
-    required this.id,
-    this.name,
-    this.email,
-    this.metadata,
-  });
+  User({required this.id, this.name, this.email, this.metadata});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);
@@ -36,7 +31,8 @@ class Conversation {
     this.metadata,
   });
 
-  factory Conversation.fromJson(Map<String, dynamic> json) => _$ConversationFromJson(json);
+  factory Conversation.fromJson(Map<String, dynamic> json) =>
+      _$ConversationFromJson(json);
   Map<String, dynamic> toJson() => _$ConversationToJson(this);
 }
 
@@ -66,7 +62,8 @@ class Message {
     this.interacted = false,
   });
 
-  factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
+  factory Message.fromJson(Map<String, dynamic> json) =>
+      _$MessageFromJson(json);
   Map<String, dynamic> toJson() => _$MessageToJson(this);
 }
 
@@ -75,12 +72,10 @@ class MessageOption {
   final String label;
   final String value;
 
-  MessageOption({
-    required this.label,
-    required this.value,
-  });
+  MessageOption({required this.label, required this.value});
 
-  factory MessageOption.fromJson(Map<String, dynamic> json) => _$MessageOptionFromJson(json);
+  factory MessageOption.fromJson(Map<String, dynamic> json) =>
+      _$MessageOptionFromJson(json);
   Map<String, dynamic> toJson() => _$MessageOptionToJson(this);
 }
 
@@ -89,12 +84,10 @@ class SimpleMessageRequest {
   final String type;
   final String text;
 
-  SimpleMessageRequest({
-    this.type = "text",
-    required this.text,
-  });
+  SimpleMessageRequest({this.type = "text", required this.text});
 
-  factory SimpleMessageRequest.fromJson(Map<String, dynamic> json) => _$SimpleMessageRequestFromJson(json);
+  factory SimpleMessageRequest.fromJson(Map<String, dynamic> json) =>
+      _$SimpleMessageRequestFromJson(json);
   Map<String, dynamic> toJson() => _$SimpleMessageRequestToJson(this);
 }
 
@@ -110,7 +103,8 @@ class BotpressUser {
     required this.updatedAt,
   });
 
-  factory BotpressUser.fromJson(Map<String, dynamic> json) => _$BotpressUserFromJson(json);
+  factory BotpressUser.fromJson(Map<String, dynamic> json) =>
+      _$BotpressUserFromJson(json);
   Map<String, dynamic> toJson() => _$BotpressUserToJson(this);
 }
 
@@ -132,7 +126,8 @@ class BotpressUserResponse {
     this.message,
   });
 
-  factory BotpressUserResponse.fromJson(Map<String, dynamic> json) => _$BotpressUserResponseFromJson(json);
+  factory BotpressUserResponse.fromJson(Map<String, dynamic> json) =>
+      _$BotpressUserResponseFromJson(json);
   Map<String, dynamic> toJson() => _$BotpressUserResponseToJson(this);
 }
 
@@ -156,7 +151,8 @@ class BotpressMessage {
     this.updatedAt,
   });
 
-  factory BotpressMessage.fromJson(Map<String, dynamic> json) => _$BotpressMessageFromJson(json);
+  factory BotpressMessage.fromJson(Map<String, dynamic> json) =>
+      _$BotpressMessageFromJson(json);
   Map<String, dynamic> toJson() => _$BotpressMessageToJson(this);
 }
 
@@ -167,14 +163,10 @@ class MessagePayload {
   final String? imageUrl;
   final List<MessageOption>? options;
 
-  MessagePayload({
-    this.type = "text",
-    this.text,
-    this.imageUrl,
-    this.options,
-  });
+  MessagePayload({this.type = "text", this.text, this.imageUrl, this.options});
 
-  factory MessagePayload.fromJson(Map<String, dynamic> json) => _$MessagePayloadFromJson(json);
+  factory MessagePayload.fromJson(Map<String, dynamic> json) =>
+      _$MessagePayloadFromJson(json);
   Map<String, dynamic> toJson() => _$MessagePayloadToJson(this);
 }
 
@@ -188,7 +180,8 @@ class MessageWithConversation {
     required this.payload,
   });
 
-  factory MessageWithConversation.fromJson(Map<String, dynamic> json) => _$MessageWithConversationFromJson(json);
+  factory MessageWithConversation.fromJson(Map<String, dynamic> json) =>
+      _$MessageWithConversationFromJson(json);
   Map<String, dynamic> toJson() => _$MessageWithConversationToJson(this);
 }
 
@@ -198,13 +191,10 @@ class BotpressMessageResponse {
   final String? error;
   final int? code;
 
-  BotpressMessageResponse({
-    required this.message,
-    this.error,
-    this.code,
-  });
+  BotpressMessageResponse({required this.message, this.error, this.code});
 
-  factory BotpressMessageResponse.fromJson(Map<String, dynamic> json) => _$BotpressMessageResponseFromJson(json);
+  factory BotpressMessageResponse.fromJson(Map<String, dynamic> json) =>
+      _$BotpressMessageResponseFromJson(json);
   Map<String, dynamic> toJson() => _$BotpressMessageResponseToJson(this);
 }
 
@@ -213,12 +203,10 @@ class BotpressMessagesResponse {
   final List<BotpressMessage> messages;
   final Map<String, String> meta;
 
-  BotpressMessagesResponse({
-    required this.messages,
-    this.meta = const {},
-  });
+  BotpressMessagesResponse({required this.messages, this.meta = const {}});
 
-  factory BotpressMessagesResponse.fromJson(Map<String, dynamic> json) => _$BotpressMessagesResponseFromJson(json);
+  factory BotpressMessagesResponse.fromJson(Map<String, dynamic> json) =>
+      _$BotpressMessagesResponseFromJson(json);
   Map<String, dynamic> toJson() => _$BotpressMessagesResponseToJson(this);
 }
 
@@ -234,7 +222,8 @@ class CreateUserRequest {
     this.metadata = const {"platform": "flutter", "deviceType": "mobile"},
   });
 
-  factory CreateUserRequest.fromJson(Map<String, dynamic> json) => _$CreateUserRequestFromJson(json);
+  factory CreateUserRequest.fromJson(Map<String, dynamic> json) =>
+      _$CreateUserRequestFromJson(json);
   Map<String, dynamic> toJson() => _$CreateUserRequestToJson(this);
 }
 
@@ -248,7 +237,8 @@ class CreateConversationRequest {
     this.metadata = const {"source": "flutter"},
   });
 
-  factory CreateConversationRequest.fromJson(Map<String, dynamic> json) => _$CreateConversationRequestFromJson(json);
+  factory CreateConversationRequest.fromJson(Map<String, dynamic> json) =>
+      _$CreateConversationRequestFromJson(json);
   Map<String, dynamic> toJson() => _$CreateConversationRequestToJson(this);
 }
 
@@ -264,7 +254,8 @@ class BotpressConversation {
     required this.updatedAt,
   });
 
-  factory BotpressConversation.fromJson(Map<String, dynamic> json) => _$BotpressConversationFromJson(json);
+  factory BotpressConversation.fromJson(Map<String, dynamic> json) =>
+      _$BotpressConversationFromJson(json);
   Map<String, dynamic> toJson() => _$BotpressConversationToJson(this);
 }
 
@@ -274,8 +265,7 @@ class BotpressConversationResponse {
 
   BotpressConversationResponse({required this.conversation});
 
-  factory BotpressConversationResponse.fromJson(Map<String, dynamic> json) => _$BotpressConversationResponseFromJson(json);
+  factory BotpressConversationResponse.fromJson(Map<String, dynamic> json) =>
+      _$BotpressConversationResponseFromJson(json);
   Map<String, dynamic> toJson() => _$BotpressConversationResponseToJson(this);
 }
-
-

@@ -134,19 +134,30 @@ class ChatUiState {
       isSendingMessage: isSendingMessage ?? this.isSendingMessage,
       pollingEnabled: pollingEnabled ?? this.pollingEnabled,
       error: error,
-      hasActiveConversation: hasActiveConversation ?? this.hasActiveConversation,
+      hasActiveConversation:
+          hasActiveConversation ?? this.hasActiveConversation,
       isTyping: isTyping ?? this.isTyping,
       conversationHistory: conversationHistory ?? this.conversationHistory,
       isLoadingHistory: isLoadingHistory ?? this.isLoadingHistory,
-      showNewConversationButton: showNewConversationButton ?? this.showNewConversationButton,
-      showStartNewConversationDialog: showStartNewConversationDialog ?? this.showStartNewConversationDialog,
+      showNewConversationButton:
+          showNewConversationButton ?? this.showNewConversationButton,
+      showStartNewConversationDialog:
+          showStartNewConversationDialog ?? this.showStartNewConversationDialog,
       showHistory: showHistory ?? this.showHistory,
       showSettingsDialog: showSettingsDialog ?? this.showSettingsDialog,
-      showUserProfileDialog: showUserProfileDialog ?? this.showUserProfileDialog,
-      showRestartConfirmation: showRestartConfirmation ?? this.showRestartConfirmation,
-      currentConversationId: identical(currentConversationId, _sentinel) ? this.currentConversationId : currentConversationId as String?,
-      currentUserKey: identical(currentUserKey, _sentinel) ? this.currentUserKey : currentUserKey as String?,
-      userIdForBotpress: identical(userIdForBotpress, _sentinel) ? this.userIdForBotpress : userIdForBotpress as String?,
+      showUserProfileDialog:
+          showUserProfileDialog ?? this.showUserProfileDialog,
+      showRestartConfirmation:
+          showRestartConfirmation ?? this.showRestartConfirmation,
+      currentConversationId: identical(currentConversationId, _sentinel)
+          ? this.currentConversationId
+          : currentConversationId as String?,
+      currentUserKey: identical(currentUserKey, _sentinel)
+          ? this.currentUserKey
+          : currentUserKey as String?,
+      userIdForBotpress: identical(userIdForBotpress, _sentinel)
+          ? this.userIdForBotpress
+          : userIdForBotpress as String?,
       hasInitialized: hasInitialized ?? this.hasInitialized,
     );
   }
@@ -154,13 +165,16 @@ class ChatUiState {
 
 class ChatProvider extends ChangeNotifier {
   @visibleForTesting
-  static ChatRepository Function() defaultChatRepository = () => ChatRepository();
+  static ChatRepository Function() defaultChatRepository = () =>
+      ChatRepository();
 
   @visibleForTesting
-  static ChatHistoryRepository Function() defaultHistoryRepository = () => ChatHistoryRepository();
+  static ChatHistoryRepository Function() defaultHistoryRepository = () =>
+      ChatHistoryRepository();
 
   @visibleForTesting
-  static Future<SharedPreferences> Function() defaultPrefs = SharedPreferences.getInstance;
+  static Future<SharedPreferences> Function() defaultPrefs =
+      SharedPreferences.getInstance;
 
   final ChatRepository _chatRepository;
   final ChatHistoryRepository _historyRepository;
@@ -170,10 +184,10 @@ class ChatProvider extends ChangeNotifier {
     ChatRepository? chatRepository,
     ChatHistoryRepository? historyRepository,
     Future<SharedPreferences> Function()? prefs,
-  })  : _chatRepository = chatRepository ?? defaultChatRepository(),
-        _historyRepository = historyRepository ?? defaultHistoryRepository(),
-        _prefs = prefs ?? defaultPrefs;
-  
+  }) : _chatRepository = chatRepository ?? defaultChatRepository(),
+       _historyRepository = historyRepository ?? defaultHistoryRepository(),
+       _prefs = prefs ?? defaultPrefs;
+
   ChatUiState _uiState = ChatUiState();
   ChatUiState get uiState => _uiState;
 
@@ -181,25 +195,29 @@ class ChatProvider extends ChangeNotifier {
   final Set<String> _interactedMessageIds = {};
   final Map<String, bool> _messageDirections = {}; // true = user, false = bot
 
-  Future<void> initializeChat() async {
+  Future<void> initializeChat({
+    String? firebaseUserId,
+    String? name,
+    String? email,
+  }) async {
     if (_uiState.hasInitialized) return;
 
-    _uiState = _uiState.copyWith(
-      isLoadingInitial: true,
-      error: null,
-    );
+    _uiState = _uiState.copyWith(isLoadingInitial: true, error: null);
     notifyListeners();
 
     try {
       // Persist Botpress user key across launches to avoid 403 on history
       final prefs = await _prefs();
-      String? userKey = prefs.getString('botpress_user_key');
+      final prefsKey = (firebaseUserId == null || firebaseUserId.isEmpty)
+          ? 'botpress_user_key'
+          : 'botpress_user_key_$firebaseUserId';
+      String? userKey = prefs.getString(prefsKey);
       if (userKey == null) {
-        final user = await _chatRepository.createUser();
+        final user = await _chatRepository.createUser(name: name, email: email);
         userKey = user.id;
-        await prefs.setString('botpress_user_key', userKey);
+        await prefs.setString(prefsKey, userKey);
       }
-      
+
       _uiState = _uiState.copyWith(
         currentUserKey: userKey,
         userIdForBotpress: userKey,
@@ -207,7 +225,7 @@ class ChatProvider extends ChangeNotifier {
         isLoadingInitial: false,
       );
       notifyListeners();
-      
+
       await loadConversationHistory();
     } catch (e) {
       _uiState = _uiState.copyWith(
@@ -226,15 +244,14 @@ class ChatProvider extends ChangeNotifier {
       await initializeChat();
     }
 
-    _uiState = _uiState.copyWith(
-      isLoading: true,
-      error: null,
-    );
+    _uiState = _uiState.copyWith(isLoading: true, error: null);
     notifyListeners();
 
     try {
-      final conversation = await _chatRepository.createConversation(_uiState.currentUserKey!);
-      
+      final conversation = await _chatRepository.createConversation(
+        _uiState.currentUserKey!,
+      );
+
       _uiState = _uiState.copyWith(
         currentConversationId: conversation.id,
         messages: [],
@@ -243,7 +260,7 @@ class ChatProvider extends ChangeNotifier {
         showNewConversationButton: false,
       );
       notifyListeners();
-      
+
       _startPolling();
     } catch (e) {
       _uiState = _uiState.copyWith(
@@ -265,23 +282,39 @@ class ChatProvider extends ChangeNotifier {
     return _messageDirections[messageId] ?? false;
   }
 
-  Future<void> sendMessageWithInteraction(String text, String messageId) async {
+  Future<void> sendMessageWithInteraction(
+    String text,
+    String messageId, {
+    String? nutritionContext,
+  }) async {
     _interactedMessageIds.add(messageId);
     notifyListeners();
-    await sendMessage(text);
+    await sendMessage(text, nutritionContext: nutritionContext);
   }
 
-  Future<void> sendMessage(String text) async {
-    if (_uiState.currentUserKey == null || _uiState.currentConversationId == null) {
+  Future<void> sendMessage(String text, {String? nutritionContext}) async {
+    if (_uiState.currentUserKey == null ||
+        _uiState.currentConversationId == null) {
       _uiState = _uiState.copyWith(error: 'No active conversation');
       notifyListeners();
       return;
     }
 
+    final outbound = nutritionContext != null && nutritionContext.isNotEmpty
+        ? '$nutritionContext\n\nUser: $text'
+        : text;
+
     _uiState = _uiState.copyWith(isSendingMessage: true, error: null);
     // Optimistically append the user's message with a special marker
     final optimisticId = 'local_${DateTime.now().millisecondsSinceEpoch}';
-    final isImageUrl = text.startsWith('http') && (text.endsWith('.png') || text.endsWith('.jpg') || text.endsWith('.jpeg') || text.endsWith('.gif') || text.contains('imgbb.com') || text.contains('i.imgur.com'));
+    final isImageUrl =
+        text.startsWith('http') &&
+        (text.endsWith('.png') ||
+            text.endsWith('.jpg') ||
+            text.endsWith('.jpeg') ||
+            text.endsWith('.gif') ||
+            text.contains('imgbb.com') ||
+            text.contains('i.imgur.com'));
     final optimistic = Message(
       id: optimisticId,
       conversationId: _uiState.currentConversationId!,
@@ -300,18 +333,20 @@ class ChatProvider extends ChangeNotifier {
       final sent = await _chatRepository.sendMessage(
         _uiState.currentUserKey!,
         _uiState.currentConversationId!,
-        text,
+        outbound,
       );
       // Mark the sent message as a user message
       _messageDirections[sent.id] = true;
-      
+
       // Replace last optimistic message with the confirmed one
       final current = [..._uiState.messages];
       // Always append the confirmed message, then remove the last optimistic message if present.
       // This is equivalent to an in-place replace, but avoids edge cases where the optimistic
       // message list changes due to polling while awaiting the server response.
       current.add(sent);
-      final lastIndex = current.lastIndexWhere((m) => m.id.startsWith('local_'));
+      final lastIndex = current.lastIndexWhere(
+        (m) => m.id.startsWith('local_'),
+      );
       if (lastIndex != -1) {
         // Remove the optimistic message direction tracking
         _messageDirections.remove(current[lastIndex].id);
@@ -332,7 +367,8 @@ class ChatProvider extends ChangeNotifier {
   }
 
   Future<void> loadMessages() async {
-    if (_uiState.currentUserKey == null || _uiState.currentConversationId == null) {
+    if (_uiState.currentUserKey == null ||
+        _uiState.currentConversationId == null) {
       return;
     }
 
@@ -341,9 +377,10 @@ class ChatProvider extends ChangeNotifier {
         _uiState.currentUserKey!,
         _uiState.currentConversationId!,
       );
-      
+
       // Deduplicate by id while preserving order
-      final LinkedHashMap<String, Message> uniqueById = LinkedHashMap<String, Message>();
+      final LinkedHashMap<String, Message> uniqueById =
+          LinkedHashMap<String, Message>();
       for (final m in messages) {
         uniqueById[m.id] = m;
       }
@@ -351,12 +388,17 @@ class ChatProvider extends ChangeNotifier {
 
       // Track message directions based on the pattern
       // We'll use a simple algorithm: user messages are at even indices when sorted
-      final fetchedSorted = [...deduped]..sort((Message a, Message b) {
-        final aTime = DateTime.tryParse(a.created) ?? DateTime.fromMillisecondsSinceEpoch(0);
-        final bTime = DateTime.tryParse(b.created) ?? DateTime.fromMillisecondsSinceEpoch(0);
-        return aTime.compareTo(bTime);
-      });
-      
+      final fetchedSorted = [...deduped]
+        ..sort((Message a, Message b) {
+          final aTime =
+              DateTime.tryParse(a.created) ??
+              DateTime.fromMillisecondsSinceEpoch(0);
+          final bTime =
+              DateTime.tryParse(b.created) ??
+              DateTime.fromMillisecondsSinceEpoch(0);
+          return aTime.compareTo(bTime);
+        });
+
       // Update message directions based on pattern
       for (int i = 0; i < fetchedSorted.length; i++) {
         final msg = fetchedSorted[i];
@@ -366,15 +408,14 @@ class ChatProvider extends ChangeNotifier {
         bool isUser = (i == 2 || i == 6) ? false : (i % 2 == 0);
         _messageDirections[msg.id] = isUser;
       }
-      
+
       // Keep existing optimistic messages
-      final optimisticMessages = _uiState.messages.where((m) => m.id.startsWith('local_')).toList();
+      final optimisticMessages = _uiState.messages
+          .where((m) => m.id.startsWith('local_'))
+          .toList();
       final combined = [...fetchedSorted, ...optimisticMessages];
 
-      _uiState = _uiState.copyWith(
-        messages: combined,
-        error: null,
-      );
+      _uiState = _uiState.copyWith(messages: combined, error: null);
       notifyListeners();
     } catch (e) {
       _uiState = _uiState.copyWith(
@@ -395,7 +436,7 @@ class ChatProvider extends ChangeNotifier {
         loadMessages();
       }
     });
-    
+
     _uiState = _uiState.copyWith(pollingEnabled: true);
     notifyListeners();
   }
@@ -435,10 +476,16 @@ class ChatProvider extends ChangeNotifier {
     }
 
     try {
-      final lastMessageRaw = _uiState.messages.isNotEmpty ? (_uiState.messages.last.text ?? '') : '';
-      final lastMessage = lastMessageRaw.isEmpty ? 'No message' : lastMessageRaw;
+      final lastMessageRaw = _uiState.messages.isNotEmpty
+          ? (_uiState.messages.last.text ?? '')
+          : '';
+      final lastMessage = lastMessageRaw.isEmpty
+          ? 'No message'
+          : lastMessageRaw;
 
-      String firstText = _uiState.messages.isNotEmpty ? (_uiState.messages.first.text ?? '') : '';
+      String firstText = _uiState.messages.isNotEmpty
+          ? (_uiState.messages.first.text ?? '')
+          : '';
       if (firstText.trim().isEmpty) {
         firstText = 'Conversation';
       }
@@ -457,8 +504,9 @@ class ChatProvider extends ChangeNotifier {
       await _historyRepository.saveConversation(savedConversation);
       await loadConversationHistory();
       if (kDebugMode) {
-        // ignore: avoid_print
-        print('[History] Saved conversation ${savedConversation.id} title="$title" last="$lastMessage"');
+        debugPrint(
+          '[History] Saved conversation ${savedConversation.id} title="$title"',
+        );
       }
       return true;
     } catch (e) {
@@ -476,11 +524,11 @@ class ChatProvider extends ChangeNotifier {
   Future<void> restartConversation() async {
     _stopPolling();
     await saveCurrentConversation();
-    
+
     // Clear message tracking
     _messageDirections.clear();
     _interactedMessageIds.clear();
-    
+
     _uiState = _uiState.copyWith(
       messages: [],
       hasActiveConversation: false,
@@ -529,12 +577,16 @@ class ChatProvider extends ChangeNotifier {
   }
 
   void toggleSettings() {
-    _uiState = _uiState.copyWith(showSettingsDialog: !_uiState.showSettingsDialog);
+    _uiState = _uiState.copyWith(
+      showSettingsDialog: !_uiState.showSettingsDialog,
+    );
     notifyListeners();
   }
 
   void toggleUserProfile() {
-    _uiState = _uiState.copyWith(showUserProfileDialog: !_uiState.showUserProfileDialog);
+    _uiState = _uiState.copyWith(
+      showUserProfileDialog: !_uiState.showUserProfileDialog,
+    );
     notifyListeners();
   }
 
@@ -560,5 +612,3 @@ class ChatProvider extends ChangeNotifier {
     super.dispose();
   }
 }
-
-

@@ -12,13 +12,13 @@ class ChatRepository {
         name: name ?? "Flutter User",
         email: email ?? "user@example.com",
       );
-      
+
       final response = await _api.createUser(request);
-      
+
       if (response.message != null && response.code != null) {
         throw Exception("API Error (${response.code}): ${response.message}");
       }
-      
+
       if (response.user != null && response.key != null) {
         return User(
           id: response.key!,
@@ -37,7 +37,7 @@ class ChatRepository {
     try {
       final request = CreateConversationRequest();
       final response = await _api.createConversation(userKey, request);
-      
+
       return Conversation(
         id: response.conversation.id,
         userId: "user",
@@ -49,13 +49,32 @@ class ChatRepository {
     }
   }
 
-  Future<Message> sendMessage(String userKey, String conversationId, String text) async {
+  Future<Message> sendMessage(
+    String userKey,
+    String conversationId,
+    String text,
+  ) async {
     try {
-      final isImageUrl = text.startsWith('http') && (text.endsWith('.png') || text.endsWith('.jpg') || text.endsWith('.jpeg') || text.endsWith('.gif') || text.contains('imgbb.com') || text.contains('i.imgur.com'));
+      final isImageUrl =
+          text.startsWith('http') &&
+          (text.endsWith('.png') ||
+              text.endsWith('.jpg') ||
+              text.endsWith('.jpeg') ||
+              text.endsWith('.gif') ||
+              text.contains('imgbb.com') ||
+              text.contains('i.imgur.com'));
       final response = isImageUrl
-          ? await _api.sendMessagePayload(userKey, conversationId, MessagePayload(type: 'image', imageUrl: text))
-          : await _api.sendMessage(userKey, conversationId, SimpleMessageRequest(type: 'text', text: text));
-      
+          ? await _api.sendMessagePayload(
+              userKey,
+              conversationId,
+              MessagePayload(type: 'image', imageUrl: text),
+            )
+          : await _api.sendMessage(
+              userKey,
+              conversationId,
+              SimpleMessageRequest(type: 'text', text: text),
+            );
+
       return Message(
         id: response.message.id,
         conversationId: response.message.conversationId,
@@ -71,10 +90,13 @@ class ChatRepository {
     }
   }
 
-  Future<List<Message>> getMessages(String userKey, String conversationId) async {
+  Future<List<Message>> getMessages(
+    String userKey,
+    String conversationId,
+  ) async {
     try {
       final response = await _api.getMessages(userKey, conversationId);
-      
+
       final messages = response.messages.map((botpressMessage) {
         String messageType;
         if (botpressMessage.payload.type == "choice") {
@@ -90,14 +112,17 @@ class ChatRepository {
         } else {
           messageType = "text";
         }
-        
-        final isUserMessage = botpressMessage.userId == null || botpressMessage.userId?.contains(userKey) == true;
-        final userId = isUserMessage 
+
+        final isUserMessage =
+            botpressMessage.userId == null ||
+            botpressMessage.userId?.contains(userKey) == true;
+        final userId = isUserMessage
             ? "user_${botpressMessage.userId ?? userKey}"
             : "bot_${botpressMessage.userId ?? "botpress"}";
-        
+
         // Deduplicate options if the bot returns repeated entries
-        final rawOptions = botpressMessage.payload.options ?? const <MessageOption>[];
+        final rawOptions =
+            botpressMessage.payload.options ?? const <MessageOption>[];
         final seen = <String>{};
         final uniqueOptions = <MessageOption>[];
         for (final opt in rawOptions) {
@@ -119,7 +144,7 @@ class ChatRepository {
           options: uniqueOptions,
         );
       }).toList();
-      
+
       return messages;
     } catch (e) {
       throw Exception("Error getting messages: ${e.toString()}");
@@ -130,5 +155,3 @@ class ChatRepository {
     _api.dispose();
   }
 }
-
-

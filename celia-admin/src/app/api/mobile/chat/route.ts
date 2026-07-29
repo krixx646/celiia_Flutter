@@ -186,6 +186,19 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    const lastForDebug = messages.at(-1);
+    console.log(
+      '[chat] resume-debug',
+      JSON.stringify({
+        count: messages.length,
+        lastRole: lastForDebug?.role,
+        lastTypes: Array.isArray(lastForDebug?.content)
+          ? lastForDebug.content.map((p) => p.type)
+          : typeof lastForDebug?.content,
+        approvalsIn: approvals,
+      })
+    );
+
     const agent = createCeliaAgent({ uid: user.uid, tzOffsetMinutes }, body.state);
     const result = await agent.stream({ messages });
 
@@ -193,13 +206,18 @@ export async function POST(req: NextRequest) {
       headers: { 'x-conversation-id': conversationId },
       stream: toUIMessageStream({
         stream: result.stream,
+        // Required for resuming an approved tool call: the call was made on a
+        // previous turn, so without the conversation here the stream has no
+        // tool part to attach the result to and throws "no tool invocation
+        // found for tool call id".
+        originalMessages: history,
         // The SDK's default swallows the cause behind "An error occurred.",
         // which leaves nothing to debug from once this is running on a device.
         onError: (error) => {
           console.error('[chat] stream error', error);
           return error instanceof Error ? error.message : String(error);
         },
-        onEnd: async ({ responseMessage }) => {
+        onEnd: async ({ responseMessage, isContinuation }) => {
           const parts = responseMessage.parts ?? [];
           const text = parts
             .filter((part): part is { type: 'text'; text: string } => part.type === 'text')
@@ -211,13 +229,23 @@ export async function POST(req: NextRequest) {
           // empty row that the next turn feeds back to the model as history.
           if (parts.length === 0) return;
 
-          await supabase.from('chat_messages').insert({
-            conversation_id: conversationId,
-            user_id: user.uid,
-            role: 'assistant',
-            content: text,
-            parts,
-          });
+          if (isContinuation) {
+            // Answering an approval extends the assistant message that asked
+            // for it, so the stored turn is rewritten rather than duplicated.
+            await supabase
+              .from('chat_messages')
+              .update({ content: text, parts })
+              .eq('id', responseMessage.id)
+              .eq('user_id', user.uid);
+          } else {
+            await supabase.from('chat_messages').insert({
+              conversation_id: conversationId,
+              user_id: user.uid,
+              role: 'assistant',
+              content: text,
+              parts,
+            });
+          }
 
           await supabase
             .from('chat_conversations')

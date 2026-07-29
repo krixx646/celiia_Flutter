@@ -93,6 +93,102 @@ function searchTokens(query: string | undefined): string[] {
   );
 }
 
+// Words that carry no meaning in an exercise slug, and so are exactly what a
+// model drops or adds when it writes a slug from memory.
+const SLUG_FILLER_WORDS = new Set([
+  'of',
+  'the',
+  'with',
+  'a',
+  'an',
+  'and',
+  'for',
+  'to',
+  'on',
+  'in',
+  'at',
+  'by',
+  'your',
+]);
+
+/** The meaningful words of a slug, order-insensitive. */
+function slugFingerprint(slug: string): string {
+  return slug
+    .toLowerCase()
+    .split(/[-_\s]+/)
+    .filter((word) => word && !SLUG_FILLER_WORDS.has(word))
+    .sort()
+    .join('-');
+}
+
+type SlugMatch = { slug: string; displayName: string };
+
+/**
+ * Celia picks exercises from their display names, so she occasionally writes a
+ * slug that is one filler word out ("stretch-reverse-shoulder-standing" for
+ * "stretch-of-reverse-shoulder-standing"). Rejecting the whole routine over
+ * that wastes a good workout, so match on the meaningful words instead and
+ * accept a correction only when exactly one exercise fits.
+ *
+ * Anything still unmatched comes back with the closest names, so she can fix
+ * it herself rather than guessing again.
+ */
+async function resolveNearMissSlugs(unknown: string[]): Promise<{
+  resolved: Map<string, SlugMatch>;
+  unresolved: { slug: string; didYouMean: string[] }[];
+}> {
+  const supabase = getSupabaseAdmin();
+  const resolved = new Map<string, SlugMatch>();
+  const unresolved: { slug: string; didYouMean: string[] }[] = [];
+
+  const { data, error } = await supabase
+    .from('exercise_media')
+    .select('slug,display_name')
+    .limit(5000);
+
+  if (error || !data) {
+    return { resolved, unresolved: unknown.map((slug) => ({ slug, didYouMean: [] })) };
+  }
+
+  const catalog = data.map((row) => ({
+    slug: String(row.slug),
+    displayName: String(row.display_name),
+  }));
+
+  const byFingerprint = new Map<string, SlugMatch[]>();
+  for (const entry of catalog) {
+    const key = slugFingerprint(entry.slug);
+    const list = byFingerprint.get(key);
+    if (list) list.push(entry);
+    else byFingerprint.set(key, [entry]);
+  }
+
+  for (const slug of unknown) {
+    const candidates = byFingerprint.get(slugFingerprint(slug)) || [];
+    if (candidates.length === 1) {
+      resolved.set(slug, candidates[0]);
+      continue;
+    }
+
+    // No single match, so offer whichever exercises share the most words.
+    const wanted = new Set(slugFingerprint(slug).split('-'));
+    const ranked = catalog
+      .map((entry) => {
+        const words = slugFingerprint(entry.slug).split('-');
+        const shared = words.filter((word) => wanted.has(word)).length;
+        return { slug: entry.slug, shared };
+      })
+      .filter((entry) => entry.shared > 0)
+      .sort((a, b) => b.shared - a.shared)
+      .slice(0, 5)
+      .map((entry) => entry.slug);
+
+    unresolved.push({ slug, didYouMean: ranked });
+  }
+
+  return { resolved, unresolved };
+}
+
 export const celiaTools = {
   get_my_progress: tool({
     description:
@@ -453,29 +549,46 @@ export const celiaTools = {
       const nameBySlug = new Map(
         (known || []).map((row) => [String(row.slug), String(row.display_name)])
       );
+
+      // Slugs Celia wrote that don't exist verbatim, mapped to the real ones.
+      const corrections = new Map<string, string>();
       const unknown = slugs.filter((slug) => !nameBySlug.has(slug));
+
       if (unknown.length > 0) {
-        // Handing back the bad slugs lets Celia search again and retry rather
-        // than saving a routine with steps the app can't play.
-        return {
-          created: false,
-          error: 'Some slugs are not in the exercise library',
-          unknownSlugs: unknown,
-        };
+        const { resolved, unresolved } = await resolveNearMissSlugs(unknown);
+        for (const [wrong, match] of resolved) {
+          corrections.set(wrong, match.slug);
+          nameBySlug.set(match.slug, match.displayName);
+        }
+
+        if (unresolved.length > 0) {
+          // Handing back the bad slugs with near matches lets Celia retry
+          // rather than saving a routine with steps the app can't play.
+          return {
+            created: false,
+            error:
+              'Some exercises are not in the library. Use one of the suggestions, ' +
+              'or search again, then call this tool once more with the whole routine.',
+            unknownSlugs: unresolved,
+          };
+        }
       }
 
-      const steps = input.steps.map((step, index) => ({
-        id: crypto.randomUUID(),
-        title: step.title || nameBySlug.get(step.exerciseSlug) || 'Exercise',
-        description: step.coachingCue || null,
-        duration_seconds: step.durationSeconds,
-        video_id: null,
-        exercise_slug: step.exerciseSlug,
-        // Left null on purpose: the app resolves the GIF from `exercise_slug`
-        // at display time, so the URL isn't duplicated here.
-        thumbnail_url: null,
-        order_index: index,
-      }));
+      const steps = input.steps.map((step, index) => {
+        const slug = corrections.get(step.exerciseSlug) ?? step.exerciseSlug;
+        return {
+          id: crypto.randomUUID(),
+          title: step.title || nameBySlug.get(slug) || 'Exercise',
+          description: step.coachingCue || null,
+          duration_seconds: step.durationSeconds,
+          video_id: null,
+          exercise_slug: slug,
+          // Left null on purpose: the app resolves the GIF from `exercise_slug`
+          // at display time, so the URL isn't duplicated here.
+          thumbnail_url: null,
+          order_index: index,
+        };
+      });
 
       const totalSeconds = steps.reduce((sum, step) => sum + step.duration_seconds, 0);
 

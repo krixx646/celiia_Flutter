@@ -125,11 +125,140 @@ type StepPayload = {
 
 type DeepSeekChatResponse = {
   choices?: Array<{
+    finish_reason?: unknown;
     message?: {
       content?: unknown;
     };
   }>;
+  usage?: {
+    prompt_tokens?: unknown;
+    completion_tokens?: unknown;
+    total_tokens?: unknown;
+  };
 };
+
+// The stock GIF library is ~900 exercises. Sending all of them (~33k tokens)
+// made the model spend its entire token budget reasoning over near-duplicate
+// entries and return empty content, so the catalog is narrowed to the entries
+// that plausibly match the request before it ever reaches the prompt.
+const MAX_CATALOG_ENTRIES = 150;
+
+// Keyed by the `muscle_group` / `category` values actually stored in
+// `exercise_media`. Note ~half of the rows have a NULL muscle_group, so name
+// matching (not just these tags) is what carries most of the scoring.
+const MUSCLE_GROUP_KEYWORDS: Record<string, string[]> = {
+  shoulders: ['shoulder', 'delt', 'overhead', 'rotator'],
+  chest: ['chest', 'pec', 'bench'],
+  back_traps: ['back', 'lat', 'trap', 'row', 'pull', 'posture', 'spine'],
+  core_abs: ['core', 'abs', 'abdominal', 'plank', 'oblique', 'stomach', 'waist'],
+  legs_glutes: ['leg', 'glute', 'quad', 'hamstring', 'squat', 'lunge', 'thigh', 'hip', 'knee'],
+  calves: ['calf', 'calves', 'ankle'],
+};
+
+const CATEGORY_KEYWORDS: Record<string, string[]> = {
+  stretching_mobility: [
+    'stretch', 'mobility', 'flexibility', 'yoga', 'warm up', 'warmup',
+    'cool down', 'cooldown', 'recovery', 'loosen', 'limber',
+  ],
+  functional_hiit: [
+    'hiit', 'cardio', 'conditioning', 'fat burn', 'sweat', 'interval',
+    'explosive', 'jump', 'plyometric', 'endurance', 'metabolic',
+  ],
+  strength: [
+    'strength', 'muscle', 'hypertrophy', 'tone', 'dumbbell', 'weight',
+    'barbell', 'kettlebell', 'resistance',
+  ],
+  calisthenics: ['calisthenic', 'bodyweight', 'body weight', 'no equipment'],
+};
+
+// 'full' is excluded deliberately: "full body" requests otherwise score every
+// exercise whose name happens to contain it ("Abs full", "Ab wheel full").
+const REQUEST_STOPWORDS = new Set([
+  'and', 'the', 'for', 'with', 'want', 'need', 'workout', 'exercise',
+  'exercises', 'routine', 'session', 'minute', 'minutes', 'that', 'some',
+  'give', 'make', 'please', 'body', 'training', 'full',
+]);
+
+function requestTokens(text: string): string[] {
+  return text
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((token) => token.length >= 3 && !REQUEST_STOPWORDS.has(token));
+}
+
+function matchTagsFor(haystack: string, keywordMap: Record<string, string[]>): Set<string> {
+  const matched = new Set<string>();
+  for (const [tag, keywords] of Object.entries(keywordMap)) {
+    if (keywords.some((keyword) => haystack.includes(keyword))) matched.add(tag);
+  }
+  return matched;
+}
+
+function catalogKey(entry: CatalogEntryForPrompt) {
+  return `${entry.refType}:${entry.refId}`;
+}
+
+// Round-robins the leftovers by category so a narrow request still leaves the
+// model a balanced set to build a full routine from, rather than 150 variations
+// of one movement.
+function topUpAcrossCategories(
+  all: CatalogEntryForPrompt[],
+  picked: CatalogEntryForPrompt[],
+  limit: number
+): CatalogEntryForPrompt[] {
+  const chosen = new Set(picked.map(catalogKey));
+  const buckets = new Map<string, CatalogEntryForPrompt[]>();
+
+  for (const entry of all) {
+    if (chosen.has(catalogKey(entry))) continue;
+    const bucket = entry.category || 'other';
+    const list = buckets.get(bucket) || [];
+    list.push(entry);
+    buckets.set(bucket, list);
+  }
+
+  const out = [...picked];
+  const lists = [...buckets.values()];
+  let cursor = 0;
+  while (out.length < limit && lists.some((list) => list.length > 0)) {
+    const next = lists[cursor % lists.length].shift();
+    if (next) out.push(next);
+    cursor += 1;
+  }
+  return out;
+}
+
+function selectCatalogForPrompt(
+  entries: CatalogEntryForPrompt[],
+  requestText: string,
+  equipment: string[],
+  limit: number
+): CatalogEntryForPrompt[] {
+  if (entries.length <= limit) return entries;
+
+  const haystack = [requestText, ...equipment].join(' ').toLowerCase();
+  const tokens = requestTokens(haystack);
+  const wantedGroups = matchTagsFor(haystack, MUSCLE_GROUP_KEYWORDS);
+  const wantedCategories = matchTagsFor(haystack, CATEGORY_KEYWORDS);
+
+  const relevant = entries
+    .map((entry) => {
+      let score = 0;
+      if (entry.muscleGroup && wantedGroups.has(entry.muscleGroup)) score += 4;
+      if (entry.category && wantedCategories.has(entry.category)) score += 2;
+      const name = entry.name.toLowerCase();
+      for (const token of tokens) {
+        if (name.includes(token)) score += 3;
+      }
+      return { entry, score };
+    })
+    .filter((scored) => scored.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map((scored) => scored.entry);
+
+  if (relevant.length >= limit) return relevant.slice(0, limit);
+  return topUpAcrossCategories(entries, relevant, limit);
+}
 
 async function verifyFirebaseUser(req: NextRequest): Promise<{ uid: string } | null> {
   if (!FIREBASE_PROJECT_ID) return null;
@@ -254,22 +383,29 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'No exercises available to build a routine' }, { status: 400 });
     }
 
+    const videoEntries: CatalogEntryForPrompt[] = videoCatalog.map((v) => ({
+      refType: 'video' as const,
+      refId: v.id,
+      name: v.title,
+      category: v.category,
+      muscleGroup: v.bodyPart,
+      durationSeconds: v.durationSeconds,
+    }));
+
+    const gifEntries: CatalogEntryForPrompt[] = gifCatalog.map((g) => ({
+      refType: 'gif' as const,
+      refId: g.slug,
+      name: g.displayName,
+      category: g.category,
+      muscleGroup: g.muscleGroup,
+    }));
+
+    // Real filmed videos are the preferred pool and capped at 200, so they all
+    // stay in the prompt; only the much larger GIF library gets narrowed.
+    const gifBudget = Math.max(40, MAX_CATALOG_ENTRIES - videoEntries.length);
     const promptCatalog: CatalogEntryForPrompt[] = [
-      ...videoCatalog.map((v) => ({
-        refType: 'video' as const,
-        refId: v.id,
-        name: v.title,
-        category: v.category,
-        muscleGroup: v.bodyPart,
-        durationSeconds: v.durationSeconds,
-      })),
-      ...gifCatalog.map((g) => ({
-        refType: 'gif' as const,
-        refId: g.slug,
-        name: g.displayName,
-        category: g.category,
-        muscleGroup: g.muscleGroup,
-      })),
+      ...videoEntries,
+      ...selectCatalogForPrompt(gifEntries, requestText, equipment, gifBudget),
     ];
 
     const preferVideoRule = videoCatalog.length > 0
@@ -330,7 +466,10 @@ ${preferVideoRule}
         response_format: { type: 'json_object' },
         temperature: 1.0,
         top_p: 1.0,
-        max_tokens: 2500,
+        // Generous headroom: a 40-step routine is well under this, but a
+        // reasoning model also spends this budget thinking before it emits any
+        // JSON, and running out mid-thought yields empty content.
+        max_tokens: 8000,
         messages: [
           { role: 'system', content: system },
           { role: 'user', content: JSON.stringify(userPrompt) },
@@ -349,7 +488,15 @@ ${preferVideoRule}
     const deepSeekJson = (await deepSeekRes.json()) as DeepSeekChatResponse;
     const content = deepSeekJson.choices?.[0]?.message?.content;
     if (typeof content !== 'string' || !content.trim()) {
-      return NextResponse.json({ error: 'DeepSeek returned empty response' }, { status: 500 });
+      return NextResponse.json(
+        {
+          error: 'DeepSeek returned empty response',
+          finishReason: deepSeekJson.choices?.[0]?.finish_reason ?? null,
+          usage: deepSeekJson.usage ?? null,
+          catalogSize: promptCatalog.length,
+        },
+        { status: 500 }
+      );
     }
 
     let routineJson: RoutineJson;

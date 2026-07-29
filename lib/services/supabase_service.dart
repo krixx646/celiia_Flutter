@@ -370,11 +370,15 @@ class SupabaseService {
   /// this in memory for the app session (see [ExerciseMediaResolver]) rather
   /// than calling it per routine step.
   Future<List<ExerciseMedia>> getExerciseMediaLibrary() async {
+    // Explicit limit: without one this relies on PostgREST's default max-rows
+    // cap (1000), which would start silently dropping exercises as the library
+    // grows past it.
     final rows = await client
         .from('exercise_media')
         .select(
           'slug, display_name, muscle_group, category, gif_url, is_placeholder',
-        );
+        )
+        .limit(5000);
     return (rows as List)
         .map((row) => ExerciseMedia.fromJson(row as Map<String, dynamic>))
         .toList();

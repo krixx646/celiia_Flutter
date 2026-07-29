@@ -77,6 +77,27 @@ function sumMacros(rows: MealRow[]): MacroTotals {
   );
 }
 
+/** Words a model tends to include that no exercise name ever contains. */
+const SEARCH_STOPWORDS = new Set([
+  'the', 'and', 'for', 'with', 'without', 'any', 'some', 'best', 'good', 'easy',
+  'exercise', 'exercises', 'workout', 'workouts', 'routine', 'routines',
+  'move', 'moves', 'movement', 'movements', 'equipment', 'home', 'gym',
+]);
+
+/** How many rows to rank before trimming to the caller's limit. */
+const CANDIDATE_LIMIT = 200;
+
+function searchTokens(query: string | undefined): string[] {
+  return Array.from(
+    new Set(
+      (query || '')
+        .toLowerCase()
+        .split(/[^a-z0-9]+/)
+        .filter((token) => token.length > 2 && !SEARCH_STOPWORDS.has(token))
+    )
+  );
+}
+
 export const celiaTools = {
   get_my_progress: tool({
     description:
@@ -323,10 +344,18 @@ export const celiaTools = {
     description:
       "Search the app's exercise library. Use this to ground any exercise you recommend in something the app can actually show the user, and to check what is available for a muscle group before promising it.",
     inputSchema: z.object({
-      query: z.string().optional().describe('Free text matched against exercise names'),
+      query: z
+        .string()
+        .optional()
+        .describe(
+          'Free text matched word by word against exercise names, so a phrase like "shoulder press" works'
+        ),
       muscleGroup: z
         .enum(['shoulders', 'chest', 'back_traps', 'core_abs', 'legs_glutes', 'calves'])
-        .optional(),
+        .optional()
+        .describe(
+          'Narrows by muscle group, but about half the library has none recorded, so prefer `query` when you can'
+        ),
       category: z
         .enum(['strength', 'calisthenics', 'functional_hiit', 'stretching_mobility'])
         .optional(),
@@ -334,23 +363,52 @@ export const celiaTools = {
     }),
     contextSchema: userContext,
     execute: async ({ query, muscleGroup, category, limit }) => {
-      const supabase = getSupabaseAdmin();
-      let builder = supabase
-        .from('exercise_media')
-        .select('slug,display_name,muscle_group,category')
-        .limit(limit);
+      const tokens = searchTokens(query);
 
-      if (query?.trim()) builder = builder.ilike('display_name', `%${query.trim()}%`);
-      if (muscleGroup) builder = builder.eq('muscle_group', muscleGroup);
-      if (category) builder = builder.eq('category', category);
+      const run = async (withMuscleGroup: boolean) => {
+        let builder = getSupabaseAdmin()
+          .from('exercise_media')
+          .select('slug,display_name,muscle_group,category');
 
-      const { data, error } = await builder;
+        if (withMuscleGroup && muscleGroup) builder = builder.eq('muscle_group', muscleGroup);
+        if (category) builder = builder.eq('category', category);
+        // Any token is enough to be a candidate; ranking below sorts out how
+        // good each hit is. Requiring every token would drop "shoulder
+        // mobility", since no exercise name contains the word "mobility".
+        if (tokens.length > 0) {
+          builder = builder.or(tokens.map((t) => `display_name.ilike.%${t}%`).join(','));
+        }
+
+        return builder.limit(CANDIDATE_LIMIT);
+      };
+
+      let { data, error } = await run(true);
       if (error) return { error: 'Could not search exercises', details: error.message };
 
+      // Roughly half the library has no muscle_group recorded, so a muscle
+      // group filter alone can hide perfectly good matches. Fall back to the
+      // text search rather than telling Celia nothing exists.
+      if (muscleGroup && (data || []).length === 0) {
+        ({ data, error } = await run(false));
+        if (error) return { error: 'Could not search exercises', details: error.message };
+      }
+
+      const ranked = (data || [])
+        .map((row) => {
+          const name = String(row.display_name);
+          const haystack = name.toLowerCase();
+          const hits = tokens.filter((t) => haystack.includes(t)).length;
+          return { row, name, hits };
+        })
+        // Most query words matched wins; shorter names break ties, which
+        // favours "Shoulder press" over "Shoulder press machine seated".
+        .sort((a, b) => b.hits - a.hits || a.name.length - b.name.length)
+        .slice(0, limit);
+
       return {
-        exercises: (data || []).map((row) => ({
+        exercises: ranked.map(({ row, name }) => ({
           slug: String(row.slug),
-          name: String(row.display_name),
+          name,
           muscleGroup: row.muscle_group ? String(row.muscle_group) : null,
           category: row.category ? String(row.category) : null,
         })),

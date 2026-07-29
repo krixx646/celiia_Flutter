@@ -35,6 +35,47 @@ type ChatBody = {
   approvals?: ApprovalDecision[];
 };
 
+/** Shape of a tool part waiting on a decision, as stored in `chat_messages.parts`. */
+type ApprovalRequestedPart = {
+  state: string;
+  approval?: { id?: string };
+};
+
+/**
+ * Records the user's decisions on the tool parts that asked for them and
+ * returns the messages that changed, so they can be written back.
+ */
+function applyApprovals(history: UIMessage[], decisions: ApprovalDecision[]) {
+  const byId = new Map(decisions.map((d) => [d.approvalId, d.approved]));
+  const changed: UIMessage[] = [];
+
+  for (const message of history) {
+    if (message.role !== 'assistant') continue;
+    let touched = false;
+
+    message.parts = message.parts.map((part) => {
+      const candidate = part as ApprovalRequestedPart;
+      if (candidate.state !== 'approval-requested') return part;
+
+      const id = candidate.approval?.id;
+      if (!id || !byId.has(id)) return part;
+
+      touched = true;
+      return {
+        ...part,
+        state: 'approval-responded',
+        // Keeping the original approval object preserves the signature that
+        // binds this decision to the tool call it came from.
+        approval: { ...candidate.approval, approved: byId.get(id) },
+      } as UIMessage['parts'][number];
+    });
+
+    if (touched) changed.push(message);
+  }
+
+  return changed;
+}
+
 function titleFrom(message: string) {
   const trimmed = message.trim().replace(/\s+/g, ' ');
   return trimmed.length <= 60 ? trimmed : `${trimmed.slice(0, 57)}...`;
@@ -109,6 +150,21 @@ export async function POST(req: NextRequest) {
       parts: (Array.isArray(row.parts) ? row.parts : []) as UIMessage['parts'],
     }));
 
+    // Answers to the confirmations Celia asked for last turn. The decision has
+    // to be written onto the tool part that requested it: the agent matches an
+    // approval to its pending tool call by id and checks the signature it
+    // issued, so a free-standing approval message leaves the call pending and
+    // the turn produces nothing.
+    if (approvals.length > 0) {
+      const changed = applyApprovals(history, approvals);
+      for (const message of changed) {
+        await supabase
+          .from('chat_messages')
+          .update({ parts: message.parts })
+          .eq('id', message.id);
+      }
+    }
+
     if (messageText) {
       history.push({
         id: crypto.randomUUID(),
@@ -118,19 +174,6 @@ export async function POST(req: NextRequest) {
     }
 
     const messages: ModelMessage[] = await convertToModelMessages(history);
-
-    // Answers to tool confirmations from the previous turn. Without these the
-    // agent would just re-ask instead of running the approved tool.
-    if (approvals.length > 0) {
-      messages.push({
-        role: 'tool',
-        content: approvals.map((decision) => ({
-          type: 'tool-approval-response' as const,
-          approvalId: decision.approvalId,
-          approved: decision.approved,
-        })),
-      });
-    }
 
     // Persist the user's turn now, so it isn't lost if generation fails.
     if (messageText) {

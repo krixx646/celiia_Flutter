@@ -1,24 +1,29 @@
-import 'package:flutter/material.dart';
 import 'dart:ui';
+
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../providers/auth_provider.dart';
-import 'package:flutter/gestures.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import '../providers/chat_provider.dart';
+import '../providers/nutrition_profile_provider.dart';
 import '../providers/nutrition_tracker_provider.dart';
 import '../providers/routine_provider.dart';
 import '../providers/theme_provider.dart';
-import '../utils/progress.dart';
-import '../widgets/loading_indicator.dart';
-import 'package:file_picker/file_picker.dart';
-import 'dart:io' show File;
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import '../config/env.dart';
-import '../models/chat_models.dart';
-import '../utils/user_facing_error.dart';
+import '../services/supabase_service.dart';
 import '../widgets/animated_gradient_border.dart';
+import '../widgets/chat_message_bubble.dart';
+import '../widgets/loading_indicator.dart';
+import 'routines/routine_detail_screen.dart';
+import 'tools/calorie_scanner_screen.dart';
+
+/// Things Celia can actually do, offered up front so the abilities are
+/// discoverable instead of hidden behind knowing what to ask.
+const _suggestions = <String>[
+  'Build me a 20-minute HIIT routine',
+  'What should I eat tonight?',
+  'How am I doing this week?',
+  'I have chicken, rice and spinach',
+];
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -30,140 +35,115 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-
-  String _coachContext(BuildContext context) {
-    final tracker = context.read<NutritionTrackerProvider>();
-    final routines = context.read<RoutineProvider>().userRoutines;
-    final streakStats = computeActiveStreakStats(
-      routines: routines,
-      meals: tracker.meals,
-    );
-    return buildCoachContext(
-      nutritionContext: tracker.chatContext,
-      streakStats: streakStats,
-    );
-  }
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _focusNode.addListener(() {
-      setState(() {});
-    });
+    _focusNode.addListener(() => setState(() {}));
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final user = context.read<AuthProvider>().uiState.currentUser;
-      final email = user?.email;
-      final name = user?.displayName?.trim().isNotEmpty == true
-          ? user!.displayName!.trim()
-          : email?.split('@').first;
-      context.read<ChatProvider>().initializeChat(
-        firebaseUserId: user?.uid,
-        name: name,
-        email: email,
-      );
+      if (!mounted) return;
+      _publishUserState();
       context.read<NutritionTrackerProvider>().refresh();
-      final userId = user?.uid;
+      final userId = context.read<AuthProvider>().uiState.currentUser?.uid;
       if (userId != null) {
         context.read<RoutineProvider>().loadUserRoutines(userId);
       }
     });
   }
 
-  bool _looksLikeMarkdown(String input) {
-    if (input.isEmpty) return false;
-    final patterns = <RegExp>[
-      RegExp(r'(^|\n)#{1,6}\s'), // headers
-      RegExp(r'\*\*[^\*]+\*\*'), // bold
-      RegExp(r'(^|\n)[\-\*]\s+'), // bullet list
-      RegExp(r'(^|\n)\d+\.\s+'), // ordered list
-    ];
-    return patterns.any((r) => r.hasMatch(input));
-  }
-
-  TextSpan _linkTextSpan(String text, String url) {
-    return TextSpan(
-      text: text,
-      style: const TextStyle(
-        color: Colors.blue,
-        decoration: TextDecoration.underline,
-      ),
-      recognizer: TapGestureRecognizer()
-        ..onTap = () async {
-          final uri = Uri.parse(url);
-          await launchUrl(uri, mode: LaunchMode.externalApplication);
-        },
-    );
-  }
-
-  InlineSpan _plainSpan(String text, {TextStyle? style}) =>
-      TextSpan(text: text, style: style);
-
-  // Very lightweight parser for markdown links [label](url) and bare URLs
-  List<InlineSpan> _linkify(String input, {TextStyle? style}) {
-    final List<InlineSpan> spans = [];
-    final markdownRegex = RegExp(r"\[([^\]]+)\]\((https?:[^)]+)\)");
-    final urlRegex = RegExp(r"(https?:\/\/[^\s)]+)");
-
-    int index = 0;
-    for (final match in markdownRegex.allMatches(input)) {
-      if (match.start > index) {
-        spans.add(
-          _plainSpan(input.substring(index, match.start), style: style),
-        );
-      }
-      final label = match.group(1)!;
-      final url = match.group(2)!;
-      spans.add(_linkTextSpan(label, url));
-      index = match.end;
-    }
-    if (index < input.length) {
-      final remainder = input.substring(index);
-      // Within the remainder, convert bare URLs
-      int rIndex = 0;
-      for (final m in urlRegex.allMatches(remainder)) {
-        if (m.start > rIndex) {
-          spans.add(
-            _plainSpan(remainder.substring(rIndex, m.start), style: style),
-          );
-        }
-        final url = m.group(0)!;
-        spans.add(_linkTextSpan(url, url));
-        rIndex = m.end;
-      }
-      if (rIndex < remainder.length) {
-        spans.add(_plainSpan(remainder.substring(rIndex), style: style));
-      }
-    }
-    return spans;
-  }
-
-  Future<String?> _uploadImageToImgbb(List<int> bytes, String filename) async {
-    const apiKey = Env.imgbbKey;
-    if (apiKey.isEmpty) return null;
-    final uri = Uri.parse('https://api.imgbb.com/1/upload?key=$apiKey');
-    final b64 = base64Encode(bytes);
-    final response = await http.post(
-      uri,
-      body: {'image': b64, 'name': filename},
-    );
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      final jsonMap = json.decode(response.body) as Map<String, dynamic>;
-      final data = jsonMap['data'] as Map<String, dynamic>?;
-      return data?['url'] as String?;
-    }
-    return null;
-  }
-
   @override
   void dispose() {
     _controller.dispose();
     _focusNode.dispose();
+    _scrollController.dispose();
     super.dispose();
+  }
+
+  /// Hands Celia the profile numbers she cannot read from the backend.
+  void _publishUserState() {
+    final user = context.read<AuthProvider>().uiState.currentUser;
+    final name = user?.displayName?.trim();
+    context.read<ChatProvider>().setUserState(
+      buildUserState(
+        displayName: name != null && name.isNotEmpty
+            ? name
+            : user?.email?.split('@').first,
+        profile: context.read<NutritionProfileProvider>().profile,
+      ),
+    );
+  }
+
+  Future<void> _send(String text) async {
+    if (text.trim().isEmpty) return;
+    _publishUserState();
+    _controller.clear();
+    _scrollToEnd();
+    await context.read<ChatProvider>().sendMessage(text);
+    if (!mounted) return;
+    // A routine Celia just saved should show up in the library straight away.
+    final userId = context.read<AuthProvider>().uiState.currentUser?.uid;
+    if (userId != null) {
+      context.read<RoutineProvider>().loadUserRoutines(userId);
+    }
+  }
+
+  void _scrollToEnd() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_scrollController.hasClients) return;
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOut,
+      );
+    });
+  }
+
+  Future<void> _openRoutine(String routineId) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+    try {
+      final routine = await SupabaseService.instance.getRoutine(routineId);
+      if (routine == null) {
+        messenger.showSnackBar(
+          const SnackBar(content: Text('Could not open that routine')),
+        );
+        return;
+      }
+      await navigator.push(
+        MaterialPageRoute(builder: (_) => RoutineDetailScreen(routine: routine)),
+      );
+    } catch (_) {
+      messenger.showSnackBar(
+        const SnackBar(content: Text('Could not open that routine')),
+      );
+    }
+  }
+
+  Future<void> _showHistory() async {
+    final chat = context.read<ChatProvider>();
+    await chat.loadHistory();
+    if (!mounted) return;
+
+    await showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (sheetContext) => _HistorySheet(
+        onOpen: (id) async {
+          Navigator.of(sheetContext).pop();
+          await chat.openConversation(id);
+          _scrollToEnd();
+        },
+        onDelete: chat.deleteConversation,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = context.watch<ThemeProvider>();
+
     return Scaffold(
       backgroundColor: theme.background,
       resizeToAvoidBottomInset: false,
@@ -213,599 +193,62 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         actions: [
           IconButton(
-            tooltip: 'New Chat',
+            tooltip: 'Chat history',
+            icon: Icon(Icons.history, color: theme.textPrimary),
+            onPressed: _showHistory,
+          ),
+          IconButton(
+            tooltip: 'New chat',
             icon: Icon(Icons.add_comment, color: theme.textPrimary),
-            onPressed: () async {
-              final chat = context.read<ChatProvider>();
-              // Save current conversation before resetting; show result
-              final saved = await chat.saveCurrentConversation();
-              await chat.restartConversation();
-              await chat.startNewConversation();
-              if (!context.mounted) return;
-              final messenger = ScaffoldMessenger.of(context);
-              messenger.clearSnackBars();
-              messenger.showSnackBar(
-                SnackBar(
-                  content: Text(
-                    saved
-                        ? 'Saved and started a new chat'
-                        : 'Started a new chat',
-                  ),
-                ),
-              );
-            },
+            onPressed: () => context.read<ChatProvider>().startNewConversation(),
           ),
         ],
       ),
       body: Consumer<ChatProvider>(
         builder: (context, chat, child) {
-          final ui = chat.uiState;
-          final tracker = context.watch<NutritionTrackerProvider>();
-          final nutritionHint = tracker.todayCalories > 0
-              ? 'You\'ve logged ${tracker.todayCalories.round()} kcal today. Ask Celia about your remaining budget.'
-              : 'Ask about your form, diet, or routines.';
-
-          if (ui.isLoadingInitial) {
+          if (chat.isLoadingConversation) {
             return const Center(
-              child: LoadingIndicator(message: 'Initializing chat...'),
+              child: LoadingIndicator(message: 'Opening chat...'),
             );
           }
 
           return Column(
             children: [
               Expanded(
-                child: ui.messages.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              width: 100,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: theme.accentOrange.withValues(
-                                  alpha: 0.1,
-                                ),
-                                shape: BoxShape.circle,
-                              ),
-                              child: ClipOval(
-                                child: Image.asset(
-                                  'assets/images/app_icon_foreground.png',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-                            Text(
-                              'How can I help you\nget fit today?',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: theme.textPrimary,
-                                height: 1.2,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              nutritionHint,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: theme.textSecondary,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      )
-                    : ListView.builder(
+                child: chat.hasMessages
+                    ? ListView.builder(
+                        controller: _scrollController,
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
+                          horizontal: 10,
                           vertical: 12,
                         ),
-                        itemCount: ui.messages.length,
-                        itemBuilder: (context, index) {
-                          final msg = ui.messages[index];
-                          final provider = Provider.of<ChatProvider>(
-                            context,
-                            listen: false,
-                          );
-                          // Use the reliable message direction tracking from ChatProvider
-                          final isUser = provider.isUserMessage(msg.id);
-                          final botBubbleColor = theme.isDarkMode
-                              ? const Color(0xFF1A1D2D)
-                              : Colors.grey.shade200;
-                          final botTextColor = theme.isDarkMode
-                              ? Colors.white
-                              : Colors.black87;
-
-                          Widget bubble;
-                          if (msg.type == 'image' &&
-                              (msg.imageUrl ?? '').isNotEmpty) {
-                            final cacheW =
-                                (MediaQuery.of(context).size.width * 2).toInt();
-                            bubble = ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.network(
-                                msg.imageUrl!,
-                                fit: BoxFit.cover,
-                                gaplessPlayback: true,
-                                cacheWidth: cacheW,
-                                headers: const {'Accept': 'image/*'},
-                                errorBuilder: (context, error, stack) {
-                                  final baseStyle = Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                        color: isUser
-                                            ? Colors.white
-                                            : botTextColor,
-                                      );
-                                  return InkWell(
-                                    onTap: () => launchUrl(
-                                      Uri.parse(msg.imageUrl!),
-                                      mode: LaunchMode.externalApplication,
-                                    ),
-                                    child: Text(
-                                      msg.imageUrl!,
-                                      style: baseStyle,
-                                    ),
-                                  );
-                                },
-                              ),
+                        itemCount: chat.messages.length,
+                        itemBuilder: (context, index) => ChatMessageBubble(
+                          message: chat.messages[index],
+                          onApproval: (approvalId, approved) {
+                            chat.respondToApproval(
+                              approvalId: approvalId,
+                              approved: approved,
                             );
-                          } else if (msg.type == 'button' ||
-                              msg.type == 'choice' ||
-                              msg.type == 'dropdown') {
-                            final options = msg.options ?? [];
-                            final hasInteracted = context
-                                .watch<ChatProvider>()
-                                .hasMessageBeenInteracted(msg.id);
-                            bubble = Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if ((msg.text ?? '').isNotEmpty)
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 8),
-                                    child: Text(
-                                      msg.text!,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                            color: isUser
-                                                ? Colors.white
-                                                : (theme.isDarkMode
-                                                      ? Colors.white
-                                                      : Colors.black87),
-                                          ),
-                                    ),
-                                  ),
-                                Wrap(
-                                  spacing: 8,
-                                  runSpacing: 8,
-                                  children: options
-                                      .fold<
-                                        Map<String, MessageOption>
-                                      >(<String, MessageOption>{}, (map, opt) {
-                                        final key = '${opt.label}|${opt.value}';
-                                        map[key] =
-                                            opt; // last one wins but keys unique
-                                        return map;
-                                      })
-                                      .values
-                                      .map(
-                                        (opt) => OutlinedButton(
-                                          style: OutlinedButton.styleFrom(
-                                            foregroundColor: hasInteracted
-                                                ? (theme.isDarkMode
-                                                      ? Colors.white54
-                                                      : Colors.grey.shade700)
-                                                : (theme.isDarkMode
-                                                      ? Colors.white
-                                                      : Colors.deepPurple),
-                                            backgroundColor: hasInteracted
-                                                ? (theme.isDarkMode
-                                                      ? Colors.white10
-                                                      : Colors.grey.shade100)
-                                                : (theme.isDarkMode
-                                                      ? theme.accentOrange
-                                                            .withValues(
-                                                              alpha: 0.24,
-                                                            )
-                                                      : const Color(
-                                                          0xFFF3E5F5,
-                                                        )),
-                                            side: BorderSide(
-                                              color: hasInteracted
-                                                  ? Colors.grey
-                                                  : (theme.isDarkMode
-                                                        ? theme.accentOrange
-                                                              .withValues(
-                                                                alpha: 0.7,
-                                                              )
-                                                        : const Color(
-                                                            0xFFCE93D8,
-                                                          )),
-                                            ),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(24),
-                                            ),
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 16,
-                                              vertical: 10,
-                                            ),
-                                          ),
-                                          onPressed: hasInteracted
-                                              ? null
-                                              : () async {
-                                                  await context
-                                                      .read<ChatProvider>()
-                                                      .sendMessageWithInteraction(
-                                                        opt.value,
-                                                        msg.id,
-                                                        nutritionContext:
-                                                            _coachContext(
-                                                          context,
-                                                        ),
-                                                      );
-                                                },
-                                          child: Text(
-                                            opt.label,
-                                            style: TextStyle(
-                                              color: hasInteracted
-                                                  ? (theme.isDarkMode
-                                                        ? Colors.white54
-                                                        : Colors.grey.shade700)
-                                                  : (theme.isDarkMode
-                                                        ? Colors.white
-                                                        : Colors.deepPurple),
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                              ],
-                            );
-                          } else {
-                            final text = msg.text ?? '';
-                            final shouldUseMarkdown = _looksLikeMarkdown(text);
-                            // If message is a direct image URL, render inline
-                            final isDirectImage =
-                                Uri.tryParse(text)?.hasAbsolutePath == true &&
-                                (text.endsWith('.png') ||
-                                    text.endsWith('.jpg') ||
-                                    text.endsWith('.jpeg') ||
-                                    text.endsWith('.gif') ||
-                                    text.contains('i.imgur.com') ||
-                                    text.contains('imgbb.com') ||
-                                    text.contains('images.'));
-                            if (isDirectImage) {
-                              final cacheW =
-                                  (MediaQuery.of(context).size.width * 2)
-                                      .toInt();
-                              bubble = ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.network(
-                                  text,
-                                  fit: BoxFit.cover,
-                                  gaplessPlayback: true,
-                                  cacheWidth: cacheW,
-                                  headers: const {'Accept': 'image/*'},
-                                  errorBuilder: (_, __, ___) {
-                                    final style = Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                          color: isUser
-                                              ? Colors.white
-                                              : botTextColor,
-                                        );
-                                    return InkWell(
-                                      onTap: () => launchUrl(
-                                        Uri.parse(text),
-                                        mode: LaunchMode.externalApplication,
-                                      ),
-                                      child: Text(text, style: style),
-                                    );
-                                  },
-                                ),
-                              );
-                            } else if (shouldUseMarkdown) {
-                              final baseColor = isUser
-                                  ? Colors.white
-                                  : botTextColor;
-                              bubble = MarkdownBody(
-                                data: text,
-                                onTapLink: (label, href, title) {
-                                  if (href != null) {
-                                    launchUrl(
-                                      Uri.parse(href),
-                                      mode: LaunchMode.externalApplication,
-                                    );
-                                  }
-                                },
-                                styleSheet:
-                                    MarkdownStyleSheet.fromTheme(
-                                      Theme.of(context),
-                                    ).copyWith(
-                                      p: Theme.of(context).textTheme.bodyMedium
-                                          ?.copyWith(
-                                            color: baseColor,
-                                            height: 1.5,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                      h1: Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium
-                                          ?.copyWith(
-                                            color: baseColor,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                      h2: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(
-                                            color: baseColor,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                      h3: Theme.of(context).textTheme.titleLarge
-                                          ?.copyWith(
-                                            color: baseColor,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                      strong: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: baseColor,
-                                      ),
-                                      em: TextStyle(
-                                        fontStyle: FontStyle.italic,
-                                        color: baseColor,
-                                      ),
-                                      a: TextStyle(
-                                        color: isUser
-                                            ? Colors.white70
-                                            : Colors.blue.shade700,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                      listBullet: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(color: baseColor),
-                                    ),
-                              );
-                            } else {
-                              final textStyle = Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: isUser ? Colors.white : botTextColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    height: 1.5,
-                                  );
-                              bubble = RichText(
-                                text: TextSpan(
-                                  style: textStyle,
-                                  children: _linkify(text, style: textStyle),
-                                ),
-                              );
-                            }
-                          }
-
-                          return Align(
-                            alignment: isUser
-                                ? Alignment.centerRight
-                                : Alignment.centerLeft,
-                            child: ConstrainedBox(
-                              constraints: BoxConstraints(
-                                // Make bubbles feel larger, close to full width
-                                maxWidth:
-                                    MediaQuery.of(context).size.width * 0.95,
-                              ),
-                              child: Container(
-                                margin: const EdgeInsets.symmetric(
-                                  vertical: 8,
-                                  horizontal: 6,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                  horizontal: 18,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: isUser
-                                      ? const Color(0xFFF57C00)
-                                      : botBubbleColor,
-                                  borderRadius: BorderRadius.circular(16),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(
-                                        alpha: 0.06,
-                                      ),
-                                      blurRadius: 6,
-                                      offset: const Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: DefaultTextStyle.merge(
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: isUser ? Colors.white : botTextColor,
-                                    height: 1.5,
-                                  ),
-                                  child: bubble,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-              ),
-              if (ui.error != null &&
-                  !ui.error!.toLowerCase().contains('not a participant') &&
-                  !ui.error!.toLowerCase().contains('unavailable'))
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    toUserFriendlyMessage(
-                      ui.error,
-                      fallback: 'Something went wrong. Please try again.',
-                    ),
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                ),
-              // Save button fixed at bottom (optional explicit save)
-              // moved Save action to app bar; removed bottom button
-              // inline history panel removed; retrieval now via bottom sheet picker
-              // Chat Composer Area
-              AnimatedPadding(
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.easeOut,
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom > 0
-                      ? MediaQuery.of(context).viewInsets.bottom + 8
-                      : 100, // 100 to clear the bottom nav bar when keyboard is closed
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: AnimatedGradientBorder(
-                    isFocused: _focusNode.hasFocus,
-                    glowColor: theme.accentOrange,
-                    idleBorderColor: theme.isDarkMode
-                        ? Colors.white.withValues(alpha: 0.1)
-                        : Colors.black.withValues(alpha: 0.05),
-                    backgroundColor: theme.isDarkMode
-                        ? const Color(0xFF1E2235).withValues(alpha: 0.6)
-                        : Colors.white,
-                    borderRadius: 32,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          padding: const EdgeInsets.only(bottom: 4, left: 8),
-                          tooltip: 'Attach file',
-                          icon: Icon(
-                            Icons.attach_file,
-                            size: 24,
-                            color: theme.isDarkMode
-                                ? Colors.white54
-                                : Colors.black54,
-                          ),
-                          onPressed: () async {
-                            final messenger = ScaffoldMessenger.of(context);
-                            final provider = Provider.of<ChatProvider>(
-                              context,
-                              listen: false,
-                            );
-                            try {
-                              final result = await FilePicker.platform
-                                  .pickFiles(
-                                    type: FileType.image,
-                                    withData: true,
-                                    allowMultiple: false,
-                                  );
-                              if (result == null || result.files.isEmpty) {
-                                return;
-                              }
-                              final file = result.files.first;
-                              final bytes =
-                                  file.bytes ??
-                                  await File(file.path!).readAsBytes();
-                              final url = await _uploadImageToImgbb(
-                                bytes,
-                                file.name,
-                              );
-                              if (url == null) {
-                                messenger.showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Image upload failed'),
-                                  ),
-                                );
-                                return;
-                              }
-                              final ui = provider.uiState;
-                              if (!ui.hasActiveConversation) {
-                                await provider.startNewConversation();
-                              }
-                              await provider.sendMessage(url);
-                            } catch (_) {
-                              messenger.showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Upload failed. Please try again.',
-                                  ),
-                                ),
-                              );
-                            }
+                            _scrollToEnd();
                           },
+                          onOpenRoutine: _openRoutine,
                         ),
-                        Expanded(
-                          child: TextField(
-                            controller: _controller,
-                            focusNode: _focusNode,
-                            minLines: 1,
-                            maxLines: 4,
-                            style: TextStyle(
-                              color: theme.textPrimary,
-                              fontSize: 16,
-                            ),
-                            decoration: InputDecoration(
-                              hintText:
-                                  'Ask about your form, diet, or routines...',
-                              border: InputBorder.none,
-                              isDense: true,
-                              contentPadding: const EdgeInsets.symmetric(
-                                vertical: 16,
-                              ),
-                              hintStyle: TextStyle(color: theme.textSecondary),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 4, right: 4),
-                          child: ui.isSendingMessage
-                              ? const Padding(
-                                  padding: EdgeInsets.all(12.0),
-                                  child: SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: Colors.orange,
-                                    ),
-                                  ),
-                                )
-                              : IconButton(
-                                  icon: Icon(
-                                    Icons.send,
-                                    color: theme.accentOrange,
-                                    size: 24,
-                                  ),
-                                  onPressed: () async {
-                                    final text = _controller.text.trim();
-                                    if (text.isEmpty) {
-                                      return;
-                                    }
-                                    final coachContext = _coachContext(context);
-                                    if (!ui.hasActiveConversation) {
-                                      await chat.startNewConversation();
-                                    }
-                                    await chat.sendMessage(
-                                      text,
-                                      nutritionContext: coachContext,
-                                    );
-                                    _controller.clear();
-                                    await chat.saveCurrentConversation();
-                                  },
-                                ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      )
+                    : _EmptyState(onSuggestion: _send),
+              ),
+              if (chat.error != null)
+                _ErrorBanner(
+                  message: chat.error!,
+                  onDismiss: chat.clearError,
+                ),
+              _Composer(
+                controller: _controller,
+                focusNode: _focusNode,
+                isBusy: chat.isStreaming,
+                onSend: () => _send(_controller.text),
+                onScanMeal: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const CalorieScannerScreen()),
                 ),
               ),
             ],
@@ -813,5 +256,313 @@ class _ChatScreenState extends State<ChatScreen> {
         },
       ),
     );
+  }
+}
+
+class _EmptyState extends StatelessWidget {
+  const _EmptyState({required this.onSuggestion});
+
+  final Future<void> Function(String prompt) onSuggestion;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.watch<ThemeProvider>();
+    final tracker = context.watch<NutritionTrackerProvider>();
+    final hint = tracker.todayCalories > 0
+        ? 'You\'ve logged ${tracker.todayCalories.round()} kcal today.'
+        : 'Ask about your training, your food, or your progress.';
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 96,
+            height: 96,
+            decoration: BoxDecoration(
+              color: theme.accentOrange.withValues(alpha: 0.1),
+              shape: BoxShape.circle,
+            ),
+            child: ClipOval(
+              child: Image.asset(
+                'assets/images/app_icon_foreground.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            'How can I help you\nget fit today?',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: theme.textPrimary,
+              height: 1.2,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 10),
+          Text(
+            hint,
+            style: TextStyle(fontSize: 15, color: theme.textSecondary),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 28),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              for (final prompt in _suggestions)
+                ActionChip(
+                  label: Text(prompt),
+                  labelStyle: TextStyle(
+                    color: theme.textPrimary,
+                    fontSize: 13.5,
+                  ),
+                  backgroundColor: theme.isDarkMode
+                      ? Colors.white.withValues(alpha: 0.06)
+                      : Colors.black.withValues(alpha: 0.04),
+                  side: BorderSide(
+                    color: theme.accentOrange.withValues(alpha: 0.3),
+                  ),
+                  shape: const StadiumBorder(),
+                  onPressed: () => onSuggestion(prompt),
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ErrorBanner extends StatelessWidget {
+  const _ErrorBanner({required this.message, required this.onDismiss});
+
+  final String message;
+  final VoidCallback onDismiss;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              message,
+              style: TextStyle(color: Colors.red.shade400, fontSize: 13),
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.close, size: 18, color: Colors.red.shade400),
+            onPressed: onDismiss,
+            visualDensity: VisualDensity.compact,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Composer extends StatelessWidget {
+  const _Composer({
+    required this.controller,
+    required this.focusNode,
+    required this.isBusy,
+    required this.onSend,
+    required this.onScanMeal,
+  });
+
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final bool isBusy;
+  final VoidCallback onSend;
+  final VoidCallback onScanMeal;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.watch<ThemeProvider>();
+    final keyboard = MediaQuery.of(context).viewInsets.bottom;
+
+    return AnimatedPadding(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeOut,
+      // 100 clears the bottom nav bar when the keyboard is closed.
+      padding: EdgeInsets.only(bottom: keyboard > 0 ? keyboard + 8 : 100),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: AnimatedGradientBorder(
+          isFocused: focusNode.hasFocus,
+          glowColor: theme.accentOrange,
+          idleBorderColor: theme.isDarkMode
+              ? Colors.white.withValues(alpha: 0.1)
+              : Colors.black.withValues(alpha: 0.05),
+          backgroundColor: theme.isDarkMode
+              ? const Color(0xFF1E2235).withValues(alpha: 0.6)
+              : Colors.white,
+          borderRadius: 32,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              IconButton(
+                padding: const EdgeInsets.only(bottom: 4, left: 8),
+                // Celia's model cannot see photos, so a picture goes to the
+                // scanner, which reads it and logs the meal she can then talk
+                // about.
+                tooltip: 'Scan a meal',
+                icon: Icon(
+                  Icons.photo_camera_outlined,
+                  size: 24,
+                  color: theme.isDarkMode ? Colors.white54 : Colors.black54,
+                ),
+                onPressed: onScanMeal,
+              ),
+              Expanded(
+                child: TextField(
+                  controller: controller,
+                  focusNode: focusNode,
+                  minLines: 1,
+                  maxLines: 4,
+                  textInputAction: TextInputAction.send,
+                  onSubmitted: (_) => isBusy ? null : onSend(),
+                  style: TextStyle(color: theme.textPrimary, fontSize: 16),
+                  decoration: InputDecoration(
+                    hintText: 'Ask Celia anything about your training...',
+                    border: InputBorder.none,
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                    hintStyle: TextStyle(color: theme.textSecondary),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4, right: 4),
+                child: isBusy
+                    ? Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: theme.accentOrange,
+                          ),
+                        ),
+                      )
+                    : IconButton(
+                        icon: Icon(
+                          Icons.send,
+                          color: theme.accentOrange,
+                          size: 24,
+                        ),
+                        onPressed: onSend,
+                      ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HistorySheet extends StatelessWidget {
+  const _HistorySheet({required this.onOpen, required this.onDelete});
+
+  final Future<void> Function(String id) onOpen;
+  final Future<void> Function(String id) onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.watch<ThemeProvider>();
+
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.isDarkMode ? const Color(0xFF15182A) : Colors.white,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 28),
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.7,
+      ),
+      child: Consumer<ChatProvider>(
+        builder: (context, chat, _) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Your chats',
+                style: TextStyle(
+                  color: theme.textPrimary,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 12),
+              if (chat.isLoadingHistory)
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 32),
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              else if (chat.history.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 32),
+                  child: Text(
+                    'No saved chats yet.',
+                    style: TextStyle(color: theme.textSecondary),
+                  ),
+                )
+              else
+                Flexible(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: chat.history.length,
+                    itemBuilder: (context, index) {
+                      final conversation = chat.history[index];
+                      return ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: Text(
+                          conversation.title,
+                          style: TextStyle(color: theme.textPrimary),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        subtitle: Text(
+                          _relativeTime(conversation.updatedAt),
+                          style: TextStyle(
+                            color: theme.textSecondary,
+                            fontSize: 12,
+                          ),
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(
+                            Icons.delete_outline,
+                            color: theme.textSecondary,
+                          ),
+                          onPressed: () => onDelete(conversation.id),
+                        ),
+                        onTap: () => onOpen(conversation.id),
+                      );
+                    },
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  String _relativeTime(DateTime time) {
+    final diff = DateTime.now().difference(time);
+    if (diff.inMinutes < 1) return 'Just now';
+    if (diff.inHours < 1) return '${diff.inMinutes}m ago';
+    if (diff.inDays < 1) return '${diff.inHours}h ago';
+    if (diff.inDays < 7) return '${diff.inDays}d ago';
+    return '${time.day}/${time.month}/${time.year}';
   }
 }

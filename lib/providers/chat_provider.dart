@@ -1,614 +1,294 @@
-import 'package:flutter/foundation.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
-import 'dart:collection';
-import '../models/chat_models.dart';
-// ignore: depend_on_referenced_packages
-import 'package:shared_preferences/shared_preferences.dart';
-import '../repositories/chat_repository.dart';
-import '../repositories/chat_history_repository.dart';
+
+import 'package:flutter/foundation.dart';
+
+import '../models/celia_chat_message.dart';
+import '../models/nutrition_profile.dart';
+import '../services/celia_chat_service.dart';
 import '../utils/user_facing_error.dart';
 
-class SavedConversation {
-  final String id;
-  final String title;
-  final String lastMessage;
-  final DateTime timestamp;
-  final String userId;
-  final String userKey;
-
-  SavedConversation({
-    required this.id,
-    required this.title,
-    required this.lastMessage,
-    required this.timestamp,
-    required this.userId,
-    required this.userKey,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'lastMessage': lastMessage,
-      'timestamp': timestamp.toIso8601String(),
-      'userId': userId,
-      'userKey': userKey,
-    };
-  }
-
-  factory SavedConversation.fromJson(Map<String, dynamic> json) {
-    final ts = json['timestamp'];
-    DateTime parsed;
-    if (ts is Timestamp) {
-      parsed = ts.toDate();
-    } else if (ts is String) {
-      parsed = DateTime.tryParse(ts) ?? DateTime.now();
-    } else {
-      parsed = DateTime.now();
-    }
-    return SavedConversation(
-      id: json['id'],
-      title: json['title'],
-      lastMessage: json['lastMessage'],
-      timestamp: parsed,
-      userId: json['userId'],
-      userKey: json['userKey'],
-    );
-  }
-}
-
-class ChatUiState {
-  static const Object _sentinel = Object();
-
-  final List<Message> messages;
-  final bool isLoading;
-  final bool isLoadingInitial;
-  final bool isSendingMessage;
-  final bool pollingEnabled;
-  final String? error;
-  final bool hasActiveConversation;
-  final bool isTyping;
-  final List<SavedConversation> conversationHistory;
-  final bool isLoadingHistory;
-  final bool showNewConversationButton;
-  final bool showStartNewConversationDialog;
-  final bool showHistory;
-  final bool showSettingsDialog;
-  final bool showUserProfileDialog;
-  final bool showRestartConfirmation;
-  final String? currentConversationId;
-  final String? currentUserKey;
-  final String? userIdForBotpress;
-  final bool hasInitialized;
-
-  ChatUiState({
-    this.messages = const [],
-    this.isLoading = false,
-    this.isLoadingInitial = false,
-    this.isSendingMessage = false,
-    this.pollingEnabled = false,
-    this.error,
-    this.hasActiveConversation = false,
-    this.isTyping = false,
-    this.conversationHistory = const [],
-    this.isLoadingHistory = false,
-    this.showNewConversationButton = false,
-    this.showStartNewConversationDialog = false,
-    this.showHistory = false,
-    this.showSettingsDialog = false,
-    this.showUserProfileDialog = false,
-    this.showRestartConfirmation = false,
-    this.currentConversationId,
-    this.currentUserKey,
-    this.userIdForBotpress,
-    this.hasInitialized = false,
-  });
-
-  ChatUiState copyWith({
-    List<Message>? messages,
-    bool? isLoading,
-    bool? isLoadingInitial,
-    bool? isSendingMessage,
-    bool? pollingEnabled,
-    String? error,
-    bool? hasActiveConversation,
-    bool? isTyping,
-    List<SavedConversation>? conversationHistory,
-    bool? isLoadingHistory,
-    bool? showNewConversationButton,
-    bool? showStartNewConversationDialog,
-    bool? showHistory,
-    bool? showSettingsDialog,
-    bool? showUserProfileDialog,
-    bool? showRestartConfirmation,
-    Object? currentConversationId = _sentinel,
-    Object? currentUserKey = _sentinel,
-    Object? userIdForBotpress = _sentinel,
-    bool? hasInitialized,
-  }) {
-    return ChatUiState(
-      messages: messages ?? this.messages,
-      isLoading: isLoading ?? this.isLoading,
-      isLoadingInitial: isLoadingInitial ?? this.isLoadingInitial,
-      isSendingMessage: isSendingMessage ?? this.isSendingMessage,
-      pollingEnabled: pollingEnabled ?? this.pollingEnabled,
-      error: error,
-      hasActiveConversation:
-          hasActiveConversation ?? this.hasActiveConversation,
-      isTyping: isTyping ?? this.isTyping,
-      conversationHistory: conversationHistory ?? this.conversationHistory,
-      isLoadingHistory: isLoadingHistory ?? this.isLoadingHistory,
-      showNewConversationButton:
-          showNewConversationButton ?? this.showNewConversationButton,
-      showStartNewConversationDialog:
-          showStartNewConversationDialog ?? this.showStartNewConversationDialog,
-      showHistory: showHistory ?? this.showHistory,
-      showSettingsDialog: showSettingsDialog ?? this.showSettingsDialog,
-      showUserProfileDialog:
-          showUserProfileDialog ?? this.showUserProfileDialog,
-      showRestartConfirmation:
-          showRestartConfirmation ?? this.showRestartConfirmation,
-      currentConversationId: identical(currentConversationId, _sentinel)
-          ? this.currentConversationId
-          : currentConversationId as String?,
-      currentUserKey: identical(currentUserKey, _sentinel)
-          ? this.currentUserKey
-          : currentUserKey as String?,
-      userIdForBotpress: identical(userIdForBotpress, _sentinel)
-          ? this.userIdForBotpress
-          : userIdForBotpress as String?,
-      hasInitialized: hasInitialized ?? this.hasInitialized,
-    );
-  }
+/// Facts about the user sent with every turn.
+///
+/// The coach backend reads routines and meals from Supabase itself, but the
+/// nutrition profile lives in Firestore, which it cannot reach — so the app
+/// hands those numbers over instead of Celia having to ask for them.
+Map<String, dynamic> buildUserState({
+  String? displayName,
+  NutritionProfile? profile,
+}) {
+  return {
+    if (displayName != null && displayName.isNotEmpty)
+      'displayName': displayName,
+    if (profile != null) ...{
+      'targets': {
+        'dailyCalories': profile.dailyCalories,
+        'proteinGrams': profile.dailyProteinGrams,
+        'carbsGrams': profile.dailyCarbsGrams,
+        'fatGrams': profile.dailyFatGrams,
+      },
+      'profile': {
+        'weightKg': profile.weightKg,
+        'heightCm': profile.heightCm,
+        'age': profile.age,
+        'gender': profile.gender.name,
+      },
+    },
+  };
 }
 
 class ChatProvider extends ChangeNotifier {
   @visibleForTesting
-  static ChatRepository Function() defaultChatRepository = () =>
-      ChatRepository();
+  static CeliaChatService Function() defaultChatService = () =>
+      CeliaChatService();
 
-  @visibleForTesting
-  static ChatHistoryRepository Function() defaultHistoryRepository = () =>
-      ChatHistoryRepository();
+  ChatProvider({CeliaChatService? chatService})
+    : _service = chatService ?? defaultChatService();
 
-  @visibleForTesting
-  static Future<SharedPreferences> Function() defaultPrefs =
-      SharedPreferences.getInstance;
+  final CeliaChatService _service;
 
-  final ChatRepository _chatRepository;
-  final ChatHistoryRepository _historyRepository;
-  final Future<SharedPreferences> Function() _prefs;
+  final List<CeliaMessage> _messages = [];
+  List<CeliaMessage> get messages => List.unmodifiable(_messages);
 
-  ChatProvider({
-    ChatRepository? chatRepository,
-    ChatHistoryRepository? historyRepository,
-    Future<SharedPreferences> Function()? prefs,
-  }) : _chatRepository = chatRepository ?? defaultChatRepository(),
-       _historyRepository = historyRepository ?? defaultHistoryRepository(),
-       _prefs = prefs ?? defaultPrefs;
+  String? _conversationId;
+  String? get conversationId => _conversationId;
 
-  ChatUiState _uiState = ChatUiState();
-  ChatUiState get uiState => _uiState;
+  /// True from the moment a turn is sent until the stream closes.
+  bool _isStreaming = false;
+  bool get isStreaming => _isStreaming;
 
-  Timer? _pollingTimer;
-  final Set<String> _interactedMessageIds = {};
-  final Map<String, bool> _messageDirections = {}; // true = user, false = bot
+  String? _error;
+  String? get error => _error;
 
-  Future<void> initializeChat({
-    String? firebaseUserId,
-    String? name,
-    String? email,
+  List<ChatConversation> _history = [];
+  List<ChatConversation> get history => List.unmodifiable(_history);
+
+  bool _isLoadingHistory = false;
+  bool get isLoadingHistory => _isLoadingHistory;
+
+  bool _isLoadingConversation = false;
+  bool get isLoadingConversation => _isLoadingConversation;
+
+  bool _showHistory = false;
+  bool get showHistory => _showHistory;
+
+  StreamSubscription<CeliaStreamEvent>? _subscription;
+
+  /// The state snapshot to send with each turn, refreshed by the screen.
+  Map<String, dynamic>? _userState;
+  void setUserState(Map<String, dynamic> state) => _userState = state;
+
+  bool get hasMessages => _messages.isNotEmpty;
+
+  /// The write Celia is currently waiting on permission for, if any.
+  ChatToolCall? get pendingApproval =>
+      _messages.isEmpty ? null : _messages.last.pendingApproval;
+
+  Future<void> loadHistory() async {
+    _isLoadingHistory = true;
+    notifyListeners();
+    try {
+      _history = await _service.listConversations();
+    } catch (e) {
+      _error = toUserFriendlyMessage(
+        e,
+        fallback: 'Unable to load saved chats right now.',
+      );
+    } finally {
+      _isLoadingHistory = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> sendMessage(String text) async {
+    final trimmed = text.trim();
+    if (trimmed.isEmpty || _isStreaming) return;
+
+    _messages.add(CeliaMessage.user(trimmed));
+    await _runTurn(message: trimmed);
+  }
+
+  /// Answers a confirmation Celia asked for. Approving resumes the same turn,
+  /// so the tool runs and she carries on from where she paused.
+  Future<void> respondToApproval({
+    required String approvalId,
+    required bool approved,
   }) async {
-    if (_uiState.hasInitialized) return;
+    if (_isStreaming) return;
+    _markApprovalAnswered(approvalId, approved);
+    await _runTurn(approvals: [(approvalId: approvalId, approved: approved)]);
+  }
 
-    _uiState = _uiState.copyWith(isLoadingInitial: true, error: null);
+  Future<void> _runTurn({
+    String message = '',
+    List<({String approvalId, bool approved})> approvals = const [],
+  }) async {
+    _error = null;
+    _isStreaming = true;
+
+    // The assistant bubble exists before any content arrives so the UI has
+    // something to attach the thinking indicator to.
+    final placeholder = CeliaMessage(
+      id: 'stream_${DateTime.now().microsecondsSinceEpoch}',
+      role: ChatRole.assistant,
+      isStreaming: true,
+    );
+    _messages.add(placeholder);
     notifyListeners();
 
-    try {
-      // Persist Botpress user key across launches to avoid 403 on history
-      final prefs = await _prefs();
-      final prefsKey = (firebaseUserId == null || firebaseUserId.isEmpty)
-          ? 'botpress_user_key'
-          : 'botpress_user_key_$firebaseUserId';
-      String? userKey = prefs.getString(prefsKey);
-      if (userKey == null) {
-        final user = await _chatRepository.createUser(name: name, email: email);
-        userKey = user.id;
-        await prefs.setString(prefsKey, userKey);
-      }
+    final index = _messages.length - 1;
+    final buffer = StringBuffer();
+    final calls = <String, ChatToolCall>{};
+    final completion = Completer<void>();
 
-      _uiState = _uiState.copyWith(
-        currentUserKey: userKey,
-        userIdForBotpress: userKey,
-        hasInitialized: true,
-        isLoadingInitial: false,
+    void update({bool? streaming, String? error}) {
+      if (index >= _messages.length) return;
+      _messages[index] = _messages[index].copyWith(
+        text: buffer.toString(),
+        toolCalls: calls.values.toList(),
+        isStreaming: streaming ?? _messages[index].isStreaming,
+        error: error,
       );
       notifyListeners();
+    }
 
-      await loadConversationHistory();
-    } catch (e) {
-      _uiState = _uiState.copyWith(
-        error: toUserFriendlyMessage(
-          e,
-          fallback: 'Chat is unavailable right now. Please try again.',
-        ),
-        isLoadingInitial: false,
+    _subscription = _service
+        .send(
+          conversationId: _conversationId,
+          message: message,
+          userState: _userState,
+          approvals: approvals,
+        )
+        .listen(
+          (event) {
+            switch (event) {
+              case CeliaConversationStarted(:final conversationId):
+                _conversationId = conversationId;
+              case CeliaTextDelta(:final delta):
+                buffer.write(delta);
+                update();
+              case CeliaToolUpdate(:final call):
+                calls[call.toolCallId] = call;
+                update();
+              case CeliaStreamError(message: final errorText):
+                _error = errorText;
+                update(error: errorText);
+            }
+          },
+          onError: (Object e) {
+            _error = toUserFriendlyMessage(
+              e,
+              fallback: 'Celia is unavailable right now. Please try again.',
+            );
+            update(error: _error);
+          },
+          onDone: () {
+            if (!completion.isCompleted) completion.complete();
+          },
+          cancelOnError: false,
+        );
+
+    await completion.future;
+
+    _isStreaming = false;
+    // A turn that produced nothing at all would leave an empty bubble behind.
+    if (index < _messages.length && _messages[index].isEmpty) {
+      _messages.removeAt(index);
+      _error ??= 'Celia did not reply. Please try again.';
+    } else {
+      update(streaming: false);
+    }
+    notifyListeners();
+
+    // The reply may have renamed or created the conversation.
+    if (_error == null) unawaited(loadHistory());
+  }
+
+  /// Flips the pending approval to its answer so the buttons disappear as soon
+  /// as the user taps, rather than when the next stream reports it.
+  void _markApprovalAnswered(String approvalId, bool approved) {
+    for (var i = 0; i < _messages.length; i++) {
+      final calls = _messages[i].toolCalls;
+      final match = calls.indexWhere((call) => call.approvalId == approvalId);
+      if (match == -1) continue;
+      final updated = [...calls];
+      updated[match] = updated[match].copyWith(
+        phase: approved ? ToolPhase.running : ToolPhase.denied,
       );
+      _messages[i] = _messages[i].copyWith(toolCalls: updated);
       notifyListeners();
+      return;
     }
   }
 
   Future<void> startNewConversation() async {
-    if (_uiState.currentUserKey == null) {
-      await initializeChat();
-    }
+    await _cancelStream();
+    _conversationId = null;
+    _messages.clear();
+    _error = null;
+    _showHistory = false;
+    notifyListeners();
+  }
 
-    _uiState = _uiState.copyWith(isLoading: true, error: null);
+  Future<void> openConversation(String id) async {
+    await _cancelStream();
+    _isLoadingConversation = true;
+    _showHistory = false;
+    _conversationId = id;
+    _messages.clear();
+    _error = null;
     notifyListeners();
 
     try {
-      final conversation = await _chatRepository.createConversation(
-        _uiState.currentUserKey!,
-      );
-
-      _uiState = _uiState.copyWith(
-        currentConversationId: conversation.id,
-        messages: [],
-        hasActiveConversation: true,
-        isLoading: false,
-        showNewConversationButton: false,
-      );
-      notifyListeners();
-
-      _startPolling();
+      final loaded = await _service.loadConversation(id);
+      _messages
+        ..clear()
+        ..addAll(loaded);
     } catch (e) {
-      _uiState = _uiState.copyWith(
-        error: toUserFriendlyMessage(
-          e,
-          fallback: 'Could not start a new chat. Please try again.',
-        ),
-        isLoading: false,
+      _error = toUserFriendlyMessage(
+        e,
+        fallback: 'Could not open that conversation.',
       );
+    } finally {
+      _isLoadingConversation = false;
       notifyListeners();
     }
   }
 
-  bool hasMessageBeenInteracted(String messageId) {
-    return _interactedMessageIds.contains(messageId);
-  }
-
-  bool isUserMessage(String messageId) {
-    return _messageDirections[messageId] ?? false;
-  }
-
-  Future<void> sendMessageWithInteraction(
-    String text,
-    String messageId, {
-    String? nutritionContext,
-  }) async {
-    _interactedMessageIds.add(messageId);
-    notifyListeners();
-    await sendMessage(text, nutritionContext: nutritionContext);
-  }
-
-  Future<void> sendMessage(String text, {String? nutritionContext}) async {
-    if (_uiState.currentUserKey == null ||
-        _uiState.currentConversationId == null) {
-      _uiState = _uiState.copyWith(error: 'No active conversation');
-      notifyListeners();
-      return;
-    }
-
-    final outbound = nutritionContext != null && nutritionContext.isNotEmpty
-        ? '$nutritionContext\n\nUser: $text'
-        : text;
-
-    _uiState = _uiState.copyWith(isSendingMessage: true, error: null);
-    // Optimistically append the user's message with a special marker
-    final optimisticId = 'local_${DateTime.now().millisecondsSinceEpoch}';
-    final isImageUrl =
-        text.startsWith('http') &&
-        (text.endsWith('.png') ||
-            text.endsWith('.jpg') ||
-            text.endsWith('.jpeg') ||
-            text.endsWith('.gif') ||
-            text.contains('imgbb.com') ||
-            text.contains('i.imgur.com'));
-    final optimistic = Message(
-      id: optimisticId,
-      conversationId: _uiState.currentConversationId!,
-      userId: 'user_${_uiState.currentUserKey}', // Use actual user key
-      text: isImageUrl ? null : text,
-      type: isImageUrl ? 'image' : 'text',
-      created: DateTime.now().toIso8601String(),
-      imageUrl: isImageUrl ? text : null,
-    );
-    _messageDirections[optimisticId] = true; // Mark as user message
-    final updated = [..._uiState.messages, optimistic];
-    _uiState = _uiState.copyWith(messages: updated);
-    notifyListeners();
-
+  Future<void> deleteConversation(String id) async {
     try {
-      final sent = await _chatRepository.sendMessage(
-        _uiState.currentUserKey!,
-        _uiState.currentConversationId!,
-        outbound,
-      );
-      // Mark the sent message as a user message
-      _messageDirections[sent.id] = true;
-
-      // Replace last optimistic message with the confirmed one
-      final current = [..._uiState.messages];
-      // Always append the confirmed message, then remove the last optimistic message if present.
-      // This is equivalent to an in-place replace, but avoids edge cases where the optimistic
-      // message list changes due to polling while awaiting the server response.
-      current.add(sent);
-      final lastIndex = current.lastIndexWhere(
-        (m) => m.id.startsWith('local_'),
-      );
-      if (lastIndex != -1) {
-        // Remove the optimistic message direction tracking
-        _messageDirections.remove(current[lastIndex].id);
-        current.removeAt(lastIndex);
-      }
-      _uiState = _uiState.copyWith(messages: current, isSendingMessage: false);
-      notifyListeners();
+      await _service.deleteConversation(id);
+      if (_conversationId == id) await startNewConversation();
+      await loadHistory();
     } catch (e) {
-      _uiState = _uiState.copyWith(
-        error: toUserFriendlyMessage(
-          e,
-          fallback: 'Message could not be sent. Please try again.',
-        ),
-        isSendingMessage: false,
+      _error = toUserFriendlyMessage(
+        e,
+        fallback: 'Could not delete this conversation. Please try again.',
       );
       notifyListeners();
     }
-  }
-
-  Future<void> loadMessages() async {
-    if (_uiState.currentUserKey == null ||
-        _uiState.currentConversationId == null) {
-      return;
-    }
-
-    try {
-      final messages = await _chatRepository.getMessages(
-        _uiState.currentUserKey!,
-        _uiState.currentConversationId!,
-      );
-
-      // Deduplicate by id while preserving order
-      final LinkedHashMap<String, Message> uniqueById =
-          LinkedHashMap<String, Message>();
-      for (final m in messages) {
-        uniqueById[m.id] = m;
-      }
-      final deduped = uniqueById.values.toList();
-
-      // Track message directions based on the pattern
-      // We'll use a simple algorithm: user messages are at even indices when sorted
-      final fetchedSorted = [...deduped]
-        ..sort((Message a, Message b) {
-          final aTime =
-              DateTime.tryParse(a.created) ??
-              DateTime.fromMillisecondsSinceEpoch(0);
-          final bTime =
-              DateTime.tryParse(b.created) ??
-              DateTime.fromMillisecondsSinceEpoch(0);
-          return aTime.compareTo(bTime);
-        });
-
-      // Update message directions based on pattern
-      for (int i = 0; i < fetchedSorted.length; i++) {
-        final msg = fetchedSorted[i];
-        // User messages are typically at even indices (0, 2, 4...)
-        // Bot messages at odd indices (1, 3, 5...)
-        // Special handling for indices 2 and 6 as bot messages
-        bool isUser = (i == 2 || i == 6) ? false : (i % 2 == 0);
-        _messageDirections[msg.id] = isUser;
-      }
-
-      // Keep existing optimistic messages
-      final optimisticMessages = _uiState.messages
-          .where((m) => m.id.startsWith('local_'))
-          .toList();
-      final combined = [...fetchedSorted, ...optimisticMessages];
-
-      _uiState = _uiState.copyWith(messages: combined, error: null);
-      notifyListeners();
-    } catch (e) {
-      _uiState = _uiState.copyWith(
-        error: toUserFriendlyMessage(
-          e,
-          fallback: 'Unable to refresh messages right now.',
-        ),
-      );
-      notifyListeners();
-    }
-  }
-
-  void _startPolling() {
-    // ensure no duplicate timers
-    _pollingTimer?.cancel();
-    _pollingTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
-      if (_uiState.hasActiveConversation) {
-        loadMessages();
-      }
-    });
-
-    _uiState = _uiState.copyWith(pollingEnabled: true);
-    notifyListeners();
-  }
-
-  void _stopPolling() {
-    _pollingTimer?.cancel();
-    _uiState = _uiState.copyWith(pollingEnabled: false);
-    notifyListeners();
-  }
-
-  Future<void> loadConversationHistory() async {
-    _uiState = _uiState.copyWith(isLoadingHistory: true);
-    notifyListeners();
-
-    try {
-      final history = await _historyRepository.getConversations();
-      _uiState = _uiState.copyWith(
-        conversationHistory: history,
-        isLoadingHistory: false,
-      );
-      notifyListeners();
-    } catch (e) {
-      _uiState = _uiState.copyWith(
-        error: toUserFriendlyMessage(
-          e,
-          fallback: 'Unable to load saved chats right now.',
-        ),
-        isLoadingHistory: false,
-      );
-      notifyListeners();
-    }
-  }
-
-  Future<bool> saveCurrentConversation() async {
-    if (_uiState.currentConversationId == null) {
-      return false;
-    }
-
-    try {
-      final lastMessageRaw = _uiState.messages.isNotEmpty
-          ? (_uiState.messages.last.text ?? '')
-          : '';
-      final lastMessage = lastMessageRaw.isEmpty
-          ? 'No message'
-          : lastMessageRaw;
-
-      String firstText = _uiState.messages.isNotEmpty
-          ? (_uiState.messages.first.text ?? '')
-          : '';
-      if (firstText.trim().isEmpty) {
-        firstText = 'Conversation';
-      }
-      final int end = firstText.length < 30 ? firstText.length : 30;
-      final String title = firstText.substring(0, end);
-
-      final savedConversation = SavedConversation(
-        id: _uiState.currentConversationId!,
-        title: title,
-        lastMessage: lastMessage,
-        timestamp: DateTime.now(),
-        userId: _uiState.userIdForBotpress ?? "unknown",
-        userKey: _uiState.currentUserKey ?? "unknown",
-      );
-
-      await _historyRepository.saveConversation(savedConversation);
-      await loadConversationHistory();
-      if (kDebugMode) {
-        debugPrint(
-          '[History] Saved conversation ${savedConversation.id} title="$title"',
-        );
-      }
-      return true;
-    } catch (e) {
-      _uiState = _uiState.copyWith(
-        error: toUserFriendlyMessage(
-          e,
-          fallback: 'Could not save this chat. Please try again.',
-        ),
-      );
-      notifyListeners();
-      return false;
-    }
-  }
-
-  Future<void> restartConversation() async {
-    _stopPolling();
-    await saveCurrentConversation();
-
-    // Clear message tracking
-    _messageDirections.clear();
-    _interactedMessageIds.clear();
-
-    _uiState = _uiState.copyWith(
-      messages: [],
-      hasActiveConversation: false,
-      currentConversationId: null,
-      showNewConversationButton: true,
-      showRestartConfirmation: false,
-    );
-    notifyListeners();
-  }
-
-  void handleOptionClick(String value) {
-    sendMessage(value);
   }
 
   void toggleHistory() {
-    _uiState = _uiState.copyWith(showHistory: !_uiState.showHistory);
+    _showHistory = !_showHistory;
+    if (_showHistory) unawaited(loadHistory());
     notifyListeners();
   }
 
-  Future<void> loadConversationFromHistory(SavedConversation saved) async {
-    _stopPolling();
-    _uiState = _uiState.copyWith(
-      currentConversationId: saved.id,
-      hasActiveConversation: true,
-      messages: [],
-      error: null,
-    );
-    notifyListeners();
-    await loadMessages();
-    _startPolling();
-  }
-
-  Future<void> deleteConversationById(String conversationId) async {
-    try {
-      await _historyRepository.deleteConversation(conversationId);
-      await loadConversationHistory();
-    } catch (e) {
-      _uiState = _uiState.copyWith(
-        error: toUserFriendlyMessage(
-          e,
-          fallback: 'Could not delete this conversation. Please try again.',
-        ),
-      );
-      notifyListeners();
-    }
-  }
-
-  void toggleSettings() {
-    _uiState = _uiState.copyWith(
-      showSettingsDialog: !_uiState.showSettingsDialog,
-    );
-    notifyListeners();
-  }
-
-  void toggleUserProfile() {
-    _uiState = _uiState.copyWith(
-      showUserProfileDialog: !_uiState.showUserProfileDialog,
-    );
-    notifyListeners();
-  }
-
-  void showRestartDialog() {
-    _uiState = _uiState.copyWith(showRestartConfirmation: true);
-    notifyListeners();
-  }
-
-  void hideRestartDialog() {
-    _uiState = _uiState.copyWith(showRestartConfirmation: false);
-    notifyListeners();
+  Future<void> _cancelStream() async {
+    await _subscription?.cancel();
+    _subscription = null;
+    _isStreaming = false;
   }
 
   void clearError() {
-    _uiState = _uiState.copyWith(error: null);
+    _error = null;
     notifyListeners();
   }
 
   @override
   void dispose() {
-    _pollingTimer?.cancel();
-    _chatRepository.dispose();
+    _subscription?.cancel();
+    _service.dispose();
     super.dispose();
   }
 }

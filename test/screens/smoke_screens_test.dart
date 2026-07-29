@@ -5,10 +5,10 @@ import 'package:celia_flutter/providers/nutrition_tracker_provider.dart';
 import 'package:celia_flutter/services/calorie_scanner_service.dart';
 import 'package:celia_flutter/providers/routine_provider.dart';
 import 'package:celia_flutter/providers/theme_provider.dart';
+import 'package:celia_flutter/providers/nutrition_profile_provider.dart';
 import 'package:celia_flutter/repositories/auth_repository.dart';
-import 'package:celia_flutter/repositories/chat_history_repository.dart';
-import 'package:celia_flutter/repositories/chat_repository.dart';
-import 'package:celia_flutter/models/chat_models.dart' as m;
+import 'package:celia_flutter/repositories/nutrition_profile_repository.dart';
+import 'package:celia_flutter/services/celia_chat_service.dart';
 import 'package:celia_flutter/screens/auth_screen.dart';
 import 'package:celia_flutter/screens/email_verification_screen.dart';
 import 'package:celia_flutter/screens/forgot_password_screen.dart';
@@ -62,9 +62,18 @@ class MockAuthRepository extends Mock implements AuthRepository {}
 
 class MockSupabaseService extends Mock implements SupabaseService {}
 
-class MockChatRepository extends Mock implements ChatRepository {}
+class MockCeliaChatService extends Mock implements CeliaChatService {}
 
-class MockChatHistoryRepository extends Mock implements ChatHistoryRepository {}
+class MockNutritionProfileRepository extends Mock
+    implements NutritionProfileRepository {}
+
+/// The screens only build the chat UI; nothing sends a turn, so the service just
+/// has to exist.
+ChatProvider _chatProvider() {
+  final service = MockCeliaChatService();
+  when(() => service.listConversations()).thenAnswer((_) async => []);
+  return ChatProvider(chatService: service);
+}
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
@@ -89,6 +98,11 @@ Widget _wrap(
             mealService: CalorieScannerService(
               firebaseAuth: MockFirebaseAuth(),
             ),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => NutritionProfileProvider(
+            repository: MockNutritionProfileRepository(),
           ),
         ),
         ChangeNotifierProvider<AuthProvider>.value(value: auth),
@@ -119,12 +133,7 @@ void main() {
     ).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
-    final chatRepo = MockChatRepository();
-    final historyRepo = MockChatHistoryRepository();
-    final chat = ChatProvider(
-      chatRepository: chatRepo,
-      historyRepository: historyRepo,
-    );
+    final chat = _chatProvider();
 
     await tester.pumpWidget(
       _wrap(const AuthScreen(), auth: auth, routines: routines, chat: chat),
@@ -145,34 +154,7 @@ void main() {
     when(() => supa.getUserRoutines(any())).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
-    final chatRepo = MockChatRepository();
-    when(
-      () => chatRepo.createUser(
-        name: any(named: 'name'),
-        email: any(named: 'email'),
-      ),
-    ).thenAnswer((_) async => m.User(id: 'ukey'));
-    when(() => chatRepo.createConversation(any())).thenAnswer(
-      (_) async => m.Conversation(id: 'c', userId: 'u', created: 't'),
-    );
-    when(() => chatRepo.getMessages(any(), any())).thenAnswer((_) async => []);
-    when(() => chatRepo.sendMessage(any(), any(), any())).thenAnswer(
-      (_) async => m.Message(
-        id: 'm',
-        conversationId: 'c',
-        userId: 'u',
-        created: 't',
-        text: 'x',
-        type: 'text',
-      ),
-    );
-
-    final historyRepo = MockChatHistoryRepository();
-    when(() => historyRepo.getConversations()).thenAnswer((_) async => []);
-    final chat = ChatProvider(
-      chatRepository: chatRepo,
-      historyRepository: historyRepo,
-    );
+    final chat = _chatProvider();
 
     for (final screen in const [
       HomeScreen(),
@@ -199,10 +181,7 @@ void main() {
     ).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
-    final chat = ChatProvider(
-      chatRepository: MockChatRepository(),
-      historyRepository: MockChatHistoryRepository(),
-    );
+      final chat = _chatProvider();
     await tester.pumpWidget(
       _wrap(
         const Scaffold(body: GenerateRoutineSheet()),
@@ -227,10 +206,7 @@ void main() {
     when(() => supa.getUserRoutines(any())).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
-    final chat = ChatProvider(
-      chatRepository: MockChatRepository(),
-      historyRepository: MockChatHistoryRepository(),
-    );
+      final chat = _chatProvider();
     await tester.pumpWidget(
       _wrap(
         const SavedRoutinesScreen(),
@@ -256,10 +232,7 @@ void main() {
     ).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
-    final chat = ChatProvider(
-      chatRepository: MockChatRepository(),
-      historyRepository: MockChatHistoryRepository(),
-    );
+      final chat = _chatProvider();
 
     for (final screen in const [
       EmailVerificationScreen(),
@@ -290,10 +263,7 @@ void main() {
         currentUserId: () => null,
       );
 
-      final chat = ChatProvider(
-        chatRepository: MockChatRepository(),
-        historyRepository: MockChatHistoryRepository(),
-      );
+        final chat = _chatProvider();
 
       final routine = Routine(
         id: 'r',
@@ -367,10 +337,7 @@ void main() {
     ).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
-    final chat = ChatProvider(
-      chatRepository: MockChatRepository(),
-      historyRepository: MockChatHistoryRepository(),
-    );
+      final chat = _chatProvider();
 
     final firebaseAuth = MockFirebaseAuth();
     when(() => firebaseAuth.currentUser).thenReturn(null);

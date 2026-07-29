@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+coverage
+*.log
+.env
+.env.*
+!.env.example
+../build
+../.dart_tool
+../android/build
+../ios/build

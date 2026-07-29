@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Celia AI - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#11131c",
+                        "primary": "#ffb691",
+                        "inverse-surface": "#e1e1ef",
+                        "surface-dim": "#11131c",
+                        "on-secondary-fixed": "#291800",
+                        "on-surface-variant": "#e1bfb0",
+                        "glass-border": "rgba(255, 255, 255, 0.12)",
+                        "on-secondary-fixed-variant": "#633f00",
+                        "surface-container-lowest": "#0c0e17",
+                        "surface-bright": "#373943",
+                        "on-tertiary-container": "#003b1a",
+                        "surface-variant": "#32343e",
+                        "surface-container": "#1d1f29",
+                        "on-secondary-container": "#3c2500",
+                        "outline": "#a98a7c",
+                        "on-tertiary": "#003918",
+                        "surface-tint": "#ffb691",
+                        "ink-surface": "#1A1D2D",
+                        "primary-fixed": "#ffdbcb",
+                        "text-secondary": "#B0BEC5",
+                        "on-error-container": "#ffdad6",
+                        "secondary": "#ffb954",
+                        "text-primary": "#FFFFFF",
+                        "on-primary-container": "#592200",
+                        "on-error": "#690005",
+                        "on-secondary": "#452b00",
+                        "on-primary": "#552000",
+                        "on-primary-fixed": "#341100",
+                        "tertiary-fixed-dim": "#00e475",
+                        "secondary-fixed-dim": "#ffb954",
+                        "on-primary-fixed-variant": "#793100",
+                        "on-tertiary-fixed-variant": "#005226",
+                        "tertiary-fixed": "#62ff96",
+                        "on-tertiary-fixed": "#00210b",
+                        "text-muted": "rgba(255, 255, 255, 0.40)",
+                        "secondary-container": "#c3841b",
+                        "on-background": "#e1e1ef",
+                        "on-surface": "#e1e1ef",
+                        "error": "#ffb4ab",
+                        "primary-container": "#ff6f00",
+                        "inverse-on-surface": "#2e303a",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#00b25a",
+                        "inverse-primary": "#9e4200",
+                        "surface-container-low": "#191b24",
+                        "surface-container-highest": "#32343e",
+                        "primary-fixed-dim": "#ffb691",
+                        "glass-surface": "rgba(30, 34, 53, 0.60)",
+                        "secondary-fixed": "#ffddb4",
+                        "outline-variant": "#594136",
+                        "surface-container-high": "#282933",
+                        "tertiary": "#00e475",
+                        "surface": "#11131c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap-lg": "32px",
+                        "inline-gutter": "12px",
+                        "stack-gap-md": "16px",
+                        "container-padding": "24px",
+                        "stack-gap-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Urbanist"],
+                        "body-md": ["Urbanist"],
+                        "headline-md": ["Urbanist"],
+                        "headline-lg-mobile": ["Urbanist"],
+                        "body-sm": ["Urbanist"],
+                        "display": ["Urbanist"],
+                        "headline-lg": ["Urbanist"],
+                        "body-lg": ["Urbanist"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "800" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "display": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0F111A;
+            color: #FFFFFF;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[style*="font-variation-settings: 'FILL' 1"] {
+             font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom Utilities */
+        .glass-panel {
+            background: rgba(30, 34, 53, 0.60);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-text-primary min-h-screen flex flex-col font-body-md pb-24 relative overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-container-padding py-4 w-full sticky top-0 z-50 backdrop-blur-md bg-transparent">
+<div class="flex items-center gap-inline-gutter">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-glass-border">
+<img alt="User Profile Picture" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9ilA7yh39lZDJY4TL6x0ujAJR-ymyArAIwBeR1ulHYbKDvhtJXUaih-aZPcsuVO06dsB-LCMnlxmtaIn0tA_UuiiRtZmz980PhCdNoU-IhTKKphxfb06i8Mxyb5xpFAbzTT2c3Fx24nM3jfKzTMecKemnC5zJYqCWqv3yKM3ImAPp5Az9cmzq--LshRJQYEj-O8lwQXZcrQSqEEGHpZgAs7R5NjPqrFloG45eOGAx-jdx-ax3ByP_HyEymZBd1cvl_un6K2fn7Lkd"/>
+</div>
+<div class="flex flex-col">
+<span class="text-text-muted font-body-sm text-body-sm">Good Morning,</span>
+<span class="text-headline-md font-headline-md font-extrabold text-text-primary">Krixx!</span>
+</div>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full glass-panel text-primary hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="flex-1 px-container-padding flex flex-col gap-stack-gap-lg mt-4">
+<!-- Hero Section -->
+<section class="relative w-full rounded-2xl overflow-hidden shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container/80 to-surface-container-highest/90 z-0"></div>
+<img alt="AI Workout" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-40 z-0" data-alt="A dynamic fitness scene featuring a modern home gym setup illuminated by dramatic, high-contrast lighting with vibrant orange highlights against deep navy shadows. The scene implies high-performance and kinetic energy, aligning with a premium, AI-driven digital coaching aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqiHaSJ72J_ZdBOM_Qn3bHJAGWVSd5mbyzm8sEX6qQwq3kpaN3Y1EPvHwbPo6uJKYfmqtECeP2aYAO_3NssLjpjmFHIROZQPClp5s46EDT138NDAFM4QgtTrie27z1kbii2cGcesOakDQehBBje0Iq7wJBSj7L7VgYVvKKplqEGRMBrMyh6MMzEdOywLUjxB-7xxudRNZxnX_FZIw7x-DDRyiCUurKw7AzTDWqpl5DDjfVr8bEY_adSAAr2zRPX2wFJb3oOZiwi_D7"/>
+<div class="relative z-10 p-6 flex flex-col gap-4 h-full justify-end">
+<div class="bg-primary/20 backdrop-blur-md border border-primary/30 rounded-full px-3 py-1 self-start flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-label-caps text-label-caps text-primary">AI COACH ACTIVE</span>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-text-primary max-w-[240px]">
+                    Generate your personalized routine with AI
+                </h1>
+<button class="bg-primary text-on-primary-container font-body-md text-body-md rounded-full py-4 px-6 mt-2 w-full flex items-center justify-center gap-2 hover:bg-primary-fixed transition-colors active:scale-95 shadow-lg">
+<span class="material-symbols-outlined">auto_awesome</span>
+                    Create Routine
+                </button>
+</div>
+</section>
+<!-- Up Next Section -->
+<section class="flex flex-col gap-stack-gap-md">
+<div class="flex justify-between items-end">
+<h2 class="font-headline-md text-headline-md text-text-primary">Up Next</h2>
+<button class="text-primary font-body-sm text-body-sm hover:underline">See All</button>
+</div>
+<div class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory -mx-container-padding px-container-padding scrollbar-hide">
+<!-- Card 1 -->
+<div class="min-w-[280px] bg-ink-surface rounded-xl overflow-hidden shadow-lg snap-center flex flex-col border border-glass-border">
+<div class="h-32 relative">
+<img alt="Full Body Blast" class="w-full h-full object-cover" data-alt="A close-up shot of heavy kettlebells resting on a dark rubber gym floor, lit by dramatic cinematic lighting. The color palette focuses on deep obsidian blacks with high-vis orange rim lighting, conveying strength, focus, and a high-end athletic environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0hfjYiNyAa-ZXDSn8MYeGUYC1e81insQib0Igww5SXlSy5tkwHHXHedODNMDt2qy2Jh-TnK3ZeriLZV1shR8i-B_1V_IRPhs9CmTempT8uXBcq8Q4OzPiy0BPLmEQiVHBHrZbia3O0PrrFhueqqbphhu4Es2a-fA8PXEl7TiO6yGFIS45pHqZK9tvs_t5hLweaPLTvPbFDk_7EqT47qGNdL7SDZdg9frN3Gwyc8CMg64RCnNBmrJUv97pjo3q60Sl0ZIAUfNl99y7"/>
+<div class="absolute inset-0 bg-gradient-to-t from-ink-surface to-transparent"></div>
+<button class="absolute top-3 right-3 w-8 h-8 rounded-full glass-panel flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<h3 class="font-body-lg text-body-lg text-text-primary">Full Body Blast</h3>
+<div class="flex items-center gap-3 text-text-muted font-body-sm text-body-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+                                15 min
+                            </div>
+<div class="w-1 h-1 rounded-full bg-text-muted"></div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">speed</span>
+                                Easy
+                            </div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="min-w-[280px] bg-ink-surface rounded-xl overflow-hidden shadow-lg snap-center flex flex-col border border-glass-border">
+<div class="h-32 relative">
+<img alt="Core &amp; Mobility" class="w-full h-full object-cover" data-alt="A focused image of a person performing a stretching exercise on a premium yoga mat in a dark, moody studio. The environment is illuminated by subtle ambient lighting with a hint of warm orange glow, reflecting a professional and mindful digital fitness aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtpTdKYSmgi0NdFXgUINDwUBlYkJsoxGNeG0G6r9J40Dgx45vy1Ime48uJUreTBP_1pExBHAnN_Cv1y0_BUyg-y-y38dE60ojpHzhJ84kFkuVs-xhhhm5NO-X6WCBDQkK2s_ol1Le3d6E5Reu7ZpGZPD8kX7p74rHVAomNA3hY686jIuO2g2JaKUgtqxTwYy56eSlP3ggB-HNSNDEuydGVRmwGBMAq1n1tw0sAlNy5n8ZouJ_qMgzkOSu5XKhN_AJinm8WuCNHHJob"/>
+<div class="absolute inset-0 bg-gradient-to-t from-ink-surface to-transparent"></div>
+<button class="absolute top-3 right-3 w-8 h-8 rounded-full glass-panel flex items-center justify-center text-text-primary">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+</button>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<h3 class="font-body-lg text-body-lg text-text-primary">Core &amp; Mobility</h3>
+<div class="flex items-center gap-3 text-text-muted font-body-sm text-body-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+                                20 min
+                            </div>
+<div class="w-1 h-1 rounded-full bg-text-muted"></div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">speed</span>
+                                Medium
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Actions Bento Grid -->
+<section class="flex flex-col gap-stack-gap-md pb-8">
+<h2 class="font-headline-md text-headline-md text-text-primary">Quick Actions</h2>
+<div class="grid grid-cols-2 gap-4">
+<div class="col-span-2 bg-ink-surface border border-glass-border rounded-xl p-4 flex items-center gap-4 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">forum</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg text-text-primary">Chat with Celia</span>
+<span class="font-body-sm text-body-sm text-text-muted">Ask about your form or diet</span>
+</div>
+<span class="material-symbols-outlined text-text-muted ml-auto">chevron_right</span>
+</div>
+<div class="col-span-2 bg-ink-surface border border-glass-border rounded-xl p-4 flex items-center gap-4 hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center text-primary-fixed">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg text-text-primary">Scan Meal</span>
+<span class="font-body-sm text-body-sm text-text-muted">Identify food &amp; calories</span>
+</div>
+<span class="material-symbols-outlined text-text-muted ml-auto">chevron_right</span>
+</div>
+<div class="bg-ink-surface border border-glass-border rounded-xl p-4 flex flex-col justify-between aspect-square hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">video_library</span>
+</div>
+<span class="font-body-md text-body-md text-text-primary mt-4">Browse<br/>Library</span>
+</div>
+<div class="bg-ink-surface border border-glass-border rounded-xl p-4 flex flex-col justify-between aspect-square hover:bg-surface-variant transition-colors cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+</div>
+<span class="font-body-md text-body-md text-text-primary mt-4">Track<br/>Progress</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-48px)] max-w-md z-50 flex justify-around items-center p-2 bg-glass-surface text-primary font-label-caps border border-glass-border backdrop-blur-xl shadow-lg fixed bottom-4 left-4 right-4 rounded-full">
+<a class="flex flex-col items-center justify-center bg-primary/20 text-primary rounded-full px-4 py-2 hover:bg-white/5 transition-colors active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-label-caps font-label-caps mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 px-4 py-2 hover:bg-white/5 transition-colors active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+<span class="text-label-caps font-label-caps mt-1">Library</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 px-4 py-2 hover:bg-white/5 transition-colors active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="text-label-caps font-label-caps mt-1">Coach</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 px-4 py-2 hover:bg-white/5 transition-colors active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-caps font-label-caps mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

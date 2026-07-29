@@ -5,10 +5,10 @@ workflows:
     instance_type: mac_mini_m2
     environment:
       flutter: stable
-      xcode: 15.4
+      xcode: latest
       cocoapods: default
       vars:
-        # Optional: set in Codemagic UI → Environment variables (as secure)
+        # Optional: set in Codemagic UI as secure variables.
         # APPETIZE_API_TOKEN: ""
     cache:
       cache_paths:
@@ -18,12 +18,14 @@ workflows:
         - "ios/Pods"
     scripts:
       - name: Flutter version
-        script: |
-          flutter --version
+        script: flutter --version
       - name: Install dependencies
-        script: |
-          flutter pub get
-      - name: Build iOS Simulator .app (Debug, no codesign)
+        script: flutter pub get
+      - name: Analyze
+        script: flutter analyze
+      - name: Test
+        script: flutter test
+      - name: Build iOS Simulator .app
         script: |
           flutter config --enable-ios
           flutter build ios --debug --simulator --no-codesign
@@ -48,11 +50,7 @@ workflows:
               -H "Authorization: Bearer ${APPETIZE_API_TOKEN}" \
               -F "file=@${ZIP_PATH}" \
               -F "platform=ios" \
-              -F "note=Celia iOS simulator build $(date +%Y-%m-%dT%H:%M:%S)" \
-              -F "publicKey=${APPETIZE_PUBLIC_KEY:-}" \
-              -F "privateKey=${APPETIZE_PRIVATE_KEY:-}" \
-              -F "buttonText=Open Celia" \
-              -F "launchUrl=${APPETIZE_LAUNCH_URL:-}" || {
+              -F "note=Celia iOS simulator build $(date +%Y-%m-%dT%H:%M:%S)" || {
                 echo "Appetize upload failed (non-fatal)." >&2
               }
           else
@@ -61,72 +59,64 @@ workflows:
     artifacts:
       - build/ios/iphonesimulator/Runner.app
       - build/ios/iphonesimulator/Runner.app.zip
-    publishing:
-      email:
-        recipients:
-          - "${CM_EMAIL:-}"  # Set your email in Codemagic env vars if you want notifications
-        notify:
-          success: true
-          failure: true
 
-workflows:
-  ios-simulator:
-    name: iOS Simulator (unsigned)
-    environment:
-      flutter: stable
-    scripts:
-      - name: Install dependencies
-        script: |
-          flutter pub get
-      - name: Build iOS for simulator
-        script: |
-          flutter build ios --simulator
-    artifacts:
-      - build/ios/iphonesimulator/*.app
-
-  ios-device:
-    name: iOS Device (signed .ipa AdHoc)
-    environment:
-      flutter: stable
-    scripts:
-      - name: Install deps
-        script: flutter pub get
-      - name: Build signed IPA (AdHoc)
-        script: flutter build ipa --export-method ad-hoc
-    artifacts:
-      - build/ios/ipa/*.ipa
-
-  ios-workflow:
-    name: iOS Build & Deploy
-    instance_type: mac_mini_m2
+  ios-adhoc:
+    name: iOS Device (signed .ipa Ad Hoc)
     max_build_duration: 120
+    instance_type: mac_mini_m2
     environment:
       flutter: stable
       xcode: latest
+      cocoapods: default
       ios_signing:
-        distribution_type: app_store
+        distribution_type: ad_hoc
         bundle_identifier: eu.thefit.celia
+    cache:
+      cache_paths:
+        - "$HOME/.pub-cache"
+        - "$FLUTTER_ROOT/.pub-cache"
+        - "~/.cocoapods"
+        - "ios/Pods"
     scripts:
-      - name: Set up local properties
-        script: |
-          echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
-      - name: Get Flutter dependencies
-        script: flutter packages pub get
-      - name: Generate code
-        script: flutter packages pub run build_runner build --delete-conflicting-outputs
-      - name: Install CocoaPods dependencies
-        script: |
-          cd ios && pod install --repo-update && cd ..
-      - name: Flutter build iOS
-        script: flutter build ios --release --no-codesign
-      - name: Build iOS app
-        script: |
-          xcode-project build-ipa \
-            --workspace ios/Runner.xcworkspace \
-            --scheme Runner \
-            --config Release
+      - name: Install dependencies
+        script: flutter pub get
+      - name: Analyze
+        script: flutter analyze
+      - name: Test
+        script: flutter test
+      - name: Build signed IPA
+        script: flutter build ipa --release --export-method ad-hoc --build-number=$BUILD_NUMBER
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
-      - flutter_drive.log
+
+  ios-app-store:
+    name: iOS App Store (signed .ipa)
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: eu.thefit.celia
+    cache:
+      cache_paths:
+        - "$HOME/.pub-cache"
+        - "$FLUTTER_ROOT/.pub-cache"
+        - "~/.cocoapods"
+        - "ios/Pods"
+    scripts:
+      - name: Install dependencies
+        script: flutter pub get
+      - name: Analyze
+        script: flutter analyze
+      - name: Test
+        script: flutter test
+      - name: Build App Store IPA
+        script: flutter build ipa --release --build-number=$BUILD_NUMBER
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
 

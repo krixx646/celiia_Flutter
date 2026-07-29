@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
-    <option name="additionalArgs" value="--dart-define=APPLE_SERVICE_ID=eu.thefit.celia.signin --dart-define=APPLE_REDIRECT_URI=https://the-fit-87c3d.firebaseapp.com//auth/handler" />
+    <option name="additionalArgs" value="--dart-define-from-file=dart_defines.production.env" />
     <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
     <method v="2" />
   </configuration>

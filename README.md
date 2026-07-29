@@ -140,7 +140,9 @@ Codemagic signing prerequisites:
 
 ## Environment variables
 Some optional variables can be injected at build time:
-- `IMGBB_API_KEY` (used by image upload feature)
+- `IMGBB_KEY` (used by image upload feature)
+- `SUPABASE_URL` and `SUPABASE_ANON_KEY` (used by routines/library)
+- `CELIA_BACKEND_BASE_URL` (used by server-side AI routine generation and calorie scanner)
 - `FIREBASE_*` values as shown above (only needed if not bundling plist for sims)
 
 Pass with `--dart-define=KEY=VALUE` or configure in Codemagic UI as secure variables.

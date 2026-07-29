@@ -1,0 +1,10 @@
+/*
+!/celia-admin
+/celia-admin/node_modules
+/celia-admin/.next
+/celia-admin/out
+/celia-admin/coverage
+/celia-admin/*.log
+/celia-admin/.env
+/celia-admin/.env.*
+!/celia-admin/.env.example

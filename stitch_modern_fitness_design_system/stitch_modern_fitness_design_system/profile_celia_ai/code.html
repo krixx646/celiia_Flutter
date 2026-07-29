@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile &amp; Settings - Celia AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#11131c",
+                        "primary": "#ffb691",
+                        "inverse-surface": "#e1e1ef",
+                        "surface-dim": "#11131c",
+                        "on-secondary-fixed": "#291800",
+                        "on-surface-variant": "#e1bfb0",
+                        "glass-border": "rgba(255, 255, 255, 0.12)",
+                        "on-secondary-fixed-variant": "#633f00",
+                        "surface-container-lowest": "#0c0e17",
+                        "surface-bright": "#373943",
+                        "on-tertiary-container": "#003b1a",
+                        "surface-variant": "#32343e",
+                        "surface-container": "#1d1f29",
+                        "on-secondary-container": "#3c2500",
+                        "outline": "#a98a7c",
+                        "on-tertiary": "#003918",
+                        "surface-tint": "#ffb691",
+                        "ink-surface": "#1A1D2D",
+                        "primary-fixed": "#ffdbcb",
+                        "text-secondary": "#B0BEC5",
+                        "on-error-container": "#ffdad6",
+                        "secondary": "#ffb954",
+                        "text-primary": "#FFFFFF",
+                        "on-primary-container": "#592200",
+                        "on-error": "#690005",
+                        "on-secondary": "#452b00",
+                        "on-primary": "#552000",
+                        "on-primary-fixed": "#341100",
+                        "tertiary-fixed-dim": "#00e475",
+                        "secondary-fixed-dim": "#ffb954",
+                        "on-primary-fixed-variant": "#793100",
+                        "on-tertiary-fixed-variant": "#005226",
+                        "tertiary-fixed": "#62ff96",
+                        "on-tertiary-fixed": "#00210b",
+                        "text-muted": "rgba(255, 255, 255, 0.40)",
+                        "secondary-container": "#c3841b",
+                        "on-background": "#e1e1ef",
+                        "on-surface": "#e1e1ef",
+                        "error": "#ffb4ab",
+                        "primary-container": "#ff6f00",
+                        "inverse-on-surface": "#2e303a",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#00b25a",
+                        "inverse-primary": "#9e4200",
+                        "surface-container-low": "#191b24",
+                        "surface-container-highest": "#32343e",
+                        "primary-fixed-dim": "#ffb691",
+                        "glass-surface": "rgba(30, 34, 53, 0.60)",
+                        "secondary-fixed": "#ffddb4",
+                        "outline-variant": "#594136",
+                        "surface-container-high": "#282933",
+                        "tertiary": "#00e475",
+                        "surface": "#11131c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap-lg": "32px",
+                        "inline-gutter": "12px",
+                        "stack-gap-md": "16px",
+                        "container-padding": "24px",
+                        "stack-gap-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Urbanist"],
+                        "body-md": ["Urbanist"],
+                        "headline-md": ["Urbanist"],
+                        "headline-lg-mobile": ["Urbanist"],
+                        "body-sm": ["Urbanist"],
+                        "display": ["Urbanist"],
+                        "headline-lg": ["Urbanist"],
+                        "body-lg": ["Urbanist"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "800" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "display": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Urbanist', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-text-primary min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-container-padding py-4 w-full sticky top-0 z-50 backdrop-blur-md bg-transparent">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="menu" data-weight="fill" style="font-variation-settings: 'FILL' 1;">menu</span>
+<h1 class="text-headline-md font-headline-md font-extrabold text-primary">Celia AI</h1>
+</div>
+<button class="text-primary hover:opacity-80 transition-opacity active:scale-95 transition-transform flat no shadows no-border">
+<span class="material-symbols-outlined" data-icon="notifications" data-weight="fill" style="font-variation-settings: 'FILL' 1;">notifications</span>
+</button>
+</header>
+<main class="px-container-padding flex flex-col gap-stack-gap-lg mt-8">
+<!-- Profile Header -->
+<section class="flex flex-col items-center text-center">
+<div class="relative w-32 h-32 rounded-full mb-6">
+<!-- Avatar Glow -->
+<div class="absolute inset-0 bg-primary/30 rounded-full blur-xl"></div>
+<!-- Avatar Image -->
+<img alt="Krixx Va Profile" class="relative w-full h-full object-cover rounded-full border-4 border-surface" data-alt="A cinematic portrait of an athletic young woman with intense gaze, wearing high-tech futuristic activewear in dark obsidian with glowing orange accents. Set against a deep, dark atmospheric navy background with subtle volumetric lighting. High fidelity, glassmorphism aesthetic, focused and powerful." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6wBpYHtJuPa7Hon9wqxKCWRdR5Sqt_NhlO40g442QUfFiU04UqIx4OD1uc1uYQPxqLGT8v2JJeq0amqjCvjVsbmMfsylNfiKhh-Rl0Ch9rrs5Z5VEEhOTMCsYmOX74Sq1t5K7zBlRTu9W7N22B7hwrUBXumpkQJzX1quLLAeQWDgDT7-Ixlli9PFj8kx7lUx9N-OJ8pWM-Qp9rWfT3G3BaM0KxyvqVAEacZcTejHY6ug30jLmV14Hodxn0lFH1DnDkYipAFRHdmZC"/>
+<!-- Edit Badge -->
+<button class="absolute bottom-0 right-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-surface active:scale-95 transition-transform z-10 shadow-lg">
+<span class="material-symbols-outlined text-sm" data-icon="edit" data-weight="fill" style="font-variation-settings: 'FILL' 1;">edit</span>
+</button>
+</div>
+<h2 class="text-headline-lg-mobile font-headline-lg-mobile text-text-primary">Krixx Va</h2>
+<p class="text-body-md font-body-md text-primary mt-1">Elite Member</p>
+</section>
+<!-- Stats Bento Card -->
+<section class="bg-glass-surface backdrop-blur-xl border border-glass-border rounded-xl p-6 shadow-lg">
+<div class="flex justify-between items-center text-center divide-x divide-glass-border">
+<div class="flex-1 px-2">
+<p class="text-headline-md font-headline-md text-text-primary">42</p>
+<p class="text-label-caps font-label-caps text-on-surface-variant mt-1">Routines</p>
+</div>
+<div class="flex-1 px-2">
+<div class="flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="local_fire_department" data-weight="fill" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<p class="text-headline-md font-headline-md text-text-primary">14</p>
+</div>
+<p class="text-label-caps font-label-caps text-on-surface-variant mt-1">Day Streak</p>
+</div>
+<div class="flex-1 px-2">
+<p class="text-headline-md font-headline-md text-text-primary">08</p>
+<p class="text-label-caps font-label-caps text-on-surface-variant mt-1">Level</p>
+</div>
+</div>
+</section>
+<!-- Settings List -->
+<section class="flex flex-col gap-stack-gap-sm">
+<!-- Menu Item: Profile -->
+<button class="flex items-center justify-between w-full bg-ink-surface border border-glass-border rounded-xl p-4 active:scale-95 transition-transform">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<span class="text-body-md font-body-md text-text-primary">Profile</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Menu Item: Notifications -->
+<button class="flex items-center justify-between w-full bg-ink-surface border border-glass-border rounded-xl p-4 active:scale-95 transition-transform">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</div>
+<span class="text-body-md font-body-md text-text-primary">Notifications</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Menu Item: Subscription -->
+<button class="flex items-center justify-between w-full bg-ink-surface border border-glass-border rounded-xl p-4 active:scale-95 transition-transform">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="workspace_premium">workspace_premium</span>
+</div>
+<span class="text-body-md font-body-md text-text-primary">Subscription</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Menu Item: Dark Mode Toggle -->
+<div class="flex items-center justify-between w-full bg-ink-surface border border-glass-border rounded-xl p-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="dark_mode" data-weight="fill" style="font-variation-settings: 'FILL' 1;">dark_mode</span>
+</div>
+<span class="text-body-md font-body-md text-text-primary">Dark Mode</span>
+</div>
+<!-- Custom Toggle Switch -->
+<button class="relative inline-flex h-6 w-11 items-center rounded-full bg-primary transition-colors focus:outline-none">
+<span class="inline-block h-4 w-4 transform rounded-full bg-surface translate-x-6 transition-transform"></span>
+</button>
+</div>
+<!-- Menu Item: Help & Support -->
+<button class="flex items-center justify-between w-full bg-ink-surface border border-glass-border rounded-xl p-4 active:scale-95 transition-transform mt-2">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-on-surface-variant/10 flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</div>
+<span class="text-body-md font-body-md text-text-primary">Help &amp; Support</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+</section>
+<!-- Log Out Section -->
+<section class="mt-4 flex justify-center">
+<button class="text-body-md font-body-md text-text-muted hover:text-error transition-colors flex items-center gap-2 px-6 py-3">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Log Out
+            </button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-48px)] max-w-md z-50 flex justify-around items-center p-2 bg-glass-surface border border-glass-border backdrop-blur-xl shadow-lg rounded-full">
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 px-4 py-2 hover:bg-white/5 transition-colors active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-label-caps font-label-caps mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 px-4 py-2 hover:bg-white/5 transition-colors active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="fitness_center">fitness_center</span>
+<span class="text-label-caps font-label-caps mt-1">Library</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 px-4 py-2 hover:bg-white/5 transition-colors active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="text-label-caps font-label-caps mt-1">Coach</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary/20 text-primary rounded-full px-4 py-2 hover:bg-white/5 transition-colors active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person" data-weight="fill" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-label-caps font-label-caps mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

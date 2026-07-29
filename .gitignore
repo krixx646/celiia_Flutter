@@ -23,17 +23,34 @@ app/release/
 .kotlin/
 android/.kotlin/
 .pub-cache/
-pubspec.lock
 coverage/
 **/*.log
 **/*.tmp
+node_modules/
 
 # Next.js
 celia-admin/.next/
+celia-admin/node_modules/
 
 # Local env/defines (keep secrets out of git)
 .env
 .env.local
 .env.*.local
 dart_defines.env
+dart_defines.*.env
 dart_defines.json
+key.properties
+*.jks
+*.keystore
+*.p12
+*.mobileprovision
+
+.vercel
+
+# Stray npm scaffolding at the repo root; the Flutter app and celia-admin
+# each manage their own dependencies.
+/package.json
+/package-lock.json
+
+# Ad-hoc debug screenshots pulled off test devices
+/celia_test.png

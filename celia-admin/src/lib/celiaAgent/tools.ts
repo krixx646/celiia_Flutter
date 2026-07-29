@@ -1,11 +1,6 @@
 import { tool } from 'ai';
 import { z } from 'zod';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
-import {
-  clampDurationMinutes,
-  generateRoutine,
-  normalizeDifficulty,
-} from '@/lib/routineGenerator';
 
 /**
  * Per-request context handed to every tool by the route via `toolsContext`.
@@ -418,39 +413,111 @@ export const celiaTools = {
 
   create_routine: tool({
     description:
-      "Build a real, playable workout routine and save it to the user's library. Describe the workout you want in `request` — be specific about target muscles and style, because that drives which exercises get picked. Only call this once the user has agreed to a specific plan.",
+      "Save a playable workout routine to the user's library. You compose it yourself: look exercises up with search_exercises first, then list them here in the order the user should perform them. Every step must use an exact `exerciseSlug` from those results, because that slug is what the app plays. Only call this once the user has agreed to a specific plan.",
     inputSchema: z.object({
-      request: z
-        .string()
-        .min(3)
-        .describe('What the routine should be, e.g. "shoulder mobility and upper back stretching"'),
-      durationMinutes: z.number().int().min(5).max(60).default(15),
+      title: z.string().min(3).max(80),
+      description: z.string().max(300).optional(),
       difficulty: z.enum(['easy', 'medium', 'hard']).default('medium'),
-      equipment: z.array(z.string()).default([]),
+      category: z
+        .enum(['strength', 'cardio', 'flexibility', 'mindfulness', 'dance', 'hiit', 'yoga', 'custom'])
+        .default('custom'),
+      steps: z
+        .array(
+          z.object({
+            exerciseSlug: z.string().describe('Exact slug from search_exercises'),
+            title: z.string().optional().describe('Defaults to the exercise name'),
+            coachingCue: z.string().max(200).optional().describe('One short line of form guidance'),
+            durationSeconds: z.number().int().min(10).max(600).default(40),
+          })
+        )
+        .min(2)
+        .max(30),
+      equipment: z.string().optional().describe('e.g. "None" or "Dumbbells, Mat"'),
+      caloriesBurned: z.number().int().min(0).max(2000).optional(),
+      tags: z.array(z.string()).max(6).default([]),
     }),
     contextSchema: userContext,
-    execute: async ({ request, durationMinutes, difficulty, equipment }, { context }) => {
-      const result = await generateRoutine({
-        uid: context.uid,
-        request,
-        durationMinutes: clampDurationMinutes(durationMinutes),
-        difficulty: normalizeDifficulty(difficulty),
-        equipment,
-      });
+    execute: async (input, { context }) => {
+      const supabase = getSupabaseAdmin();
+      const slugs = Array.from(new Set(input.steps.map((s) => s.exerciseSlug)));
 
-      if (!result.ok) {
-        return { created: false, error: result.error };
+      const { data: known, error: lookupError } = await supabase
+        .from('exercise_media')
+        .select('slug,display_name')
+        .in('slug', slugs);
+
+      if (lookupError) {
+        return { created: false, error: 'Could not verify the exercises', details: lookupError.message };
       }
 
-      const routine = result.routine as Record<string, unknown>;
-      const steps = Array.isArray(routine.steps) ? routine.steps : [];
+      const nameBySlug = new Map(
+        (known || []).map((row) => [String(row.slug), String(row.display_name)])
+      );
+      const unknown = slugs.filter((slug) => !nameBySlug.has(slug));
+      if (unknown.length > 0) {
+        // Handing back the bad slugs lets Celia search again and retry rather
+        // than saving a routine with steps the app can't play.
+        return {
+          created: false,
+          error: 'Some slugs are not in the exercise library',
+          unknownSlugs: unknown,
+        };
+      }
+
+      const steps = input.steps.map((step, index) => ({
+        id: crypto.randomUUID(),
+        title: step.title || nameBySlug.get(step.exerciseSlug) || 'Exercise',
+        description: step.coachingCue || null,
+        duration_seconds: step.durationSeconds,
+        video_id: null,
+        exercise_slug: step.exerciseSlug,
+        // Left null on purpose: the app resolves the GIF from `exercise_slug`
+        // at display time, so the URL isn't duplicated here.
+        thumbnail_url: null,
+        order_index: index,
+      }));
+
+      const totalSeconds = steps.reduce((sum, step) => sum + step.duration_seconds, 0);
+
+      const { data: created, error: createError } = await supabase
+        .from('routines')
+        .insert({
+          title: input.title,
+          description: input.description || null,
+          duration_minutes: Math.max(1, Math.round(totalSeconds / 60)),
+          difficulty: input.difficulty,
+          category: input.category,
+          thumbnail_url: null,
+          steps,
+          created_by: context.uid,
+          is_published: false,
+          is_curated: false,
+          tags: input.tags,
+          calories_burned: input.caloriesBurned ?? null,
+          equipment: input.equipment || null,
+        })
+        .select('id,title,duration_minutes')
+        .single();
+
+      if (createError) {
+        return { created: false, error: 'Could not save the routine', details: createError.message };
+      }
+
+      // Straight into their library, so it survives an app restart.
+      const { error: saveError } = await supabase.from('user_routines').insert({
+        user_id: context.uid,
+        routine_id: created.id,
+        saved_at: new Date().toISOString(),
+      });
+
       return {
         created: true,
-        routineId: String(routine.id),
-        title: String(routine.title),
-        durationMinutes: num(routine.duration_minutes),
+        routineId: String(created.id),
+        title: String(created.title),
+        durationMinutes: num(created.duration_minutes),
         stepCount: steps.length,
-        exercises: steps.map((step) => String((step as Record<string, unknown>).title)),
+        savedToLibrary: !saveError,
+        exercises: steps.map((step) => step.title),
       };
     },
   }),

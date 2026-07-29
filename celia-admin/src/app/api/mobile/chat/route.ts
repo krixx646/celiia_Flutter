@@ -207,6 +207,10 @@ export async function POST(req: NextRequest) {
             .join('\n')
             .trim();
 
+          // A turn that died before producing anything would otherwise leave an
+          // empty row that the next turn feeds back to the model as history.
+          if (parts.length === 0) return;
+
           await supabase.from('chat_messages').insert({
             conversation_id: conversationId,
             user_id: user.uid,

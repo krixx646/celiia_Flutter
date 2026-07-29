@@ -27,9 +27,21 @@ class SupabaseService {
   static String Function() backendBaseUrl = () => Env.celiaBackendBaseUrl;
 
   @visibleForTesting
-  static Future<void> Function({required String url, required String anonKey})
-  supabaseInitialize = ({required String url, required String anonKey}) =>
-      Supabase.initialize(url: url, anonKey: anonKey);
+  static Future<void> Function({
+    required String url,
+    required String anonKey,
+    required Future<String?> Function() accessToken,
+  })
+  supabaseInitialize =
+      ({
+        required String url,
+        required String anonKey,
+        required Future<String?> Function() accessToken,
+      }) => Supabase.initialize(
+        url: url,
+        anonKey: anonKey,
+        accessToken: accessToken,
+      );
 
   @visibleForTesting
   static SupabaseClient Function() supabaseClientFactory = () =>
@@ -74,7 +86,21 @@ class SupabaseService {
     }
 
     _initializing = () async {
-      await supabaseInitialize(url: url, anonKey: anonKey);
+      await supabaseInitialize(
+        url: url,
+        anonKey: anonKey,
+        // The user signs in with Firebase, not Supabase, so Supabase has no
+        // session of its own to identify them by. Sending the Firebase ID
+        // token on every request is what lets row-level security match rows to
+        // the person asking; without it the app is anonymous and its own data
+        // is invisible to it. Returning null keeps browsing the public
+        // catalogue working before sign-in.
+        accessToken: () async {
+          final user = firebaseAuthFactory().currentUser;
+          if (user == null) return null;
+          return user.getIdToken();
+        },
+      );
       _client = supabaseClientFactory();
     }();
 

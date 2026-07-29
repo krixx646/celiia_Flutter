@@ -89,7 +89,7 @@ void main() {
       SupabaseService.supabaseUrl = () => 'https://example.supabase.test';
       SupabaseService.supabaseAnonKey = () => 'anon';
       SupabaseService.supabaseInitialize =
-          ({required url, required anonKey}) async {};
+          ({required url, required anonKey, required accessToken}) async {};
       SupabaseService.supabaseClientFactory = () => realClient;
 
       await SupabaseService.initialize();
@@ -673,6 +673,7 @@ void main() {
       await SupabaseService.supabaseInitialize(
         url: 'https://supabase.test',
         anonKey: 'anon',
+        accessToken: () async => null,
       );
     } catch (_) {
       // ignore

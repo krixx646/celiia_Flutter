@@ -413,7 +413,7 @@ export const celiaTools = {
 
   create_routine: tool({
     description:
-      "Save a playable workout routine to the user's library. You compose it yourself: look exercises up with search_exercises first, then list them here in the order the user should perform them. Every step must use an exact `exerciseSlug` from those results, because that slug is what the app plays. Only call this once the user has agreed to a specific plan.",
+      "Save a playable workout routine to the user's library. You compose it yourself: look exercises up with search_exercises first, then list them here in the order the user should perform them. Every step must use an exact `exerciseSlug` from those results, because that slug is what the app plays. Call this as soon as you know what to build — the app shows the user the routine and asks them to confirm before it saves, so you do not need to ask their permission yourself.",
     inputSchema: z.object({
       title: z.string().min(3).max(80),
       description: z.string().max(300).optional(),

@@ -131,9 +131,7 @@ class CeliaChatService {
           controller.add(CeliaConversationStarted(serverConversationId));
         }
 
-        // Tracks tool calls across parts so each update carries the full state
-        // (the protocol sends name, input and output in separate events).
-        final calls = <String, ChatToolCall>{};
+        final state = _StreamState();
 
         final lines = response.stream
             .transform(utf8.decoder)
@@ -154,7 +152,7 @@ class CeliaChatService {
             continue;
           }
 
-          final event = _decodePart(part, calls);
+          final event = _decodePart(part, state);
           if (event != null) controller.add(event);
         }
       } catch (e) {
@@ -168,16 +166,21 @@ class CeliaChatService {
     return controller.stream;
   }
 
-  CeliaStreamEvent? _decodePart(
-    Map<String, dynamic> part,
-    Map<String, ChatToolCall> calls,
-  ) {
+  CeliaStreamEvent? _decodePart(Map<String, dynamic> part, _StreamState state) {
     final type = part['type']?.toString() ?? '';
 
     switch (type) {
+      case 'text-start':
+        // A turn that calls a tool speaks twice: once before the call and once
+        // after it, as two separate text blocks. Without a break here the
+        // sentence before the call runs straight into the answer after it.
+        return state.wroteText ? const CeliaTextDelta('\n\n') : null;
+
       case 'text-delta':
         final delta = part['delta'];
-        return delta is String && delta.isNotEmpty ? CeliaTextDelta(delta) : null;
+        if (delta is! String || delta.isEmpty) return null;
+        state.wroteText = true;
+        return CeliaTextDelta(delta);
 
       case 'tool-input-start':
         final id = part['toolCallId']?.toString() ?? '';
@@ -187,14 +190,14 @@ class CeliaChatService {
           toolName: part['toolName']?.toString() ?? '',
           phase: ToolPhase.preparing,
         );
-        calls[id] = call;
+        state.calls[id] = call;
         return CeliaToolUpdate(call);
 
       case 'tool-input-available':
         final id = part['toolCallId']?.toString() ?? '';
         if (id.isEmpty) return null;
         final existing =
-            calls[id] ??
+            state.calls[id] ??
             ChatToolCall(
               toolCallId: id,
               toolName: part['toolName']?.toString() ?? '',
@@ -208,7 +211,7 @@ class CeliaChatService {
               ? Map<String, dynamic>.from(part['input'] as Map)
               : null,
         );
-        calls[id] = updated;
+        state.calls[id] = updated;
         return CeliaToolUpdate(updated);
 
       case 'tool-approval-request':
@@ -217,44 +220,44 @@ class CeliaChatService {
         // An automatic decision needs no prompt.
         if (part['isAutomatic'] == true) return null;
         final existing =
-            calls[id] ?? ChatToolCall(toolCallId: id, toolName: '');
+            state.calls[id] ?? ChatToolCall(toolCallId: id, toolName: '');
         final updated = existing.copyWith(
           phase: ToolPhase.awaitingApproval,
           approvalId: part['approvalId']?.toString(),
         );
-        calls[id] = updated;
+        state.calls[id] = updated;
         return CeliaToolUpdate(updated);
 
       case 'tool-output-available':
         final id = part['toolCallId']?.toString() ?? '';
         if (id.isEmpty) return null;
         final existing =
-            calls[id] ?? ChatToolCall(toolCallId: id, toolName: '');
+            state.calls[id] ?? ChatToolCall(toolCallId: id, toolName: '');
         final updated = existing.copyWith(
           phase: ToolPhase.done,
           output: part['output'] is Map
               ? Map<String, dynamic>.from(part['output'] as Map)
               : null,
         );
-        calls[id] = updated;
+        state.calls[id] = updated;
         return CeliaToolUpdate(updated);
 
       case 'tool-output-denied':
         final id = part['toolCallId']?.toString() ?? '';
         if (id.isEmpty) return null;
         final existing =
-            calls[id] ?? ChatToolCall(toolCallId: id, toolName: '');
+            state.calls[id] ?? ChatToolCall(toolCallId: id, toolName: '');
         final updated = existing.copyWith(phase: ToolPhase.denied);
-        calls[id] = updated;
+        state.calls[id] = updated;
         return CeliaToolUpdate(updated);
 
       case 'tool-output-error':
         final id = part['toolCallId']?.toString() ?? '';
         if (id.isEmpty) return null;
         final existing =
-            calls[id] ?? ChatToolCall(toolCallId: id, toolName: '');
+            state.calls[id] ?? ChatToolCall(toolCallId: id, toolName: '');
         final updated = existing.copyWith(phase: ToolPhase.failed);
-        calls[id] = updated;
+        state.calls[id] = updated;
         return CeliaToolUpdate(updated);
 
       case 'error':
@@ -263,8 +266,8 @@ class CeliaChatService {
         );
 
       default:
-        // start / start-step / finish-step / finish / text-start / text-end and
-        // any future part types need no UI state of their own.
+        // start / start-step / finish-step / finish / text-end and any future
+        // part types need no UI state of their own.
         return null;
     }
   }
@@ -360,4 +363,13 @@ class CeliaChatService {
   void dispose() {
     _httpClient.close();
   }
+}
+
+/// Per-stream bookkeeping.
+///
+/// Tool calls are tracked because the protocol sends a call's name, input and
+/// output as separate events, and each update needs to carry the full state.
+class _StreamState {
+  final Map<String, ChatToolCall> calls = {};
+  bool wroteText = false;
 }

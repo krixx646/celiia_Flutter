@@ -159,9 +159,12 @@ class _AuthenticatedGateState extends State<_AuthenticatedGate> {
       return;
     }
 
+    // Both providers are resolved before the first await: reading them off
+    // `context` afterwards throws if the widget was disposed mid-load.
     final profileProvider = context.read<NutritionProfileProvider>();
+    final trackerProvider = context.read<NutritionTrackerProvider>();
     await profileProvider.loadProfile();
-    context.read<NutritionTrackerProvider>().syncProfile(profileProvider.profile);
+    trackerProvider.syncProfile(profileProvider.profile);
 
     var complete = await OnboardingService.isComplete(uid);
     if (!complete && profileProvider.hasProfile) {

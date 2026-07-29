@@ -88,6 +88,60 @@ void main() {
       expect(deltas.join(), 'Three sets of ten.');
     });
 
+    test('separates the text before a tool call from the text after', () async {
+      // The shape a real tool-using turn takes: two text blocks either side of
+      // the call, both numbered from zero because ids restart each step.
+      final service = serviceReturning(
+        _sse([
+          {'type': 'text-start', 'id': '0'},
+          {'type': 'text-delta', 'delta': 'Let me check your progress!'},
+          {'type': 'text-end', 'id': '0'},
+          {
+            'type': 'tool-output-available',
+            'toolCallId': 'call-1',
+            'output': {'dayStreak': 0},
+          },
+          {'type': 'text-start', 'id': '0'},
+          {'type': 'text-delta', 'delta': 'You are at the very start.'},
+          {'type': 'text-end', 'id': '0'},
+        ]),
+      );
+
+      final deltas = await service
+          .send(message: 'how am I doing?')
+          .where((event) => event is CeliaTextDelta)
+          .cast<CeliaTextDelta>()
+          .map((event) => event.delta)
+          .toList();
+
+      expect(
+        deltas.join(),
+        'Let me check your progress!\n\nYou are at the very start.',
+      );
+    });
+
+    test('does not open with a blank line when a turn starts silently', () async {
+      // A turn that calls a tool before saying anything still opens a text
+      // block first; that must not indent the reply with a leading break.
+      final service = serviceReturning(
+        _sse([
+          {'type': 'text-start', 'id': '0'},
+          {'type': 'text-end', 'id': '0'},
+          {'type': 'text-start', 'id': '0'},
+          {'type': 'text-delta', 'delta': 'Here is your plan.'},
+        ]),
+      );
+
+      final deltas = await service
+          .send(message: 'plan please')
+          .where((event) => event is CeliaTextDelta)
+          .cast<CeliaTextDelta>()
+          .map((event) => event.delta)
+          .toList();
+
+      expect(deltas.join(), 'Here is your plan.');
+    });
+
     test('carries a tool from input through to its output', () async {
       final service = serviceReturning(
         _sse([

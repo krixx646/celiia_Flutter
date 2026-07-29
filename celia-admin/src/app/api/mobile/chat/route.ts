@@ -157,6 +157,12 @@ export async function POST(req: NextRequest) {
       headers: { 'x-conversation-id': conversationId },
       stream: toUIMessageStream({
         stream: result.stream,
+        // The SDK's default swallows the cause behind "An error occurred.",
+        // which leaves nothing to debug from once this is running on a device.
+        onError: (error) => {
+          console.error('[chat] stream error', error);
+          return error instanceof Error ? error.message : String(error);
+        },
         onEnd: async ({ responseMessage }) => {
           const parts = responseMessage.parts ?? [];
           const text = parts

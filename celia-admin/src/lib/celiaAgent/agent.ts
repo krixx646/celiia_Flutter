@@ -1,4 +1,4 @@
-import { ToolLoopAgent, isStepCount, type ModelMessage } from 'ai';
+import { ToolLoopAgent, isStepCount } from 'ai';
 import { deepSeek } from '@ai-sdk/deepseek';
 import {
   celiaTools,
@@ -60,10 +60,16 @@ Use Markdown for structure when it helps: bold for key numbers, short lists for 
  * bound to the caller's verified uid through `toolsContext`. That binding is
  * what stops the model from ever reaching another user's data.
  */
-export function createCeliaAgent(context: CeliaToolContext) {
+export function createCeliaAgent(
+  context: CeliaToolContext,
+  userState?: UserStateSnapshot | null
+) {
+  const stateSection = buildUserStateSection(userState);
   return new ToolLoopAgent({
     model: deepSeek(CHAT_MODEL),
-    instructions: INSTRUCTIONS,
+    instructions: stateSection
+      ? `${INSTRUCTIONS}\n\n${stateSection}`
+      : INSTRUCTIONS,
     tools: celiaTools,
     toolsContext: celiaToolsContext(context),
     stopWhen: isStepCount(MAX_STEPS),
@@ -93,12 +99,13 @@ export type UserStateSnapshot = {
 };
 
 /**
- * Facts the agent should always know without spending a tool call, injected as
- * a system message for the current request.
+ * Facts the agent should always know without spending a tool call. This is
+ * appended to the instructions rather than sent as a system message, because
+ * the agent rejects system messages in the message list.
  */
-export function buildUserStateMessage(
+export function buildUserStateSection(
   snapshot: UserStateSnapshot | null | undefined
-): ModelMessage | null {
+): string | null {
   if (!snapshot) return null;
 
   const lines: string[] = [];
@@ -132,8 +139,5 @@ export function buildUserStateMessage(
     );
   }
 
-  return {
-    role: 'system',
-    content: `Current user (from the app):\n${lines.join('\n')}`,
-  };
+  return `## Current user (from the app)\n${lines.join('\n')}`;
 }

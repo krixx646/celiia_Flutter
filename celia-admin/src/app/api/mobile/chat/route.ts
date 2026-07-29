@@ -8,11 +8,7 @@ import {
 } from 'ai';
 import { verifyFirebaseUser } from '@/lib/firebaseAuth';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
-import {
-  buildUserStateMessage,
-  createCeliaAgent,
-  type UserStateSnapshot,
-} from '@/lib/celiaAgent/agent';
+import { createCeliaAgent, type UserStateSnapshot } from '@/lib/celiaAgent/agent';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -136,9 +132,6 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const stateMessage = buildUserStateMessage(body.state);
-    if (stateMessage) messages.unshift(stateMessage);
-
     // Persist the user's turn now, so it isn't lost if generation fails.
     if (messageText) {
       await supabase.from('chat_messages').insert({
@@ -150,7 +143,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const agent = createCeliaAgent({ uid: user.uid, tzOffsetMinutes });
+    const agent = createCeliaAgent({ uid: user.uid, tzOffsetMinutes }, body.state);
     const result = await agent.stream({ messages });
 
     return createUIMessageStreamResponse({

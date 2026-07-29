@@ -35,10 +35,14 @@ const rows = await fetch(
 for (const row of rows) {
   let touched = false;
   const parts = row.parts.map((part) => {
-    if (part.type !== 'tool-create_routine' || part.state !== 'approval-responded') return part;
+    if (part.type !== 'tool-create_routine') return part;
+    // 'output-available' means the tool already ran; rewinding that too lets a
+    // failed write be replayed against a fix with the same input.
+    if (part.state !== 'approval-responded' && part.state !== 'output-available') return part;
     touched = true;
     const { approved, reason, ...approval } = part.approval ?? {};
-    return { ...part, state: 'approval-requested', approval };
+    const { output, errorText, ...rest } = part;
+    return { ...rest, state: 'approval-requested', approval };
   });
 
   if (!touched) continue;

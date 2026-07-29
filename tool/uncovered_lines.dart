@@ -62,14 +62,17 @@ void main(List<String> args) {
   // If user provided a file filter and it matches exactly one, print uncovered lines.
   if (fileFilter != null && entries.length == 1) {
     final m = entries.single;
-    final uncovered = m.hitsByLine.entries
-        .where((e) => e.value == 0)
-        .map((e) => e.key)
-        .toList()
-      ..sort();
+    final uncovered =
+        m.hitsByLine.entries
+            .where((e) => e.value == 0)
+            .map((e) => e.key)
+            .toList()
+          ..sort();
 
     stdout.writeln(m.file);
-    stdout.writeln('covered: ${m.lh}/${m.lf} = ${(m.lf == 0 ? 100.0 : 100.0 * m.lh / m.lf).toStringAsFixed(2)}%');
+    stdout.writeln(
+      'covered: ${m.lh}/${m.lf} = ${(m.lf == 0 ? 100.0 : 100.0 * m.lh / m.lf).toStringAsFixed(2)}%',
+    );
     stdout.writeln('uncovered lines: ${uncovered.length}');
     stdout.writeln(uncovered.join(','));
     return;
@@ -85,7 +88,8 @@ void main(List<String> args) {
   stdout.writeln('Top files by uncovered lines (LF-LH):');
   for (final m in entries.take(showTop)) {
     final uncovered = m.lf - m.lh;
-    stdout.writeln('${uncovered.toString().padLeft(5)}  ${(m.lf == 0 ? 100.0 : 100.0 * m.lh / m.lf).toStringAsFixed(2).padLeft(6)}%  ${m.file}');
+    stdout.writeln(
+      '${uncovered.toString().padLeft(5)}  ${(m.lf == 0 ? 100.0 : 100.0 * m.lh / m.lf).toStringAsFixed(2).padLeft(6)}%  ${m.file}',
+    );
   }
 }
-

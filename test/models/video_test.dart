@@ -44,4 +44,3 @@ void main() {
     expect(VideoUploadResponse.fromJson(res.toJson()).streamId, 'uid');
   });
 }
-

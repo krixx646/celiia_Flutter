@@ -117,7 +117,9 @@ void main() {
   group('loadRoutinesByCategory', () {
     test('success filters curated/ai', () async {
       final supa = MockSupabaseService();
-      when(() => supa.getPublishedRoutines(category: RoutineCategory.strength)).thenAnswer((_) async {
+      when(
+        () => supa.getPublishedRoutines(category: RoutineCategory.strength),
+      ).thenAnswer((_) async {
         return [
           routine(id: 'a', createdAt: DateTime(2026, 1, 1), isCurated: true),
           routine(id: 'b', createdAt: DateTime(2026, 1, 2), isCurated: false),
@@ -133,7 +135,9 @@ void main() {
 
     test('error sets error message', () async {
       final supa = MockSupabaseService();
-      when(() => supa.getPublishedRoutines(category: any(named: 'category'))).thenThrow(Exception('boom'));
+      when(
+        () => supa.getPublishedRoutines(category: any(named: 'category')),
+      ).thenThrow(Exception('boom'));
       final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
       await rp.loadRoutinesByCategory(RoutineCategory.cardio);
       expect(rp.error, contains('Could not load routines right now'));
@@ -154,9 +158,9 @@ void main() {
   group('loadUserRoutines', () {
     test('success sets user routines', () async {
       final supa = MockSupabaseService();
-      when(() => supa.getUserRoutines('u')).thenAnswer((_) async => [
-            userRoutine(id: 'ur1', userId: 'u', routineId: 'r1'),
-          ]);
+      when(() => supa.getUserRoutines('u')).thenAnswer(
+        (_) async => [userRoutine(id: 'ur1', userId: 'u', routineId: 'r1')],
+      );
       final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
       await rp.loadUserRoutines('u');
       expect(rp.userRoutines.single.routineId, 'r1');
@@ -188,51 +192,64 @@ void main() {
   });
 
   group('save/unsave', () {
-    test('saveRoutine success inserts and returns true; failure returns false', () async {
-      final supa = MockSupabaseService();
-      when(() => supa.saveRoutine('u', 'r1')).thenAnswer((_) async => userRoutine(id: 'ur1', userId: 'u', routineId: 'r1'));
+    test(
+      'saveRoutine success inserts and returns true; failure returns false',
+      () async {
+        final supa = MockSupabaseService();
+        when(() => supa.saveRoutine('u', 'r1')).thenAnswer(
+          (_) async => userRoutine(id: 'ur1', userId: 'u', routineId: 'r1'),
+        );
 
-      final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
-      final ok = await rp.saveRoutine('u', 'r1');
-      expect(ok, isTrue);
-      expect(rp.userRoutines.first.routineId, 'r1');
+        final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
+        final ok = await rp.saveRoutine('u', 'r1');
+        expect(ok, isTrue);
+        expect(rp.userRoutines.first.routineId, 'r1');
 
-      when(() => supa.saveRoutine(any(), any())).thenThrow(Exception('boom'));
-      final ok2 = await rp.saveRoutine('u', 'r2');
-      expect(ok2, isFalse);
-    });
+        when(() => supa.saveRoutine(any(), any())).thenThrow(Exception('boom'));
+        final ok2 = await rp.saveRoutine('u', 'r2');
+        expect(ok2, isFalse);
+      },
+    );
 
-    test('unsaveRoutine success removes and returns true; failure returns false', () async {
-      final supa = MockSupabaseService();
-      when(() => supa.unsaveRoutine('u', 'r1')).thenAnswer((_) async {});
-      final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
-      rp
-        ..clearError()
-        ..selectRoutine(routine(id: 'x', createdAt: DateTime(2026, 1, 1)));
+    test(
+      'unsaveRoutine success removes and returns true; failure returns false',
+      () async {
+        final supa = MockSupabaseService();
+        when(() => supa.unsaveRoutine('u', 'r1')).thenAnswer((_) async {});
+        final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
+        rp
+          ..clearError()
+          ..selectRoutine(routine(id: 'x', createdAt: DateTime(2026, 1, 1)));
 
-      // seed userRoutines
-      await rp.saveRoutine('u', 'r1'); // will fail unless stubbed; so seed manually
-      rp
-        ..clearSelection()
-        ..clearError();
-      // manual seed
-      rp
-        ..clearSelection()
-        ..clearError();
-      // easiest: call loadUserRoutines stub
-      when(() => supa.getUserRoutines('u')).thenAnswer((_) async => [
-            userRoutine(id: 'ur1', userId: 'u', routineId: 'r1'),
-          ]);
-      await rp.loadUserRoutines('u');
+        // seed userRoutines
+        await rp.saveRoutine(
+          'u',
+          'r1',
+        ); // will fail unless stubbed; so seed manually
+        rp
+          ..clearSelection()
+          ..clearError();
+        // manual seed
+        rp
+          ..clearSelection()
+          ..clearError();
+        // easiest: call loadUserRoutines stub
+        when(() => supa.getUserRoutines('u')).thenAnswer(
+          (_) async => [userRoutine(id: 'ur1', userId: 'u', routineId: 'r1')],
+        );
+        await rp.loadUserRoutines('u');
 
-      final ok = await rp.unsaveRoutine('u', 'r1');
-      expect(ok, isTrue);
-      expect(rp.userRoutines, isEmpty);
+        final ok = await rp.unsaveRoutine('u', 'r1');
+        expect(ok, isTrue);
+        expect(rp.userRoutines, isEmpty);
 
-      when(() => supa.unsaveRoutine(any(), any())).thenThrow(Exception('boom'));
-      final ok2 = await rp.unsaveRoutine('u', 'r2');
-      expect(ok2, isFalse);
-    });
+        when(
+          () => supa.unsaveRoutine(any(), any()),
+        ).thenThrow(Exception('boom'));
+        final ok2 = await rp.unsaveRoutine('u', 'r2');
+        expect(ok2, isFalse);
+      },
+    );
   });
 
   group('toggleFavorite', () {
@@ -245,9 +262,16 @@ void main() {
 
     test('error is swallowed but still covers branch', () async {
       final supa = MockSupabaseService();
-      when(() => supa.getUserRoutines('u')).thenAnswer((_) async => [
-            userRoutine(id: 'ur1', userId: 'u', routineId: 'r1', isFavorite: false),
-          ]);
+      when(() => supa.getUserRoutines('u')).thenAnswer(
+        (_) async => [
+          userRoutine(
+            id: 'ur1',
+            userId: 'u',
+            routineId: 'r1',
+            isFavorite: false,
+          ),
+        ],
+      );
       when(() => supa.toggleFavorite('ur1', true)).thenThrow(Exception('boom'));
 
       final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
@@ -257,20 +281,30 @@ void main() {
       expect(rp.userRoutines.single.isFavorite, isFalse);
     });
 
-    test('toggleFavoriteByRoutineId returns early when routineId not found', () async {
-      final supa = MockSupabaseService();
-      final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
-      await rp.toggleFavoriteByRoutineId('missing');
-      verifyNever(() => supa.toggleFavorite(any(), any()));
-    });
+    test(
+      'toggleFavoriteByRoutineId returns early when routineId not found',
+      () async {
+        final supa = MockSupabaseService();
+        final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
+        await rp.toggleFavoriteByRoutineId('missing');
+        verifyNever(() => supa.toggleFavorite(any(), any()));
+      },
+    );
   });
 
   group('recordCompletion', () {
     test('updates local record when present; swallows errors', () async {
       final supa = MockSupabaseService();
-      when(() => supa.getUserRoutines('u')).thenAnswer((_) async => [
-            userRoutine(id: 'ur1', userId: 'u', routineId: 'r1', timesCompleted: 0),
-          ]);
+      when(() => supa.getUserRoutines('u')).thenAnswer(
+        (_) async => [
+          userRoutine(
+            id: 'ur1',
+            userId: 'u',
+            routineId: 'r1',
+            timesCompleted: 0,
+          ),
+        ],
+      );
       when(() => supa.recordCompletion('ur1')).thenAnswer((_) async {});
 
       final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
@@ -285,49 +319,70 @@ void main() {
   });
 
   group('recordCompletionForRoutine', () {
-    test('when saveRoutine fails, reloads then records completion if row appears', () async {
-      final supa = MockSupabaseService();
-      when(() => supa.getUserRoutines('u')).thenAnswer((_) async => <UserRoutine>[]);
-      when(() => supa.saveRoutine('u', 'r1')).thenThrow(Exception('unique'));
-      when(() => supa.recordCompletion('ur1')).thenAnswer((_) async {});
+    test(
+      'when saveRoutine fails, reloads then records completion if row appears',
+      () async {
+        final supa = MockSupabaseService();
+        when(
+          () => supa.getUserRoutines('u'),
+        ).thenAnswer((_) async => <UserRoutine>[]);
+        when(() => supa.saveRoutine('u', 'r1')).thenThrow(Exception('unique'));
+        when(() => supa.recordCompletion('ur1')).thenAnswer((_) async {});
 
+        final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
+        await rp.loadUserRoutines('u');
+
+        // after reload, row exists
+        when(() => supa.getUserRoutines('u')).thenAnswer(
+          (_) async => [
+            userRoutine(
+              id: 'ur1',
+              userId: 'u',
+              routineId: 'r1',
+              timesCompleted: 0,
+            ),
+          ],
+        );
+
+        await rp.recordCompletionForRoutine(userId: 'u', routineId: 'r1');
+        verify(() => supa.recordCompletion('ur1')).called(1);
+      },
+    );
+
+    test(
+      'if row still missing after reload, returns without calling recordCompletion',
+      () async {
+        final supa = MockSupabaseService();
+        when(
+          () => supa.getUserRoutines('u'),
+        ).thenAnswer((_) async => <UserRoutine>[]);
+        when(() => supa.saveRoutine('u', 'r1')).thenThrow(Exception('unique'));
+        when(
+          () => supa.getUserRoutines('u'),
+        ).thenAnswer((_) async => <UserRoutine>[]);
+
+        final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
+        await rp.loadUserRoutines('u');
+        await rp.recordCompletionForRoutine(userId: 'u', routineId: 'r1');
+        verifyNever(() => supa.recordCompletion(any()));
+      },
+    );
+  });
+
+  test(
+    'isRoutineSaved + getUserRoutine hit success and catch branches',
+    () async {
+      final supa = MockSupabaseService();
+      when(() => supa.getUserRoutines('u')).thenAnswer(
+        (_) async => [userRoutine(id: 'ur1', userId: 'u', routineId: 'r1')],
+      );
       final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
       await rp.loadUserRoutines('u');
 
-      // after reload, row exists
-      when(() => supa.getUserRoutines('u')).thenAnswer((_) async => [
-            userRoutine(id: 'ur1', userId: 'u', routineId: 'r1', timesCompleted: 0),
-          ]);
-
-      await rp.recordCompletionForRoutine(userId: 'u', routineId: 'r1');
-      verify(() => supa.recordCompletion('ur1')).called(1);
-    });
-
-    test('if row still missing after reload, returns without calling recordCompletion', () async {
-      final supa = MockSupabaseService();
-      when(() => supa.getUserRoutines('u')).thenAnswer((_) async => <UserRoutine>[]);
-      when(() => supa.saveRoutine('u', 'r1')).thenThrow(Exception('unique'));
-      when(() => supa.getUserRoutines('u')).thenAnswer((_) async => <UserRoutine>[]);
-
-      final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
-      await rp.loadUserRoutines('u');
-      await rp.recordCompletionForRoutine(userId: 'u', routineId: 'r1');
-      verifyNever(() => supa.recordCompletion(any()));
-    });
-  });
-
-  test('isRoutineSaved + getUserRoutine hit success and catch branches', () async {
-    final supa = MockSupabaseService();
-    when(() => supa.getUserRoutines('u')).thenAnswer((_) async => [
-          userRoutine(id: 'ur1', userId: 'u', routineId: 'r1'),
-        ]);
-    final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
-    await rp.loadUserRoutines('u');
-
-    expect(rp.isRoutineSaved('r1'), isTrue);
-    expect(rp.isRoutineSaved('missing'), isFalse);
-    expect(rp.getUserRoutine('r1')?.id, 'ur1');
-    expect(rp.getUserRoutine('missing'), isNull);
-  });
+      expect(rp.isRoutineSaved('r1'), isTrue);
+      expect(rp.isRoutineSaved('missing'), isFalse);
+      expect(rp.getUserRoutine('r1')?.id, 'ur1');
+      expect(rp.getUserRoutine('missing'), isNull);
+    },
+  );
 }
-

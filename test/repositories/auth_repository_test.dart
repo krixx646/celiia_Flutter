@@ -5,22 +5,34 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
+
 class MockUserCredential extends Mock implements UserCredential {}
+
 class MockUser extends Mock implements User {}
+
 class MockGoogleSignIn extends Mock implements GoogleSignIn {}
+
 class MockGoogleAccount extends Mock implements GoogleSignInAccount {}
+
 class MockGoogleAuth extends Mock implements GoogleSignInAuthentication {}
+
 class MockPlatformInfo extends Mock implements PlatformInfo {}
 
 void main() {
   setUpAll(() {
-    registerFallbackValue(EmailAuthProvider.credential(email: 'e', password: 'p'));
+    registerFallbackValue(
+      EmailAuthProvider.credential(email: 'e', password: 'p'),
+    );
   });
 
   test('signIn wraps firebase errors', () async {
     final auth = MockFirebaseAuth();
-    when(() => auth.signInWithEmailAndPassword(email: any(named: 'email'), password: any(named: 'password')))
-        .thenThrow(Exception('nope'));
+    when(
+      () => auth.signInWithEmailAndPassword(
+        email: any(named: 'email'),
+        password: any(named: 'password'),
+      ),
+    ).thenThrow(Exception('nope'));
 
     final repo = AuthRepository(
       auth: auth,
@@ -72,4 +84,3 @@ void main() {
     expect(got, user);
   });
 }
-

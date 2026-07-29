@@ -19,22 +19,24 @@ void main() {
     expect(d.borderRadius, BorderRadius.circular(24));
   });
 
-  test('toggleTheme switches to light mode and light glassDecoration branch', () {
-    final p = ThemeProvider();
-    p.toggleTheme(false);
+  test(
+    'toggleTheme switches to light mode and light glassDecoration branch',
+    () {
+      final p = ThemeProvider();
+      p.toggleTheme(false);
 
-    expect(p.themeMode, ThemeMode.light);
-    expect(p.isDarkMode, isFalse);
-    expect(p.background, ThemeProvider.lightBackground);
-    expect(p.surface, ThemeProvider.lightSurface);
-    expect(p.accentOrange, ThemeProvider.lightAccentOrange);
-    expect(p.textPrimary, ThemeProvider.lightTextPrimary);
-    expect(p.textSecondary, ThemeProvider.lightTextSecondary);
+      expect(p.themeMode, ThemeMode.light);
+      expect(p.isDarkMode, isFalse);
+      expect(p.background, ThemeProvider.lightBackground);
+      expect(p.surface, ThemeProvider.lightSurface);
+      expect(p.accentOrange, ThemeProvider.lightAccentOrange);
+      expect(p.textPrimary, ThemeProvider.lightTextPrimary);
+      expect(p.textSecondary, ThemeProvider.lightTextSecondary);
 
-    // light glass decoration branch
-    final d = p.glassDecoration;
-    expect(d.color, Colors.white);
-    expect(d.borderRadius, BorderRadius.circular(24));
-  });
+      // light glass decoration branch
+      final d = p.glassDecoration;
+      expect(d.color, Colors.white);
+      expect(d.borderRadius, BorderRadius.circular(24));
+    },
+  );
 }
-

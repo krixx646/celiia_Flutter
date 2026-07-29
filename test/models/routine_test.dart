@@ -56,4 +56,3 @@ void main() {
     expect(r.durationLabel, '20 min');
   });
 }
-

@@ -3,10 +3,20 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('chat models round-trip JSON', () {
-    final user = User(id: 'u1', name: 'Ada', email: 'a@b.com', metadata: const {'k': 'v'});
+    final user = User(
+      id: 'u1',
+      name: 'Ada',
+      email: 'a@b.com',
+      metadata: const {'k': 'v'},
+    );
     expect(User.fromJson(user.toJson()).id, 'u1');
 
-    final convo = Conversation(id: 'c1', userId: 'u1', created: '2026-01-10T00:00:00Z', updated: null);
+    final convo = Conversation(
+      id: 'c1',
+      userId: 'u1',
+      created: '2026-01-10T00:00:00Z',
+      updated: null,
+    );
     expect(Conversation.fromJson(convo.toJson()).id, 'c1');
 
     final msg = Message(
@@ -24,11 +34,20 @@ void main() {
     expect(msg2.options?.single.label, 'A');
     expect(msg2.interacted, isTrue);
 
-    final payload = MessagePayload(type: 'button', text: 't', options: [MessageOption(label: 'B', value: 'b')]);
+    final payload = MessagePayload(
+      type: 'button',
+      text: 't',
+      options: [MessageOption(label: 'B', value: 'b')],
+    );
     expect(MessagePayload.fromJson(payload.toJson()).type, 'button');
 
-    final withConvo = MessageWithConversation(conversationId: 'c1', payload: payload);
-    expect(MessageWithConversation.fromJson(withConvo.toJson()).conversationId, 'c1');
+    final withConvo = MessageWithConversation(
+      conversationId: 'c1',
+      payload: payload,
+    );
+    expect(
+      MessageWithConversation.fromJson(withConvo.toJson()).conversationId,
+      'c1',
+    );
   });
 }
-

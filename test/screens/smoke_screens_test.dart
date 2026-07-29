@@ -1,6 +1,8 @@
 import 'package:celia_flutter/providers/auth_provider.dart';
 import 'package:celia_flutter/providers/chat_provider.dart';
 import 'package:celia_flutter/providers/navigation_provider.dart';
+import 'package:celia_flutter/providers/nutrition_tracker_provider.dart';
+import 'package:celia_flutter/services/calorie_scanner_service.dart';
 import 'package:celia_flutter/providers/routine_provider.dart';
 import 'package:celia_flutter/providers/theme_provider.dart';
 import 'package:celia_flutter/repositories/auth_repository.dart';
@@ -42,7 +44,9 @@ class _FakeAssetBundle extends CachingAssetBundle {
   @override
   Future<ByteData> load(String key) async {
     if (key.endsWith('AssetManifest.bin')) {
-      final data = const StandardMessageCodec().encodeMessage(<String, dynamic>{});
+      final data = const StandardMessageCodec().encodeMessage(
+        <String, dynamic>{},
+      );
       return data ?? ByteData(0);
     }
     if (key.endsWith('AssetManifest.json')) {
@@ -55,14 +59,21 @@ class _FakeAssetBundle extends CachingAssetBundle {
 }
 
 class MockAuthRepository extends Mock implements AuthRepository {}
+
 class MockSupabaseService extends Mock implements SupabaseService {}
+
 class MockChatRepository extends Mock implements ChatRepository {}
+
 class MockChatHistoryRepository extends Mock implements ChatHistoryRepository {}
+
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
+
 class MockFirebaseStorage extends Mock implements FirebaseStorage {}
+
 class MockImagePicker extends Mock implements ImagePicker {}
 
-Widget _wrap(Widget child, {
+Widget _wrap(
+  Widget child, {
   required AuthProvider auth,
   required RoutineProvider routines,
   required ChatProvider chat,
@@ -73,6 +84,13 @@ Widget _wrap(Widget child, {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
+        ChangeNotifierProvider(
+          create: (_) => NutritionTrackerProvider(
+            mealService: CalorieScannerService(
+              firebaseAuth: MockFirebaseAuth(),
+            ),
+          ),
+        ),
         ChangeNotifierProvider<AuthProvider>.value(value: auth),
         ChangeNotifierProvider<RoutineProvider>.value(value: routines),
         ChangeNotifierProvider<ChatProvider>.value(value: chat),
@@ -96,14 +114,21 @@ void main() {
 
     final supa = MockSupabaseService();
     when(() => supa.getPublishedRoutines()).thenAnswer((_) async => []);
-    when(() => supa.getUserCreatedRoutines(userId: any(named: 'userId'))).thenAnswer((_) async => []);
+    when(
+      () => supa.getUserCreatedRoutines(userId: any(named: 'userId')),
+    ).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
     final chatRepo = MockChatRepository();
     final historyRepo = MockChatHistoryRepository();
-    final chat = ChatProvider(chatRepository: chatRepo, historyRepository: historyRepo);
+    final chat = ChatProvider(
+      chatRepository: chatRepo,
+      historyRepository: historyRepo,
+    );
 
-    await tester.pumpWidget(_wrap(const AuthScreen(), auth: auth, routines: routines, chat: chat));
+    await tester.pumpWidget(
+      _wrap(const AuthScreen(), auth: auth, routines: routines, chat: chat),
+    );
     await tester.pump();
   });
 
@@ -114,22 +139,40 @@ void main() {
 
     final supa = MockSupabaseService();
     when(() => supa.getPublishedRoutines()).thenAnswer((_) async => []);
-    when(() => supa.getUserCreatedRoutines(userId: any(named: 'userId'))).thenAnswer((_) async => []);
+    when(
+      () => supa.getUserCreatedRoutines(userId: any(named: 'userId')),
+    ).thenAnswer((_) async => []);
     when(() => supa.getUserRoutines(any())).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
     final chatRepo = MockChatRepository();
-    when(() => chatRepo.createUser(name: any(named: 'name'), email: any(named: 'email')))
-        .thenAnswer((_) async => m.User(id: 'ukey'));
-    when(() => chatRepo.createConversation(any())).thenAnswer((_) async => m.Conversation(id: 'c', userId: 'u', created: 't'));
+    when(
+      () => chatRepo.createUser(
+        name: any(named: 'name'),
+        email: any(named: 'email'),
+      ),
+    ).thenAnswer((_) async => m.User(id: 'ukey'));
+    when(() => chatRepo.createConversation(any())).thenAnswer(
+      (_) async => m.Conversation(id: 'c', userId: 'u', created: 't'),
+    );
     when(() => chatRepo.getMessages(any(), any())).thenAnswer((_) async => []);
     when(() => chatRepo.sendMessage(any(), any(), any())).thenAnswer(
-      (_) async => m.Message(id: 'm', conversationId: 'c', userId: 'u', created: 't', text: 'x', type: 'text'),
+      (_) async => m.Message(
+        id: 'm',
+        conversationId: 'c',
+        userId: 'u',
+        created: 't',
+        text: 'x',
+        type: 'text',
+      ),
     );
 
     final historyRepo = MockChatHistoryRepository();
     when(() => historyRepo.getConversations()).thenAnswer((_) async => []);
-    final chat = ChatProvider(chatRepository: chatRepo, historyRepository: historyRepo);
+    final chat = ChatProvider(
+      chatRepository: chatRepo,
+      historyRepository: historyRepo,
+    );
 
     for (final screen in const [
       HomeScreen(),
@@ -137,7 +180,9 @@ void main() {
       ProfileScreen(),
       ChatScreen(),
     ]) {
-      await tester.pumpWidget(_wrap(screen, auth: auth, routines: routines, chat: chat));
+      await tester.pumpWidget(
+        _wrap(screen, auth: auth, routines: routines, chat: chat),
+      );
       await tester.pump();
     }
   });
@@ -149,10 +194,15 @@ void main() {
 
     final supa = MockSupabaseService();
     when(() => supa.getPublishedRoutines()).thenAnswer((_) async => []);
-    when(() => supa.getUserCreatedRoutines(userId: any(named: 'userId'))).thenAnswer((_) async => []);
+    when(
+      () => supa.getUserCreatedRoutines(userId: any(named: 'userId')),
+    ).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
-    final chat = ChatProvider(chatRepository: MockChatRepository(), historyRepository: MockChatHistoryRepository());
+    final chat = ChatProvider(
+      chatRepository: MockChatRepository(),
+      historyRepository: MockChatHistoryRepository(),
+    );
     await tester.pumpWidget(
       _wrap(
         const Scaffold(body: GenerateRoutineSheet()),
@@ -171,97 +221,139 @@ void main() {
 
     final supa = MockSupabaseService();
     when(() => supa.getPublishedRoutines()).thenAnswer((_) async => []);
-    when(() => supa.getUserCreatedRoutines(userId: any(named: 'userId'))).thenAnswer((_) async => []);
+    when(
+      () => supa.getUserCreatedRoutines(userId: any(named: 'userId')),
+    ).thenAnswer((_) async => []);
     when(() => supa.getUserRoutines(any())).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
-    final chat = ChatProvider(chatRepository: MockChatRepository(), historyRepository: MockChatHistoryRepository());
-    await tester.pumpWidget(_wrap(const SavedRoutinesScreen(), auth: auth, routines: routines, chat: chat));
+    final chat = ChatProvider(
+      chatRepository: MockChatRepository(),
+      historyRepository: MockChatHistoryRepository(),
+    );
+    await tester.pumpWidget(
+      _wrap(
+        const SavedRoutinesScreen(),
+        auth: auth,
+        routines: routines,
+        chat: chat,
+      ),
+    );
     await tester.pump();
   });
 
-  testWidgets('EmailVerificationScreen & ForgotPasswordScreen build', (tester) async {
+  testWidgets('EmailVerificationScreen & ForgotPasswordScreen build', (
+    tester,
+  ) async {
     final authRepo = MockAuthRepository();
     when(() => authRepo.currentUser).thenReturn(null);
     final auth = AuthProvider(authRepository: authRepo);
 
     final supa = MockSupabaseService();
     when(() => supa.getPublishedRoutines()).thenAnswer((_) async => []);
-    when(() => supa.getUserCreatedRoutines(userId: any(named: 'userId'))).thenAnswer((_) async => []);
+    when(
+      () => supa.getUserCreatedRoutines(userId: any(named: 'userId')),
+    ).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
-    final chat = ChatProvider(chatRepository: MockChatRepository(), historyRepository: MockChatHistoryRepository());
+    final chat = ChatProvider(
+      chatRepository: MockChatRepository(),
+      historyRepository: MockChatHistoryRepository(),
+    );
 
     for (final screen in const [
       EmailVerificationScreen(),
       ForgotPasswordScreen(),
     ]) {
-      await tester.pumpWidget(_wrap(screen, auth: auth, routines: routines, chat: chat));
+      await tester.pumpWidget(
+        _wrap(screen, auth: auth, routines: routines, chat: chat),
+      );
       await tester.pump();
     }
   });
 
-  testWidgets('RoutineDetailScreen / RoutinePlayerScreen / VideoPlayerScreen build', (tester) async {
-    final authRepo = MockAuthRepository();
-    when(() => authRepo.currentUser).thenReturn(null);
-    final auth = AuthProvider(authRepository: authRepo);
+  testWidgets(
+    'RoutineDetailScreen / RoutinePlayerScreen / VideoPlayerScreen build',
+    (tester) async {
+      final authRepo = MockAuthRepository();
+      when(() => authRepo.currentUser).thenReturn(null);
+      final auth = AuthProvider(authRepository: authRepo);
 
-    final supa = MockSupabaseService();
-    when(() => supa.getPublishedRoutines()).thenAnswer((_) async => []);
-    when(() => supa.getUserCreatedRoutines(userId: any(named: 'userId'))).thenAnswer((_) async => []);
-    when(() => supa.getUserRoutines(any())).thenAnswer((_) async => []);
-    final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
+      final supa = MockSupabaseService();
+      when(() => supa.getPublishedRoutines()).thenAnswer((_) async => []);
+      when(
+        () => supa.getUserCreatedRoutines(userId: any(named: 'userId')),
+      ).thenAnswer((_) async => []);
+      when(() => supa.getUserRoutines(any())).thenAnswer((_) async => []);
+      final routines = RoutineProvider(
+        supabase: supa,
+        currentUserId: () => null,
+      );
 
-    final chat = ChatProvider(chatRepository: MockChatRepository(), historyRepository: MockChatHistoryRepository());
+      final chat = ChatProvider(
+        chatRepository: MockChatRepository(),
+        historyRepository: MockChatHistoryRepository(),
+      );
 
-    final routine = Routine(
-      id: 'r',
-      title: 'T',
-      durationMinutes: 5,
-      difficulty: RoutineDifficulty.easy,
-      category: RoutineCategory.custom,
-      steps: const [
-        RoutineStep(
-          id: 's1',
-          title: 'Step 1',
-          durationSeconds: 10,
-          orderIndex: 0,
-          videoId: null,
-          thumbnailUrl: null,
+      final routine = Routine(
+        id: 'r',
+        title: 'T',
+        durationMinutes: 5,
+        difficulty: RoutineDifficulty.easy,
+        category: RoutineCategory.custom,
+        steps: const [
+          RoutineStep(
+            id: 's1',
+            title: 'Step 1',
+            durationSeconds: 10,
+            orderIndex: 0,
+            videoId: null,
+            thumbnailUrl: null,
+          ),
+        ],
+        createdBy: 'u',
+        createdAt: DateTime(2026, 1, 1),
+        isPublished: false,
+      );
+
+      await tester.pumpWidget(
+        _wrap(
+          RoutineDetailScreen(routine: routine),
+          auth: auth,
+          routines: routines,
+          chat: chat,
         ),
-      ],
-      createdBy: 'u',
-      createdAt: DateTime(2026, 1, 1),
-      isPublished: false,
-    );
+      );
+      await tester.pump(const Duration(milliseconds: 10));
 
-    await tester.pumpWidget(_wrap(RoutineDetailScreen(routine: routine), auth: auth, routines: routines, chat: chat));
-    await tester.pump(const Duration(milliseconds: 10));
-
-    await tester.pumpWidget(
-      _wrap(
-        RoutinePlayerScreen(routine: routine, initTimeout: const Duration(milliseconds: 1)),
-        auth: auth,
-        routines: routines,
-        chat: chat,
-      ),
-    );
-    await tester.pump(const Duration(milliseconds: 10));
-
-    await tester.pumpWidget(
-      _wrap(
-        const VideoPlayerScreen(
-          videoUrl: 'https://example.invalid/video.m3u8',
-          title: 'V',
-          initTimeout: Duration(milliseconds: 1),
+      await tester.pumpWidget(
+        _wrap(
+          RoutinePlayerScreen(
+            routine: routine,
+            initTimeout: const Duration(milliseconds: 1),
+          ),
+          auth: auth,
+          routines: routines,
+          chat: chat,
         ),
-        auth: auth,
-        routines: routines,
-        chat: chat,
-      ),
-    );
-    await tester.pump(const Duration(milliseconds: 10));
-  });
+      );
+      await tester.pump(const Duration(milliseconds: 10));
+
+      await tester.pumpWidget(
+        _wrap(
+          const VideoPlayerScreen(
+            videoUrl: 'https://example.invalid/video.m3u8',
+            title: 'V',
+            initTimeout: Duration(milliseconds: 1),
+          ),
+          auth: auth,
+          routines: routines,
+          chat: chat,
+        ),
+      );
+      await tester.pump(const Duration(milliseconds: 10));
+    },
+  );
 
   testWidgets('EditProfileScreen builds', (tester) async {
     final authRepo = MockAuthRepository();
@@ -270,10 +362,15 @@ void main() {
 
     final supa = MockSupabaseService();
     when(() => supa.getPublishedRoutines()).thenAnswer((_) async => []);
-    when(() => supa.getUserCreatedRoutines(userId: any(named: 'userId'))).thenAnswer((_) async => []);
+    when(
+      () => supa.getUserCreatedRoutines(userId: any(named: 'userId')),
+    ).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
-    final chat = ChatProvider(chatRepository: MockChatRepository(), historyRepository: MockChatHistoryRepository());
+    final chat = ChatProvider(
+      chatRepository: MockChatRepository(),
+      historyRepository: MockChatHistoryRepository(),
+    );
 
     final firebaseAuth = MockFirebaseAuth();
     when(() => firebaseAuth.currentUser).thenReturn(null);
@@ -292,4 +389,3 @@ void main() {
     await tester.pump();
   });
 }
-

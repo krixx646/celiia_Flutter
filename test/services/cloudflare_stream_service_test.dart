@@ -8,10 +8,23 @@ import 'package:http/testing.dart';
 
 void main() {
   test('getPlaybackUrl/getEmbedUrl/getThumbnailUrl format correctly', () {
-    final s = CloudflareStreamService(accountId: 'acc', apiToken: 'tok', client: MockClient((_) async => http.Response('{}', 500)));
-    expect(s.getPlaybackUrl('id'), 'https://customer-acc.cloudflarestream.com/id/manifest/video.m3u8');
-    expect(s.getEmbedUrl('id'), 'https://customer-acc.cloudflarestream.com/id/iframe');
-    expect(s.getThumbnailUrl('id', time: 3, width: 100, height: 200), contains('time=3s'));
+    final s = CloudflareStreamService(
+      accountId: 'acc',
+      apiToken: 'tok',
+      client: MockClient((_) async => http.Response('{}', 500)),
+    );
+    expect(
+      s.getPlaybackUrl('id'),
+      'https://customer-acc.cloudflarestream.com/id/manifest/video.m3u8',
+    );
+    expect(
+      s.getEmbedUrl('id'),
+      'https://customer-acc.cloudflarestream.com/id/iframe',
+    );
+    expect(
+      s.getThumbnailUrl('id', time: 3, width: 100, height: 200),
+      contains('time=3s'),
+    );
     expect(s.getThumbnailUrl('id'), endsWith('/thumbnail.jpg'));
   });
 
@@ -25,15 +38,23 @@ void main() {
         return http.Response(
           jsonEncode({
             'success': true,
-            'result': {'uploadURL': 'https://upload', 'uid': 'uid1'}
+            'result': {'uploadURL': 'https://upload', 'uid': 'uid1'},
           }),
           200,
         );
       }
       return http.Response('no', 500);
     });
-    final s = CloudflareStreamService(accountId: 'acc', apiToken: 'tok', client: client);
-    final res = await s.getDirectUploadUrl(filename: 'a.mp4', maxDurationSeconds: 10, metadata: {'foo': 'bar'});
+    final s = CloudflareStreamService(
+      accountId: 'acc',
+      apiToken: 'tok',
+      client: client,
+    );
+    final res = await s.getDirectUploadUrl(
+      filename: 'a.mp4',
+      maxDurationSeconds: 10,
+      metadata: {'foo': 'bar'},
+    );
     expect(res.uploadUrl, 'https://upload');
     expect(res.streamId, 'uid1');
   });
@@ -44,16 +65,30 @@ void main() {
       apiToken: 'tok',
       client: MockClient((_) async => http.Response('no', 500)),
     );
-    expect(() => s.getDirectUploadUrl(filename: 'a.mp4'), throwsA(isA<CloudflareException>()));
+    expect(
+      () => s.getDirectUploadUrl(filename: 'a.mp4'),
+      throwsA(isA<CloudflareException>()),
+    );
   });
 
   test('getDirectUploadUrl throws when success=false', () async {
     final s = CloudflareStreamService(
       accountId: 'acc',
       apiToken: 'tok',
-      client: MockClient((_) async => http.Response(jsonEncode({'success': false, 'errors': ['x']}), 200)),
+      client: MockClient(
+        (_) async => http.Response(
+          jsonEncode({
+            'success': false,
+            'errors': ['x'],
+          }),
+          200,
+        ),
+      ),
     );
-    expect(() => s.getDirectUploadUrl(filename: 'a.mp4'), throwsA(isA<CloudflareException>()));
+    expect(
+      () => s.getDirectUploadUrl(filename: 'a.mp4'),
+      throwsA(isA<CloudflareException>()),
+    );
   });
 
   test('getVideoDetails throws on non-200 and on success=false', () async {
@@ -67,7 +102,10 @@ void main() {
     final s2 = CloudflareStreamService(
       accountId: 'acc',
       apiToken: 'tok',
-      client: MockClient((_) async => http.Response(jsonEncode({'success': false, 'errors': []}), 200)),
+      client: MockClient(
+        (_) async =>
+            http.Response(jsonEncode({'success': false, 'errors': []}), 200),
+      ),
     );
     expect(() => s2.getVideoDetails('id'), throwsA(isA<CloudflareException>()));
   });
@@ -80,7 +118,12 @@ void main() {
         expect(req.url.queryParameters['limit'], '2');
         expect(req.url.queryParameters['after'], 'a');
         return http.Response(
-          jsonEncode({'success': true, 'result': [{'uid': '1'}]}),
+          jsonEncode({
+            'success': true,
+            'result': [
+              {'uid': '1'},
+            ],
+          }),
           200,
         );
       }),
@@ -98,7 +141,15 @@ void main() {
     final fail = CloudflareStreamService(
       accountId: 'acc',
       apiToken: 'tok',
-      client: MockClient((_) async => http.Response(jsonEncode({'success': false, 'errors': ['x']}), 200)),
+      client: MockClient(
+        (_) async => http.Response(
+          jsonEncode({
+            'success': false,
+            'errors': ['x'],
+          }),
+          200,
+        ),
+      ),
     );
     expect(() => fail.listVideos(), throwsA(isA<CloudflareException>()));
   });
@@ -125,7 +176,12 @@ void main() {
   test('getVideoStatus maps cloudflare states', () async {
     Future<http.Response> responder(String state) async {
       return http.Response(
-        jsonEncode({'success': true, 'result': {'status': {'state': state}}}),
+        jsonEncode({
+          'success': true,
+          'result': {
+            'status': {'state': state},
+          },
+        }),
         200,
       );
     }
@@ -161,7 +217,10 @@ void main() {
     final sNull = CloudflareStreamService(
       accountId: 'acc',
       apiToken: 'tok',
-      client: MockClient((_) async => http.Response(jsonEncode({'success': true, 'result': {}}), 200)),
+      client: MockClient(
+        (_) async =>
+            http.Response(jsonEncode({'success': true, 'result': {}}), 200),
+      ),
     );
     expect(await sNull.getVideoStatus('x'), VideoStatus.pending);
 
@@ -185,4 +244,3 @@ void main() {
     expect(CloudflareException('m', 'd').toString(), 'm: d');
   });
 }
-

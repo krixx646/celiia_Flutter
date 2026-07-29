@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockAuthRepository extends Mock implements AuthRepository {}
+
 class MockUser extends Mock implements User {}
 
 void main() {
@@ -54,4 +55,3 @@ void main() {
     p.dispose();
   });
 }
-

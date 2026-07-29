@@ -52,12 +52,15 @@ void main(List<String> args) {
   entries.sort((a, b) => a.pct.compareTo(b.pct));
 
   stdout.writeln('Coverage summary for $lcovPath');
-  stdout.writeln('Overall: $totalLh/$totalLf = ${totalLf == 0 ? '100.00' : (100 * totalLh / totalLf).toStringAsFixed(2)}%');
+  stdout.writeln(
+    'Overall: $totalLh/$totalLf = ${totalLf == 0 ? '100.00' : (100 * totalLh / totalLf).toStringAsFixed(2)}%',
+  );
   stdout.writeln('');
   stdout.writeln('Lowest covered files:');
 
   for (final e in entries.take(30)) {
-    stdout.writeln('${e.pct.toStringAsFixed(2).padLeft(6)}%  ${e.lh.toString().padLeft(5)}/${e.lf.toString().padRight(5)}  ${e.path}');
+    stdout.writeln(
+      '${e.pct.toStringAsFixed(2).padLeft(6)}%  ${e.lh.toString().padLeft(5)}/${e.lf.toString().padRight(5)}  ${e.path}',
+    );
   }
 }
-

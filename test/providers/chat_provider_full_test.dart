@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fake_async/fake_async.dart';
 
 class MockChatRepository extends Mock implements ChatRepository {}
+
 class MockChatHistoryRepository extends Mock implements ChatHistoryRepository {}
 
 void main() {
@@ -29,219 +30,310 @@ void main() {
     );
   });
 
-  test('SavedConversation.fromJson handles Timestamp, String, and fallback types', () {
-    final fromTs = SavedConversation.fromJson({
-      'id': 'c1',
-      'title': 't',
-      'lastMessage': 'm',
-      'timestamp': Timestamp.fromMillisecondsSinceEpoch(0),
-      'userId': 'u',
-      'userKey': 'uk',
-    });
-    expect(fromTs.timestamp, DateTime.fromMillisecondsSinceEpoch(0));
+  test(
+    'SavedConversation.fromJson handles Timestamp, String, and fallback types',
+    () {
+      final fromTs = SavedConversation.fromJson({
+        'id': 'c1',
+        'title': 't',
+        'lastMessage': 'm',
+        'timestamp': Timestamp.fromMillisecondsSinceEpoch(0),
+        'userId': 'u',
+        'userKey': 'uk',
+      });
+      expect(fromTs.timestamp, DateTime.fromMillisecondsSinceEpoch(0));
 
-    final fromStr = SavedConversation.fromJson({
-      'id': 'c2',
-      'title': 't',
-      'lastMessage': 'm',
-      'timestamp': '2026-01-01T00:00:00.000Z',
-      'userId': 'u',
-      'userKey': 'uk',
-    });
-    expect(fromStr.timestamp.toUtc(), DateTime.parse('2026-01-01T00:00:00.000Z'));
+      final fromStr = SavedConversation.fromJson({
+        'id': 'c2',
+        'title': 't',
+        'lastMessage': 'm',
+        'timestamp': '2026-01-01T00:00:00.000Z',
+        'userId': 'u',
+        'userKey': 'uk',
+      });
+      expect(
+        fromStr.timestamp.toUtc(),
+        DateTime.parse('2026-01-01T00:00:00.000Z'),
+      );
 
-    final fromOther = SavedConversation.fromJson({
-      'id': 'c3',
-      'title': 't',
-      'lastMessage': 'm',
-      'timestamp': 123,
-      'userId': 'u',
-      'userKey': 'uk',
-    });
-    expect(fromOther.timestamp, isA<DateTime>());
-  });
+      final fromOther = SavedConversation.fromJson({
+        'id': 'c3',
+        'title': 't',
+        'lastMessage': 'm',
+        'timestamp': 123,
+        'userId': 'u',
+        'userKey': 'uk',
+      });
+      expect(fromOther.timestamp, isA<DateTime>());
+    },
+  );
 
-  test('constructor default factories can be overridden (no real deps)', () async {
-    final originalChat = ChatProvider.defaultChatRepository;
-    final originalHist = ChatProvider.defaultHistoryRepository;
-    final originalPrefs = ChatProvider.defaultPrefs;
-    addTearDown(() {
-      ChatProvider.defaultChatRepository = originalChat;
-      ChatProvider.defaultHistoryRepository = originalHist;
-      ChatProvider.defaultPrefs = originalPrefs;
-    });
+  test(
+    'constructor default factories can be overridden (no real deps)',
+    () async {
+      final originalChat = ChatProvider.defaultChatRepository;
+      final originalHist = ChatProvider.defaultHistoryRepository;
+      final originalPrefs = ChatProvider.defaultPrefs;
+      addTearDown(() {
+        ChatProvider.defaultChatRepository = originalChat;
+        ChatProvider.defaultHistoryRepository = originalHist;
+        ChatProvider.defaultPrefs = originalPrefs;
+      });
 
-    final repo = MockChatRepository();
-    final history = MockChatHistoryRepository();
-    SharedPreferences.setMockInitialValues(<String, Object>{});
+      final repo = MockChatRepository();
+      final history = MockChatHistoryRepository();
+      SharedPreferences.setMockInitialValues(<String, Object>{});
 
-    when(() => repo.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-      (_) async => User(id: 'uk', name: 'N', email: 'E'),
-    );
-    when(() => history.getConversations()).thenAnswer((_) async => []);
+      when(
+        () => repo.createUser(
+          name: any(named: 'name'),
+          email: any(named: 'email'),
+        ),
+      ).thenAnswer((_) async => User(id: 'uk', name: 'N', email: 'E'));
+      when(() => history.getConversations()).thenAnswer((_) async => []);
 
-    ChatProvider.defaultChatRepository = () => repo;
-    ChatProvider.defaultHistoryRepository = () => history;
-    ChatProvider.defaultPrefs = () => SharedPreferences.getInstance();
+      ChatProvider.defaultChatRepository = () => repo;
+      ChatProvider.defaultHistoryRepository = () => history;
+      ChatProvider.defaultPrefs = () => SharedPreferences.getInstance();
 
-    final p = ChatProvider();
-    await p.initializeChat();
-    expect(p.uiState.currentUserKey, 'uk');
-  });
+      final p = ChatProvider();
+      await p.initializeChat();
+      expect(p.uiState.currentUserKey, 'uk');
+    },
+  );
 
   Future<SharedPreferences> prefsFactory() async {
     SharedPreferences.setMockInitialValues(<String, Object>{});
     return SharedPreferences.getInstance();
   }
 
-  test('initializeChat sets user key, handles errors, and is idempotent', () async {
-    final repo = MockChatRepository();
-    final history = MockChatHistoryRepository();
-
-    when(() => repo.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-      (_) async => User(id: 'uk', name: 'N', email: 'E'),
-    );
-    when(() => history.getConversations()).thenAnswer((_) async => []);
-
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
-    await p.initializeChat();
-    expect(p.uiState.currentUserKey, 'uk');
-    expect(p.uiState.hasInitialized, isTrue);
-    expect(p.uiState.isLoadingInitial, isFalse);
-
-    // Second call should early-return
-    await p.initializeChat();
-
-    // Error path
-    final repo2 = MockChatRepository();
-    when(() => repo2.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenThrow(Exception('boom'));
-    final p2 = ChatProvider(chatRepository: repo2, historyRepository: history, prefs: prefsFactory);
-    await p2.initializeChat();
-    expect(p2.uiState.error, 'Chat is unavailable right now. Please try again.');
-    expect(p2.uiState.isLoadingInitial, isFalse);
-  });
-
-  test('startNewConversation success + error, and polling triggers loadMessages', () {
-    fakeAsync((async) {
+  test(
+    'initializeChat sets user key, handles errors, and is idempotent',
+    () async {
       final repo = MockChatRepository();
       final history = MockChatHistoryRepository();
 
-      when(() => repo.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-        (_) async => User(id: 'uk', name: 'N', email: 'E'),
-      );
-      when(() => repo.createConversation(any())).thenAnswer(
-        (_) async => Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
-      );
-      when(() => repo.getMessages(any(), any())).thenAnswer((_) async => []);
+      when(
+        () => repo.createUser(
+          name: any(named: 'name'),
+          email: any(named: 'email'),
+        ),
+      ).thenAnswer((_) async => User(id: 'uk', name: 'N', email: 'E'));
       when(() => history.getConversations()).thenAnswer((_) async => []);
 
-      final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
+      final p = ChatProvider(
+        chatRepository: repo,
+        historyRepository: history,
+        prefs: prefsFactory,
+      );
+      await p.initializeChat();
+      expect(p.uiState.currentUserKey, 'uk');
+      expect(p.uiState.hasInitialized, isTrue);
+      expect(p.uiState.isLoadingInitial, isFalse);
 
-      async.run((_) async {
-        await p.initializeChat();
-        await p.startNewConversation();
-      });
-      async.flushMicrotasks();
-
-      expect(p.uiState.currentConversationId, 'cid');
-      expect(p.uiState.hasActiveConversation, isTrue);
-      expect(p.uiState.pollingEnabled, isTrue);
-
-      // Timer callback every 2s
-      async.elapse(const Duration(seconds: 2));
-      async.flushMicrotasks();
-      verify(() => repo.getMessages('uk', 'cid')).called(greaterThanOrEqualTo(1));
+      // Second call should early-return
+      await p.initializeChat();
 
       // Error path
-      final repoErr = MockChatRepository();
-      when(() => repoErr.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-        (_) async => User(id: 'uk', name: 'N', email: 'E'),
+      final repo2 = MockChatRepository();
+      when(
+        () => repo2.createUser(
+          name: any(named: 'name'),
+          email: any(named: 'email'),
+        ),
+      ).thenThrow(Exception('boom'));
+      final p2 = ChatProvider(
+        chatRepository: repo2,
+        historyRepository: history,
+        prefs: prefsFactory,
       );
-      when(() => repoErr.createConversation(any())).thenThrow(Exception('nope'));
+      await p2.initializeChat();
+      expect(
+        p2.uiState.error,
+        'Chat is unavailable right now. Please try again.',
+      );
+      expect(p2.uiState.isLoadingInitial, isFalse);
+    },
+  );
+
+  test(
+    'startNewConversation success + error, and polling triggers loadMessages',
+    () {
+      fakeAsync((async) {
+        final repo = MockChatRepository();
+        final history = MockChatHistoryRepository();
+
+        when(
+          () => repo.createUser(
+            name: any(named: 'name'),
+            email: any(named: 'email'),
+          ),
+        ).thenAnswer((_) async => User(id: 'uk', name: 'N', email: 'E'));
+        when(() => repo.createConversation(any())).thenAnswer(
+          (_) async => Conversation(
+            id: 'cid',
+            userId: 'u',
+            created: 't1',
+            updated: 't2',
+          ),
+        );
+        when(() => repo.getMessages(any(), any())).thenAnswer((_) async => []);
+        when(() => history.getConversations()).thenAnswer((_) async => []);
+
+        final p = ChatProvider(
+          chatRepository: repo,
+          historyRepository: history,
+          prefs: prefsFactory,
+        );
+
+        async.run((_) async {
+          await p.initializeChat();
+          await p.startNewConversation();
+        });
+        async.flushMicrotasks();
+
+        expect(p.uiState.currentConversationId, 'cid');
+        expect(p.uiState.hasActiveConversation, isTrue);
+        expect(p.uiState.pollingEnabled, isTrue);
+
+        // Timer callback every 2s
+        async.elapse(const Duration(seconds: 2));
+        async.flushMicrotasks();
+        verify(
+          () => repo.getMessages('uk', 'cid'),
+        ).called(greaterThanOrEqualTo(1));
+
+        // Error path
+        final repoErr = MockChatRepository();
+        when(
+          () => repoErr.createUser(
+            name: any(named: 'name'),
+            email: any(named: 'email'),
+          ),
+        ).thenAnswer((_) async => User(id: 'uk', name: 'N', email: 'E'));
+        when(
+          () => repoErr.createConversation(any()),
+        ).thenThrow(Exception('nope'));
+        when(() => history.getConversations()).thenAnswer((_) async => []);
+
+        final pErr = ChatProvider(
+          chatRepository: repoErr,
+          historyRepository: history,
+          prefs: prefsFactory,
+        );
+        async.run((_) async {
+          await pErr.initializeChat();
+          await pErr.startNewConversation();
+        });
+        async.flushMicrotasks();
+        expect(
+          pErr.uiState.error,
+          'Could not start a new chat. Please try again.',
+        );
+
+        p.dispose();
+        pErr.dispose();
+      });
+    },
+  );
+
+  test(
+    'startNewConversation auto-initializes when user key is missing',
+    () async {
+      final repo = MockChatRepository();
+      final history = MockChatHistoryRepository();
+
+      when(
+        () => repo.createUser(
+          name: any(named: 'name'),
+          email: any(named: 'email'),
+        ),
+      ).thenAnswer((_) async => User(id: 'uk', name: 'N', email: 'E'));
+      when(() => repo.createConversation(any())).thenAnswer(
+        (_) async =>
+            Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
+      );
       when(() => history.getConversations()).thenAnswer((_) async => []);
 
-      final pErr = ChatProvider(chatRepository: repoErr, historyRepository: history, prefs: prefsFactory);
-      async.run((_) async {
-        await pErr.initializeChat();
-        await pErr.startNewConversation();
-      });
-      async.flushMicrotasks();
-      expect(pErr.uiState.error, 'Could not start a new chat. Please try again.');
+      final p = ChatProvider(
+        chatRepository: repo,
+        historyRepository: history,
+        prefs: prefsFactory,
+      );
+      await p.startNewConversation();
+      expect(p.uiState.currentUserKey, 'uk');
+      expect(p.uiState.currentConversationId, 'cid');
+    },
+  );
 
-      p.dispose();
-      pErr.dispose();
-    });
-  });
+  test(
+    'sendMessage covers no-active-conversation, optimistic replace, and error',
+    () async {
+      final repo = MockChatRepository();
+      final history = MockChatHistoryRepository();
 
-  test('startNewConversation auto-initializes when user key is missing', () async {
-    final repo = MockChatRepository();
-    final history = MockChatHistoryRepository();
+      when(
+        () => repo.createUser(
+          name: any(named: 'name'),
+          email: any(named: 'email'),
+        ),
+      ).thenAnswer((_) async => User(id: 'uk', name: 'N', email: 'E'));
+      when(() => history.getConversations()).thenAnswer((_) async => []);
+      when(() => repo.createConversation(any())).thenAnswer(
+        (_) async =>
+            Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
+      );
+      when(() => repo.sendMessage(any(), any(), any())).thenAnswer(
+        (_) async => Message(
+          id: 'm1',
+          conversationId: 'cid',
+          userId: 'user_uk',
+          text: 'hello',
+          type: 'text',
+          created: DateTime(2026, 1, 1).toIso8601String(),
+        ),
+      );
 
-    when(() => repo.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-      (_) async => User(id: 'uk', name: 'N', email: 'E'),
-    );
-    when(() => repo.createConversation(any())).thenAnswer(
-      (_) async => Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
-    );
-    when(() => history.getConversations()).thenAnswer((_) async => []);
+      final p = ChatProvider(
+        chatRepository: repo,
+        historyRepository: history,
+        prefs: prefsFactory,
+      );
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
-    await p.startNewConversation();
-    expect(p.uiState.currentUserKey, 'uk');
-    expect(p.uiState.currentConversationId, 'cid');
-  });
+      // No active conversation
+      await p.sendMessage('x');
+      expect(p.uiState.error, 'No active conversation');
 
-  test('sendMessage covers no-active-conversation, optimistic replace, and error', () async {
-    final repo = MockChatRepository();
-    final history = MockChatHistoryRepository();
+      await p.initializeChat();
+      await p.startNewConversation();
 
-    when(() => repo.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-      (_) async => User(id: 'uk', name: 'N', email: 'E'),
-    );
-    when(() => history.getConversations()).thenAnswer((_) async => []);
-    when(() => repo.createConversation(any())).thenAnswer(
-      (_) async => Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
-    );
-    when(() => repo.sendMessage(any(), any(), any())).thenAnswer(
-      (_) async => Message(
-        id: 'm1',
-        conversationId: 'cid',
-        userId: 'user_uk',
-        text: 'hello',
-        type: 'text',
-        created: DateTime(2026, 1, 1).toIso8601String(),
-      ),
-    );
+      await p.sendMessage('hello');
+      expect(p.uiState.messages.last.id, 'm1');
+      expect(p.isUserMessage('m1'), isTrue);
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
-
-    // No active conversation
-    await p.sendMessage('x');
-    expect(p.uiState.error, 'No active conversation');
-
-    await p.initializeChat();
-    await p.startNewConversation();
-
-    await p.sendMessage('hello');
-    expect(p.uiState.messages.last.id, 'm1');
-    expect(p.isUserMessage('m1'), isTrue);
-
-    // Error
-    when(() => repo.sendMessage(any(), any(), any())).thenThrow(Exception('nope'));
-    await p.sendMessage('hello2');
-    expect(p.uiState.error, 'Message could not be sent. Please try again.');
-  });
+      // Error
+      when(
+        () => repo.sendMessage(any(), any(), any()),
+      ).thenThrow(Exception('nope'));
+      await p.sendMessage('hello2');
+      expect(p.uiState.error, 'Message could not be sent. Please try again.');
+    },
+  );
 
   test('sendMessageWithInteraction + interaction helpers', () async {
     final repo = MockChatRepository();
     final history = MockChatHistoryRepository();
 
-    when(() => repo.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-      (_) async => User(id: 'uk', name: 'N', email: 'E'),
-    );
+    when(
+      () => repo.createUser(
+        name: any(named: 'name'),
+        email: any(named: 'email'),
+      ),
+    ).thenAnswer((_) async => User(id: 'uk', name: 'N', email: 'E'));
     when(() => history.getConversations()).thenAnswer((_) async => []);
     when(() => repo.createConversation(any())).thenAnswer(
-      (_) async => Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
+      (_) async =>
+          Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
     );
     when(() => repo.sendMessage(any(), any(), any())).thenAnswer(
       (_) async => Message(
@@ -254,7 +346,11 @@ void main() {
       ),
     );
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
+    final p = ChatProvider(
+      chatRepository: repo,
+      historyRepository: history,
+      prefs: prefsFactory,
+    );
     await p.initializeChat();
     await p.startNewConversation();
 
@@ -267,25 +363,61 @@ void main() {
       final repo = MockChatRepository();
       final history = MockChatHistoryRepository();
 
-      when(() => repo.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-        (_) async => User(id: 'uk', name: 'N', email: 'E'),
-      );
+      when(
+        () => repo.createUser(
+          name: any(named: 'name'),
+          email: any(named: 'email'),
+        ),
+      ).thenAnswer((_) async => User(id: 'uk', name: 'N', email: 'E'));
       when(() => history.getConversations()).thenAnswer((_) async => []);
       when(() => repo.createConversation(any())).thenAnswer(
-        (_) async => Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
+        (_) async =>
+            Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
       );
 
       // duplicate ids + various timestamps
       when(() => repo.getMessages('uk', 'cid')).thenAnswer((_) async {
         return [
-          Message(id: 'a', conversationId: 'cid', userId: 'u', text: '1', type: 'text', created: '2026-01-01T00:00:00.000Z'),
-          Message(id: 'b', conversationId: 'cid', userId: 'u', text: '2', type: 'text', created: '2026-01-01T00:00:01.000Z'),
-          Message(id: 'b', conversationId: 'cid', userId: 'u', text: '2b', type: 'text', created: '2026-01-01T00:00:02.000Z'),
-          Message(id: 'c', conversationId: 'cid', userId: 'u', text: '3', type: 'text', created: '2026-01-01T00:00:03.000Z'),
+          Message(
+            id: 'a',
+            conversationId: 'cid',
+            userId: 'u',
+            text: '1',
+            type: 'text',
+            created: '2026-01-01T00:00:00.000Z',
+          ),
+          Message(
+            id: 'b',
+            conversationId: 'cid',
+            userId: 'u',
+            text: '2',
+            type: 'text',
+            created: '2026-01-01T00:00:01.000Z',
+          ),
+          Message(
+            id: 'b',
+            conversationId: 'cid',
+            userId: 'u',
+            text: '2b',
+            type: 'text',
+            created: '2026-01-01T00:00:02.000Z',
+          ),
+          Message(
+            id: 'c',
+            conversationId: 'cid',
+            userId: 'u',
+            text: '3',
+            type: 'text',
+            created: '2026-01-01T00:00:03.000Z',
+          ),
         ];
       });
 
-      final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
+      final p = ChatProvider(
+        chatRepository: repo,
+        historyRepository: history,
+        prefs: prefsFactory,
+      );
 
       async.run((_) async {
         await p.initializeChat();
@@ -329,16 +461,24 @@ void main() {
     final repo = MockChatRepository();
     final history = MockChatHistoryRepository();
 
-    when(() => repo.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-      (_) async => User(id: 'uk', name: 'N', email: 'E'),
-    );
+    when(
+      () => repo.createUser(
+        name: any(named: 'name'),
+        email: any(named: 'email'),
+      ),
+    ).thenAnswer((_) async => User(id: 'uk', name: 'N', email: 'E'));
     when(() => repo.createConversation(any())).thenAnswer(
-      (_) async => Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
+      (_) async =>
+          Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
     );
     when(() => repo.getMessages('uk', 'cid')).thenThrow(Exception('boom'));
     when(() => history.getConversations()).thenAnswer((_) async => []);
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
+    final p = ChatProvider(
+      chatRepository: repo,
+      historyRepository: history,
+      prefs: prefsFactory,
+    );
     await p.initializeChat();
     await p.startNewConversation();
     await p.loadMessages();
@@ -349,117 +489,159 @@ void main() {
     final repo = MockChatRepository();
     final history = MockChatHistoryRepository();
 
-    when(() => repo.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-      (_) async => User(id: 'uk', name: 'N', email: 'E'),
-    );
+    when(
+      () => repo.createUser(
+        name: any(named: 'name'),
+        email: any(named: 'email'),
+      ),
+    ).thenAnswer((_) async => User(id: 'uk', name: 'N', email: 'E'));
     when(() => history.getConversations()).thenThrow(Exception('boom'));
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
+    final p = ChatProvider(
+      chatRepository: repo,
+      historyRepository: history,
+      prefs: prefsFactory,
+    );
     await p.initializeChat();
     expect(p.uiState.error, 'Unable to load saved chats right now.');
     expect(p.uiState.isLoadingHistory, isFalse);
   });
 
-  test('history: loadConversationHistory + saveCurrentConversation + loadConversationFromHistory + deleteConversationById', () async {
-    final repo = MockChatRepository();
-    final history = MockChatHistoryRepository();
+  test(
+    'history: loadConversationHistory + saveCurrentConversation + loadConversationFromHistory + deleteConversationById',
+    () async {
+      final repo = MockChatRepository();
+      final history = MockChatHistoryRepository();
 
-    when(() => repo.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-      (_) async => User(id: 'uk', name: 'N', email: 'E'),
-    );
-    when(() => repo.createConversation(any())).thenAnswer(
-      (_) async => Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
-    );
+      when(
+        () => repo.createUser(
+          name: any(named: 'name'),
+          email: any(named: 'email'),
+        ),
+      ).thenAnswer((_) async => User(id: 'uk', name: 'N', email: 'E'));
+      when(() => repo.createConversation(any())).thenAnswer(
+        (_) async =>
+            Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
+      );
 
-    // Start with empty history then a saved item
-    when(() => history.getConversations()).thenAnswer((_) async => []);
+      // Start with empty history then a saved item
+      when(() => history.getConversations()).thenAnswer((_) async => []);
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
-    await p.initializeChat();
-    await p.startNewConversation();
+      final p = ChatProvider(
+        chatRepository: repo,
+        historyRepository: history,
+        prefs: prefsFactory,
+      );
+      await p.initializeChat();
+      await p.startNewConversation();
 
-    // saveCurrentConversation false when no conversation id
-    final pNoId = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
-    await pNoId.initializeChat();
-    expect(await pNoId.saveCurrentConversation(), isFalse);
+      // saveCurrentConversation false when no conversation id
+      final pNoId = ChatProvider(
+        chatRepository: repo,
+        historyRepository: history,
+        prefs: prefsFactory,
+      );
+      await pNoId.initializeChat();
+      expect(await pNoId.saveCurrentConversation(), isFalse);
 
-    // Make first message an image (text null) so title falls back to "Conversation" and last message to "No message"
-    when(() => repo.sendMessage(any(), any(), any())).thenAnswer(
-      (_) async => Message(
-        id: 'img1',
-        conversationId: 'cid',
-        userId: 'user_uk',
-        text: null,
-        type: 'image',
-        created: DateTime(2026, 1, 1).toIso8601String(),
-        imageUrl: 'https://example.test/x.png',
-      ),
-    );
-    await p.sendMessage('https://example.test/x.png');
+      // Make first message an image (text null) so title falls back to "Conversation" and last message to "No message"
+      when(() => repo.sendMessage(any(), any(), any())).thenAnswer(
+        (_) async => Message(
+          id: 'img1',
+          conversationId: 'cid',
+          userId: 'user_uk',
+          text: null,
+          type: 'image',
+          created: DateTime(2026, 1, 1).toIso8601String(),
+          imageUrl: 'https://example.test/x.png',
+        ),
+      );
+      await p.sendMessage('https://example.test/x.png');
 
-    when(() => history.saveConversation(any())).thenAnswer((_) async {});
-    when(() => history.getConversations()).thenAnswer((_) async {
-      return [
-        SavedConversation(
-          id: 'cid',
-          title: 'Conversation',
-          lastMessage: 'No message',
-          timestamp: DateTime(2026, 1, 1),
-          userId: 'u',
-          userKey: 'uk',
-        )
-      ];
-    });
-    final ok = await p.saveCurrentConversation();
-    expect(ok, isTrue);
-    expect(p.uiState.conversationHistory, isNotEmpty);
+      when(() => history.saveConversation(any())).thenAnswer((_) async {});
+      when(() => history.getConversations()).thenAnswer((_) async {
+        return [
+          SavedConversation(
+            id: 'cid',
+            title: 'Conversation',
+            lastMessage: 'No message',
+            timestamp: DateTime(2026, 1, 1),
+            userId: 'u',
+            userKey: 'uk',
+          ),
+        ];
+      });
+      final ok = await p.saveCurrentConversation();
+      expect(ok, isTrue);
+      expect(p.uiState.conversationHistory, isNotEmpty);
 
-    // loadConversationFromHistory triggers loadMessages and enables polling
-    when(() => repo.getMessages(any(), any())).thenAnswer((_) async => []);
-    await p.loadConversationFromHistory(p.uiState.conversationHistory.first);
-    expect(p.uiState.hasActiveConversation, isTrue);
-    expect(p.uiState.pollingEnabled, isTrue);
+      // loadConversationFromHistory triggers loadMessages and enables polling
+      when(() => repo.getMessages(any(), any())).thenAnswer((_) async => []);
+      await p.loadConversationFromHistory(p.uiState.conversationHistory.first);
+      expect(p.uiState.hasActiveConversation, isTrue);
+      expect(p.uiState.pollingEnabled, isTrue);
 
-    // deleteConversationById success and error branch
-    when(() => history.deleteConversation('cid')).thenAnswer((_) async {});
-    await p.deleteConversationById('cid');
+      // deleteConversationById success and error branch
+      when(() => history.deleteConversation('cid')).thenAnswer((_) async {});
+      await p.deleteConversationById('cid');
 
-    when(() => history.deleteConversation(any())).thenThrow(Exception('nope'));
-    await p.deleteConversationById('cid');
-    expect(p.uiState.error, 'Could not delete this conversation. Please try again.');
-  });
+      when(
+        () => history.deleteConversation(any()),
+      ).thenThrow(Exception('nope'));
+      await p.deleteConversationById('cid');
+      expect(
+        p.uiState.error,
+        'Could not delete this conversation. Please try again.',
+      );
+    },
+  );
 
-  test('saveCurrentConversation error path returns false and sets uiState.error', () async {
-    final repo = MockChatRepository();
-    final history = MockChatHistoryRepository();
+  test(
+    'saveCurrentConversation error path returns false and sets uiState.error',
+    () async {
+      final repo = MockChatRepository();
+      final history = MockChatHistoryRepository();
 
-    when(() => repo.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-      (_) async => User(id: 'uk', name: 'N', email: 'E'),
-    );
-    when(() => repo.createConversation(any())).thenAnswer(
-      (_) async => Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
-    );
-    when(() => history.getConversations()).thenAnswer((_) async => []);
-    when(() => history.saveConversation(any())).thenThrow(Exception('boom'));
+      when(
+        () => repo.createUser(
+          name: any(named: 'name'),
+          email: any(named: 'email'),
+        ),
+      ).thenAnswer((_) async => User(id: 'uk', name: 'N', email: 'E'));
+      when(() => repo.createConversation(any())).thenAnswer(
+        (_) async =>
+            Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
+      );
+      when(() => history.getConversations()).thenAnswer((_) async => []);
+      when(() => history.saveConversation(any())).thenThrow(Exception('boom'));
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
-    await p.initializeChat();
-    await p.startNewConversation();
-    final ok = await p.saveCurrentConversation();
-    expect(ok, isFalse);
-    expect(p.uiState.error, 'Could not save this chat. Please try again.');
-  });
+      final p = ChatProvider(
+        chatRepository: repo,
+        historyRepository: history,
+        prefs: prefsFactory,
+      );
+      await p.initializeChat();
+      await p.startNewConversation();
+      final ok = await p.saveCurrentConversation();
+      expect(ok, isFalse);
+      expect(p.uiState.error, 'Could not save this chat. Please try again.');
+    },
+  );
 
   test('handleOptionClick delegates to sendMessage', () async {
     final repo = MockChatRepository();
     final history = MockChatHistoryRepository();
 
-    when(() => repo.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-      (_) async => User(id: 'uk', name: 'N', email: 'E'),
-    );
+    when(
+      () => repo.createUser(
+        name: any(named: 'name'),
+        email: any(named: 'email'),
+      ),
+    ).thenAnswer((_) async => User(id: 'uk', name: 'N', email: 'E'));
     when(() => history.getConversations()).thenAnswer((_) async => []);
     when(() => repo.createConversation(any())).thenAnswer(
-      (_) async => Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
+      (_) async =>
+          Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
     );
     when(() => repo.sendMessage(any(), any(), any())).thenAnswer(
       (_) async => Message(
@@ -472,7 +654,11 @@ void main() {
       ),
     );
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
+    final p = ChatProvider(
+      chatRepository: repo,
+      historyRepository: history,
+      prefs: prefsFactory,
+    );
     await p.initializeChat();
     await p.startNewConversation();
     p.handleOptionClick('opt');
@@ -485,17 +671,25 @@ void main() {
     final repo = MockChatRepository();
     final history = MockChatHistoryRepository();
 
-    when(() => repo.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-      (_) async => User(id: 'uk', name: 'N', email: 'E'),
-    );
+    when(
+      () => repo.createUser(
+        name: any(named: 'name'),
+        email: any(named: 'email'),
+      ),
+    ).thenAnswer((_) async => User(id: 'uk', name: 'N', email: 'E'));
     when(() => repo.createConversation(any())).thenAnswer(
-      (_) async => Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
+      (_) async =>
+          Conversation(id: 'cid', userId: 'u', created: 't1', updated: 't2'),
     );
     when(() => history.getConversations()).thenAnswer((_) async => []);
     when(() => history.saveConversation(any())).thenAnswer((_) async {});
     when(() => repo.getMessages(any(), any())).thenAnswer((_) async => []);
 
-    final p = ChatProvider(chatRepository: repo, historyRepository: history, prefs: prefsFactory);
+    final p = ChatProvider(
+      chatRepository: repo,
+      historyRepository: history,
+      prefs: prefsFactory,
+    );
     await p.initializeChat();
     await p.startNewConversation();
 
@@ -511,7 +705,9 @@ void main() {
     expect(p.uiState.showRestartConfirmation, isFalse);
 
     // clearError
-    await p.sendMessage('x'); // will send via repo, or if missing active it sets error; either way cover clearError
+    await p.sendMessage(
+      'x',
+    ); // will send via repo, or if missing active it sets error; either way cover clearError
     p.clearError();
     expect(p.uiState.error, isNull);
 
@@ -525,4 +721,3 @@ void main() {
     verify(() => repo.dispose()).called(1);
   });
 }
-

@@ -15,10 +15,15 @@ import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 
 class MockAuthRepository extends Mock implements AuthRepository {}
+
 class MockFirebaseAuth extends Mock implements fb.FirebaseAuth {}
+
 class MockFbUser extends Mock implements fb.User {}
+
 class MockFirebaseStorage extends Mock implements FirebaseStorage {}
+
 class MockReference extends Mock implements Reference {}
+
 class MockImagePicker extends Mock implements ImagePicker {}
 
 class FakeTaskSnapshot extends Fake implements TaskSnapshot {}
@@ -42,7 +47,10 @@ class FakeUploadTask extends Fake implements UploadTask {
   }
 
   @override
-  Future<TaskSnapshot> catchError(Function onError, {bool Function(Object error)? test}) {
+  Future<TaskSnapshot> catchError(
+    Function onError, {
+    bool Function(Object error)? test,
+  }) {
     return _future.catchError(onError, test: test);
   }
 
@@ -55,24 +63,89 @@ class FakeUploadTask extends Fake implements UploadTask {
   Stream<TaskSnapshot> asStream() => _future.asStream();
 
   @override
-  Future<TaskSnapshot> timeout(Duration timeLimit, {FutureOr<TaskSnapshot> Function()? onTimeout}) {
+  Future<TaskSnapshot> timeout(
+    Duration timeLimit, {
+    FutureOr<TaskSnapshot> Function()? onTimeout,
+  }) {
     return _future.timeout(timeLimit, onTimeout: onTimeout);
   }
 }
 
 Uint8List _transparentPng() => Uint8List.fromList(<int>[
-      0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A,
-      0x00, 0x00, 0x00, 0x0D, 0x49, 0x48, 0x44, 0x52,
-      0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01,
-      0x08, 0x06, 0x00, 0x00, 0x00, 0x1F, 0x15, 0xC4,
-      0x89, 0x00, 0x00, 0x00, 0x0A, 0x49, 0x44, 0x41,
-      0x54, 0x78, 0x9C, 0x63, 0x00, 0x01, 0x00, 0x00,
-      0x05, 0x00, 0x01, 0x0D, 0x0A, 0x2D, 0xB4, 0x00,
-      0x00, 0x00, 0x00, 0x49, 0x45, 0x4E, 0x44, 0xAE,
-      0x42, 0x60, 0x82,
-    ]);
+  0x89,
+  0x50,
+  0x4E,
+  0x47,
+  0x0D,
+  0x0A,
+  0x1A,
+  0x0A,
+  0x00,
+  0x00,
+  0x00,
+  0x0D,
+  0x49,
+  0x48,
+  0x44,
+  0x52,
+  0x00,
+  0x00,
+  0x00,
+  0x01,
+  0x00,
+  0x00,
+  0x00,
+  0x01,
+  0x08,
+  0x06,
+  0x00,
+  0x00,
+  0x00,
+  0x1F,
+  0x15,
+  0xC4,
+  0x89,
+  0x00,
+  0x00,
+  0x00,
+  0x0A,
+  0x49,
+  0x44,
+  0x41,
+  0x54,
+  0x78,
+  0x9C,
+  0x63,
+  0x00,
+  0x01,
+  0x00,
+  0x00,
+  0x05,
+  0x00,
+  0x01,
+  0x0D,
+  0x0A,
+  0x2D,
+  0xB4,
+  0x00,
+  0x00,
+  0x00,
+  0x00,
+  0x49,
+  0x45,
+  0x4E,
+  0x44,
+  0xAE,
+  0x42,
+  0x60,
+  0x82,
+]);
 
-Widget _wrap(Widget child, {required app_auth.AuthProvider auth, required ThemeProvider theme}) {
+Widget _wrap(
+  Widget child, {
+  required app_auth.AuthProvider auth,
+  required ThemeProvider theme,
+}) {
   return MultiProvider(
     providers: [
       ChangeNotifierProvider<ThemeProvider>.value(value: theme),
@@ -87,110 +160,143 @@ void main() {
     registerFallbackValue(File('x'));
   });
 
-  testWidgets('uses EditProfileScreen default factories when no deps are passed', (tester) async {
-    final origAuth = EditProfileScreen.defaultAuth;
-    final origStorage = EditProfileScreen.defaultStorage;
-    final origPicker = EditProfileScreen.defaultPicker;
-    addTearDown(() {
-      EditProfileScreen.defaultAuth = origAuth;
-      EditProfileScreen.defaultStorage = origStorage;
-      EditProfileScreen.defaultPicker = origPicker;
-    });
+  testWidgets(
+    'uses EditProfileScreen default factories when no deps are passed',
+    (tester) async {
+      final origAuth = EditProfileScreen.defaultAuth;
+      final origStorage = EditProfileScreen.defaultStorage;
+      final origPicker = EditProfileScreen.defaultPicker;
+      addTearDown(() {
+        EditProfileScreen.defaultAuth = origAuth;
+        EditProfileScreen.defaultStorage = origStorage;
+        EditProfileScreen.defaultPicker = origPicker;
+      });
 
-    final mockAuth = MockFirebaseAuth();
-    when(() => mockAuth.currentUser).thenReturn(null);
-    final mockStorage = MockFirebaseStorage();
-    final mockPicker = MockImagePicker();
+      final mockAuth = MockFirebaseAuth();
+      when(() => mockAuth.currentUser).thenReturn(null);
+      final mockStorage = MockFirebaseStorage();
+      final mockPicker = MockImagePicker();
 
-    EditProfileScreen.defaultAuth = () => mockAuth;
-    EditProfileScreen.defaultStorage = () => mockStorage;
-    EditProfileScreen.defaultPicker = () => mockPicker;
+      EditProfileScreen.defaultAuth = () => mockAuth;
+      EditProfileScreen.defaultStorage = () => mockStorage;
+      EditProfileScreen.defaultPicker = () => mockPicker;
 
-    final repo = MockAuthRepository();
-    when(() => repo.currentUser).thenReturn(null);
-    final authProvider = app_auth.AuthProvider(authRepository: repo);
-    addTearDown(authProvider.dispose);
+      final repo = MockAuthRepository();
+      when(() => repo.currentUser).thenReturn(null);
+      final authProvider = app_auth.AuthProvider(authRepository: repo);
+      addTearDown(authProvider.dispose);
 
-    await tester.pumpWidget(_wrap(EditProfileScreen(), auth: authProvider, theme: ThemeProvider()));
-    await tester.pump();
-    expect(find.text('Edit Profile'), findsOneWidget);
-  });
+      await tester.pumpWidget(
+        _wrap(EditProfileScreen(), auth: authProvider, theme: ThemeProvider()),
+      );
+      await tester.pump();
+      expect(find.text('Edit Profile'), findsOneWidget);
+    },
+  );
 
-  testWidgets('save success pops; pick photo triggers upload and updateProfile', (tester) async {
-    const uid = 'u';
+  testWidgets(
+    'save success pops; pick photo triggers upload and updateProfile',
+    (tester) async {
+      const uid = 'u';
 
-    final repo = MockAuthRepository();
-    final fbUser = MockFbUser();
-    when(() => fbUser.uid).thenReturn(uid);
-    when(() => fbUser.displayName).thenReturn('Old');
-    when(() => fbUser.photoURL).thenReturn('');
-    when(() => fbUser.emailVerified).thenReturn(true);
-    when(() => repo.currentUser).thenReturn(fbUser);
-    when(() => repo.updateProfile(displayName: any(named: 'displayName'), photoUrl: any(named: 'photoUrl'))).thenAnswer((_) async {});
-    when(() => repo.reloadUser()).thenAnswer((_) async => fbUser);
-    final authProvider = app_auth.AuthProvider(authRepository: repo);
-    addTearDown(authProvider.dispose);
+      final repo = MockAuthRepository();
+      final fbUser = MockFbUser();
+      when(() => fbUser.uid).thenReturn(uid);
+      when(() => fbUser.displayName).thenReturn('Old');
+      when(() => fbUser.photoURL).thenReturn('');
+      when(() => fbUser.emailVerified).thenReturn(true);
+      when(() => repo.currentUser).thenReturn(fbUser);
+      when(
+        () => repo.updateProfile(
+          displayName: any(named: 'displayName'),
+          photoUrl: any(named: 'photoUrl'),
+        ),
+      ).thenAnswer((_) async {});
+      when(() => repo.reloadUser()).thenAnswer((_) async => fbUser);
+      final authProvider = app_auth.AuthProvider(authRepository: repo);
+      addTearDown(authProvider.dispose);
 
-    // create a real temp image file
-    final dir = await Directory.systemTemp.createTemp('celia_test');
-    addTearDown(() async => dir.delete(recursive: true));
-    final imgPath = '${dir.path}${Platform.pathSeparator}p.png';
-    await File(imgPath).writeAsBytes(_transparentPng());
-    final xfile = XFile(imgPath);
+      // create a real temp image file
+      final dir = await Directory.systemTemp.createTemp('celia_test');
+      addTearDown(() async => dir.delete(recursive: true));
+      final imgPath = '${dir.path}${Platform.pathSeparator}p.png';
+      await File(imgPath).writeAsBytes(_transparentPng());
+      final xfile = XFile(imgPath);
 
-    final picker = MockImagePicker();
-    when(() => picker.pickImage(source: ImageSource.gallery, imageQuality: 85, maxWidth: 1024))
-        .thenAnswer((_) async => xfile);
+      final picker = MockImagePicker();
+      when(
+        () => picker.pickImage(
+          source: ImageSource.gallery,
+          imageQuality: 85,
+          maxWidth: 1024,
+        ),
+      ).thenAnswer((_) async => xfile);
 
-    final storage = MockFirebaseStorage();
-    final rootRef = MockReference();
-    final childRef = MockReference();
-    when(() => storage.ref()).thenReturn(rootRef);
-    when(() => rootRef.child('profile_photos/$uid.jpg')).thenReturn(childRef);
-    when(() => childRef.putFile(any())).thenReturn(FakeUploadTask(Future.value(FakeTaskSnapshot())));
-    when(() => childRef.getDownloadURL()).thenAnswer((_) async => 'https://example.test/photo.jpg');
+      final storage = MockFirebaseStorage();
+      final rootRef = MockReference();
+      final childRef = MockReference();
+      when(() => storage.ref()).thenReturn(rootRef);
+      when(() => rootRef.child('profile_photos/$uid.jpg')).thenReturn(childRef);
+      when(
+        () => childRef.putFile(any()),
+      ).thenReturn(FakeUploadTask(Future.value(FakeTaskSnapshot())));
+      when(
+        () => childRef.getDownloadURL(),
+      ).thenAnswer((_) async => 'https://example.test/photo.jpg');
 
-    final auth = MockFirebaseAuth();
-    when(() => auth.currentUser).thenReturn(fbUser);
+      final auth = MockFirebaseAuth();
+      when(() => auth.currentUser).thenReturn(fbUser);
 
-    final theme = ThemeProvider();
+      final theme = ThemeProvider();
 
-    await tester.pumpWidget(
-      _wrap(
-        Builder(
-          builder: (context) => Scaffold(
-            body: Center(
-              child: ElevatedButton(
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => EditProfileScreen(auth: auth, storage: storage, picker: picker),
+      await tester.pumpWidget(
+        _wrap(
+          Builder(
+            builder: (context) => Scaffold(
+              body: Center(
+                child: ElevatedButton(
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => EditProfileScreen(
+                        auth: auth,
+                        storage: storage,
+                        picker: picker,
+                      ),
+                    ),
                   ),
+                  child: const Text('OPEN_EDIT'),
                 ),
-                child: const Text('OPEN_EDIT'),
               ),
             ),
           ),
+          auth: authProvider,
+          theme: theme,
         ),
-        auth: authProvider,
-        theme: theme,
-      ),
-    );
+      );
 
-    await tester.tap(find.text('OPEN_EDIT'));
-    await tester.pumpAndSettle();
+      await tester.tap(find.text('OPEN_EDIT'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 350));
 
-    // pick photo
-    await tester.tap(find.byIcon(Icons.camera_alt));
-    await tester.pump();
+      // pick photo
+      await tester.tap(find.byIcon(Icons.camera_alt));
+      await tester.pump();
 
-    // save
-    await tester.tap(find.text('Save'));
-    await tester.pumpAndSettle();
+      // save
+      await tester.tap(find.text('Save'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 350));
 
-    verify(() => childRef.putFile(any())).called(1);
-    verify(() => repo.updateProfile(displayName: any(named: 'displayName'), photoUrl: 'https://example.test/photo.jpg')).called(1);
-    expect(find.text('OPEN_EDIT'), findsOneWidget); // popped back
-  });
+      verify(() => childRef.putFile(any())).called(1);
+      verify(
+        () => repo.updateProfile(
+          displayName: any(named: 'displayName'),
+          photoUrl: 'https://example.test/photo.jpg',
+        ),
+      ).called(1);
+      expect(find.text('OPEN_EDIT'), findsOneWidget); // popped back
+    },
+  );
 
   testWidgets('save error shows snackbar and does not pop', (tester) async {
     const uid = 'u';
@@ -202,8 +308,12 @@ void main() {
     when(() => fbUser.photoURL).thenReturn('');
     when(() => fbUser.emailVerified).thenReturn(true);
     when(() => repo.currentUser).thenReturn(fbUser);
-    when(() => repo.updateProfile(displayName: any(named: 'displayName'), photoUrl: any(named: 'photoUrl')))
-        .thenThrow(Exception('boom'));
+    when(
+      () => repo.updateProfile(
+        displayName: any(named: 'displayName'),
+        photoUrl: any(named: 'photoUrl'),
+      ),
+    ).thenThrow(Exception('boom'));
     final authProvider = app_auth.AuthProvider(authRepository: repo);
     addTearDown(authProvider.dispose);
 
@@ -230,8 +340,7 @@ void main() {
     await tester.pump(); // start async
     await tester.pump(); // show snackbar
 
-    expect(find.textContaining('Failed to update profile'), findsOneWidget);
+    expect(find.textContaining('Could not update profile'), findsOneWidget);
     expect(find.text('Edit Profile'), findsOneWidget);
   });
 }
-

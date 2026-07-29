@@ -6,12 +6,9 @@ void main() {
   testWidgets('LoadingIndicator builds', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(
-        home: Scaffold(
-          body: LoadingIndicator(message: 'Loading...'),
-        ),
+        home: Scaffold(body: LoadingIndicator(message: 'Loading...')),
       ),
     );
     expect(find.text('Loading...'), findsOneWidget);
   });
 }
-

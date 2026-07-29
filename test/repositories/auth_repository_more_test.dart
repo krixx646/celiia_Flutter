@@ -5,10 +5,15 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
+
 class MockUser extends Mock implements User {}
+
 class MockUserCredential extends Mock implements UserCredential {}
+
 class MockGoogleSignIn extends Mock implements GoogleSignIn {}
+
 class MockPlatformInfo extends Mock implements PlatformInfo {}
+
 class FakeFirebaseAuthProvider extends Fake implements AuthProvider {}
 
 void main() {
@@ -62,26 +67,28 @@ void main() {
     expect(() => repo.sendEmailVerification(), throwsException);
   });
 
-  test('signInWithApple (non-Android path) uses Firebase provider flow', () async {
-    final auth = MockFirebaseAuth();
-    final cred = MockUserCredential();
-    final user = MockUser();
-    when(() => cred.user).thenReturn(user);
-    when(() => auth.signInWithProvider(any())).thenAnswer((_) async => cred);
+  test(
+    'signInWithApple (non-Android path) uses Firebase provider flow',
+    () async {
+      final auth = MockFirebaseAuth();
+      final cred = MockUserCredential();
+      final user = MockUser();
+      when(() => cred.user).thenReturn(user);
+      when(() => auth.signInWithProvider(any())).thenAnswer((_) async => cred);
 
-    final platform = MockPlatformInfo();
-    when(() => platform.isAndroid).thenReturn(false);
-    when(() => platform.isIOS).thenReturn(true);
+      final platform = MockPlatformInfo();
+      when(() => platform.isAndroid).thenReturn(false);
+      when(() => platform.isIOS).thenReturn(true);
 
-    final repo = AuthRepository(
-      auth: auth,
-      googleSignIn: MockGoogleSignIn(),
-      platform: platform,
-      apple: DefaultAppleSignInClient(),
-    );
+      final repo = AuthRepository(
+        auth: auth,
+        googleSignIn: MockGoogleSignIn(),
+        platform: platform,
+        apple: DefaultAppleSignInClient(),
+      );
 
-    final u = await repo.signInWithApple();
-    expect(u, user);
-  });
+      final u = await repo.signInWithApple();
+      expect(u, user);
+    },
+  );
 }
-

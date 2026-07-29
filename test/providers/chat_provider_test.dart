@@ -7,6 +7,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MockChatRepository extends Mock implements ChatRepository {}
+
 class MockChatHistoryRepository extends Mock implements ChatHistoryRepository {}
 
 void main() {
@@ -18,17 +19,32 @@ void main() {
     final repo = MockChatRepository();
     final history = MockChatHistoryRepository();
 
-    when(() => repo.createUser(name: any(named: 'name'), email: any(named: 'email'))).thenAnswer(
-      (_) async => m.User(id: 'ukey', name: 'n', email: null),
-    );
-    when(() => history.getConversations()).thenAnswer((_) async => <SavedConversation>[]);
+    when(
+      () => repo.createUser(
+        name: any(named: 'name'),
+        email: any(named: 'email'),
+      ),
+    ).thenAnswer((_) async => m.User(id: 'ukey', name: 'n', email: null));
+    when(
+      () => history.getConversations(),
+    ).thenAnswer((_) async => <SavedConversation>[]);
 
     final p = ChatProvider(chatRepository: repo, historyRepository: history);
-    await p.initializeChat();
+    await p.initializeChat(
+      firebaseUserId: 'firebase-user',
+      name: 'Celia User',
+      email: 'celia@example.test',
+    );
 
     expect(p.uiState.hasInitialized, isTrue);
     expect(p.uiState.currentUserKey, 'ukey');
     verify(() => history.getConversations()).called(1);
+    verify(
+      () => repo.createUser(name: 'Celia User', email: 'celia@example.test'),
+    ).called(1);
+
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getString('botpress_user_key_firebase-user'), 'ukey');
   });
 
   test('sendMessage sets error when no active conversation', () async {
@@ -40,4 +56,3 @@ void main() {
     expect(p.uiState.error, isNotNull);
   });
 }
-

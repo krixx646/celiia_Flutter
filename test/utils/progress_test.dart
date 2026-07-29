@@ -1,3 +1,4 @@
+import 'package:celia_flutter/models/meal_log.dart';
 import 'package:celia_flutter/models/routine.dart';
 import 'package:celia_flutter/utils/progress.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,6 +23,23 @@ UserRoutine ur({
   );
 }
 
+MealLog meal({required DateTime loggedAt}) {
+  return MealLog(
+    id: 'm',
+    userId: 'u',
+    title: 'Meal',
+    calories: 500,
+    proteinGrams: 30,
+    carbsGrams: 40,
+    fatGrams: 15,
+    confidence: 0.9,
+    provider: 'test',
+    items: const [],
+    warnings: const [],
+    loggedAt: loggedAt,
+  );
+}
+
 void main() {
   group('computeDayStreak', () {
     test('returns 0 when there are no played days', () {
@@ -33,27 +51,140 @@ void main() {
 
     test('requires today to count a streak', () {
       final streak = computeDayStreak([
-        ur(id: '1', userId: 'u', routineId: 'r', lastPlayedAt: DateTime(2026, 1, 9, 23, 59)),
+        ur(
+          id: '1',
+          userId: 'u',
+          routineId: 'r',
+          lastPlayedAt: DateTime(2026, 1, 9, 23, 59),
+        ),
       ], now: DateTime(2026, 1, 10, 12));
       expect(streak, 0);
     });
 
     test('counts consecutive days starting from today', () {
       final streak = computeDayStreak([
-        ur(id: '1', userId: 'u', routineId: 'r', lastPlayedAt: DateTime(2026, 1, 10, 8)),
-        ur(id: '2', userId: 'u', routineId: 'r2', lastPlayedAt: DateTime(2026, 1, 9, 20)),
-        ur(id: '3', userId: 'u', routineId: 'r3', lastPlayedAt: DateTime(2026, 1, 8, 7)),
+        ur(
+          id: '1',
+          userId: 'u',
+          routineId: 'r',
+          lastPlayedAt: DateTime(2026, 1, 10, 8),
+        ),
+        ur(
+          id: '2',
+          userId: 'u',
+          routineId: 'r2',
+          lastPlayedAt: DateTime(2026, 1, 9, 20),
+        ),
+        ur(
+          id: '3',
+          userId: 'u',
+          routineId: 'r3',
+          lastPlayedAt: DateTime(2026, 1, 8, 7),
+        ),
       ], now: DateTime(2026, 1, 10, 12));
       expect(streak, 3);
     });
 
     test('deduplicates multiple plays in the same day', () {
       final streak = computeDayStreak([
-        ur(id: '1', userId: 'u', routineId: 'r', lastPlayedAt: DateTime(2026, 1, 10, 8)),
-        ur(id: '2', userId: 'u', routineId: 'r2', lastPlayedAt: DateTime(2026, 1, 10, 22)),
-        ur(id: '3', userId: 'u', routineId: 'r3', lastPlayedAt: DateTime(2026, 1, 9, 7)),
+        ur(
+          id: '1',
+          userId: 'u',
+          routineId: 'r',
+          lastPlayedAt: DateTime(2026, 1, 10, 8),
+        ),
+        ur(
+          id: '2',
+          userId: 'u',
+          routineId: 'r2',
+          lastPlayedAt: DateTime(2026, 1, 10, 22),
+        ),
+        ur(
+          id: '3',
+          userId: 'u',
+          routineId: 'r3',
+          lastPlayedAt: DateTime(2026, 1, 9, 7),
+        ),
       ], now: DateTime(2026, 1, 10, 12));
       expect(streak, 2);
+    });
+  });
+
+  group('computeActiveStreakStats', () {
+    test('counts meals toward streak when no workout today', () {
+      final stats = computeActiveStreakStats(
+        routines: const [],
+        meals: [meal(loggedAt: DateTime(2026, 1, 10, 12))],
+        now: DateTime(2026, 1, 10, 18),
+      );
+
+      expect(stats.streak, 1);
+      expect(stats.activeToday, isTrue);
+      expect(stats.loggedMealToday, isTrue);
+      expect(stats.completedWorkoutToday, isFalse);
+    });
+
+    test('merges workout and meal days for consecutive streak', () {
+      final stats = computeActiveStreakStats(
+        routines: [
+          ur(
+            id: '1',
+            userId: 'u',
+            routineId: 'r',
+            lastPlayedAt: DateTime(2026, 1, 10, 8),
+          ),
+        ],
+        meals: [meal(loggedAt: DateTime(2026, 1, 9, 19))],
+        now: DateTime(2026, 1, 10, 12),
+      );
+
+      expect(stats.streak, 2);
+      expect(stats.loggedMealToday, isFalse);
+      expect(stats.completedWorkoutToday, isTrue);
+    });
+
+    test('wasActiveYesterday is true when streak reset today', () {
+      final stats = computeActiveStreakStats(
+        routines: [
+          ur(
+            id: '1',
+            userId: 'u',
+            routineId: 'r',
+            lastPlayedAt: DateTime(2026, 1, 9, 8),
+          ),
+        ],
+        meals: const [],
+        now: DateTime(2026, 1, 10, 12),
+      );
+
+      expect(stats.streak, 0);
+      expect(stats.wasActiveYesterday, isTrue);
+    });
+  });
+
+  group('buildStreakNudge', () {
+    test('prompts user to start when streak is zero', () {
+      final message = buildStreakNudge(
+        computeActiveStreakStats(
+          routines: const [],
+          meals: const [],
+          now: DateTime(2026, 1, 10),
+        ),
+      );
+
+      expect(message, contains('start your active streak'));
+    });
+  });
+
+  group('computeTotalWorkoutCompletions', () {
+    test('sums completions across routines', () {
+      expect(
+        computeTotalWorkoutCompletions([
+          ur(id: '1', userId: 'u', routineId: 'r', timesCompleted: 2),
+          ur(id: '2', userId: 'u', routineId: 'r2', timesCompleted: 3),
+        ]),
+        5,
+      );
     });
   });
 
@@ -79,4 +210,3 @@ void main() {
     });
   });
 }
-

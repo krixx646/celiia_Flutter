@@ -6,7 +6,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
+
 class MockFirestore extends Mock implements FirebaseFirestore {}
+
 class MockUser extends Mock implements User {}
 
 void main() {
@@ -50,4 +52,3 @@ void main() {
     }
   });
 }
-

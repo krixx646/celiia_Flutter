@@ -11,15 +11,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sb;
 
 class MockFirebaseAuth extends Mock implements fb.FirebaseAuth {}
+
 class MockFbUser extends Mock implements fb.User {}
+
 class MockHttpClient extends Mock implements http.Client {}
 
 class _FakeBaseClient extends http.BaseClient {
-  final Future<http.StreamedResponse> Function(http.BaseRequest request) _handler;
+  final Future<http.StreamedResponse> Function(http.BaseRequest request)
+  _handler;
   _FakeBaseClient(this._handler);
 
   @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) => _handler(request);
+  Future<http.StreamedResponse> send(http.BaseRequest request) =>
+      _handler(request);
 }
 
 http.StreamedResponse _streamedJson(
@@ -33,10 +37,7 @@ http.StreamedResponse _streamedJson(
     Stream<List<int>>.value(bodyBytes),
     statusCode,
     request: request,
-    headers: {
-      'content-type': 'application/json',
-      ...?headers,
-    },
+    headers: {'content-type': 'application/json', ...?headers},
   );
 }
 
@@ -51,9 +52,7 @@ http.StreamedResponse _streamedText(
     Stream<List<int>>.value(bodyBytes),
     statusCode,
     request: request,
-    headers: {
-      ...?headers,
-    },
+    headers: {...?headers},
   );
 }
 
@@ -77,13 +76,20 @@ void main() {
     final origInit = SupabaseService.supabaseInitialize;
     final origFactory = SupabaseService.supabaseClientFactory;
 
-    final dummyHttp = _FakeBaseClient((req) async => _streamedJson([], 200, req));
-    final realClient = sb.SupabaseClient('https://supabase.test', 'anon', httpClient: dummyHttp);
+    final dummyHttp = _FakeBaseClient(
+      (req) async => _streamedJson([], 200, req),
+    );
+    final realClient = sb.SupabaseClient(
+      'https://supabase.test',
+      'anon',
+      httpClient: dummyHttp,
+    );
 
     try {
       SupabaseService.supabaseUrl = () => 'https://example.supabase.test';
       SupabaseService.supabaseAnonKey = () => 'anon';
-      SupabaseService.supabaseInitialize = ({required url, required anonKey}) async {};
+      SupabaseService.supabaseInitialize =
+          ({required url, required anonKey}) async {};
       SupabaseService.supabaseClientFactory = () => realClient;
 
       await SupabaseService.initialize();
@@ -105,7 +111,8 @@ void main() {
       // Routines
       if (path.endsWith('/rest/v1/routines') && method == 'GET') {
         // maybeSingle uses object accept and returns 406 for 0 rows.
-        final accept = request.headers['accept'] ?? request.headers['Accept'] ?? '';
+        final accept =
+            request.headers['accept'] ?? request.headers['Accept'] ?? '';
         final wantsObject = accept.contains('vnd.pgrst.object+json');
         final idFilter = qp['id'];
         if (idFilter == 'eq.missing') {
@@ -152,7 +159,7 @@ void main() {
               'is_curated': false,
               'created_at': DateTime(2026, 1, 1).toIso8601String(),
               'created_by': 'u',
-            }
+            },
           ],
           200,
           request,
@@ -206,7 +213,8 @@ void main() {
 
       // Videos
       if (path.endsWith('/rest/v1/videos') && method == 'GET') {
-        final accept = request.headers['accept'] ?? request.headers['Accept'] ?? '';
+        final accept =
+            request.headers['accept'] ?? request.headers['Accept'] ?? '';
         final wantsObject = accept.contains('vnd.pgrst.object+json');
         final idFilter = qp['id'];
         final cfFilter = qp['cloudflare_video_id'];
@@ -308,7 +316,7 @@ void main() {
               'tags': const <String>[],
               'category': null,
               'file_size': 123,
-            }
+            },
           ],
           200,
           request,
@@ -366,7 +374,7 @@ void main() {
               'saved_at': DateTime(2026, 1, 1).toIso8601String(),
               'is_favorite': false,
               'completion_count': 0,
-            }
+            },
           ],
           200,
           request,
@@ -398,14 +406,23 @@ void main() {
         return _streamedText('', 204, request);
       }
 
-      if (path.endsWith('/rest/v1/rpc/increment_routine_completion') && method == 'POST') {
+      if (path.endsWith('/rest/v1/rpc/increment_routine_completion') &&
+          method == 'POST') {
         return _streamedJson(null, 200, request);
       }
 
-      return _streamedText('unhandled ${request.method} ${request.url}', 500, request);
+      return _streamedText(
+        'unhandled ${request.method} ${request.url}',
+        500,
+        request,
+      );
     });
 
-    final sbClient = sb.SupabaseClient('https://supabase.test', 'anon', httpClient: mockHttp);
+    final sbClient = sb.SupabaseClient(
+      'https://supabase.test',
+      'anon',
+      httpClient: mockHttp,
+    );
     SupabaseService.setClientForTesting(sbClient);
     final svc = SupabaseService.instance;
 
@@ -542,7 +559,13 @@ void main() {
       SupabaseService.httpClient = client;
 
       // Non-2xx with JSON error
-      when(() => client.post(any(), headers: any(named: 'headers'), body: any(named: 'body'))).thenAnswer(
+      when(
+        () => client.post(
+          any(),
+          headers: any(named: 'headers'),
+          body: any(named: 'body'),
+        ),
+      ).thenAnswer(
         (_) async => http.Response(jsonEncode({'error': 'bad'}), 400),
       );
       final svc = SupabaseService.instance;
@@ -557,9 +580,13 @@ void main() {
       );
 
       // 2xx but invalid body
-      when(() => client.post(any(), headers: any(named: 'headers'), body: any(named: 'body'))).thenAnswer(
-        (_) async => http.Response('{}', 200),
-      );
+      when(
+        () => client.post(
+          any(),
+          headers: any(named: 'headers'),
+          body: any(named: 'body'),
+        ),
+      ).thenAnswer((_) async => http.Response('{}', 200));
       await expectLater(
         svc.generateRoutineOnServer(
           request: 'r',
@@ -571,7 +598,13 @@ void main() {
       );
 
       // success
-      when(() => client.post(any(), headers: any(named: 'headers'), body: any(named: 'body'))).thenAnswer(
+      when(
+        () => client.post(
+          any(),
+          headers: any(named: 'headers'),
+          body: any(named: 'body'),
+        ),
+      ).thenAnswer(
         (_) async => http.Response(
           jsonEncode({
             'routine': {
@@ -587,7 +620,7 @@ void main() {
               'is_curated': false,
               'created_at': DateTime(2026, 1, 1).toIso8601String(),
               'created_by': 'u',
-            }
+            },
           }),
           200,
         ),
@@ -646,4 +679,3 @@ void main() {
     }
   });
 }
-

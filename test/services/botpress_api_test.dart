@@ -21,7 +21,7 @@ void main() {
       return http.Response(
         jsonEncode({
           'user': {'id': 'u', 'createdAt': 't1', 'updatedAt': 't2'},
-          'key': 'k1'
+          'key': 'k1',
         }),
         200,
         headers: {'content-type': 'application/json'},
@@ -34,90 +34,113 @@ void main() {
     expect(res.user?.id, 'u');
   });
 
-  test('BotpressApi createConversation/sendMessage/sendMessagePayload/getMessages/deleteConversation', () async {
-    final client = MockClient((req) async {
-      if (req.method == 'POST' && req.url.toString() == 'https://example.test/conversations') {
-        expect(req.headers['X-User-Key'], 'uk');
-        final body = jsonDecode(req.body) as Map<String, dynamic>;
-        expect(body['metadata'], isNotNull);
-        return http.Response(
-          jsonEncode({
-            'conversation': {'id': 'c1', 'createdAt': 't1', 'updatedAt': 't2'}
-          }),
-          200,
-          headers: {'content-type': 'application/json'},
-        );
-      }
+  test(
+    'BotpressApi createConversation/sendMessage/sendMessagePayload/getMessages/deleteConversation',
+    () async {
+      final client = MockClient((req) async {
+        if (req.method == 'POST' &&
+            req.url.toString() == 'https://example.test/conversations') {
+          expect(req.headers['X-User-Key'], 'uk');
+          final body = jsonDecode(req.body) as Map<String, dynamic>;
+          expect(body['metadata'], isNotNull);
+          return http.Response(
+            jsonEncode({
+              'conversation': {
+                'id': 'c1',
+                'createdAt': 't1',
+                'updatedAt': 't2',
+              },
+            }),
+            200,
+            headers: {'content-type': 'application/json'},
+          );
+        }
 
-      if (req.method == 'POST' && req.url.toString() == 'https://example.test/messages') {
-        expect(req.headers['X-User-Key'], 'uk');
-        final body = jsonDecode(req.body) as Map<String, dynamic>;
-        expect(body['conversationId'], 'c1');
-        final payload = body['payload'] as Map<String, dynamic>;
-        expect(payload['type'], isNotEmpty);
-        return http.Response(
-          jsonEncode({
-            'message': {
-              'id': 'm1',
-              'conversationId': 'c1',
-              'userId': 'u1',
-              'tags': const <String>[],
-              'payload': payload,
-              'createdAt': 't1',
-              'updatedAt': null,
-            }
-          }),
-          200,
-          headers: {'content-type': 'application/json'},
-        );
-      }
-
-      if (req.method == 'GET' && req.url.toString() == 'https://example.test/conversations/c1/messages') {
-        expect(req.headers['X-User-Key'], 'uk');
-        return http.Response(
-          jsonEncode({
-            'messages': [
-              {
+        if (req.method == 'POST' &&
+            req.url.toString() == 'https://example.test/messages') {
+          expect(req.headers['X-User-Key'], 'uk');
+          final body = jsonDecode(req.body) as Map<String, dynamic>;
+          expect(body['conversationId'], 'c1');
+          final payload = body['payload'] as Map<String, dynamic>;
+          expect(payload['type'], isNotEmpty);
+          return http.Response(
+            jsonEncode({
+              'message': {
                 'id': 'm1',
                 'conversationId': 'c1',
                 'userId': 'u1',
                 'tags': const <String>[],
-                'payload': {'type': 'text', 'text': 'hi'},
+                'payload': payload,
                 'createdAt': 't1',
                 'updatedAt': null,
-              }
-            ],
-            'meta': {'nextToken': 'n'},
-          }),
-          200,
-          headers: {'content-type': 'application/json'},
-        );
-      }
+              },
+            }),
+            200,
+            headers: {'content-type': 'application/json'},
+          );
+        }
 
-      if (req.method == 'DELETE' && req.url.toString() == 'https://example.test/conversations/c1') {
-        expect(req.headers['X-User-Key'], 'uk');
-        return http.Response('', 204);
-      }
+        if (req.method == 'GET' &&
+            req.url.toString() ==
+                'https://example.test/conversations/c1/messages') {
+          expect(req.headers['X-User-Key'], 'uk');
+          return http.Response(
+            jsonEncode({
+              'messages': [
+                {
+                  'id': 'm1',
+                  'conversationId': 'c1',
+                  'userId': 'u1',
+                  'tags': const <String>[],
+                  'payload': {'type': 'text', 'text': 'hi'},
+                  'createdAt': 't1',
+                  'updatedAt': null,
+                },
+              ],
+              'meta': {'nextToken': 'n'},
+            }),
+            200,
+            headers: {'content-type': 'application/json'},
+          );
+        }
 
-      return http.Response('unhandled', 500);
-    });
+        if (req.method == 'DELETE' &&
+            req.url.toString() == 'https://example.test/conversations/c1') {
+          expect(req.headers['X-User-Key'], 'uk');
+          return http.Response('', 204);
+        }
 
-    final api = BotpressApi(client: client, baseUrl: 'https://example.test/');
+        return http.Response('unhandled', 500);
+      });
 
-    final convo = await api.createConversation('uk', CreateConversationRequest(userId: 'u1'));
-    expect(convo.conversation.id, 'c1');
+      final api = BotpressApi(client: client, baseUrl: 'https://example.test/');
 
-    final sent1 = await api.sendMessage('uk', 'c1', SimpleMessageRequest(type: 'text', text: 'hello'));
-    expect(sent1.message.conversationId, 'c1');
+      final convo = await api.createConversation(
+        'uk',
+        CreateConversationRequest(userId: 'u1'),
+      );
+      expect(convo.conversation.id, 'c1');
 
-    final sent2 = await api.sendMessagePayload('uk', 'c1', MessagePayload(type: 'text', text: 'hello2'));
-    expect(sent2.message.conversationId, 'c1');
+      final sent1 = await api.sendMessage(
+        'uk',
+        'c1',
+        SimpleMessageRequest(type: 'text', text: 'hello'),
+      );
+      expect(sent1.message.conversationId, 'c1');
 
-    final messages = await api.getMessages('uk', 'c1');
-    expect(messages.messages, isNotEmpty);
+      final sent2 = await api.sendMessagePayload(
+        'uk',
+        'c1',
+        MessagePayload(type: 'text', text: 'hello2'),
+      );
+      expect(sent2.message.conversationId, 'c1');
 
-    await api.deleteConversation('uk', 'c1');
-  });
+      final messages = await api.getMessages('uk', 'c1');
+      expect(messages.messages, isNotEmpty);
+
+      await api.deleteConversation('uk', 'c1');
+    },
+  );
 
   test('BotpressApi deleteConversation throws on non-2xx', () async {
     final client = MockClient((req) async {
@@ -148,4 +171,3 @@ void main() {
     api.dispose();
   });
 }
-

@@ -8,6 +8,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 
 class MockAuthRepository extends Mock implements AuthRepository {}
+
 class MockUser extends Mock implements User {}
 
 void main() {
@@ -15,47 +16,51 @@ void main() {
     registerFallbackValue(MockUser());
   });
 
-  testWidgets('EmailVerificationScreen shows sent/error/cooldown states and buttons call provider', (tester) async {
-    final repo = MockAuthRepository();
-    when(() => repo.currentUser).thenReturn(null);
+  testWidgets(
+    'EmailVerificationScreen shows sent/error/cooldown states and buttons call provider',
+    (tester) async {
+      final repo = MockAuthRepository();
+      when(() => repo.currentUser).thenReturn(null);
 
-    when(() => repo.sendEmailVerification()).thenAnswer((_) async {});
-    when(() => repo.signOut()).thenAnswer((_) async {});
+      when(() => repo.sendEmailVerification()).thenAnswer((_) async {});
+      when(() => repo.signOut()).thenAnswer((_) async {});
 
-    final verified = MockUser();
-    when(() => verified.emailVerified).thenReturn(true);
-    when(() => repo.reloadUser()).thenAnswer((_) async => verified);
+      final verified = MockUser();
+      when(() => verified.emailVerified).thenReturn(true);
+      when(() => repo.reloadUser()).thenAnswer((_) async => verified);
 
-    await tester.pumpWidget(
-      ChangeNotifierProvider<AuthProvider>(
-        create: (_) => AuthProvider(authRepository: repo, now: DateTime.now),
-        child: const MaterialApp(home: EmailVerificationScreen()),
-      ),
-    );
+      await tester.pumpWidget(
+        ChangeNotifierProvider<AuthProvider>(
+          create: (_) => AuthProvider(authRepository: repo, now: DateTime.now),
+          child: const MaterialApp(home: EmailVerificationScreen()),
+        ),
+      );
 
-    final auth = tester.element(find.byType(EmailVerificationScreen)).read<AuthProvider>();
+      final auth = tester
+          .element(find.byType(EmailVerificationScreen))
+          .read<AuthProvider>();
 
-    // Trigger resend
-    await tester.tap(find.text('Resend verification email'));
-    await tester.pump(); // rebuild with updated state
+      // Trigger resend
+      await tester.tap(find.text('Resend verification email'));
+      await tester.pump(); // rebuild with updated state
 
-    expect(find.text('Verification email sent!'), findsOneWidget);
-    expect(find.textContaining('Resend in '), findsOneWidget);
+      expect(find.text('Verification email sent!'), findsOneWidget);
+      expect(find.textContaining('Resend in '), findsOneWidget);
 
-    // Surface an auth error
-    auth.setAuthError('boom');
-    await tester.pump();
-    expect(find.text('boom'), findsOneWidget);
+      // Surface an auth error
+      auth.setAuthError('boom');
+      await tester.pump();
+      expect(find.text('boom'), findsOneWidget);
 
-    // "I have verified" calls into provider/repo
-    await tester.tap(find.text('I have verified, continue'));
-    await tester.pump();
-    verify(() => repo.reloadUser()).called(greaterThanOrEqualTo(1));
+      // "I have verified" calls into provider/repo
+      await tester.tap(find.text('I have verified, continue'));
+      await tester.pump();
+      verify(() => repo.reloadUser()).called(greaterThanOrEqualTo(1));
 
-    // Sign out
-    await tester.tap(find.text('Sign out'));
-    await tester.pump();
-    verify(() => repo.signOut()).called(1);
-  });
+      // Sign out
+      await tester.tap(find.text('Sign out'));
+      await tester.pump();
+      verify(() => repo.signOut()).called(1);
+    },
+  );
 }
-

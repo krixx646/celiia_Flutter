@@ -5,11 +5,19 @@ import 'services/supabase_service.dart';
 import 'providers/auth_provider.dart';
 import 'providers/chat_provider.dart';
 import 'providers/navigation_provider.dart';
+import 'providers/nutrition_profile_provider.dart';
+import 'providers/nutrition_tracker_provider.dart';
 import 'providers/routine_provider.dart';
 import 'providers/theme_provider.dart';
 import 'screens/auth_screen.dart';
 import 'screens/email_verification_screen.dart';
 import 'screens/main_screen.dart';
+import 'screens/name_setup_screen.dart';
+import 'screens/onboarding/onboarding_screen.dart';
+import 'services/onboarding_service.dart';
+import 'widgets/loading_indicator.dart';
+
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,6 +61,8 @@ class CeliaRoot extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => RoutineProvider()),
+        ChangeNotifierProvider(create: (_) => NutritionProfileProvider()),
+        ChangeNotifierProvider(create: (_) => NutritionTrackerProvider()),
       ],
       child: const CeliaApp(),
     );
@@ -90,14 +100,14 @@ class CeliaApp extends StatelessWidget {
           themeMode: themeProvider.themeMode,
           theme: baseLight.copyWith(
             scaffoldBackgroundColor: ThemeProvider.lightBackground,
-            textTheme: baseLight.textTheme.apply(fontFamily: 'Urbanist'),
+            textTheme: GoogleFonts.urbanistTextTheme(baseLight.textTheme),
           ),
           darkTheme: baseDark.copyWith(
             scaffoldBackgroundColor: ThemeProvider.darkBackground,
-            textTheme: baseDark.textTheme.apply(fontFamily: 'Urbanist'),
-        ),
-        home: const AppNavigator(),
-        debugShowCheckedModeBanner: false,
+            textTheme: GoogleFonts.urbanistTextTheme(baseDark.textTheme),
+          ),
+          home: const AppNavigator(),
+          debugShowCheckedModeBanner: false,
         );
       },
     );
@@ -116,11 +126,67 @@ class AppNavigator extends StatelessWidget {
           return const AuthScreen();
         } else if (!uiState.isEmailVerified) {
           return const EmailVerificationScreen();
+        } else if (authProvider.needsDisplayName) {
+          return const NameSetupScreen();
         } else {
-          return const MainScreen();
+          return const _AuthenticatedGate();
         }
       },
     );
+  }
+}
+
+class _AuthenticatedGate extends StatefulWidget {
+  const _AuthenticatedGate();
+
+  @override
+  State<_AuthenticatedGate> createState() => _AuthenticatedGateState();
+}
+
+class _AuthenticatedGateState extends State<_AuthenticatedGate> {
+  bool? _onboardingComplete;
+
+  @override
+  void initState() {
+    super.initState();
+    _resolveOnboarding();
+  }
+
+  Future<void> _resolveOnboarding() async {
+    final uid = context.read<AuthProvider>().uiState.currentUser?.uid;
+    if (uid == null) {
+      if (mounted) setState(() => _onboardingComplete = true);
+      return;
+    }
+
+    final profileProvider = context.read<NutritionProfileProvider>();
+    await profileProvider.loadProfile();
+    context.read<NutritionTrackerProvider>().syncProfile(profileProvider.profile);
+
+    var complete = await OnboardingService.isComplete(uid);
+    if (!complete && profileProvider.hasProfile) {
+      await OnboardingService.markComplete(uid);
+      complete = true;
+    }
+
+    if (mounted) setState(() => _onboardingComplete = complete);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_onboardingComplete == null) {
+      return const Scaffold(
+        body: Center(child: LoadingIndicator(message: 'Preparing Celia...')),
+      );
+    }
+
+    if (!_onboardingComplete!) {
+      return OnboardingScreen(
+        onComplete: () => setState(() => _onboardingComplete = true),
+      );
+    }
+
+    return const MainScreen();
   }
 }
 
@@ -138,11 +204,7 @@ class _InitErrorScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Spacer(),
-              Icon(
-                Icons.error_outline,
-                color: Colors.orangeAccent,
-                size: 64,
-              ),
+              Icon(Icons.error_outline, color: Colors.orangeAccent, size: 64),
               SizedBox(height: 16),
               Text(
                 'Unable to start the app',

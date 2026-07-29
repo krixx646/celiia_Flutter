@@ -17,22 +17,31 @@ class FirebaseService {
   static String Function(String key) env = (key) => String.fromEnvironment(key);
 
   @visibleForTesting
-  static Future<void> Function({FirebaseOptions? options}) firebaseInitializeApp = ({FirebaseOptions? options}) {
+  static Future<void> Function({FirebaseOptions? options})
+  firebaseInitializeApp = ({FirebaseOptions? options}) {
     if (options == null) return Firebase.initializeApp();
     return Firebase.initializeApp(options: options);
   };
 
   @visibleForTesting
-  static Future<void> Function() googleSignInInitialize = () => GoogleSignIn.instance.initialize();
+  static Future<void> Function() googleSignInInitialize = () =>
+      GoogleSignIn.instance.initialize();
 
   @visibleForTesting
-  static Future<void> Function({required AndroidProvider androidProvider, required AppleProvider appleProvider}) appCheckActivate =
-      ({required AndroidProvider androidProvider, required AppleProvider appleProvider}) {
-    return FirebaseAppCheck.instance.activate(
-      androidProvider: androidProvider,
-      appleProvider: appleProvider,
-    );
-  };
+  static Future<void> Function({
+    required AndroidProvider androidProvider,
+    required AppleProvider appleProvider,
+  })
+  appCheckActivate =
+      ({
+        required AndroidProvider androidProvider,
+        required AppleProvider appleProvider,
+      }) {
+        return FirebaseAppCheck.instance.activate(
+          androidProvider: androidProvider,
+          appleProvider: appleProvider,
+        );
+      };
 
   static Future<void> initialize() async {
     try {
@@ -47,11 +56,15 @@ class FirebaseService {
         final projectId = env('FIREBASE_PROJECT_ID');
         final storageBucket = env('FIREBASE_STORAGE_BUCKET');
 
-        if (apiKey.isEmpty || appId.isEmpty || messagingSenderId.isEmpty || projectId.isEmpty) {
+        if (apiKey.isEmpty ||
+            appId.isEmpty ||
+            messagingSenderId.isEmpty ||
+            projectId.isEmpty) {
           // Re-throw with a clear message so the UI can still boot and we can see logs on simulator
           throw FirebaseException(
             plugin: 'firebase_core',
-            message: 'Missing Firebase iOS options. Supply FIREBASE_API_KEY, FIREBASE_IOS_APP_ID, FIREBASE_MESSAGING_SENDER_ID, FIREBASE_PROJECT_ID (and optional FIREBASE_STORAGE_BUCKET) via --dart-define.',
+            message:
+                'Missing Firebase iOS options. Supply FIREBASE_API_KEY, FIREBASE_IOS_APP_ID, FIREBASE_MESSAGING_SENDER_ID, FIREBASE_PROJECT_ID (and optional FIREBASE_STORAGE_BUCKET) via --dart-define.',
           );
         }
 
@@ -75,8 +88,12 @@ class FirebaseService {
     // Initialize Firebase App Check (protects Firestore/Storage in production)
     try {
       await appCheckActivate(
-        androidProvider: kReleaseMode ? AndroidProvider.playIntegrity : AndroidProvider.debug,
-        appleProvider: kReleaseMode ? AppleProvider.appAttest : AppleProvider.debug,
+        androidProvider: kReleaseMode
+            ? AndroidProvider.playIntegrity
+            : AndroidProvider.debug,
+        appleProvider: kReleaseMode
+            ? AppleProvider.appAttest
+            : AppleProvider.debug,
       );
     } catch (_) {
       // If App Check init fails, proceed to avoid blocking startup; server rules may allow debug
@@ -84,10 +101,8 @@ class FirebaseService {
   }
 
   static User? get currentUser => auth.currentUser;
-  
+
   static bool get isAuthenticated => currentUser != null;
-  
+
   static bool get isEmailVerified => currentUser?.emailVerified ?? false;
 }
-
-

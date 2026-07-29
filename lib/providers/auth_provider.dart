@@ -46,23 +46,28 @@ class AuthUiState {
       isLoading: isLoading ?? this.isLoading,
       currentUser: currentUser ?? this.currentUser,
       isEmailVerified: isEmailVerified ?? this.isEmailVerified,
-      needsEmailVerification: needsEmailVerification ?? this.needsEmailVerification,
-      verificationEmailSent: verificationEmailSent ?? this.verificationEmailSent,
+      needsEmailVerification:
+          needsEmailVerification ?? this.needsEmailVerification,
+      verificationEmailSent:
+          verificationEmailSent ?? this.verificationEmailSent,
       authError: authError,
-      passwordResetEmailSent: passwordResetEmailSent ?? this.passwordResetEmailSent,
+      passwordResetEmailSent:
+          passwordResetEmailSent ?? this.passwordResetEmailSent,
       lastUsedEmail: lastUsedEmail ?? this.lastUsedEmail,
-      resendCooldownSeconds: resendCooldownSeconds ?? this.resendCooldownSeconds,
+      resendCooldownSeconds:
+          resendCooldownSeconds ?? this.resendCooldownSeconds,
     );
   }
 }
 
 class AuthProvider extends ChangeNotifier {
   @visibleForTesting
-  static AuthRepository Function() defaultAuthRepository = () => AuthRepository();
+  static AuthRepository Function() defaultAuthRepository = () =>
+      AuthRepository();
 
   final AuthRepository _authRepository;
   final DateTime Function() _now;
-  
+
   AuthUiState _uiState = AuthUiState();
   AuthUiState get uiState => _uiState;
   Timer? _cooldownTimer;
@@ -71,11 +76,9 @@ class AuthProvider extends ChangeNotifier {
   bool get isUserAuthenticated => _authRepository.isUserAuthenticated;
   bool get isEmailVerified => _authRepository.isEmailVerified;
 
-  AuthProvider({
-    AuthRepository? authRepository,
-    DateTime Function()? now,
-  })  : _authRepository = authRepository ?? defaultAuthRepository(),
-        _now = now ?? DateTime.now {
+  AuthProvider({AuthRepository? authRepository, DateTime Function()? now})
+    : _authRepository = authRepository ?? defaultAuthRepository(),
+      _now = now ?? DateTime.now {
     _initialize();
   }
 
@@ -95,7 +98,10 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> updateProfile({String? displayName, String? photoUrl}) async {
-    await _authRepository.updateProfile(displayName: displayName, photoUrl: photoUrl);
+    await _authRepository.updateProfile(
+      displayName: displayName,
+      photoUrl: photoUrl,
+    );
     await reloadCurrentUser();
   }
 
@@ -116,16 +122,13 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> signIn(String email, String password) async {
-    _uiState = _uiState.copyWith(
-      isLoading: true,
-      authError: null,
-    );
+    _uiState = _uiState.copyWith(isLoading: true, authError: null);
     notifyListeners();
 
     try {
       final user = await _authRepository.signIn(email, password);
       await _authRepository.reloadUser();
-      
+
       _uiState = _uiState.copyWith(
         isAuthenticated: true,
         isLoading: false,
@@ -153,27 +156,34 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> signUp(String email, String password) async {
+  Future<void> signUp(
+    String email,
+    String password, {
+    required String displayName,
+  }) async {
     saveEmailForVerification(email);
-    
-    _uiState = _uiState.copyWith(
-      isLoading: true,
-      authError: null,
-    );
+
+    _uiState = _uiState.copyWith(isLoading: true, authError: null);
     notifyListeners();
 
     try {
       final user = await _authRepository.signUp(email, password);
+      final trimmedName = displayName.trim();
+      if (trimmedName.isNotEmpty) {
+        await _authRepository.updateProfile(displayName: trimmedName);
+        await _authRepository.reloadUser();
+      }
       // Immediately send verification email for new users
       try {
         await _authRepository.sendEmailVerification();
         _uiState = _uiState.copyWith(verificationEmailSent: true);
       } catch (_) {}
-      
+
+      final refreshedUser = _authRepository.currentUser ?? user;
       _uiState = _uiState.copyWith(
         isAuthenticated: true,
         isLoading: false,
-        currentUser: user,
+        currentUser: refreshedUser,
         isEmailVerified: false,
         needsEmailVerification: true,
         authError: null,
@@ -190,6 +200,11 @@ class AuthProvider extends ChangeNotifier {
       );
     }
     notifyListeners();
+  }
+
+  bool get needsDisplayName {
+    final name = _uiState.currentUser?.displayName?.trim();
+    return name == null || name.isEmpty;
   }
 
   Future<void> resetPassword(String email) async {
@@ -284,10 +299,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> signInWithGoogle() async {
-    _uiState = _uiState.copyWith(
-      isLoading: true,
-      authError: null,
-    );
+    _uiState = _uiState.copyWith(isLoading: true, authError: null);
     notifyListeners();
 
     try {
@@ -320,10 +332,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> signInWithApple() async {
-    _uiState = _uiState.copyWith(
-      isLoading: true,
-      authError: null,
-    );
+    _uiState = _uiState.copyWith(isLoading: true, authError: null);
     notifyListeners();
 
     try {
@@ -378,5 +387,3 @@ class AuthProvider extends ChangeNotifier {
     super.dispose();
   }
 }
-
-

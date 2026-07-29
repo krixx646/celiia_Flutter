@@ -3,6 +3,11 @@ import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/loading_indicator.dart';
 
+const Color _authBackground = Colors.black;
+const Color _authSurface = Color(0xFF090909);
+const Color _authBorder = Color(0xFF242424);
+const Color _authOrange = Color(0xFFFF6F00);
+
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
@@ -22,9 +27,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: _authBackground,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: _authBackground,
         foregroundColor: Colors.white,
         title: const Text('Forgot Password'),
       ),
@@ -36,7 +41,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               builder: (context, constraints) {
                 return SingleChildScrollView(
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(
@@ -44,11 +51,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          SizedBox(height: constraints.maxHeight * 0.32),
+                          SizedBox(height: constraints.maxHeight * 0.22),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              const Text('Enter your email to receive a password reset link.', style: TextStyle(color: Colors.white70)),
+                              const Text(
+                                'Enter your email to receive a password reset link.',
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.35,
+                                ),
+                              ),
                               const SizedBox(height: 12),
                               TextField(
                                 controller: _emailController,
@@ -56,35 +70,82 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 style: const TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
                                   labelText: 'Email',
-                                  labelStyle: const TextStyle(color: Colors.white70),
-                                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: const BorderSide(color: Colors.white24)),
-                                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: const BorderSide(color: Colors.white60)),
+                                  filled: true,
+                                  fillColor: _authSurface,
+                                  labelStyle: const TextStyle(
+                                    color: Colors.white70,
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                    borderSide: const BorderSide(
+                                      color: _authBorder,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                    borderSide: const BorderSide(
+                                      color: _authOrange,
+                                    ),
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 24),
                               if (ui.authError != null)
-                                Text(ui.authError!, style: const TextStyle(color: Colors.red)),
+                                Text(
+                                  ui.authError!,
+                                  style: const TextStyle(color: Colors.red),
+                                ),
                               const SizedBox(height: 12),
                               ElevatedButton(
-                                style: ElevatedButton.styleFrom(backgroundColor: Colors.white10, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)), padding: const EdgeInsets.symmetric(vertical: 14)),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: _authOrange,
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 14,
+                                  ),
+                                ),
                                 onPressed: ui.isLoading
                                     ? null
                                     : () async {
-                                        final email = _emailController.text.trim();
-                                        final messenger = ScaffoldMessenger.of(context);
+                                        final email = _emailController.text
+                                            .trim();
+                                        final messenger = ScaffoldMessenger.of(
+                                          context,
+                                        );
                                         final navigator = Navigator.of(context);
                                         if (email.isEmpty) {
-                                          messenger.showSnackBar(const SnackBar(content: Text('Please enter an email')));
+                                          messenger.showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                'Please enter an email',
+                                              ),
+                                            ),
+                                          );
                                           return;
                                         }
                                         await auth.resetPassword(email);
                                         if (!context.mounted) return;
-                                        if (auth.uiState.passwordResetEmailSent) {
-                                          messenger.showSnackBar(const SnackBar(content: Text('Password reset email sent.')));
+                                        if (auth
+                                            .uiState
+                                            .passwordResetEmailSent) {
+                                          messenger.showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                'Password reset email sent.',
+                                              ),
+                                            ),
+                                          );
                                           navigator.pop();
                                         }
                                       },
-                                child: ui.isLoading ? const LoadingIndicator(message: 'Sending...') : const Text('Send reset link'),
+                                child: ui.isLoading
+                                    ? const LoadingIndicator(
+                                        message: 'Sending...',
+                                      )
+                                    : const Text('Send reset link'),
                               ),
                             ],
                           ),
@@ -102,5 +163,3 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 }
-
-

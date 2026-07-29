@@ -48,13 +48,15 @@ class AuthRepository {
   static FirebaseAuth Function() defaultAuth = () => FirebaseService.auth;
 
   @visibleForTesting
-  static GoogleSignIn Function() defaultGoogleSignIn = () => FirebaseService.googleSignIn;
+  static GoogleSignIn Function() defaultGoogleSignIn = () =>
+      FirebaseService.googleSignIn;
 
   @visibleForTesting
   static PlatformInfo Function() defaultPlatform = () => DefaultPlatformInfo();
 
   @visibleForTesting
-  static AppleSignInClient Function() defaultApple = () => DefaultAppleSignInClient();
+  static AppleSignInClient Function() defaultApple = () =>
+      DefaultAppleSignInClient();
 
   final FirebaseAuth _auth;
   final GoogleSignIn _googleSignIn;
@@ -70,12 +72,15 @@ class AuthRepository {
     AppleSignInClient? apple,
     String? appleServiceId,
     String? appleRedirectUri,
-  })  : _auth = auth ?? defaultAuth(),
-        _googleSignIn = googleSignIn ?? defaultGoogleSignIn(),
-        _platform = platform ?? defaultPlatform(),
-        _apple = apple ?? defaultApple(),
-        _appleServiceId = appleServiceId ?? const String.fromEnvironment('APPLE_SERVICE_ID'),
-        _appleRedirectUri = appleRedirectUri ?? const String.fromEnvironment('APPLE_REDIRECT_URI');
+  }) : _auth = auth ?? defaultAuth(),
+       _googleSignIn = googleSignIn ?? defaultGoogleSignIn(),
+       _platform = platform ?? defaultPlatform(),
+       _apple = apple ?? defaultApple(),
+       _appleServiceId =
+           appleServiceId ?? const String.fromEnvironment('APPLE_SERVICE_ID'),
+       _appleRedirectUri =
+           appleRedirectUri ??
+           const String.fromEnvironment('APPLE_REDIRECT_URI');
 
   User? get currentUser => _auth.currentUser;
   bool get isUserAuthenticated => currentUser != null;
@@ -107,8 +112,10 @@ class AuthRepository {
         try {
           // Send verification with explicit ActionCodeSettings to avoid invalid/expired links
           final ActionCodeSettings actionCodeSettings = ActionCodeSettings(
-            url: 'https://the-fit-87c3d.web.app', // authorized domain in your project
-            handleCodeInApp: false, // let Firebase hosted page complete verification
+            url:
+                'https://the-fit-87c3d.web.app', // authorized domain in your project
+            handleCodeInApp:
+                false, // let Firebase hosted page complete verification
             androidPackageName: 'eu.thefit.celia',
             androidInstallApp: false,
             iOSBundleId: 'eu.thefit.celia',
@@ -208,9 +215,13 @@ class AuthRepository {
 
   // ----- Sign in with Apple -----
   String _generateNonce([int length = 32]) {
-    const charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+    const charset =
+        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
     final random = Random.secure();
-    return List.generate(length, (_) => charset[random.nextInt(charset.length)]).join();
+    return List.generate(
+      length,
+      (_) => charset[random.nextInt(charset.length)],
+    ).join();
   }
 
   String _sha256ofString(String input) {
@@ -230,7 +241,9 @@ class AuthRepository {
         final serviceId = _appleServiceId;
         final redirectUri = _appleRedirectUri;
         if (serviceId.isEmpty || redirectUri.isEmpty) {
-          throw Exception('Missing APPLE_SERVICE_ID or APPLE_REDIRECT_URI. Provide as --dart-define.');
+          throw Exception(
+            'Missing APPLE_SERVICE_ID or APPLE_REDIRECT_URI. Provide as --dart-define.',
+          );
         }
         appleCredential = await _apple.getAppleIDCredential(
           scopes: const [
@@ -257,13 +270,25 @@ class AuthRepository {
       }
 
       // Android path continues here (web flow returns identityToken)
-      final oauth = OAuthProvider('apple.com').credential(
-        idToken: appleCredential.identityToken,
-        rawNonce: rawNonce,
-      );
+      final oauth = OAuthProvider(
+        'apple.com',
+      ).credential(idToken: appleCredential.identityToken, rawNonce: rawNonce);
 
       final result = await _auth.signInWithCredential(oauth);
       if (result.user != null) {
+        final givenName = appleCredential.givenName?.trim();
+        final familyName = appleCredential.familyName?.trim();
+        final fullName = [
+          givenName,
+          familyName,
+        ].whereType<String>().where((part) => part.isNotEmpty).join(' ');
+        if (fullName.isNotEmpty &&
+            (result.user!.displayName == null ||
+                result.user!.displayName!.trim().isEmpty)) {
+          await result.user!.updateDisplayName(fullName);
+          await result.user!.reload();
+          return _auth.currentUser ?? result.user!;
+        }
         return result.user!;
       } else {
         throw Exception('Apple sign-in failed');
@@ -273,5 +298,3 @@ class AuthRepository {
     }
   }
 }
-
-

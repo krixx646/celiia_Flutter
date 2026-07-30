@@ -254,7 +254,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Row(
             children: [
               Expanded(
-                child: _buildStatItem(theme, '$savedCount', 'Saved', null),
+                child: _buildStatItem(
+                  theme,
+                  '$savedCount',
+                  'Saved',
+                  Icons.bookmark,
+                ),
               ),
               Container(width: 1, height: 40, color: theme.border),
               Expanded(
@@ -271,7 +276,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   theme,
                   '$workoutCompletions',
                   'Workouts',
-                  null,
+                  Icons.fitness_center,
                 ),
               ),
             ],

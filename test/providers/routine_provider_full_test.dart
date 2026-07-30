@@ -293,7 +293,7 @@ void main() {
   });
 
   group('recordCompletion', () {
-    test('updates local record when present; swallows errors', () async {
+    test('updates local record when present; reports errors', () async {
       final supa = MockSupabaseService();
       when(() => supa.getUserRoutines('u')).thenAnswer(
         (_) async => [
@@ -313,8 +313,13 @@ void main() {
       expect(rp.userRoutines.single.timesCompleted, 1);
       expect(rp.userRoutines.single.lastPlayedAt, isNotNull);
 
+      // A completion that cannot be saved has to surface, so the player can
+      // offer a retry rather than pretending the workout counted.
       when(() => supa.recordCompletion('ur1')).thenThrow(Exception('boom'));
-      await rp.recordCompletion('ur1'); // should not throw
+      await expectLater(
+        rp.recordCompletion('ur1'),
+        throwsA(isA<Exception>()),
+      );
     });
   });
 
@@ -350,7 +355,7 @@ void main() {
     );
 
     test(
-      'if row still missing after reload, returns without calling recordCompletion',
+      'if row still missing after reload, throws instead of counting nothing',
       () async {
         final supa = MockSupabaseService();
         when(
@@ -363,7 +368,10 @@ void main() {
 
         final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
         await rp.loadUserRoutines('u');
-        await rp.recordCompletionForRoutine(userId: 'u', routineId: 'r1');
+        await expectLater(
+          rp.recordCompletionForRoutine(userId: 'u', routineId: 'r1'),
+          throwsA(isA<StateError>()),
+        );
         verifyNever(() => supa.recordCompletion(any()));
       },
     );

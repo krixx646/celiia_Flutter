@@ -238,7 +238,12 @@ class RoutineProvider extends ChangeNotifier {
     await toggleFavorite(ur.id);
   }
 
-  /// Record routine completion
+  /// Record routine completion.
+  ///
+  /// Throws if it could not be saved. A workout that quietly fails to count is
+  /// worse than one that reports the problem: the player offers a retry, and
+  /// the streak, workout total and level are all derived from this write, so
+  /// swallowing the failure means the user's progress silently stops moving.
   Future<void> recordCompletion(String userRoutineId) async {
     try {
       await _supabase.recordCompletion(userRoutineId);
@@ -259,6 +264,7 @@ class RoutineProvider extends ChangeNotifier {
       }
     } catch (e) {
       debugPrint('Failed to record completion: $e');
+      rethrow;
     }
   }
 
@@ -276,14 +282,21 @@ class RoutineProvider extends ChangeNotifier {
         _userRoutines.insert(0, created);
         ur = created;
         notifyListeners();
-      } catch (_) {
-        // If insert fails due to unique constraint, reload and try again.
+      } catch (e) {
+        // The row may already exist (unique constraint), so reload before
+        // giving up.
+        debugPrint('Could not save routine before recording completion: $e');
         await loadUserRoutines(userId);
         ur = getUserRoutine(routineId);
       }
     }
 
-    if (ur == null) return;
+    if (ur == null) {
+      throw StateError(
+        'Could not add this routine to your library, so the completion was '
+        'not recorded',
+      );
+    }
     await recordCompletion(ur.id);
   }
 

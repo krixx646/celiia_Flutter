@@ -327,20 +327,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
         const SizedBox(height: 6),
-        // Every column gets the same amount of room for its label, so a label
-        // that wraps on a large font setting cannot drag its own column out of
-        // line with the other two.
+        // A third of a phone's width is about 87pt, and 'WORKOUTS' wants ~90 of
+        // them, so it used to wrap while its neighbours stayed on one line and
+        // the row stopped reading as a row. Scaling a long label down a fraction
+        // keeps all three on one line at any width or font setting, and the
+        // equal-height columns keep them starting at the same place.
         Expanded(
           child: Align(
             alignment: Alignment.topCenter,
-            child: Text(
-              label.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 0.5,
-                color: theme.textSecondary,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                label.toUpperCase(),
+                maxLines: 1,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.5,
+                  color: theme.textSecondary,
+                ),
               ),
             ),
           ),

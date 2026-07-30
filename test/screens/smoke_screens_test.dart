@@ -181,7 +181,7 @@ void main() {
     ).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
-      final chat = _chatProvider();
+    final chat = _chatProvider();
     await tester.pumpWidget(
       _wrap(
         const Scaffold(body: GenerateRoutineSheet()),
@@ -206,7 +206,7 @@ void main() {
     when(() => supa.getUserRoutines(any())).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
-      final chat = _chatProvider();
+    final chat = _chatProvider();
     await tester.pumpWidget(
       _wrap(
         const SavedRoutinesScreen(),
@@ -232,7 +232,7 @@ void main() {
     ).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
-      final chat = _chatProvider();
+    final chat = _chatProvider();
 
     for (final screen in const [
       EmailVerificationScreen(),
@@ -263,7 +263,7 @@ void main() {
         currentUserId: () => null,
       );
 
-        final chat = _chatProvider();
+      final chat = _chatProvider();
 
       final routine = Routine(
         id: 'r',
@@ -337,7 +337,7 @@ void main() {
     ).thenAnswer((_) async => []);
     final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
 
-      final chat = _chatProvider();
+    final chat = _chatProvider();
 
     final firebaseAuth = MockFirebaseAuth();
     when(() => firebaseAuth.currentUser).thenReturn(null);
@@ -354,5 +354,51 @@ void main() {
       ),
     );
     await tester.pump();
+  });
+
+  testWidgets('the three profile stats line up with each other', (
+    tester,
+  ) async {
+    final authRepo = MockAuthRepository();
+    when(() => authRepo.currentUser).thenReturn(null);
+    final auth = AuthProvider(authRepository: authRepo);
+
+    final supa = MockSupabaseService();
+    when(() => supa.getPublishedRoutines()).thenAnswer((_) async => []);
+    when(
+      () => supa.getUserCreatedRoutines(userId: any(named: 'userId')),
+    ).thenAnswer((_) async => []);
+    when(() => supa.getUserRoutines(any())).thenAnswer((_) async => []);
+    final routines = RoutineProvider(supabase: supa, currentUserId: () => null);
+
+    // A phone's width, not the 800pt test default: the row only has room to go
+    // wrong at the size it is actually used at.
+    tester.view.physicalSize = const Size(720, 1600);
+    tester.view.devicePixelRatio = 2;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      _wrap(
+        const ProfileScreen(),
+        auth: auth,
+        routines: routines,
+        chat: _chatProvider(),
+      ),
+    );
+    await tester.pump();
+
+    // 'WORKOUTS' used to wrap onto a second line while its neighbours stayed on
+    // one, which is what threw the row out of line. A single line is under 20pt
+    // tall at this size; a wrapped one is about twice that.
+    final saved = tester.getRect(find.text('SAVED'));
+    final streak = tester.getRect(find.text('STREAK'));
+    final workouts = tester.getRect(find.text('WORKOUTS'));
+
+    for (final label in [saved, streak, workouts]) {
+      expect(label.height, lessThan(20));
+      expect(label.top, saved.top);
+    }
+    expect(tester.takeException(), isNull);
   });
 }

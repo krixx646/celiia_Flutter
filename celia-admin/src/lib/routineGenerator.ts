@@ -8,7 +8,17 @@ import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
 const DEEPSEEK_TEXT_ENDPOINT =
   process.env.DEEPSEEK_TEXT_ENDPOINT || 'https://api.deepseek.com/v1/chat/completions';
-const DEEPSEEK_TEXT_MODEL = process.env.DEEPSEEK_TEXT_MODEL || 'deepseek-v4-pro';
+// Composing a routine is a lookup-and-order job, not a reasoning one: the model
+// picks entries out of a catalog it was handed. A reasoning model spends 50-60s
+// deliberating over it and half the requests died on the platform's 60s ceiling
+// (measured: 60.8s, 55.0s, 60.8s for three requests). `deepseek-chat` is the
+// model the coach agent already composes routines with, and it answers in
+// seconds. Set DEEPSEEK_ROUTINE_MODEL to override.
+const DEEPSEEK_ROUTINE_MODEL = process.env.DEEPSEEK_ROUTINE_MODEL || 'deepseek-chat';
+
+// How long to wait for the model. Comfortably inside the route's 60s budget, so
+// a slow answer becomes an error we can explain rather than a bodyless 504.
+const DEEPSEEK_TIMEOUT_MS = 45_000;
 
 // Mirrors `Env.suspendRealVideos` on the Flutter side: the client's real
 // filming pipeline isn't ready yet, so by default the generator only builds
@@ -440,27 +450,46 @@ ${preferVideoRule}
     catalog: promptCatalog,
   };
 
-  const deepSeekRes = await fetch(DEEPSEEK_TEXT_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${DEEPSEEK_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: DEEPSEEK_TEXT_MODEL,
-      response_format: { type: 'json_object' },
-      temperature: 1.0,
-      top_p: 1.0,
-      // Generous headroom: a 40-step routine is well under this, but a
-      // reasoning model also spends this budget thinking before it emits any
-      // JSON, and running out mid-thought yields empty content.
-      max_tokens: 8000,
-      messages: [
-        { role: 'system', content: system },
-        { role: 'user', content: JSON.stringify(userPrompt) },
-      ],
-    }),
-  });
+  const askedAt = Date.now();
+  let deepSeekRes: Response;
+  try {
+    deepSeekRes = await fetch(DEEPSEEK_TEXT_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${DEEPSEEK_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      signal: AbortSignal.timeout(DEEPSEEK_TIMEOUT_MS),
+      body: JSON.stringify({
+        model: DEEPSEEK_ROUTINE_MODEL,
+        response_format: { type: 'json_object' },
+        temperature: 1.0,
+        top_p: 1.0,
+        // A 40-step routine is around 1.5k tokens of JSON; this leaves room to
+        // spare without inviting the model to fill it.
+        max_tokens: 4000,
+        messages: [
+          { role: 'system', content: system },
+          { role: 'user', content: JSON.stringify(userPrompt) },
+        ],
+      }),
+    });
+  } catch (e) {
+    const timedOut = e instanceof Error && e.name === 'TimeoutError';
+    console.error('[generate-routine] model call failed', {
+      model: DEEPSEEK_ROUTINE_MODEL,
+      catalogSize: promptCatalog.length,
+      elapsedMs: Date.now() - askedAt,
+      timedOut,
+    });
+    return {
+      ok: false,
+      status: timedOut ? 504 : 502,
+      error: timedOut
+        ? 'Building your routine took too long. Please try again.'
+        : 'Could not reach the routine builder. Please try again.',
+    };
+  }
 
   if (!deepSeekRes.ok) {
     const text = await deepSeekRes.text().catch(() => '');
@@ -473,6 +502,14 @@ ${preferVideoRule}
   }
 
   const deepSeekJson = (await deepSeekRes.json()) as DeepSeekChatResponse;
+  // Logged on every generation so a creeping model slowdown is visible in the
+  // function logs before it starts timing out again.
+  console.log('[generate-routine] model answered', {
+    model: DEEPSEEK_ROUTINE_MODEL,
+    catalogSize: promptCatalog.length,
+    elapsedMs: Date.now() - askedAt,
+    usage: deepSeekJson.usage ?? null,
+  });
   const content = deepSeekJson.choices?.[0]?.message?.content;
   if (typeof content !== 'string' || !content.trim()) {
     return {

@@ -216,11 +216,13 @@ void main() {
       final authProvider = app_auth.AuthProvider(authRepository: repo);
       addTearDown(authProvider.dispose);
 
-      // create a real temp image file
-      final dir = await Directory.systemTemp.createTemp('celia_test');
-      addTearDown(() async => dir.delete(recursive: true));
+      // A real temp image file, written synchronously: the test body runs in a
+      // fake-async zone that never pumps the real event loop, so awaiting file
+      // I/O here deadlocks until the harness kills the suite.
+      final dir = Directory.systemTemp.createTempSync('celia_test');
+      addTearDown(() => dir.deleteSync(recursive: true));
       final imgPath = '${dir.path}${Platform.pathSeparator}p.png';
-      await File(imgPath).writeAsBytes(_transparentPng());
+      File(imgPath).writeAsBytesSync(_transparentPng());
       final xfile = XFile(imgPath);
 
       final picker = MockImagePicker();
@@ -237,9 +239,11 @@ void main() {
       final childRef = MockReference();
       when(() => storage.ref()).thenReturn(rootRef);
       when(() => rootRef.child('profile_photos/$uid.jpg')).thenReturn(childRef);
+      // An UploadTask is itself a Future, which mocktail refuses to hand back
+      // from thenReturn.
       when(
         () => childRef.putFile(any()),
-      ).thenReturn(FakeUploadTask(Future.value(FakeTaskSnapshot())));
+      ).thenAnswer((_) => FakeUploadTask(Future.value(FakeTaskSnapshot())));
       when(
         () => childRef.getDownloadURL(),
       ).thenAnswer((_) async => 'https://example.test/photo.jpg');

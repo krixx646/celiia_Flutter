@@ -234,19 +234,30 @@ class SupabaseService {
     final idToken = await user.getIdToken();
     final uri = Uri.parse('$base/api/mobile/generate-routine');
 
-    final res = await httpClient.post(
-      uri,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $idToken',
-      },
-      body: jsonEncode({
-        'request': request,
-        'durationMinutes': durationMinutes,
-        'difficulty': difficulty.name,
-        'equipment': equipment,
-      }),
-    );
+    final res = await httpClient
+        .post(
+          uri,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $idToken',
+          },
+          body: jsonEncode({
+            'request': request,
+            'durationMinutes': durationMinutes,
+            'difficulty': difficulty.name,
+            'equipment': equipment,
+          }),
+        )
+        // Sits above the server's own 60s ceiling, so it never cuts off a
+        // routine that is still coming — it only stops the spinner running
+        // forever when the request itself is lost.
+        .timeout(
+          const Duration(seconds: 90),
+          onTimeout: () => throw SupabaseException(
+            'Building your routine took too long. Please try again.',
+            'generate-routine timed out after 90s',
+          ),
+        );
 
     final raw = res.bodyBytes;
     final text = utf8.decode(raw);

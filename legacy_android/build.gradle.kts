@@ -34,13 +34,18 @@ android {
             keyPassword = "android"
         }
         create("release") {
-            // Use proper release keystore
-            storeFile = file("${project.projectDir}/keystore/celia_release_key.jks")
-            // NOTE: For security, in a real project, these would be stored in a secure location
-            // like environment variables or a properties file not checked into version control
-            storePassword = "REMOVED_CREDENTIAL" // The password provided by user
-            keyAlias = "celia"
-            keyPassword = "REMOVED_CREDENTIAL" // The password provided by user
+            // Credentials and the keystore itself live outside the repository and
+            // are read from an untracked properties file. They used to be written
+            // here in plain text, next to a committed .jks, in a public repo.
+            val props = java.util.Properties()
+            val propsFile = rootProject.file("key.properties")
+            if (propsFile.exists()) {
+                propsFile.inputStream().use { props.load(it) }
+                storeFile = file(props["storeFile"] as String)
+                storePassword = props["storePassword"] as String
+                keyAlias = props["keyAlias"] as String
+                keyPassword = props["keyPassword"] as String
+            }
             
             // Enable V1 and V2 signing for maximum compatibility
             enableV1Signing = true

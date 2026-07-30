@@ -61,14 +61,25 @@ flutter build ios --simulator \
 - Version is read from `pubspec.yaml` (e.g., `version: 1.1.4+17`)
 
 ### Signing (release)
-1) Create `key.properties` at project root (same level as `android/`):
+Keep the keystore **outside this repository** and never commit it or its
+password. A previous release key was committed here in a public repo, with its
+password in plain text in `legacy_android/build.gradle.kts`, and had to be
+replaced. `.gitignore` covers `*.jks` and `key.properties`, but that only helps
+for files git is not already tracking.
+
+1) Create `android/key.properties` (untracked) pointing at a keystore stored
+   elsewhere on the machine, e.g. `C:/Users/<you>/celia-keys/`:
 ```
-storeFile=<absolute-or-relative-path-to-release-jks>
+storeFile=<absolute-path-to-release-jks-outside-the-repo>
 storePassword=<password>
 keyAlias=<alias>
 keyPassword=<password>
 ```
-2) Ensure the path points to your release keystore (e.g., a legacy or existing Play signing upload key).
+2) The path must be the upload key Play expects for `eu.thefit.celia`. Check it
+   matches Play Console → Setup → App integrity → upload key certificate:
+```bash
+keytool -list -v -keystore <path-to-jks> -alias <alias>
+```
 3) Build AAB for Play Console:
 ```bash
 flutter build appbundle --release

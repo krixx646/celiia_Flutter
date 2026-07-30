@@ -140,8 +140,11 @@ class RoutineProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Generate a new AI routine based on user request
-  Future<Routine?> generateRoutine({
+  /// Generate a new AI routine based on user request.
+  ///
+  /// Comes back flagged as pre-existing when the server recognised the request
+  /// as one this user already has, in which case the original is returned.
+  Future<GeneratedRoutine?> generateRoutine({
     required String request,
     int? durationMinutes,
     RoutineDifficulty? difficulty,
@@ -152,19 +155,20 @@ class RoutineProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final savedRoutine = await _supabase.generateRoutineOnServer(
+      final result = await _supabase.generateRoutineOnServer(
         request: request,
         durationMinutes: durationMinutes ?? 15,
         difficulty: difficulty ?? RoutineDifficulty.medium,
         equipment: equipment ?? const ['None'],
       );
 
-      // Add to local AI routines list
-      _aiRoutines.insert(0, savedRoutine);
-      _routines.insert(0, savedRoutine);
+      // An existing routine may already be in these lists, and listing it twice
+      // is the clutter this is meant to prevent.
+      _addOrReplace(_aiRoutines, result.routine);
+      _addOrReplace(_routines, result.routine);
 
       notifyListeners();
-      return savedRoutine;
+      return result;
     } catch (e, st) {
       debugPrint('generateRoutine failed: $e');
       debugPrint('$st');
@@ -177,6 +181,15 @@ class RoutineProvider extends ChangeNotifier {
       _isGenerating = false;
       notifyListeners();
     }
+  }
+
+  void _addOrReplace(List<Routine> list, Routine routine) {
+    final index = list.indexWhere((existing) => existing.id == routine.id);
+    if (index >= 0) {
+      list[index] = routine;
+      return;
+    }
+    list.insert(0, routine);
   }
 
   /// Save a routine to user's library

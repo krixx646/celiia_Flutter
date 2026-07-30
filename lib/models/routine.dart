@@ -180,3 +180,12 @@ class UserRoutine {
 
   Map<String, dynamic> toJson() => _$UserRoutineToJson(this);
 }
+
+/// What came back from asking the backend for a routine: either a new one, or
+/// the original it pointed us at because that exact sequence already existed.
+class GeneratedRoutine {
+  const GeneratedRoutine({required this.routine, required this.alreadyExisted});
+
+  final Routine routine;
+  final bool alreadyExisted;
+}

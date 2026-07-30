@@ -1,3 +1,4 @@
+import { ensureSavedToLibrary, findMatchingRoutine } from '@/lib/routineDedupe';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
 
 // Shared by POST /api/mobile/generate-routine (the Create Routine sheet) and by
@@ -130,7 +131,12 @@ export type GenerateRoutineInput = {
 };
 
 export type GenerateRoutineResult =
-  | { ok: true; routine: Record<string, unknown> }
+  | {
+      ok: true;
+      routine: Record<string, unknown>;
+      /** True when this is a routine the user already had, not a new one. */
+      alreadyExisted?: boolean;
+    }
   | { ok: false; status: number; error: string; details?: unknown };
 
 // The stock GIF library is ~900 exercises. Sending all of them (~33k tokens)
@@ -564,6 +570,16 @@ ${preferVideoRule}
   // Normalize ordering
   steps.sort((a, b) => safeInt(a.order_index, 0) - safeInt(b.order_index, 0));
   steps.forEach((s, i) => (s.order_index = i));
+
+  // Asking twice for the same workout used to leave two identical routines in
+  // the library. If this sequence already exists, hand back that one instead.
+  // This has to come after the sort above, because the order of the exercises
+  // is half of what identifies a routine.
+  const existing = await findMatchingRoutine(uid, steps);
+  if (existing) {
+    await ensureSavedToLibrary(uid, existing.id);
+    return { ok: true, routine: existing.row, alreadyExisted: true };
+  }
 
   const payload = {
     title: String(routineJson?.title || 'Personalized Routine'),

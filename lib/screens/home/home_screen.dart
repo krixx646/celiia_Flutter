@@ -9,6 +9,7 @@ import '../../providers/theme_provider.dart';
 import '../../services/routine_thumbnail_resolver.dart';
 import '../../services/supabase_service.dart';
 import '../../utils/progress.dart';
+import '../../widgets/daily_progress_card.dart';
 import '../../widgets/generate_routine_sheet.dart';
 import '../routines/routine_detail_screen.dart';
 import '../routines/routine_player_screen.dart';
@@ -69,12 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             // TopAppBar
-            _buildHeader(
-              theme,
-              userName,
-              user?.photoURL,
-              streakStats.streak,
-            ),
+            _buildHeader(theme, userName, user?.photoURL, streakStats.streak),
 
             // Main Content
             Expanded(
@@ -86,7 +82,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 16),
                     _buildHeroSection(theme),
                     const SizedBox(height: 24),
-                    _buildDailyDashboard(theme, tracker, streakStats),
+                    DailyProgressCard(
+                      tracker: tracker,
+                      streakStats: streakStats,
+                    ),
                     const SizedBox(height: 32),
 
                     // Up Next Section
@@ -246,164 +245,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 errorBuilder: (_, __, ___) => fallback,
               )
             : fallback,
-      ),
-    );
-  }
-
-  Widget _buildDailyDashboard(
-    ThemeProvider theme,
-    NutritionTrackerProvider tracker,
-    ActiveStreakStats streakStats,
-  ) {
-    final profile = tracker.profile;
-
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: theme.surface,
-        borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: theme.border),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(
-              alpha: theme.isDarkMode ? 0.18 : 0.06,
-            ),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Today\'s Progress',
-            style: TextStyle(
-              color: theme.textPrimary,
-              fontSize: 20,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            buildStreakNudge(streakStats),
-            style: TextStyle(color: theme.textSecondary, height: 1.35),
-          ),
-          const SizedBox(height: 16),
-          if (profile == null)
-            Text(
-              'Set your nutrition goals to unlock calorie and macro tracking.',
-              style: TextStyle(color: theme.textSecondary, height: 1.4),
-            )
-          else ...[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  tracker.todayCalories.round().toString(),
-                  style: TextStyle(
-                    color: theme.textPrimary,
-                    fontSize: 36,
-                    fontWeight: FontWeight.w900,
-                    height: 1,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 4),
-                  child: Text(
-                    '/ ${profile.dailyCalories.round()} kcal',
-                    style: TextStyle(color: theme.textSecondary),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(999),
-              child: LinearProgressIndicator(
-                minHeight: 8,
-                value: (tracker.todayCalories / profile.dailyCalories).clamp(
-                  0,
-                  1,
-                ),
-                backgroundColor: theme.border,
-                color: theme.accentOrange,
-              ),
-            ),
-            const SizedBox(height: 14),
-            Row(
-              children: [
-                _buildDashboardMacro(
-                  theme,
-                  'Protein',
-                  tracker.todayProtein,
-                  profile.dailyProteinGrams,
-                ),
-                const SizedBox(width: 8),
-                _buildDashboardMacro(
-                  theme,
-                  'Carbs',
-                  tracker.todayCarbs,
-                  profile.dailyCarbsGrams,
-                ),
-                const SizedBox(width: 8),
-                _buildDashboardMacro(
-                  theme,
-                  'Fat',
-                  tracker.todayFat,
-                  profile.dailyFatGrams,
-                ),
-              ],
-            ),
-            if (tracker.todayInsight != null) ...[
-              const SizedBox(height: 14),
-              Text(
-                tracker.todayInsight!.message,
-                style: TextStyle(color: theme.textSecondary, height: 1.35),
-              ),
-            ],
-          ],
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDashboardMacro(
-    ThemeProvider theme,
-    String label,
-    double consumed,
-    double target,
-  ) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        decoration: BoxDecoration(
-          color: theme.background,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: theme.border),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                color: theme.textSecondary,
-                fontSize: 11,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              '${consumed.round()}/${target.round()}g',
-              style: TextStyle(
-                color: theme.textPrimary,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

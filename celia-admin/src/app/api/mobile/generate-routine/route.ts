@@ -43,7 +43,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    return NextResponse.json({ routine: result.routine });
+    return NextResponse.json({
+      routine: result.routine,
+      alreadyExisted: result.alreadyExisted === true,
+    });
   } catch (e) {
     return NextResponse.json(
       { error: 'Unexpected error', details: e instanceof Error ? e.message : String(e) },

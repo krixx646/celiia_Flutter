@@ -598,6 +598,39 @@ void main() {
       );
 
       // success
+      final routineJson = {
+        'id': 'r1',
+        'title': 'T',
+        'description': '',
+        'category': 'strength',
+        'difficulty': 'easy',
+        'duration_minutes': 10,
+        'equipment': 'None',
+        'steps': const [],
+        'is_published': false,
+        'is_curated': false,
+        'created_at': DateTime(2026, 1, 1).toIso8601String(),
+        'created_by': 'u',
+      };
+      when(
+        () => client.post(
+          any(),
+          headers: any(named: 'headers'),
+          body: any(named: 'body'),
+        ),
+      ).thenAnswer(
+        (_) async => http.Response(jsonEncode({'routine': routineJson}), 200),
+      );
+      final generated = await svc.generateRoutineOnServer(
+        request: 'r',
+        durationMinutes: 10,
+        difficulty: RoutineDifficulty.easy,
+        equipment: const [],
+      );
+      expect(generated.routine.id, 'r1');
+      expect(generated.alreadyExisted, isFalse);
+
+      // The server answers with the original when the same routine exists.
       when(
         () => client.post(
           any(),
@@ -606,32 +639,18 @@ void main() {
         ),
       ).thenAnswer(
         (_) async => http.Response(
-          jsonEncode({
-            'routine': {
-              'id': 'r1',
-              'title': 'T',
-              'description': '',
-              'category': 'strength',
-              'difficulty': 'easy',
-              'duration_minutes': 10,
-              'equipment': 'None',
-              'steps': const [],
-              'is_published': false,
-              'is_curated': false,
-              'created_at': DateTime(2026, 1, 1).toIso8601String(),
-              'created_by': 'u',
-            },
-          }),
+          jsonEncode({'routine': routineJson, 'alreadyExisted': true}),
           200,
         ),
       );
-      final routine = await svc.generateRoutineOnServer(
+      final existing = await svc.generateRoutineOnServer(
         request: 'r',
         durationMinutes: 10,
         difficulty: RoutineDifficulty.easy,
         equipment: const [],
       );
-      expect(routine.id, 'r1');
+      expect(existing.routine.id, 'r1');
+      expect(existing.alreadyExisted, isTrue);
     } finally {
       SupabaseService.backendBaseUrl = origBase;
       SupabaseService.firebaseAuthFactory = origAuth;

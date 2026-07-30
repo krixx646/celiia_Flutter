@@ -1,5 +1,6 @@
 import { tool } from 'ai';
 import { z } from 'zod';
+import { ensureSavedToLibrary, findMatchingRoutine } from '@/lib/routineDedupe';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
 
 /**
@@ -589,6 +590,24 @@ export const celiaTools = {
           order_index: index,
         };
       });
+
+      // The same sequence twice is the same workout, so point at the one that
+      // already exists rather than filling the library with copies of it.
+      const existing = await findMatchingRoutine(context.uid, steps);
+      if (existing) {
+        const savedToLibrary = await ensureSavedToLibrary(context.uid, existing.id);
+        return {
+          created: false,
+          alreadyExists: true,
+          routineId: existing.id,
+          title: existing.title,
+          savedToLibrary,
+          message:
+            'The user already has this exact sequence, so nothing new was saved. ' +
+            'Tell them it already exists and that the card opens the original. ' +
+            'Only build another one if they ask for something different.',
+        };
+      }
 
       const totalSeconds = steps.reduce((sum, step) => sum + step.duration_seconds, 0);
 

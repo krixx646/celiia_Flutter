@@ -206,7 +206,10 @@ class SupabaseService {
 
   /// Generate a personalized routine on the server (Next.js / Vercel) using the clip library.
   /// This keeps OpenAI keys off the device.
-  Future<Routine> generateRoutineOnServer({
+  ///
+  /// The server returns an existing routine instead of a new one when the same
+  /// sequence is already available to this user.
+  Future<GeneratedRoutine> generateRoutineOnServer({
     required String request,
     required int durationMinutes,
     required RoutineDifficulty difficulty,
@@ -261,7 +264,10 @@ class SupabaseService {
       throw SupabaseException('Invalid server response', text);
     }
 
-    return Routine.fromJson(routineJson);
+    return GeneratedRoutine(
+      routine: Routine.fromJson(routineJson),
+      alreadyExisted: json is Map && json['alreadyExisted'] == true,
+    );
   }
 
   /// Update an existing routine

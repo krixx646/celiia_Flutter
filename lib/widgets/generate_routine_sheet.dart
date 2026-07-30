@@ -327,7 +327,7 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
     }
 
     final provider = context.read<RoutineProvider>();
-    final routine = await provider.generateRoutine(
+    final result = await provider.generateRoutine(
       request: request,
       durationMinutes: _selectedDuration,
       difficulty: _selectedDifficulty,
@@ -336,11 +336,15 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
 
     if (!context.mounted) return;
 
-    if (routine != null) {
-      Navigator.of(context).pop(routine);
+    if (result != null) {
+      Navigator.of(context).pop(result.routine);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Created: ${routine.title}'),
+          content: Text(
+            result.alreadyExisted
+                ? 'You already have this one: ${result.routine.title}'
+                : 'Created: ${result.routine.title}',
+          ),
           backgroundColor: Colors.green,
         ),
       );

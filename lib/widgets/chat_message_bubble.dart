@@ -70,6 +70,9 @@ class ChatMessageBubble extends StatelessWidget {
             const SizedBox(height: 14),
             _RoutineCard(
               title: routine.title,
+              subtitle: routine.alreadyExisted
+                  ? 'Already in your library — tap to open'
+                  : 'Tap to open',
               onOpen: () => onOpenRoutine(routine.routineId),
             ),
           ],
@@ -350,9 +353,14 @@ class _ApprovalCard extends StatelessWidget {
 }
 
 class _RoutineCard extends StatelessWidget {
-  const _RoutineCard({required this.title, required this.onOpen});
+  const _RoutineCard({
+    required this.title,
+    required this.subtitle,
+    required this.onOpen,
+  });
 
   final String title;
+  final String subtitle;
   final VoidCallback onOpen;
 
   @override
@@ -387,7 +395,7 @@ class _RoutineCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    'Tap to open',
+                    subtitle,
                     style: TextStyle(color: theme.textSecondary, fontSize: 12),
                   ),
                 ],

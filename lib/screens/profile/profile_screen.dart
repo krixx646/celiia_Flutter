@@ -251,35 +251,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ],
           ),
-          child: Row(
-            children: [
-              Expanded(
-                child: _buildStatItem(
-                  theme,
-                  '$savedCount',
-                  'Saved',
-                  Icons.bookmark,
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: _buildStatItem(
+                    theme,
+                    '$savedCount',
+                    'Saved',
+                    Icons.bookmark,
+                  ),
                 ),
-              ),
-              Container(width: 1, height: 40, color: theme.border),
-              Expanded(
-                child: _buildStatItem(
-                  theme,
-                  '${streakStats.streak}',
-                  'Active Streak',
-                  Icons.local_fire_department,
+                _buildStatDivider(theme),
+                Expanded(
+                  child: _buildStatItem(
+                    theme,
+                    '${streakStats.streak}',
+                    'Streak',
+                    Icons.local_fire_department,
+                  ),
                 ),
-              ),
-              Container(width: 1, height: 40, color: theme.border),
-              Expanded(
-                child: _buildStatItem(
-                  theme,
-                  '$workoutCompletions',
-                  'Workouts',
-                  Icons.fitness_center,
+                _buildStatDivider(theme),
+                Expanded(
+                  child: _buildStatItem(
+                    theme,
+                    '$workoutCompletions',
+                    'Workouts',
+                    Icons.fitness_center,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 12),
@@ -292,6 +295,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ],
     );
+  }
+
+  Widget _buildStatDivider(ThemeProvider theme) {
+    return Center(child: Container(width: 1, height: 40, color: theme.border));
   }
 
   Widget _buildStatItem(
@@ -319,14 +326,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ],
         ),
-        const SizedBox(height: 4),
-        Text(
-          label.toUpperCase(),
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 0.5,
-            color: theme.textSecondary,
+        const SizedBox(height: 6),
+        // Every column gets the same amount of room for its label, so a label
+        // that wraps on a large font setting cannot drag its own column out of
+        // line with the other two.
+        Expanded(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Text(
+              label.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.5,
+                color: theme.textSecondary,
+              ),
+            ),
           ),
         ),
       ],

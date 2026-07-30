@@ -78,7 +78,9 @@ class ChatToolCall {
         final title = input?['title'];
         final steps = input?['steps'];
         final count = steps is List ? steps.length : 0;
-        final name = title is String && title.isNotEmpty ? title : 'this routine';
+        final name = title is String && title.isNotEmpty
+            ? title
+            : 'this routine';
         return count > 0
             ? 'Save "$name" with $count exercises to your library?'
             : 'Save "$name" to your library?';
@@ -153,16 +155,23 @@ class CeliaMessage {
     return null;
   }
 
-  /// A routine Celia successfully created in this message, if any.
-  ({String routineId, String title})? get createdRoutine {
+  /// The routine this message should offer to open: one Celia just created, or
+  /// the original she pointed to instead of saving a duplicate of it.
+  ({String routineId, String title, bool alreadyExisted})? get createdRoutine {
     for (final call in toolCalls) {
       if (call.toolName != 'create_routine') continue;
       final output = call.output;
-      if (output == null || output['created'] != true) continue;
+      if (output == null) continue;
+      final alreadyExisted = output['alreadyExists'] == true;
+      if (output['created'] != true && !alreadyExisted) continue;
       final id = output['routineId'];
       final title = output['title'];
       if (id is String && id.isNotEmpty) {
-        return (routineId: id, title: title is String ? title : 'Your routine');
+        return (
+          routineId: id,
+          title: title is String ? title : 'Your routine',
+          alreadyExisted: alreadyExisted,
+        );
       }
     }
     return null;
@@ -229,7 +238,9 @@ class CeliaMessage {
         : (content is String ? content : '');
 
     return CeliaMessage(
-      id: json['id']?.toString() ?? 'stored_${DateTime.now().microsecondsSinceEpoch}',
+      id:
+          json['id']?.toString() ??
+          'stored_${DateTime.now().microsecondsSinceEpoch}',
       role: role,
       text: text,
       toolCalls: calls,

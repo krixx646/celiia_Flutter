@@ -78,7 +78,9 @@ void main() {
           difficulty: any(named: 'difficulty'),
           equipment: any(named: 'equipment'),
         ),
-      ).thenAnswer((_) async => created);
+      ).thenAnswer(
+        (_) async => GeneratedRoutine(routine: created, alreadyExisted: false),
+      );
 
       final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
       final res = await rp.generateRoutine(
@@ -89,6 +91,7 @@ void main() {
       );
 
       expect(res, isNotNull);
+      expect(res!.alreadyExisted, isFalse);
       expect(rp.routines.first.id, 'r_new');
       expect(rp.aiRoutines.first.id, 'r_new');
       expect(rp.error, isNull);
@@ -101,6 +104,35 @@ void main() {
         ),
       ).called(1);
     });
+
+    test(
+      'lists a pre-existing routine once, however often it comes back',
+      () async {
+        final supa = MockSupabaseService();
+        final original = routine(id: 'r_old', createdAt: DateTime(2026, 1, 2));
+
+        when(
+          () => supa.generateRoutineOnServer(
+            request: any(named: 'request'),
+            durationMinutes: any(named: 'durationMinutes'),
+            difficulty: any(named: 'difficulty'),
+            equipment: any(named: 'equipment'),
+          ),
+        ).thenAnswer(
+          (_) async =>
+              GeneratedRoutine(routine: original, alreadyExisted: true),
+        );
+
+        final rp = RoutineProvider(supabase: supa, currentUserId: () => 'u');
+        final first = await rp.generateRoutine(request: 'same thing again');
+        final second = await rp.generateRoutine(request: 'same thing again');
+
+        expect(first?.alreadyExisted, isTrue);
+        expect(second?.alreadyExisted, isTrue);
+        expect(rp.routines.where((r) => r.id == 'r_old'), hasLength(1));
+        expect(rp.aiRoutines.where((r) => r.id == 'r_old'), hasLength(1));
+      },
+    );
 
     test('sets error and returns null on failure', () async {
       final supa = MockSupabaseService();

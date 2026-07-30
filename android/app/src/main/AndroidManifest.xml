@@ -1,6 +1,51 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="eu.thefit.celia">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="eu.thefit.celia">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+
+    <!-- Only the calorie scanner uses the camera, and it already tells the user
+         when a device has none. The camera plugin declares this feature as
+         required, which made Google Play hide the app from every camera-less
+         device: 426 models that the previous release supported. -->
+    <uses-feature
+        android:name="android.hardware.camera.any"
+        android:required="false"
+        tools:replace="android:required" />
+
+    <!-- Requesting CAMERA makes Google Play treat a rear camera and autofocus as
+         hardware the app cannot run without, which hides it from devices that
+         have neither. Only the calorie scanner needs a camera and it already
+         handles a device that has none. -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <!-- The camera plugin asks for microphone access so it can record video with
+         sound. Celia only takes still photos (the controller is created with
+         enableAudio: false) and plays video back, so the permission would appear
+         on the store listing as a capability the app never uses. -->
+    <uses-permission
+        android:name="android.permission.RECORD_AUDIO"
+        tools:node="remove" />
+
+    <!-- androidx.biometric arrives through Firebase Auth and asks for these, but
+         nothing in Celia authenticates with a fingerprint: sign-in is email and
+         password. USE_FINGERPRINT in particular makes Play treat a fingerprint
+         sensor as required hardware, which is what dropped support for devices
+         the previous release reached. -->
+    <uses-permission
+        android:name="android.permission.USE_BIOMETRIC"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.USE_FINGERPRINT"
+        tools:node="remove" />
+    <uses-feature
+        android:name="android.hardware.fingerprint"
+        android:required="false" />
     <application
         android:label="Celia"
         android:name="${applicationName}"

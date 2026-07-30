@@ -13,6 +13,15 @@
         android:required="false"
         tools:replace="android:required" />
 
+    <!-- Celia shows no ads and has no analytics SDK, and the Play Console
+         declaration says so. Google Play services libraries pull this permission
+         in through manifest merge on their own, though, and a build that carries
+         it while the declaration says otherwise is blocked from release. Removing
+         it explicitly keeps the two in agreement whatever the dependencies do. -->
+    <uses-permission
+        android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
+
     <!-- Requesting CAMERA makes Google Play treat a rear camera and autofocus as
          hardware the app cannot run without, which hides it from devices that
          have neither. Only the calorie scanner needs a camera and it already

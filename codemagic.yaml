@@ -4,8 +4,10 @@ workflows:
     max_build_duration: 60
     instance_type: mac_mini_m2
     environment:
-      flutter: stable
-      xcode: latest
+      # Pin so Codemagic does not jump to a Flutter/Xcode pair our plugins
+      # have not caught up with (IconData final / new ASAuthorizationError cases).
+      flutter: 3.35.2
+      xcode: 16.4
       cocoapods: default
       vars:
         # Optional: set in Codemagic UI as secure variables.
@@ -65,8 +67,8 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m2
     environment:
-      flutter: stable
-      xcode: latest
+      flutter: 3.35.2
+      xcode: 16.4
       cocoapods: default
       ios_signing:
         distribution_type: ad_hoc
@@ -95,8 +97,8 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m2
     environment:
-      flutter: stable
-      xcode: latest
+      flutter: 3.35.2
+      xcode: 16.4
       cocoapods: default
       ios_signing:
         distribution_type: app_store
@@ -119,4 +121,3 @@ workflows:
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
-

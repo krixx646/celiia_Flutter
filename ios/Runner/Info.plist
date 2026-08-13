@@ -78,5 +78,9 @@
     <string>Celia may save processed images (e.g., analysis snapshots) back to your library when you choose to download them.</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>Celia uses the microphone only when you record video with sound for upload; audio is not recorded otherwise.</string>
+    <!-- Required by ITMS-90683: a linked SDK references Core Location even though
+         Celia never requests or uses the user's location. -->
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Celia does not use your location. This permission text is required because a third-party library included with the app references location APIs.</string>
 </dict>
 </plist>

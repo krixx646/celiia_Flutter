@@ -1,16 +1,41 @@
 import '../models/meal_log.dart';
 import '../models/nutrition_profile.dart';
 
+/// Which observation an insight is making.
+///
+/// The service decides what is worth saying; the wording lives in the widget
+/// layer (see `insightText`) so the same insight reads in whatever language
+/// the app is currently set to, including after the user changes it.
+enum NutritionInsightKind {
+  startFueling,
+  aboveTarget,
+  lowProtein,
+  almostThere,
+  onTrack,
+  weeklyRhythm,
+  weeklyTrend,
+}
+
 class NutritionInsight {
   const NutritionInsight({
-    required this.title,
-    required this.message,
+    required this.kind,
     required this.tone,
+    this.calories = 0,
+    this.grams = 0,
+    this.loggedDays = 0,
+    this.averageCalories = 0,
+    this.deltaCalories = 0,
   });
 
-  final String title;
-  final String message;
+  final NutritionInsightKind kind;
   final NutritionInsightTone tone;
+
+  /// Numbers the wording needs. Which ones are meaningful depends on [kind].
+  final int calories;
+  final int grams;
+  final int loggedDays;
+  final int averageCalories;
+  final int deltaCalories;
 }
 
 enum NutritionInsightTone { positive, neutral, warning }
@@ -47,45 +72,40 @@ class NutritionInsightsService {
 
     if (todayCalories <= 0) {
       return const NutritionInsight(
-        title: 'Start fueling today',
-        message:
-            'You have your full calorie budget left. Scan or log your first meal to stay on track.',
+        kind: NutritionInsightKind.startFueling,
         tone: NutritionInsightTone.neutral,
       );
     }
 
     if (remainingCalories < -150) {
       return NutritionInsight(
-        title: 'Above target today',
-        message:
-            'You are ${(-remainingCalories).round()} kcal above your daily target. Keep dinner lighter or add a short workout.',
+        kind: NutritionInsightKind.aboveTarget,
         tone: NutritionInsightTone.warning,
+        calories: (-remainingCalories).round(),
       );
     }
 
     if (proteinGap > 25) {
       return NutritionInsight(
-        title: 'Protein is still low',
-        message:
-            'You still need about ${proteinGap.round()}g protein today to hit your target.',
+        kind: NutritionInsightKind.lowProtein,
         tone: NutritionInsightTone.neutral,
+        grams: proteinGap.round(),
       );
     }
 
     if (remainingCalories <= 350 && remainingCalories >= 0) {
       return NutritionInsight(
-        title: 'Almost at your goal',
-        message:
-            'You have ${remainingCalories.round()} kcal left today. A balanced snack should fit nicely.',
+        kind: NutritionInsightKind.almostThere,
         tone: NutritionInsightTone.positive,
+        calories: remainingCalories.round(),
       );
     }
 
     return NutritionInsight(
-      title: 'On track today',
-      message:
-          '${remainingCalories.round()} kcal and ${proteinGap.round()}g protein left to reach your daily targets.',
+      kind: NutritionInsightKind.onTrack,
       tone: NutritionInsightTone.positive,
+      calories: remainingCalories.round(),
+      grams: proteinGap.round(),
     );
   }
 
@@ -111,9 +131,7 @@ class NutritionInsightsService {
     final loggedDays = dailyTotals.where((value) => value > 0).length;
     if (loggedDays == 0) {
       return const NutritionInsight(
-        title: 'Build your weekly rhythm',
-        message:
-            'Log meals across the week so Celia can spot patterns and coach you better.',
+        kind: NutritionInsightKind.weeklyRhythm,
         tone: NutritionInsightTone.neutral,
       );
     }
@@ -121,19 +139,15 @@ class NutritionInsightsService {
     final average =
         dailyTotals.fold<double>(0, (sum, value) => sum + value) / loggedDays;
     final delta = average - profile.dailyCalories;
-    final direction = delta.abs() < 80
-        ? 'right around your daily target'
-        : delta > 0
-        ? '${delta.round()} kcal above your target on average'
-        : '${(-delta).round()} kcal below your target on average';
 
     return NutritionInsight(
-      title: 'Weekly trend',
-      message:
-          'You logged meals on $loggedDays of the last 7 days, averaging ${average.round()} kcal — $direction.',
+      kind: NutritionInsightKind.weeklyTrend,
       tone: delta.abs() < 120
           ? NutritionInsightTone.positive
           : NutritionInsightTone.neutral,
+      loggedDays: loggedDays,
+      averageCalories: average.round(),
+      deltaCalories: delta.round(),
     );
   }
 

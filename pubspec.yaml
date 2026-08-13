@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.1.8+21
+version: 1.1.9+22
 
 environment:
   sdk: '>=3.8.0 <4.0.0'
@@ -30,6 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
   
   # State Management
   provider: ^6.1.1
@@ -53,9 +56,18 @@ dependencies:
   # Supabase (Database, Auth, Storage)
   supabase_flutter: ^2.8.0
   
-  # Video Player
+  # Video player + coaching audio.
+  # Workout counting uses flutter_tts (on-device). just_audio stays pinned for
+  # future OpenAI/avatar speech clips; 0.10+ pulls audio_session 0.2.4 which
+  # requires Kotlin 2.3.20 + AGP 9 — incompatible with this app's toolchain.
   video_player: ^2.9.2
   chewie: ^1.8.5
+  flutter_tts: ^4.2.5
+  just_audio: 0.9.46
+  audio_session: 0.1.25
+  wakelock_plus: ^1.4.0
+  path_provider: ^2.1.5
+  path: ^1.9.0
   
   # JSON Serialization
   json_annotation: ^4.9.0
@@ -91,6 +103,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  # Builds AppLocalizations from lib/l10n/*.arb (see l10n.yaml).
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:

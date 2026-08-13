@@ -1,3 +1,4 @@
+import 'package:celia_flutter/l10n/app_localizations.dart';
 import 'package:celia_flutter/providers/navigation_provider.dart';
 import 'package:celia_flutter/providers/nutrition_profile_provider.dart';
 import 'package:celia_flutter/providers/nutrition_tracker_provider.dart';
@@ -61,6 +62,9 @@ void main() {
             ..._nutritionProviders(),
           ],
           child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('en'),
             home: MainScreen(
               screens: [
                 Center(child: Text('SCREEN_0')),
@@ -98,6 +102,9 @@ void main() {
           ..._nutritionProviders(),
         ],
         child: const MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: Locale('en'),
           home: MainScreen(
             screens: [
               Center(child: Text('SCREEN_0')),

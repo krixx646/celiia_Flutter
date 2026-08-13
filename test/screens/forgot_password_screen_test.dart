@@ -1,3 +1,4 @@
+import 'package:celia_flutter/l10n/app_localizations.dart';
 import 'package:celia_flutter/providers/auth_provider.dart';
 import 'package:celia_flutter/repositories/auth_repository.dart';
 import 'package:celia_flutter/screens/forgot_password_screen.dart';
@@ -23,6 +24,9 @@ void main() {
         ChangeNotifierProvider<AuthProvider>.value(
           value: auth,
           child: MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: const Locale('en'),
             home: Builder(
               builder: (context) => Scaffold(
                 body: Center(

@@ -48,6 +48,16 @@ class RoutineStep {
   /// ready yet. Optional — if absent, it's derived from [title] at runtime.
   final String? exerciseSlug;
 
+  /// How many rounds of this exercise to do before moving on.
+  final int sets;
+
+  /// Reps per set for a counted exercise. Null means the exercise is held or
+  /// worked for time instead, in which case [durationSeconds] is the target.
+  final int? reps;
+
+  /// Recovery between sets, and after the last set before the next exercise.
+  final int restSeconds;
+
   const RoutineStep({
     required this.id,
     required this.title,
@@ -57,7 +67,15 @@ class RoutineStep {
     this.thumbnailUrl,
     required this.orderIndex,
     this.exerciseSlug,
+    this.sets = 1,
+    this.reps,
+    this.restSeconds = 0,
   });
+
+  /// Whether the guided player counts reps out loud for this step or runs a
+  /// countdown. Routines written before sets and reps existed have no rep
+  /// prescription, so they keep working as timed steps.
+  bool get isCounted => (reps ?? 0) > 0;
 
   factory RoutineStep.fromJson(Map<String, dynamic> json) =>
       _$RoutineStepFromJson(json);

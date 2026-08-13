@@ -1,0 +1,1017 @@
+{
+  "@@locale": "ja",
+  "appName": "Celia Integral Coach",
+  "@appName": {
+    "description": "The app's name. Not translated."
+  },
+  "actionCancel": "キャンセル",
+  "actionSave": "保存",
+  "actionDelete": "削除",
+  "actionEdit": "編集",
+  "actionRetry": "再試行",
+  "actionDone": "完了",
+  "actionClose": "閉じる",
+  "actionContinue": "続ける",
+  "actionSeeAll": "すべて見る",
+  "actionYesDoIt": "はい、実行する",
+  "actionNotNow": "今はしない",
+  "loadingPreparing": "Celiaを準備中…",
+  "loadingGeneric": "読み込み中…",
+  "errorGeneric": "問題が発生しました。もう一度お試しください。",
+  "errorCanceled": "操作がキャンセルされました。",
+  "errorTooManyRequests": "試行回数が多すぎます。1分ほど待ってから、もう一度お試しください。",
+  "errorNetwork": "インターネット接続を確認して、もう一度お試しください。",
+  "errorBadCredentials": "メールアドレスまたはパスワードが正しくありません。",
+  "errorEmailInUse": "このメールアドレスはすでに使用されています。代わりにログインしてください。",
+  "errorWeakPassword": "より強力なパスワードを入力して、もう一度お試しください。",
+  "errorInvalidEmail": "有効なメールアドレスを入力してください。",
+  "errorNoPermission": "この操作を行う権限がありません。",
+  "errorNotSignedIn": "サインインしてから、もう一度お試しください。",
+  "errorNoConversation": "続けるには新しいチャットを開始してください。",
+  "errorNoPlayableVideos": "このルーティンで再生できる動画はまだありません。",
+  "errorLoadRoutines": "現在ルーティンを読み込めません。もう一度お試しください。",
+  "errorLoadSavedRoutines": "現在保存済みのルーティンを読み込めません。もう一度お試しください。",
+  "errorGenerateRoutine": "現在ルーティンを作成できません。もう一度お試しください。",
+  "errorLoadChats": "現在保存済みのチャットを読み込めません。",
+  "errorCeliaUnavailable": "現在Celiaを利用できません。もう一度お試しください。",
+  "errorOpenConversation": "その会話を開けませんでした。",
+  "errorDeleteConversation": "この会話を削除できませんでした。もう一度お試しください。",
+  "errorSignIn": "サインインできませんでした。もう一度お試しください。",
+  "errorCreateAccount": "アカウントを作成できませんでした。もう一度お試しください。",
+  "errorSendResetEmail": "パスワードリセットメールを送信できませんでした。もう一度お試しください。",
+  "errorSendVerificationEmail": "確認メールを送信できませんでした。もう一度お試しください。",
+  "errorGoogleSignIn": "Googleでのサインインに失敗しました。もう一度お試しください。",
+  "errorAppleSignIn": "Appleでのサインインに失敗しました。もう一度お試しください。",
+  "errorRefreshNutrition": "栄養データを更新できませんでした。",
+  "errorLoadNutritionProfile": "栄養プロフィールを読み込めませんでした。",
+  "startupErrorTitle": "アプリを起動できません",
+  "startupErrorBody": "アプリを閉じて、もう一度開いてください。問題が続く場合は、サポートにお問い合わせください。",
+  "authTagline": "あなたのフィットネス仲間",
+  "authSignUp": "アカウント登録",
+  "authLogIn": "ログイン",
+  "authVersion": "バージョン {version}",
+  "@authVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "authForgotPassword": "パスワードをお忘れですか？",
+  "authOr": "または",
+  "authContinueWithGoogle": "Googleで続ける",
+  "authContinueWithApple": "Appleで続ける",
+  "authAuthenticating": "認証中…",
+  "authEnterYourName": "名前を入力してください。",
+  "authNeedAccount": "アカウントをお持ちでない方：アカウント登録",
+  "authHaveAccount": "すでにアカウントをお持ちですか？ログイン",
+  "authFieldName": "名前",
+  "authFieldEmail": "メールアドレス",
+  "authFieldPassword": "パスワード",
+  "verifyEmailTitle": "メールアドレスを確認",
+  "verifyEmailHeading": "受信トレイを確認してください",
+  "verifyEmailBody": "確認リンクをメールで送信しました。",
+  "verifyEmailSent": "確認メールを送信しました！",
+  "verifyEmailContinue": "確認しました。続行",
+  "verifyEmailSignOut": "ログアウト",
+  "verifyEmailSending": "送信中…",
+  "verifyEmailResend": "確認メールを再送信",
+  "verifyEmailResendIn": "{seconds}秒後に再送信",
+  "@verifyEmailResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "verifyEmailAddress": "メール：{email}",
+  "@verifyEmailAddress": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "forgotPasswordTitle": "パスワードをお忘れですか？",
+  "forgotPasswordBody": "パスワード再設定リンクを受け取るメールアドレスを入力してください。",
+  "forgotPasswordEmptyEmail": "メールアドレスを入力してください",
+  "forgotPasswordSent": "パスワード再設定メールを送信しました。",
+  "forgotPasswordSend": "再設定リンクを送信",
+  "forgotPasswordSending": "送信中…",
+  "nameSetupTitle": "Celiaには何と呼ばせますか？",
+  "nameSetupBody": "コーチングをあなたに合わせるため、アプリ全体で名前を使用します。",
+  "nameSetupSaveFailed": "名前を保存できませんでした。もう一度お試しください。",
+  "homeGoodMorning": "おはようございます。",
+  "homeCeliaActive": "CELIA ACTIVE",
+  "homeGenerateRoutine": "AIで\nあなた専用の\nルーティンを作成",
+  "homeCreateRoutine": "ルーティンを作成",
+  "homeQuickActions": "クイックアクション",
+  "homeUpNext": "次の予定",
+  "homeNoUpcoming": "予定されているルーティンはまだありません。\n作成するか、ライブラリを見てみましょう。",
+  "homeChatWithCelia": "Celiaに相談",
+  "homeChatSubtitle": "フォームや食事について質問",
+  "homeScanMeal": "食事をスキャン",
+  "homeScanMealSubtitle": "食べ物とカロリーを識別",
+  "homeNutrition": "栄養",
+  "homeNutritionSubtitle": "カロリー、マクロ、食事を確認",
+  "homeBrowseLibrary": "ライブラリを\n見る",
+  "homeTrackProgress": "進捗を\n記録",
+  "chatTitle": "コーチCelia",
+  "chatEmptyPrompt": "今日はどのように\nフィットネスをサポートしましょうか？",
+  "chatYourChats": "あなたのチャット",
+  "chatNoSavedChats": "保存されたチャットはまだありません。",
+  "chatHistory": "チャット履歴",
+  "chatNew": "新しいチャット",
+  "chatOpening": "チャットを開いています…",
+  "chatScanAMeal": "食事をスキャン",
+  "chatInputHint": "トレーニングについてCeliaに何でも聞いてください…",
+  "chatCouldNotOpenRoutine": "そのルーティンを開けませんでした",
+  "chatThisRoutine": "このルーティン",
+  "chatThisMeal": "この食事",
+  "chatYourRoutine": "あなたのルーティン",
+  "chatMoreExercises": "あと{count}件",
+  "@chatMoreExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatEmptySubtitle": "トレーニング、食事、進捗について質問してください。",
+  "chatLoggedToday": "今日は{calories} kcalを記録しています。",
+  "@chatLoggedToday": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "chatSuggestionHiit": "20分間のHIITルーティンを作って",
+  "chatSuggestionDinner": "今夜は何を食べればいい？",
+  "chatSuggestionProgress": "今週の調子はどう？",
+  "chatSuggestionIngredients": "鶏肉、米、ほうれん草があります",
+  "chatJustNow": "たった今",
+  "chatMinutesAgo": "{minutes}分前",
+  "@chatMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "chatHoursAgo": "{hours}時間前",
+  "@chatHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "chatDaysAgo": "{days}日前",
+  "@chatDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "chatRoutineAlreadySaved": "すでにライブラリにあります — タップして開く",
+  "chatRoutineTapToOpen": "タップして開く",
+  "chatToolCancelled": "キャンセルしました",
+  "chatToolFailed": "{label} — うまくいきませんでした",
+  "@chatToolFailed": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "chatToolRoutineSaveFailed": "ルーティンを保存できませんでした",
+  "chatToolRoutineSaved": "ライブラリに保存しました",
+  "chatToolMealLogged": "今日の記録に追加しました",
+  "chatToolRoutineAdded": "ライブラリに追加しました",
+  "activityCheckingProgress": "進捗を確認しています",
+  "activityCheckingNutrition": "今日食べたものを確認しています",
+  "activityReviewingMeals": "最近の食事を確認しています",
+  "activityLookingAtRoutines": "ルーティンを確認しています",
+  "activityReadingRoutine": "そのルーティンを読み込んでいます",
+  "activitySearchingLibrary": "エクササイズライブラリを検索しています",
+  "activityBuildingRoutine": "ルーティンを作成しています",
+  "activityLoggingMeal": "食事を記録しています",
+  "activitySavingToLibrary": "ライブラリに保存しています",
+  "activityWorking": "処理しています",
+  "approvalSaveRoutineWithCount": "「{name}」を{count}個のエクササイズ付きでライブラリに保存しますか？",
+  "@approvalSaveRoutineWithCount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalSaveRoutine": "「{name}」をライブラリに保存しますか？",
+  "@approvalSaveRoutine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalLogMealWithCalories": "「{name}」を{calories} kcalとして記録しますか？",
+  "@approvalLogMealWithCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalLogMeal": "「{name}」を記録しますか？",
+  "@approvalLogMeal": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalAddRoutine": "このルーティンをライブラリに追加しますか？",
+  "approvalGeneric": "Celiaに実行を許可しますか？",
+  "libraryTitle": "ルーティンライブラリ",
+  "librarySteps": "{count, plural, one{{count}ステップ} other{{count}ステップ}}",
+  "@librarySteps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryEmpty": "ルーティンはまだありません",
+  "libraryEmptyBody": "管理ダッシュボードでルーティンを作成して公開してください。",
+  "libraryLoadFailed": "ルーティンを読み込めませんでした",
+  "routineStartWorkout": "ワークアウトを開始",
+  "routineNoSteps": "利用できるステップはありません",
+  "routineNoVideoForStep": "このステップの動画はありません",
+  "routineVideoProcessing": "動画を処理中です。後でもう一度お試しください。",
+  "routineMissingPlaybackUrl": "この動画の再生URLがありません",
+  "routinePreviewBanner": "プレビュー — フル動画は近日公開",
+  "routinePreview": "プレビュー",
+  "routineDetails": "詳細",
+  "routineNotFound": "ルーティンが見つかりません",
+  "routineCompletedTimes": "{count}回完了",
+  "@routineCompletedTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "playerVideoUnavailable": "この動画は現在利用できません。",
+  "playerSteps": "ステップ",
+  "playerStepCounter": "{current}/{total}",
+  "@playerStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoPlayableVideos": "再生できる動画はありません",
+  "playerWorkoutComplete": "ワークアウト完了！",
+  "playerSavingStreak": "連続記録に保存しています…",
+  "playerSavedStreak": "連続記録に保存しました",
+  "playerRetrySave": "再保存",
+  "playerReplay": "再生",
+  "playerNotReady": "プレーヤーの準備ができていません",
+  "playerPreviewUnavailable": "プレビューは現在利用できません。",
+  "playerClipCounter": "Clip {current} of {total} · {duration}",
+  "@playerClipCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerErrorLoadingVideo": "動画の読み込み中にエラーが発生しました",
+  "playerLoadingVideo": "動画を読み込んでいます…",
+  "playerFailedToLoadVideo": "動画を読み込めませんでした",
+  "playerNotInitialized": "動画プレーヤーが初期化されていません",
+  "guidedExerciseCounter": "エクササイズ {current}/{total}",
+  "@guidedExerciseCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedGetReady": "準備してください",
+  "guidedSetOf": "Set {current} of {total}",
+  "@guidedSetOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedRest": "休憩",
+  "guidedSkipRest": "休憩をスキップ",
+  "guidedPaused": "一時停止中",
+  "guidedResume": "再開",
+  "guidedWorkoutComplete": "ワークアウト完了",
+  "guidedEndTitle": "ワークアウトを終了しますか？",
+  "guidedEndBody": "このセッションの進捗は保存されません。",
+  "guidedKeepGoing": "続ける",
+  "guidedEnd": "終了",
+  "guidedReps": "{count, plural, one{{count}回} other{{count}回}}",
+  "@guidedReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetTitle": "AIでルーティンを生成",
+  "generateSheetPrompt": "どんなワークアウトをしたいですか？",
+  "generateSheetHint": "例：「目を覚ますための朝の短いストレッチ」または「初心者向けの全身筋力トレーニング」",
+  "generateSheetDuration": "時間",
+  "generateSheetMinutes": "{count}分",
+  "@generateSheetMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetDifficulty": "難易度",
+  "generateSheetEquipment": "利用可能な器具",
+  "generateSheetGenerating": "生成中…",
+  "generateSheetSubmit": "ルーティンを生成",
+  "generateSheetDescribeFirst": "希望するワークアウトを入力してください",
+  "generateSheetAlreadyExists": "同じものがすでにあります：{title}",
+  "@generateSheetAlreadyExists": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetCreated": "作成しました：{title}",
+  "@generateSheetCreated": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetFailed": "ルーティンの生成に失敗しました",
+  "guidedNoExercises": "このルーティンにはまだエクササイズがありません。",
+  "guidedStartFailed": "現在このワークアウトを開始できません。もう一度お試しください。",
+  "guidedSaveFailed": "このワークアウトを保存できませんでした。連続記録を更新するには、再試行をタップしてください。",
+  "guidedOfReps": "全{count}回中",
+  "@guidedOfReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedHold": "キープ",
+  "guidedNextSet": "次のセット",
+  "guidedUpNext": "次はこれ",
+  "guidedSetsHold": "{sets} × {seconds}秒キープ",
+  "@guidedSetsHold": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachGetReady": "準備してください。{exercise}",
+  "@coachGetReady": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachStartReps": "開始。{count}回。",
+  "@coachStartReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachStartHold": "{seconds}秒キープ。",
+  "@coachStartHold": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachRest": "休憩。次は{exercise}です",
+  "@coachRest": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachRestShort": "休憩。",
+  "coachComplete": "よくできました。ワークアウト完了です。",
+  "coachRep": "{count}",
+  "@coachRep": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachCountdown": "{seconds}",
+  "@coachCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoVideosInRoutine": "このルーティンに再生可能な動画が見つかりません。",
+  "playerLoadRoutineFailed": "現在このルーティンを読み込めません。もう一度お試しください。",
+  "playerStepLoadFailedSkipping": "「{title}」を読み込めませんでした。スキップします…",
+  "@playerStepLoadFailedSkipping": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerStepLoadFailed": "「{title}」を読み込めませんでした。",
+  "@playerStepLoadFailed": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerSaveCompletionFailed": "完了を保存できませんでした。連続記録を更新するには、再試行をタップしてください。",
+  "playerStepPreviewSubtitle": "{duration} • プレビュー",
+  "@playerStepPreviewSubtitle": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerNoVideosReady": "このルーティンにはまだ再生できる動画がありません。",
+  "playerPlaybackFailed": "現在この動画を再生できません。もう一度お試しください。",
+  "libraryTabCurated": "厳選",
+  "libraryTabAiGenerated": "AI生成",
+  "profileSavedRoutines": "保存済みルーティン",
+  "savedRoutinesNoFavorites": "お気に入りのルーティンはまだありません。",
+  "savedRoutinesEmpty": "保存済みのルーティンはまだありません。",
+  "actionFavorite": "お気に入りに追加",
+  "actionUnfavorite": "お気に入りから削除",
+  "routineDurationMinutes": "{minutes}分",
+  "@routineDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHoursMinutes": "{hours}時間{minutes}分",
+  "@routineDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHours": "{hours}時間",
+  "@routineDurationHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "difficultyEasy": "初級",
+  "difficultyMedium": "中級",
+  "difficultyHard": "上級",
+  "categoryStrength": "筋力",
+  "categoryCardio": "有酸素運動",
+  "categoryFlexibility": "柔軟性",
+  "categoryMindfulness": "マインドフルネス",
+  "categoryDance": "ダンス",
+  "categoryHiit": "HIIT",
+  "categoryYoga": "ヨガ",
+  "categoryCustom": "カスタム",
+  "navHome": "ホーム",
+  "navLibrary": "ライブラリ",
+  "navChat": "チャット",
+  "navProfile": "プロフィール",
+  "equipmentNone": "なし",
+  "equipmentDumbbells": "ダンベル",
+  "equipmentResistanceBands": "レジスタンスバンド",
+  "equipmentYogaMat": "ヨガマット",
+  "equipmentKettlebell": "ケトルベル",
+  "equipmentPullUpBar": "懸垂バー",
+  "equipmentJumpRope": "縄跳び",
+  "nutritionTitle": "栄養",
+  "nutritionSubtitle": "カロリー、マクロ栄養素、食事履歴",
+  "nutritionSetGoalsTitle": "1日の栄養目標を設定",
+  "nutritionSetGoalsBody": "体重、身長、年齢、性別を入力すると、Celiaが毎日摂取すべきカロリーと栄養素を計算します。",
+  "nutritionSetUpGoals": "目標を設定",
+  "nutritionDailyTarget": "1日の目標",
+  "nutritionDailyGoals": "1日の目標",
+  "nutritionKcal": "{calories} kcal",
+  "@nutritionKcal": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMacroSummary": "P {protein}g · C {carbs}g · F {fat}g",
+  "@nutritionMacroSummary": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionToday": "今日",
+  "nutritionMealHistory": "食事履歴",
+  "nutritionCeliaInsights": "Celiaのインサイト",
+  "nutritionWeeklyTrend": "週間の推移",
+  "nutritionTodayMeals": "kcal • {count, plural, one{{count}食} other{{count}食}}",
+  "@nutritionTodayMeals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionTodayOfTargetMeals": "{target} kcal中 • {count, plural, one{{count}食} other{{count}食}}",
+  "@nutritionTodayOfTargetMeals": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionWeekdayInitials": "月,火,水,木,金,土,日",
+  "@nutritionWeekdayInitials": {
+    "description": "Single-letter weekday labels for the weekly chart, Monday first, comma separated."
+  },
+  "nutritionFieldFoodName": "食品名",
+  "nutritionFieldGrams": "グラム数",
+  "nutritionFieldCalories": "カロリー",
+  "scannerStatusAnalyzing": "分析中...",
+  "scannerStatusIdle": "CELIA SCANNER",
+  "scannerFieldFoodName": "食品名",
+  "scannerFieldGrams": "グラム数",
+  "scannerFieldCalories": "カロリー",
+  "scannerFieldPro": "Pro",
+  "scannerMacroPro": "PRO",
+  "scannerMacroCarb": "CARB",
+  "scannerMacroFat": "FAT",
+  "scannerRemainingAfterLogging": "今日は残り{calories} kcal、たんぱく質{grams}gです",
+  "@scannerRemainingAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerOverTargetAfterLogging": "1日の目標を{calories} kcal超えています",
+  "@scannerOverTargetAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerButtonAnalyzing": "分析中",
+  "scannerButtonQuotaNeeded": "クォータが必要",
+  "scannerButtonScanNow": "今すぐスキャン",
+  "scannerButtonLogging": "記録中",
+  "scannerButtonLogMeal": "食事を記録",
+  "scannerNoClearFood": "食品をまだはっきり検出できません。明るい場所で試すか、カメラを近づけてください。",
+  "scannerErrorCameraPermission": "食事をスキャンするにはカメラの許可が必要です。",
+  "scannerErrorBackendMissing": "カロリースキャナーのバックエンドがまだ設定されていません。",
+  "scannerErrorApiKeyInvalid": "カロリースキャン用のOpenAI APIキーが無効です。バックエンド環境のキーを置き換えて再デプロイし、もう一度お試しください。",
+  "scannerErrorApiKeyMissing": "カロリースキャンにはOpenAI APIキーが必要です。Vercelに追加して再デプロイし、もう一度お試しください。",
+  "scannerErrorQuotaExhausted": "カロリースキャン用のOpenAIクレジットを使い切りました。APIクレジットを追加するか請求上限を引き上げて、もう一度お試しください。",
+  "scannerErrorTimeout": "Celiaによる食事の分析に時間がかかっています。カメラを固定して、もう一度スキャンしてください。",
+  "scannerErrorNotSignedIn": "食事をスキャンする前にサインインしてください。",
+  "scannerErrorMealTableMissing": "食事記録テーブルの準備がまだできていません。スキャン結果は引き続き利用できます。",
+  "scannerErrorGeneric": "Celiaはまだこの食事を分析できません。カメラを固定し、食品を中央に収めて、もう一度スキャンしてください。",
+  "nutritionGrams": "{grams}g",
+  "@nutritionGrams": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionMealSubtitle": "{time} · {count, plural, one{{count}品} other{{count}品}}",
+  "@nutritionMealSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMealDetails": "食事の詳細",
+  "nutritionFoodItems": "食品項目",
+  "nutritionItemSubtitle": "{grams}g · {calories} kcal",
+  "@nutritionItemSubtitle": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionNeedsOneItem": "食事には少なくとも1つの食品項目が必要です。",
+  "nutritionMealUpdated": "食事を更新しました",
+  "nutritionUpdateFailed": "食事を更新できませんでした：{error}",
+  "@nutritionUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionDeleteMealTitle": "食事を削除しますか？",
+  "nutritionDeleteMealBody": "栄養履歴からこの食事を削除します。",
+  "nutritionDeleteMeal": "食事を削除",
+  "nutritionDeleteFailed": "食事を削除できませんでした：{error}",
+  "@nutritionDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionEditFood": "食品を編集",
+  "nutritionSaveFood": "食品を保存",
+  "nutritionLoadFailed": "食事を読み込めませんでした",
+  "nutritionLoadFailedBody": "下にスワイプして更新するか、バックエンド接続を確認してください。",
+  "nutritionNoMeals": "まだ食事が記録されていません",
+  "nutritionNoMealsBody": "最初の食事をスキャンすると、Celiaが栄養履歴を作成します。",
+  "progressToday": "今日",
+  "progressSetGoals": "栄養目標を設定して、カロリーとマクロのトラッキングを利用しましょう。",
+  "progressOfTarget": "{target} kcal中",
+  "@progressOfTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressMacroAmount": "{consumed} / {target}g",
+  "@progressMacroAmount": {
+    "placeholders": {
+      "consumed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalOver": "{calories} kcalオーバー",
+  "@progressKcalOver": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalLeft": "残り{calories} kcal",
+  "@progressKcalLeft": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressProtein": "タンパク質",
+  "progressCarbs": "炭水化物",
+  "progressFat": "脂質",
+  "scannerEditItem": "食品項目を編集",
+  "scannerSaveChanges": "変更を保存",
+  "scannerItemCalories": "{name} · {calories} kcal",
+  "@scannerItemCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerConfidence": "信頼度 {percent}% · {provider}",
+  "@scannerConfidence": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerMoreItems": "+ {count}個の項目をこの食事記録に追加",
+  "@scannerMoreItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerIfYouLog": "この食事を記録すると",
+  "scannerAfterLogging": "今日の{after} / {target} kcal",
+  "@scannerAfterLogging": {
+    "placeholders": {
+      "after": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerGramsDecimal": "{grams}g",
+  "@scannerGramsDecimal": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerItemServing": "{name} · {grams}g",
+  "@scannerItemServing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerNoMealDetected": "食事を検出できませんでした",
+  "onboardingWelcome": "ようこそ、{name}さん",
+  "@onboardingWelcome": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingGender": "性別",
+  "onboardingCalculateGoals": "目標を計算",
+  "onboardingScanFirstMeal": "最初の食事をスキャン",
+  "onboardingExploreRoutines": "ルーティンを見る",
+  "onboardingGoHome": "ホームへ",
+  "onboardingDailyTargets": "1日の目標",
+  "onboardingProtein": "タンパク質 {grams}g ·",
+  "@onboardingProtein": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingMacroTargets": "タンパク質 {protein}g • 炭水化物 {carbs}g • 脂質 {fat}g",
+  "@onboardingMacroTargets": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingTargetsReady": "1日の栄養目標が準備できました。始め方を選択してください。",
+  "onboardingWeightKg": "体重（kg）",
+  "onboardingHeightCm": "身長（cm）",
+  "onboardingAge": "年齢",
+  "onboardingInvalidWeight": "有効な体重をkg単位で入力してください。",
+  "onboardingInvalidHeight": "有効な身長をcm単位で入力してください。",
+  "onboardingInvalidAge": "13～100歳の有効な年齢を入力してください。",
+  "onboardingSaveFailed": "栄養プロフィールを保存できませんでした。",
+  "genderMale": "男性",
+  "genderFemale": "女性",
+  "genderOther": "その他",
+  "nutritionSetupTitle": "1日の栄養目標",
+  "nutritionSetupBody": "Celiaが1日のカロリーとマクロを計算できるよう、体について教えてください。",
+  "nutritionSetupGender": "性別",
+  "nutritionSetupFootnote": "Celiaは体重、身長、年齢、性別をもとに、適度な活動レベルで1日のカロリーとマクロの目標を推定します。",
+  "nutritionSetupSave": "目標を保存",
+  "profileTitle": "プロフィール",
+  "profileCeliaAi": "Celia AI",
+  "profileEliteMember": "エリートメンバー",
+  "profileAccount": "アカウント",
+  "profileSignedInAs": "ログイン中のアカウント：\n{email}",
+  "@profileSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "profileUnknownEmail": "不明",
+  "profileDarkMode": "ダークモード",
+  "profileLanguage": "言語",
+  "profileLogOutTitle": "ログアウトしますか？",
+  "profileLogOutBody": "本当にログアウトしますか？",
+  "profileLogOut": "ログアウト",
+  "profileLogOutButton": "ログアウト",
+  "profileFavoriteRoutines": "お気に入りのルーティン",
+  "profileSubscription": "サブスクリプション",
+  "profileNutrition": "栄養",
+  "profileHelpSupport": "ヘルプとサポート",
+  "profileFriend": "フレンド",
+  "profileStatSaved": "保存済み",
+  "profileStatStreak": "連続記録",
+  "profileStatWorkouts": "ワークアウト",
+  "streakDayOneStarted": "1日目がスタートしました — 明日も戻ってきて、連続記録を伸ばしましょう。",
+  "streakRebuild": "昨日はアクティブでした — 今日、食事を記録するかワークアウトを完了して、連続記録を再開しましょう。",
+  "streakStart": "食事を記録するかワークアウトを完了して、連続記録を始めましょう。",
+  "streakLongRun": "{days}日連続！続けていきましょう — Celiaがあなたの継続状況を記録しています。",
+  "@streakLongRun": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakBothLogged": "{days}日連続 — 今日はワークアウトと食事の両方を記録しました。",
+  "@streakBothLogged": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedWorkout": "{days}日連続。短いワークアウトを追加すれば、今日の記録がさらに充実します。",
+  "@streakNeedWorkout": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedMeal": "{days}日連続。食事を記録して、栄養補給を管理しましょう。",
+  "@streakNeedMeal": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakStayActive": "{days}日連続 — 今日もアクティブに過ごしましょう。",
+  "@streakStayActive": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "editProfileTitle": "プロフィールを編集",
+  "editProfileName": "名前",
+  "editProfileFootnote": "変更内容はアカウントに保存され、ホームとプロフィールに反映されます。",
+  "editProfileSaveFailed": "プロフィールを更新できませんでした。もう一度お試しください。",
+  "languageTitle": "言語",
+  "languageSystem": "端末の言語",
+  "languageSystemSubtitle": "スマートフォンの設定言語に合わせる",
+  "languageEnglish": "英語",
+  "languageSpanish": "スペイン語",
+  "insightStartFuelingTitle": "今日の栄養補給を始めましょう",
+  "insightStartFuelingBody": "1日のカロリー予算がすべて残っています。最初の食事をスキャンまたは記録して、目標どおりに進めましょう。",
+  "insightAboveTargetTitle": "今日は目標を超えています",
+  "insightAboveTargetBody": "1日の目標を{calories} kcal上回っています。夕食を軽めにするか、短いワークアウトを追加しましょう。",
+  "@insightAboveTargetBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightLowProteinTitle": "まだタンパク質が不足しています",
+  "insightLowProteinBody": "目標達成まで、今日はあと約{grams}gのタンパク質が必要です。",
+  "@insightLowProteinBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightAlmostThereTitle": "目標まであと少し",
+  "insightAlmostThereBody": "今日はあと{calories} kcalです。バランスのよいスナックなら無理なく収まります。",
+  "@insightAlmostThereBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightOnTrackTitle": "今日は順調です",
+  "insightOnTrackBody": "1日の目標達成まで、あと{calories} kcalと{grams}gのタンパク質です。",
+  "@insightOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightWeeklyRhythmTitle": "1週間のリズムを作りましょう",
+  "insightWeeklyRhythmBody": "1週間を通して食事を記録すると、Celiaがパターンを見つけて、より適切にサポートできます。",
+  "insightWeeklyTrendTitle": "週間トレンド",
+  "insightWeeklyTrendBody": "過去7日間のうち{days}日で食事を記録し、平均{average} kcalでした — {direction}。",
+  "@insightWeeklyTrendBody": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "average": {
+        "type": "int"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "insightTrendOnTarget": "1日の目標付近",
+  "insightTrendAbove": "平均で目標を{delta} kcal上回っています",
+  "@insightTrendAbove": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightTrendBelow": "平均で目標を{delta} kcal下回っています",
+  "@insightTrendBelow": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsSectionTitle": "Celiaのインサイト"
+}

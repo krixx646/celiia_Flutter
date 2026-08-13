@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:celia_flutter/l10n/app_localizations.dart';
 import 'package:celia_flutter/models/routine.dart';
 import 'package:celia_flutter/providers/auth_provider.dart';
 import 'package:celia_flutter/providers/routine_provider.dart';
@@ -45,7 +46,12 @@ Widget _wrap({
       ChangeNotifierProvider<AuthProvider>.value(value: auth),
       ChangeNotifierProvider<RoutineProvider>.value(value: routines),
     ],
-    child: MaterialApp(home: child),
+    child: MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale('en'),
+      home: child,
+    ),
   );
 }
 

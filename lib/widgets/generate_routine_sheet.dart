@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../l10n/app_localizations.dart';
 import '../models/routine.dart';
 import '../providers/routine_provider.dart';
 import '../providers/theme_provider.dart';
+import '../utils/routine_text.dart';
 
 /// Bottom sheet for generating AI routines
 class GenerateRoutineSheet extends StatefulWidget {
@@ -35,8 +37,32 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
     super.dispose();
   }
 
+  /// The equipment values above are what the backend matches on, so they stay
+  /// English; only the chip text follows the app language.
+  String _equipmentLabel(AppLocalizations l10n, String equipment) {
+    switch (equipment) {
+      case 'None':
+        return l10n.equipmentNone;
+      case 'Dumbbells':
+        return l10n.equipmentDumbbells;
+      case 'Resistance Bands':
+        return l10n.equipmentResistanceBands;
+      case 'Yoga Mat':
+        return l10n.equipmentYogaMat;
+      case 'Kettlebell':
+        return l10n.equipmentKettlebell;
+      case 'Pull-up Bar':
+        return l10n.equipmentPullUpBar;
+      case 'Jump Rope':
+        return l10n.equipmentJumpRope;
+      default:
+        return equipment;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     final routineProvider = context.watch<RoutineProvider>();
 
@@ -86,7 +112,7 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  'Generate Routine with AI',
+                  l10n.generateSheetTitle,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -99,7 +125,7 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
 
             // Request input
             Text(
-              'What kind of workout do you want?',
+              l10n.generateSheetPrompt,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -112,8 +138,7 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
               maxLines: 3,
               style: TextStyle(color: theme.textPrimary),
               decoration: InputDecoration(
-                hintText:
-                    'e.g., "A quick morning stretch to wake up" or "Full body strength training for beginners"',
+                hintText: l10n.generateSheetHint,
                 hintStyle: TextStyle(
                   color: theme.textSecondary.withValues(alpha: 0.6),
                 ),
@@ -135,7 +160,7 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
 
             // Duration selector
             Text(
-              'Duration',
+              l10n.generateSheetDuration,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -148,7 +173,7 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
               children: _durations.map((duration) {
                 final isSelected = _selectedDuration == duration;
                 return ChoiceChip(
-                  label: Text('$duration min'),
+                  label: Text(l10n.generateSheetMinutes(duration)),
                   selected: isSelected,
                   onSelected: (selected) {
                     if (selected) {
@@ -170,7 +195,7 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
 
             // Difficulty selector
             Text(
-              'Difficulty',
+              l10n.generateSheetDifficulty,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -181,9 +206,7 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
             Row(
               children: RoutineDifficulty.values.map((difficulty) {
                 final isSelected = _selectedDifficulty == difficulty;
-                final label =
-                    difficulty.name[0].toUpperCase() +
-                    difficulty.name.substring(1);
+                final label = localizedRoutineDifficulty(l10n, difficulty);
                 return Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -212,7 +235,7 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
 
             // Equipment selector
             Text(
-              'Available Equipment',
+              l10n.generateSheetEquipment,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -226,7 +249,7 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
               children: _equipmentOptions.map((equipment) {
                 final isSelected = _selectedEquipment.contains(equipment);
                 return FilterChip(
-                  label: Text(equipment),
+                  label: Text(_equipmentLabel(l10n, equipment)),
                   selected: isSelected,
                   onSelected: (selected) {
                     setState(() {
@@ -263,7 +286,7 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
               child: ElevatedButton(
                 onPressed: routineProvider.isGenerating
                     ? null
-                    : () => _generateRoutine(context),
+                    : () => _generateRoutine(l10n, context),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: theme.accentOrange,
                   foregroundColor: Colors.white,
@@ -273,10 +296,10 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
                   elevation: 0,
                 ),
                 child: routineProvider.isGenerating
-                    ? const Row(
+                    ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 20,
                             height: 20,
                             child: CircularProgressIndicator(
@@ -284,24 +307,24 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
                               valueColor: AlwaysStoppedAnimation(Colors.white),
                             ),
                           ),
-                          SizedBox(width: 12),
+                          const SizedBox(width: 12),
                           Text(
-                            'Generating...',
-                            style: TextStyle(
+                            l10n.generateSheetGenerating,
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],
                       )
-                    : const Row(
+                    : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.auto_awesome, size: 20),
-                          SizedBox(width: 8),
+                          const Icon(Icons.auto_awesome, size: 20),
+                          const SizedBox(width: 8),
                           Text(
-                            'Generate Routine',
-                            style: TextStyle(
+                            l10n.generateSheetSubmit,
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -317,11 +340,14 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
     );
   }
 
-  Future<void> _generateRoutine(BuildContext context) async {
+  Future<void> _generateRoutine(
+    AppLocalizations l10n,
+    BuildContext context,
+  ) async {
     final request = _requestController.text.trim();
     if (request.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please describe the workout you want')),
+        SnackBar(content: Text(l10n.generateSheetDescribeFirst)),
       );
       return;
     }
@@ -342,8 +368,8 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
         SnackBar(
           content: Text(
             result.alreadyExisted
-                ? 'You already have this one: ${result.routine.title}'
-                : 'Created: ${result.routine.title}',
+                ? l10n.generateSheetAlreadyExists(result.routine.title)
+                : l10n.generateSheetCreated(result.routine.title),
           ),
           backgroundColor: Colors.green,
         ),
@@ -351,7 +377,7 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(provider.error ?? 'Failed to generate routine'),
+          content: Text(provider.error ?? l10n.generateSheetFailed),
           backgroundColor: Colors.red,
         ),
       );

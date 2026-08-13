@@ -100,7 +100,7 @@ class NutritionTrackerProvider extends ChangeNotifier {
     } catch (e) {
       _error = toUserFriendlyMessage(
         e,
-        fallback: 'Could not refresh nutrition data.',
+        fallbackOf: (l10n) => l10n.errorRefreshNutrition,
       );
     } finally {
       _isLoading = false;

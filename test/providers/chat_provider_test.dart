@@ -1,7 +1,10 @@
+import 'package:celia_flutter/l10n/app_localizations.dart';
 import 'package:celia_flutter/models/celia_chat_message.dart';
 import 'package:celia_flutter/models/nutrition_profile.dart';
 import 'package:celia_flutter/providers/chat_provider.dart';
 import 'package:celia_flutter/services/celia_chat_service.dart';
+import 'package:celia_flutter/utils/chat_activity_text.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -216,10 +219,11 @@ void main() {
 
     test('exposes the pending approval', () async {
       await reachPendingApproval();
+      final l10n = await AppLocalizations.delegate.load(const Locale('en'));
 
       expect(provider.pendingApproval?.approvalId, 'approval-1');
       expect(
-        provider.pendingApproval?.approvalPrompt,
+        provider.pendingApproval?.approvalPrompt(l10n),
         contains('Leg day'),
       );
     });

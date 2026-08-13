@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'l10n/app_localizations.dart';
+import 'providers/locale_provider.dart';
 import 'services/firebase_service.dart';
 import 'services/supabase_service.dart';
 import 'providers/auth_provider.dart';
@@ -15,12 +18,14 @@ import 'screens/main_screen.dart';
 import 'screens/name_setup_screen.dart';
 import 'screens/onboarding/onboarding_screen.dart';
 import 'services/onboarding_service.dart';
+import 'utils/responsive.dart';
 import 'widgets/loading_indicator.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await configureAppOrientations();
   Object? fatalInitError;
   try {
     await FirebaseService.initialize();
@@ -51,6 +56,8 @@ class CeliaRoot extends StatelessWidget {
     if (initError != null) {
       return const MaterialApp(
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: _InitErrorScreen(),
       );
     }
@@ -60,6 +67,7 @@ class CeliaRoot extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ChatProvider()),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => LocaleProvider()..load()),
         ChangeNotifierProvider(create: (_) => RoutineProvider()),
         ChangeNotifierProvider(create: (_) => NutritionProfileProvider()),
         ChangeNotifierProvider(create: (_) => NutritionTrackerProvider()),
@@ -74,8 +82,11 @@ class CeliaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
+    return Consumer2<ThemeProvider, LocaleProvider>(
+      builder: (context, themeProvider, localeProvider, child) {
+        localeProvider.publishEffectiveLocale(
+          WidgetsBinding.instance.platformDispatcher.locales,
+        );
         final lightScheme = ColorScheme.fromSeed(
           seedColor: const Color(0xFFF57C00),
           surface: ThemeProvider.lightSurface,
@@ -98,6 +109,16 @@ class CeliaApp extends StatelessWidget {
         return MaterialApp(
           title: 'Celia Integral Coach',
           themeMode: themeProvider.themeMode,
+          // Null means follow the device, which is what a fresh install does:
+          // Flutter then resolves it against supportedLocales for us.
+          locale: localeProvider.locale,
+          supportedLocales: LocaleProvider.supportedLocales,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
           theme: baseLight.copyWith(
             scaffoldBackgroundColor: ThemeProvider.lightBackground,
             textTheme: GoogleFonts.urbanistTextTheme(baseLight.textTheme),
@@ -149,7 +170,12 @@ class _AuthenticatedGateState extends State<_AuthenticatedGate> {
   @override
   void initState() {
     super.initState();
-    _resolveOnboarding();
+    // Deferred: loadProfile notifies its listeners synchronously, which would
+    // dirty an ancestor provider scope while this widget's tree is still being
+    // built.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _resolveOnboarding();
+    });
   }
 
   Future<void> _resolveOnboarding() async {
@@ -178,8 +204,12 @@ class _AuthenticatedGateState extends State<_AuthenticatedGate> {
   @override
   Widget build(BuildContext context) {
     if (_onboardingComplete == null) {
-      return const Scaffold(
-        body: Center(child: LoadingIndicator(message: 'Preparing Celia...')),
+      return Scaffold(
+        body: Center(
+          child: LoadingIndicator(
+            message: AppLocalizations.of(context).loadingPreparing,
+          ),
+        ),
       );
     }
 
@@ -198,34 +228,38 @@ class _InitErrorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xFF0B0B0B),
+    final l10n = AppLocalizations.of(context);
+    return Scaffold(
+      backgroundColor: const Color(0xFF0B0B0B),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Spacer(),
-              Icon(Icons.error_outline, color: Colors.orangeAccent, size: 64),
-              SizedBox(height: 16),
+              const Spacer(),
+              const Icon(
+                Icons.error_outline,
+                color: Colors.orangeAccent,
+                size: 64,
+              ),
+              const SizedBox(height: 16),
               Text(
-                'Unable to start the app',
-                style: TextStyle(
+                l10n.startupErrorTitle,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               Text(
-                'Please close and reopen the app. '
-                'If this continues, contact support.',
-                style: TextStyle(color: Colors.white70, height: 1.4),
+                l10n.startupErrorBody,
+                style: const TextStyle(color: Colors.white70, height: 1.4),
                 textAlign: TextAlign.center,
               ),
-              Spacer(),
+              const Spacer(),
             ],
           ),
         ),

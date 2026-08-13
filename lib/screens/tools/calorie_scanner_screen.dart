@@ -5,6 +5,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../models/meal_analysis.dart';
 import '../../providers/nutrition_profile_provider.dart';
 import '../../providers/nutrition_tracker_provider.dart';
@@ -104,9 +105,10 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
       _startScanLoop();
     } catch (e) {
       if (!mounted) return;
+      final l10n = AppLocalizations.of(context);
       setState(() {
         _isInitializingCamera = false;
-        _error = _friendlyError(e);
+        _error = _friendlyError(l10n, e);
       });
     }
   }
@@ -116,6 +118,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
   }
 
   Future<void> _captureAndAnalyze({bool silent = false}) async {
+    final l10n = AppLocalizations.of(context);
     final controller = _cameraController;
     if (_isAnalyzing ||
         controller == null ||
@@ -137,13 +140,11 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
       setState(() {
         _analysis = analysis;
         _isQuotaBlocked = false;
-        _error = analysis.items.isEmpty
-            ? 'No clear food detected yet. Try better lighting or move closer.'
-            : null;
+        _error = analysis.items.isEmpty ? l10n.scannerNoClearFood : null;
       });
     } catch (e) {
       if (!mounted) return;
-      final friendlyError = _friendlyError(e);
+      final friendlyError = _friendlyError(l10n, e);
       setState(() {
         _error = friendlyError;
         _isQuotaBlocked = _isQuotaError(e);
@@ -163,6 +164,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
   }
 
   Future<void> _logMeal() async {
+    final l10n = AppLocalizations.of(context);
     final analysis = _analysis;
     if (analysis == null || analysis.items.isEmpty) return;
 
@@ -183,7 +185,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text(_friendlyError(e))));
+      ).showSnackBar(SnackBar(content: Text(_friendlyError(l10n, e))));
     } finally {
       if (mounted) setState(() => _isLogging = false);
     }
@@ -220,6 +222,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
+        final l10n = AppLocalizations.of(context);
         final theme = context.watch<ThemeProvider>();
         return Padding(
           padding: EdgeInsets.only(
@@ -240,7 +243,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Edit Food Item',
+                    l10n.scannerEditItem,
                     style: TextStyle(
                       color: theme.textPrimary,
                       fontSize: 20,
@@ -248,19 +251,27 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
                     ),
                   ),
                   const SizedBox(height: 16),
-                  _buildEditField(theme, nameController, 'Food name'),
+                  _buildEditField(
+                    theme,
+                    nameController,
+                    l10n.scannerFieldFoodName,
+                  ),
                   const SizedBox(height: 12),
                   Row(
                     children: [
                       Expanded(
-                        child: _buildEditField(theme, gramsController, 'Grams'),
+                        child: _buildEditField(
+                          theme,
+                          gramsController,
+                          l10n.scannerFieldGrams,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: _buildEditField(
                           theme,
                           caloriesController,
-                          'Calories',
+                          l10n.scannerFieldCalories,
                         ),
                       ),
                     ],
@@ -269,15 +280,27 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
                   Row(
                     children: [
                       Expanded(
-                        child: _buildEditField(theme, proteinController, 'Pro'),
+                        child: _buildEditField(
+                          theme,
+                          proteinController,
+                          l10n.scannerFieldPro,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: _buildEditField(theme, carbsController, 'Carbs'),
+                        child: _buildEditField(
+                          theme,
+                          carbsController,
+                          l10n.progressCarbs,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: _buildEditField(theme, fatController, 'Fat'),
+                        child: _buildEditField(
+                          theme,
+                          fatController,
+                          l10n.progressFat,
+                        ),
                       ),
                     ],
                   ),
@@ -315,7 +338,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
                         borderRadius: BorderRadius.circular(26),
                       ),
                     ),
-                    child: const Text('Save Changes'),
+                    child: Text(l10n.scannerSaveChanges),
                   ),
                 ],
               ),
@@ -353,6 +376,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     final analysis = _analysis;
 
@@ -362,22 +386,22 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
         fit: StackFit.expand,
         children: [
           _buildCameraLayer(theme),
-          _buildScanOverlay(theme, analysis),
+          _buildScanOverlay(l10n, theme, analysis),
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildTopControls(theme),
+                  _buildTopControls(l10n, theme),
                   if (_error != null) ...[
                     const SizedBox(height: 16),
                     _buildErrorPill(theme, _error!),
                   ],
                   const Spacer(),
-                  if (analysis != null) _buildMealCard(theme, analysis),
+                  if (analysis != null) _buildMealCard(l10n, theme, analysis),
                   const SizedBox(height: 16),
-                  _buildBottomActions(theme, analysis),
+                  _buildBottomActions(l10n, theme, analysis),
                 ],
               ),
             ),
@@ -414,7 +438,11 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
     );
   }
 
-  Widget _buildScanOverlay(ThemeProvider theme, MealAnalysis? analysis) {
+  Widget _buildScanOverlay(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    MealAnalysis? analysis,
+  ) {
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -451,7 +479,10 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
                 fit: StackFit.expand,
                 children: analysis.items
                     .where((item) => item.box != null)
-                    .map((item) => _buildBoundingBox(theme, item, constraints))
+                    .map(
+                      (item) =>
+                          _buildBoundingBox(l10n, theme, item, constraints),
+                    )
                     .toList(),
               );
             },
@@ -461,6 +492,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
   }
 
   Widget _buildBoundingBox(
+    AppLocalizations l10n,
     ThemeProvider theme,
     MealFoodItem item,
     BoxConstraints constraints,
@@ -495,7 +527,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
                   ),
                 ),
                 child: Text(
-                  '${item.name} • ${item.calories.round()} kcal',
+                  l10n.scannerItemCalories(item.name, item.calories.round()),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
@@ -543,7 +575,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
     await context.read<NutritionProfileProvider>().loadProfile();
   }
 
-  Widget _buildTopControls(ThemeProvider theme) {
+  Widget _buildTopControls(AppLocalizations l10n, ThemeProvider theme) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -551,7 +583,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
           icon: Icons.close,
           onTap: () => Navigator.of(context).pop(),
         ),
-        _buildStatusPill(theme),
+        _buildStatusPill(l10n, theme),
         Row(
           children: [
             _buildGlassIconButton(
@@ -569,7 +601,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
     );
   }
 
-  Widget _buildStatusPill(ThemeProvider theme) {
+  Widget _buildStatusPill(AppLocalizations l10n, ThemeProvider theme) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(999),
       child: BackdropFilter(
@@ -601,7 +633,9 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
               ),
               const SizedBox(width: 10),
               Text(
-                _isAnalyzing ? 'ANALYZING...' : 'CELIA SCANNER',
+                _isAnalyzing
+                    ? l10n.scannerStatusAnalyzing
+                    : l10n.scannerStatusIdle,
                 style: TextStyle(
                   color: _isAnalyzing ? theme.accentOrange : Colors.white,
                   fontSize: 12,
@@ -669,7 +703,11 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
     );
   }
 
-  Widget _buildMealCard(ThemeProvider theme, MealAnalysis analysis) {
+  Widget _buildMealCard(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    MealAnalysis analysis,
+  ) {
     final tracker = context.watch<NutritionTrackerProvider>();
     final profile = tracker.profile;
 
@@ -707,7 +745,10 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Confidence ${(analysis.confidence * 100).round()}% • ${analysis.provider}',
+                          l10n.scannerConfidence(
+                            (analysis.confidence * 100).round(),
+                            analysis.provider,
+                          ),
                           style: TextStyle(
                             color: Colors.white.withValues(alpha: 0.64),
                             fontWeight: FontWeight.w700,
@@ -729,28 +770,43 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
               ),
               if (profile != null) ...[
                 const SizedBox(height: 14),
-                _buildBudgetPreview(theme, tracker, analysis),
+                _buildBudgetPreview(l10n, theme, tracker, analysis),
               ],
               const SizedBox(height: 16),
               Row(
                 children: [
-                  _buildMacroChip('PRO', analysis.totalProteinGrams, theme),
+                  _buildMacroChip(
+                    l10n,
+                    l10n.scannerMacroPro,
+                    analysis.totalProteinGrams,
+                    theme,
+                  ),
                   const SizedBox(width: 10),
-                  _buildMacroChip('CARB', analysis.totalCarbsGrams, theme),
+                  _buildMacroChip(
+                    l10n,
+                    l10n.scannerMacroCarb,
+                    analysis.totalCarbsGrams,
+                    theme,
+                  ),
                   const SizedBox(width: 10),
-                  _buildMacroChip('FAT', analysis.totalFatGrams, theme),
+                  _buildMacroChip(
+                    l10n,
+                    l10n.scannerMacroFat,
+                    analysis.totalFatGrams,
+                    theme,
+                  ),
                 ],
               ),
               if (analysis.items.isNotEmpty) ...[
                 const SizedBox(height: 14),
                 ...analysis.items
                     .take(6)
-                    .map((item) => _buildFoodRow(theme, item)),
+                    .map((item) => _buildFoodRow(l10n, theme, item)),
                 if (analysis.items.length > 6)
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
-                      '+ ${analysis.items.length - 6} more items included in this meal log',
+                      l10n.scannerMoreItems(analysis.items.length - 6),
                       style: TextStyle(
                         color: Colors.white.withValues(alpha: 0.64),
                         fontWeight: FontWeight.w700,
@@ -777,6 +833,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
   }
 
   Widget _buildBudgetPreview(
+    AppLocalizations l10n,
     ThemeProvider theme,
     NutritionTrackerProvider tracker,
     MealAnalysis analysis,
@@ -798,7 +855,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'If you log this meal',
+            l10n.scannerIfYouLog,
             style: TextStyle(
               color: Colors.white.withValues(alpha: 0.72),
               fontWeight: FontWeight.w800,
@@ -807,7 +864,10 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
           ),
           const SizedBox(height: 6),
           Text(
-            '${afterCalories.round()} / ${profile.dailyCalories.round()} kcal today',
+            l10n.scannerAfterLogging(
+              afterCalories.round(),
+              profile.dailyCalories.round(),
+            ),
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w900,
@@ -817,8 +877,13 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
           const SizedBox(height: 4),
           Text(
             remainingCalories >= 0
-                ? '${remainingCalories.round()} kcal and ${remainingProtein.round()}g protein left today'
-                : '${(-remainingCalories).round()} kcal over your daily target',
+                ? l10n.scannerRemainingAfterLogging(
+                    remainingCalories.round(),
+                    remainingProtein.round(),
+                  )
+                : l10n.scannerOverTargetAfterLogging(
+                    (-remainingCalories).round(),
+                  ),
             style: TextStyle(
               color: remainingCalories >= 0
                   ? theme.accentOrange
@@ -831,7 +896,12 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
     );
   }
 
-  Widget _buildMacroChip(String label, double value, ThemeProvider theme) {
+  Widget _buildMacroChip(
+    AppLocalizations l10n,
+    String label,
+    double value,
+    ThemeProvider theme,
+  ) {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -852,7 +922,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
             ),
             const SizedBox(height: 4),
             Text(
-              '${value.toStringAsFixed(1)}g',
+              l10n.scannerGramsDecimal(value.toStringAsFixed(1)),
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w800,
@@ -864,14 +934,18 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
     );
   }
 
-  Widget _buildFoodRow(ThemeProvider theme, MealFoodItem item) {
+  Widget _buildFoodRow(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    MealFoodItem item,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Row(
         children: [
           Expanded(
             child: Text(
-              '${item.name} • ${item.servingGrams.round()}g',
+              l10n.scannerItemServing(item.name, item.servingGrams.round()),
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -880,7 +954,10 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
           ),
           TextButton(
             onPressed: () => _editItem(item),
-            child: Text('Edit', style: TextStyle(color: theme.accentOrange)),
+            child: Text(
+              l10n.actionEdit,
+              style: TextStyle(color: theme.accentOrange),
+            ),
           ),
           IconButton(
             onPressed: () => _removeItem(item),
@@ -891,7 +968,11 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
     );
   }
 
-  Widget _buildBottomActions(ThemeProvider theme, MealAnalysis? analysis) {
+  Widget _buildBottomActions(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    MealAnalysis? analysis,
+  ) {
     final canLog = analysis != null && analysis.items.isNotEmpty && !_isLogging;
     return Row(
       children: [
@@ -920,10 +1001,10 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
                 : const Icon(Icons.center_focus_strong),
             label: Text(
               _isAnalyzing
-                  ? 'Analyzing'
+                  ? l10n.scannerButtonAnalyzing
                   : _isQuotaBlocked
-                  ? 'Quota Needed'
-                  : 'Scan Now',
+                  ? l10n.scannerButtonQuotaNeeded
+                  : l10n.scannerButtonScanNow,
             ),
           ),
         ),
@@ -950,7 +1031,11 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
                     ),
                   )
                 : const Icon(Icons.add_circle),
-            label: Text(_isLogging ? 'Logging' : 'Log Meal'),
+            label: Text(
+              _isLogging
+                  ? l10n.scannerButtonLogging
+                  : l10n.scannerButtonLogMeal,
+            ),
           ),
         ),
       ],
@@ -982,36 +1067,36 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
     );
   }
 
-  String _friendlyError(Object error) {
+  String _friendlyError(AppLocalizations l10n, Object error) {
     final text = error.toString();
     if (text.contains('CameraAccessDenied')) {
-      return 'Camera permission is needed to scan meals.';
+      return l10n.scannerErrorCameraPermission;
     }
     if (text.contains('Backend not configured')) {
-      return 'Calorie scanner backend is not configured yet.';
+      return l10n.scannerErrorBackendMissing;
     }
     if (text.contains('OPENAI_API_KEY') ||
         text.contains('OpenAI vision API key') ||
         text.contains('vision is not configured')) {
       _scanTimer?.cancel();
       return text.contains('invalid')
-          ? 'The OpenAI API key for calorie scanning is invalid. Replace it in the backend environment, redeploy, then try again.'
-          : 'OpenAI API key is required for calorie scanning. Add it in Vercel, redeploy, then try again.';
+          ? l10n.scannerErrorApiKeyInvalid
+          : l10n.scannerErrorApiKeyMissing;
     }
     if (_isQuotaError(error)) {
       _scanTimer?.cancel();
-      return 'OpenAI credits are exhausted for calorie scanning. Add API credits or raise the billing limit, then try again.';
+      return l10n.scannerErrorQuotaExhausted;
     }
     if (text.contains('TimeoutException')) {
-      return 'Celia needed more time to analyze this meal. Hold the camera steady and scan again.';
+      return l10n.scannerErrorTimeout;
     }
     if (text.contains('Unauthorized') || text.contains('Not signed in')) {
-      return 'Please sign in before scanning meals.';
+      return l10n.scannerErrorNotSignedIn;
     }
     if (text.contains('user_meals')) {
-      return 'Meal logging table is not ready yet. The scan result is still available.';
+      return l10n.scannerErrorMealTableMissing;
     }
-    return 'Celia could not analyze this meal yet. Hold the camera steady, keep the food centered, and scan again.';
+    return l10n.scannerErrorGeneric;
   }
 
   bool _isQuotaError(Object error) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../models/nutrition_profile.dart';
 import '../../providers/nutrition_profile_provider.dart';
 import '../../providers/theme_provider.dart';
@@ -47,20 +48,21 @@ class _NutritionProfileSetupScreenState
   }
 
   Future<void> _save() async {
+    final l10n = AppLocalizations.of(context);
     final weight = double.tryParse(_weightController.text.trim());
     final height = double.tryParse(_heightController.text.trim());
     final age = int.tryParse(_ageController.text.trim());
 
     if (weight == null || weight <= 0) {
-      _showError('Enter a valid weight in kg.');
+      _showError(l10n.onboardingInvalidWeight);
       return;
     }
     if (height == null || height <= 0) {
-      _showError('Enter a valid height in cm.');
+      _showError(l10n.onboardingInvalidHeight);
       return;
     }
     if (age == null || age < 13 || age > 100) {
-      _showError('Enter a valid age between 13 and 100.');
+      _showError(l10n.onboardingInvalidAge);
       return;
     }
 
@@ -80,7 +82,7 @@ class _NutritionProfileSetupScreenState
       return;
     }
 
-    _showError(provider.error ?? 'Could not save your nutrition profile.');
+    _showError(provider.error ?? l10n.onboardingSaveFailed);
   }
 
   void _showError(String message) {
@@ -91,6 +93,7 @@ class _NutritionProfileSetupScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
 
     return PopScope(
@@ -110,7 +113,7 @@ class _NutritionProfileSetupScreenState
                     ),
                   Expanded(
                     child: Text(
-                      'Daily Nutrition Goals',
+                      l10n.nutritionSetupTitle,
                       style: TextStyle(
                         color: theme.textPrimary,
                         fontSize: 28,
@@ -122,18 +125,23 @@ class _NutritionProfileSetupScreenState
               ),
               const SizedBox(height: 8),
               Text(
-                'Tell Celia about your body so she can calculate your daily calories and macros.',
+                l10n.nutritionSetupBody,
                 style: TextStyle(color: theme.textSecondary, height: 1.4),
               ),
               const SizedBox(height: 24),
-              _buildField(theme, _weightController, 'Weight (kg)'),
+              _buildField(theme, _weightController, l10n.onboardingWeightKg),
               const SizedBox(height: 12),
-              _buildField(theme, _heightController, 'Height (cm)'),
+              _buildField(theme, _heightController, l10n.onboardingHeightCm),
               const SizedBox(height: 12),
-              _buildField(theme, _ageController, 'Age', isNumber: true),
+              _buildField(
+                theme,
+                _ageController,
+                l10n.onboardingAge,
+                isNumber: true,
+              ),
               const SizedBox(height: 18),
               Text(
-                'Gender',
+                l10n.nutritionSetupGender,
                 style: TextStyle(
                   color: theme.textPrimary,
                   fontWeight: FontWeight.w700,
@@ -145,7 +153,7 @@ class _NutritionProfileSetupScreenState
                 children: NutritionGender.values.map((gender) {
                   final selected = _gender == gender;
                   return ChoiceChip(
-                    label: Text(_genderLabel(gender)),
+                    label: Text(_genderLabel(l10n, gender)),
                     selected: selected,
                     onSelected: (_) => setState(() => _gender = gender),
                     selectedColor: theme.accentOrange.withValues(alpha: 0.2),
@@ -168,7 +176,7 @@ class _NutritionProfileSetupScreenState
                   border: Border.all(color: theme.border),
                 ),
                 child: Text(
-                  'Celia uses your weight, height, age, and gender to estimate daily calorie and macro targets using a moderate activity level.',
+                  l10n.nutritionSetupFootnote,
                   style: TextStyle(color: theme.textSecondary, height: 1.4),
                 ),
               ),
@@ -192,9 +200,9 @@ class _NutritionProfileSetupScreenState
                           color: Colors.white,
                         ),
                       )
-                    : const Text(
-                        'Save Goals',
-                        style: TextStyle(
+                    : Text(
+                        l10n.nutritionSetupSave,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -234,11 +242,11 @@ class _NutritionProfileSetupScreenState
     );
   }
 
-  String _genderLabel(NutritionGender gender) {
+  String _genderLabel(AppLocalizations l10n, NutritionGender gender) {
     return switch (gender) {
-      NutritionGender.male => 'Male',
-      NutritionGender.female => 'Female',
-      NutritionGender.other => 'Other',
+      NutritionGender.male => l10n.genderMale,
+      NutritionGender.female => l10n.genderFemale,
+      NutritionGender.other => l10n.genderOther,
     };
   }
 }

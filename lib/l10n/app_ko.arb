@@ -1,0 +1,1017 @@
+{
+  "@@locale": "ko",
+  "appName": "Celia 종합 코치",
+  "@appName": {
+    "description": "The app's name. Not translated."
+  },
+  "actionCancel": "취소",
+  "actionSave": "저장",
+  "actionDelete": "삭제",
+  "actionEdit": "수정",
+  "actionRetry": "다시 시도",
+  "actionDone": "완료",
+  "actionClose": "닫기",
+  "actionContinue": "계속",
+  "actionSeeAll": "모두 보기",
+  "actionYesDoIt": "네, 진행할게요",
+  "actionNotNow": "나중에",
+  "loadingPreparing": "Celia 준비 중...",
+  "loadingGeneric": "불러오는 중...",
+  "errorGeneric": "문제가 발생했습니다. 다시 시도해 주세요.",
+  "errorCanceled": "작업이 취소되었습니다.",
+  "errorTooManyRequests": "시도 횟수가 너무 많습니다. 1분 후 다시 시도해 주세요.",
+  "errorNetwork": "인터넷 연결을 확인한 후 다시 시도해 주세요.",
+  "errorBadCredentials": "이메일 또는 비밀번호가 올바르지 않습니다.",
+  "errorEmailInUse": "이 이메일은 이미 사용 중입니다. 대신 로그인해 보세요.",
+  "errorWeakPassword": "더 강력한 비밀번호를 사용한 후 다시 시도해 주세요.",
+  "errorInvalidEmail": "유효한 이메일 주소를 입력해 주세요.",
+  "errorNoPermission": "이 작업을 수행할 권한이 없습니다.",
+  "errorNotSignedIn": "로그인한 후 다시 시도해 주세요.",
+  "errorNoConversation": "계속하려면 새 채팅을 시작하세요.",
+  "errorNoPlayableVideos": "아직 이 루틴에 재생할 수 있는 동영상이 없습니다.",
+  "errorLoadRoutines": "지금은 루틴을 불러올 수 없습니다. 다시 시도해 주세요.",
+  "errorLoadSavedRoutines": "지금은 저장된 루틴을 불러올 수 없습니다. 다시 시도해 주세요.",
+  "errorGenerateRoutine": "지금은 루틴을 생성할 수 없습니다. 다시 시도해 주세요.",
+  "errorLoadChats": "지금은 저장된 채팅을 불러올 수 없습니다.",
+  "errorCeliaUnavailable": "지금은 Celia를 사용할 수 없습니다. 다시 시도해 주세요.",
+  "errorOpenConversation": "대화를 열 수 없습니다.",
+  "errorDeleteConversation": "이 대화를 삭제할 수 없습니다. 다시 시도해 주세요.",
+  "errorSignIn": "로그인할 수 없습니다. 다시 시도해 주세요.",
+  "errorCreateAccount": "계정을 만들 수 없습니다. 다시 시도해 주세요.",
+  "errorSendResetEmail": "비밀번호 재설정 이메일을 보낼 수 없습니다. 다시 시도해 주세요.",
+  "errorSendVerificationEmail": "인증 이메일을 보낼 수 없습니다. 다시 시도해 주세요.",
+  "errorGoogleSignIn": "Google 로그인에 실패했습니다. 다시 시도해 주세요.",
+  "errorAppleSignIn": "Apple 로그인에 실패했습니다. 다시 시도해 주세요.",
+  "errorRefreshNutrition": "영양 데이터를 새로 고칠 수 없습니다.",
+  "errorLoadNutritionProfile": "영양 프로필을 불러올 수 없습니다.",
+  "startupErrorTitle": "앱을 시작할 수 없습니다",
+  "startupErrorBody": "앱을 종료한 후 다시 열어 주세요. 문제가 계속되면 고객 지원팀에 문의해 주세요.",
+  "authTagline": "나의 피트니스 친구",
+  "authSignUp": "회원가입",
+  "authLogIn": "로그인",
+  "authVersion": "버전 {version}",
+  "@authVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "authForgotPassword": "비밀번호를 잊으셨나요?",
+  "authOr": "또는",
+  "authContinueWithGoogle": "Google로 계속하기",
+  "authContinueWithApple": "Apple로 계속하기",
+  "authAuthenticating": "인증 중...",
+  "authEnterYourName": "이름을 입력해 주세요.",
+  "authNeedAccount": "계정이 없나요? 회원가입",
+  "authHaveAccount": "이미 계정이 있나요? 로그인",
+  "authFieldName": "이름",
+  "authFieldEmail": "이메일",
+  "authFieldPassword": "비밀번호",
+  "verifyEmailTitle": "이메일 인증",
+  "verifyEmailHeading": "받은편지함을 확인하세요",
+  "verifyEmailBody": "인증 링크를 이메일로 보냈습니다.",
+  "verifyEmailSent": "인증 이메일을 보냈습니다!",
+  "verifyEmailContinue": "인증을 완료했어요. 계속하기",
+  "verifyEmailSignOut": "로그아웃",
+  "verifyEmailSending": "전송 중...",
+  "verifyEmailResend": "인증 이메일 다시 보내기",
+  "verifyEmailResendIn": "{seconds}초 후 다시 보내기",
+  "@verifyEmailResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "verifyEmailAddress": "이메일: {email}",
+  "@verifyEmailAddress": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "forgotPasswordTitle": "비밀번호를 잊으셨나요?",
+  "forgotPasswordBody": "비밀번호 재설정 링크를 받을 이메일을 입력하세요.",
+  "forgotPasswordEmptyEmail": "이메일을 입력하세요",
+  "forgotPasswordSent": "비밀번호 재설정 이메일을 보냈습니다.",
+  "forgotPasswordSend": "재설정 링크 보내기",
+  "forgotPasswordSending": "전송 중...",
+  "nameSetupTitle": "Celia가 어떻게 불러드릴까요?",
+  "nameSetupBody": "코칭을 더 개인화할 수 있도록 앱 전체에서 이름을 사용합니다.",
+  "nameSetupSaveFailed": "이름을 저장하지 못했습니다. 다시 시도해 주세요.",
+  "homeGoodMorning": "좋은 아침이에요,",
+  "homeCeliaActive": "CELIA 활성화",
+  "homeGenerateRoutine": "AI로\n맞춤\n루틴 생성",
+  "homeCreateRoutine": "루틴 만들기",
+  "homeQuickActions": "빠른 작업",
+  "homeUpNext": "다음 일정",
+  "homeNoUpcoming": "예정된 루틴이 아직 없습니다.\n루틴을 만들거나 라이브러리를 둘러보세요.",
+  "homeChatWithCelia": "Celia와 채팅",
+  "homeChatSubtitle": "운동 자세나 식단에 대해 물어보세요",
+  "homeScanMeal": "식사 스캔",
+  "homeScanMealSubtitle": "음식 및 칼로리 확인",
+  "homeNutrition": "영양",
+  "homeNutritionSubtitle": "칼로리, 매크로 및 식사 확인",
+  "homeBrowseLibrary": "라이브러리\n둘러보기",
+  "homeTrackProgress": "진행 상황\n추적",
+  "chatTitle": "코치 Celia",
+  "chatEmptyPrompt": "오늘 어떻게 도와드릴까요?\n함께 건강해져요.",
+  "chatYourChats": "내 채팅",
+  "chatNoSavedChats": "저장된 채팅이 아직 없습니다.",
+  "chatHistory": "채팅 기록",
+  "chatNew": "새 채팅",
+  "chatOpening": "채팅 여는 중...",
+  "chatScanAMeal": "식사 스캔하기",
+  "chatInputHint": "운동에 대해 Celia에게 무엇이든 물어보세요...",
+  "chatCouldNotOpenRoutine": "해당 루틴을 열 수 없습니다",
+  "chatThisRoutine": "이 루틴",
+  "chatThisMeal": "이 식사",
+  "chatYourRoutine": "내 루틴",
+  "chatMoreExercises": "+ {count}개 더",
+  "@chatMoreExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatEmptySubtitle": "운동, 음식 또는 진행 상황에 대해 물어보세요.",
+  "chatLoggedToday": "오늘 {calories} kcal를 기록했습니다.",
+  "@chatLoggedToday": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "chatSuggestionHiit": "20분 HIIT 루틴을 만들어줘",
+  "chatSuggestionDinner": "오늘 저녁에는 무엇을 먹을까요?",
+  "chatSuggestionProgress": "이번 주 진행 상황은 어떤가요?",
+  "chatSuggestionIngredients": "닭고기, 쌀, 시금치가 있어요",
+  "chatJustNow": "방금 전",
+  "chatMinutesAgo": "{minutes}분 전",
+  "@chatMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "chatHoursAgo": "{hours}시간 전",
+  "@chatHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "chatDaysAgo": "{days}일 전",
+  "@chatDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "chatRoutineAlreadySaved": "이미 라이브러리에 있습니다 — 탭하여 열기",
+  "chatRoutineTapToOpen": "탭하여 열기",
+  "chatToolCancelled": "취소됨",
+  "chatToolFailed": "{label} — 작업을 완료하지 못했습니다",
+  "@chatToolFailed": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "chatToolRoutineSaveFailed": "루틴을 저장하지 못했습니다",
+  "chatToolRoutineSaved": "라이브러리에 저장했습니다",
+  "chatToolMealLogged": "오늘 기록에 추가했습니다",
+  "chatToolRoutineAdded": "라이브러리에 추가했습니다",
+  "activityCheckingProgress": "진행 상황을 확인하는 중",
+  "activityCheckingNutrition": "오늘 먹은 음식을 확인하는 중",
+  "activityReviewingMeals": "최근 식사를 검토하는 중",
+  "activityLookingAtRoutines": "루틴을 확인하는 중",
+  "activityReadingRoutine": "해당 루틴을 읽는 중",
+  "activitySearchingLibrary": "운동 라이브러리를 검색하는 중",
+  "activityBuildingRoutine": "루틴을 만드는 중",
+  "activityLoggingMeal": "식사를 기록하는 중",
+  "activitySavingToLibrary": "라이브러리에 저장하는 중",
+  "activityWorking": "처리 중",
+  "approvalSaveRoutineWithCount": "Save \"{name}\" with {count} exercises to your library?",
+  "@approvalSaveRoutineWithCount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalSaveRoutine": "\"{name}\"을(를) 라이브러리에 저장할까요?",
+  "@approvalSaveRoutine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalLogMealWithCalories": "\"{name}\"을(를) {calories} kcal로 기록할까요?",
+  "@approvalLogMealWithCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalLogMeal": "\"{name}\"을(를) 기록할까요?",
+  "@approvalLogMeal": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalAddRoutine": "이 루틴을 라이브러리에 추가할까요?",
+  "approvalGeneric": "Celia가 이 작업을 수행하도록 허용할까요?",
+  "libraryTitle": "루틴 라이브러리",
+  "librarySteps": "{count, plural, one{{count}단계} other{{count}단계}}",
+  "@librarySteps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryEmpty": "아직 루틴이 없습니다",
+  "libraryEmptyBody": "관리자 대시보드에서 루틴을 만들고 게시하세요.",
+  "libraryLoadFailed": "루틴을 불러오지 못했습니다",
+  "routineStartWorkout": "운동 시작",
+  "routineNoSteps": "사용 가능한 단계가 없습니다",
+  "routineNoVideoForStep": "이 단계에 사용할 수 있는 동영상이 없습니다",
+  "routineVideoProcessing": "동영상을 처리하는 중입니다. 나중에 다시 시도해 주세요.",
+  "routineMissingPlaybackUrl": "이 동영상의 재생 URL이 없습니다",
+  "routinePreviewBanner": "미리보기 — 전체 동영상은 곧 제공됩니다",
+  "routinePreview": "미리보기",
+  "routineDetails": "세부 정보",
+  "routineNotFound": "루틴을 찾을 수 없습니다",
+  "routineCompletedTimes": "{count}회 완료",
+  "@routineCompletedTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "playerVideoUnavailable": "이 동영상은 현재 사용할 수 없습니다.",
+  "playerSteps": "단계",
+  "playerStepCounter": "{current}/{total}",
+  "@playerStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoPlayableVideos": "재생할 수 있는 동영상이 없습니다",
+  "playerWorkoutComplete": "운동 완료!",
+  "playerSavingStreak": "연속 기록에 저장하는 중…",
+  "playerSavedStreak": "연속 기록에 저장했습니다",
+  "playerRetrySave": "다시 저장",
+  "playerReplay": "다시 재생",
+  "playerNotReady": "플레이어가 준비되지 않았습니다",
+  "playerPreviewUnavailable": "미리보기를 현재 사용할 수 없습니다.",
+  "playerClipCounter": "클립 {current}/{total} · {duration}",
+  "@playerClipCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerErrorLoadingVideo": "동영상 로드 중 오류가 발생했습니다",
+  "playerLoadingVideo": "동영상 로드 중...",
+  "playerFailedToLoadVideo": "동영상을 로드하지 못했습니다",
+  "playerNotInitialized": "동영상 플레이어가 초기화되지 않았습니다",
+  "guidedExerciseCounter": "운동 {current}/{total}",
+  "@guidedExerciseCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedGetReady": "준비하세요",
+  "guidedSetOf": "세트 {current}/{total}",
+  "@guidedSetOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedRest": "휴식",
+  "guidedSkipRest": "휴식 건너뛰기",
+  "guidedPaused": "일시정지됨",
+  "guidedResume": "재개",
+  "guidedWorkoutComplete": "운동 완료",
+  "guidedEndTitle": "운동을 종료할까요?",
+  "guidedEndBody": "이번 세션의 진행 상황은 저장되지 않습니다.",
+  "guidedKeepGoing": "계속하기",
+  "guidedEnd": "종료",
+  "guidedReps": "{count, plural, one{{count}회} other{{count}회}}",
+  "@guidedReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetTitle": "AI로 루틴 생성",
+  "generateSheetPrompt": "어떤 운동을 원하시나요?",
+  "generateSheetHint": "예: \"잠을 깨우는 간단한 아침 스트레칭\" 또는 \"초보자를 위한 전신 근력 운동\"",
+  "generateSheetDuration": "운동 시간",
+  "generateSheetMinutes": "{count}분",
+  "@generateSheetMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetDifficulty": "난이도",
+  "generateSheetEquipment": "사용 가능한 장비",
+  "generateSheetGenerating": "생성 중...",
+  "generateSheetSubmit": "루틴 생성",
+  "generateSheetDescribeFirst": "원하는 운동을 설명해 주세요",
+  "generateSheetAlreadyExists": "이미 있습니다: {title}",
+  "@generateSheetAlreadyExists": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetCreated": "생성됨: {title}",
+  "@generateSheetCreated": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetFailed": "루틴을 생성하지 못했습니다",
+  "guidedNoExercises": "이 루틴에는 아직 운동이 없습니다.",
+  "guidedStartFailed": "지금은 이 운동을 시작할 수 없습니다. 다시 시도해 주세요.",
+  "guidedSaveFailed": "이 운동을 저장하지 못했습니다. 연속 기록을 업데이트하려면 재시도를 탭하세요.",
+  "guidedOfReps": "{count}회 중",
+  "@guidedOfReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedHold": "유지",
+  "guidedNextSet": "다음 세트",
+  "guidedUpNext": "다음 운동",
+  "guidedSetsHold": "{sets} × {seconds}초 유지",
+  "@guidedSetsHold": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachGetReady": "준비하세요. {exercise}",
+  "@coachGetReady": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachStartReps": "시작합니다. {count}회.",
+  "@coachStartReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachStartHold": "{seconds}초 동안 유지하세요.",
+  "@coachStartHold": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachRest": "휴식하세요. 다음 운동: {exercise}",
+  "@coachRest": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachRestShort": "휴식하세요.",
+  "coachComplete": "잘했어요. 운동이 완료되었습니다.",
+  "coachRep": "{count}",
+  "@coachRep": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachCountdown": "{seconds}",
+  "@coachCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoVideosInRoutine": "이 루틴에서 재생할 수 있는 동영상을 찾지 못했습니다.",
+  "playerLoadRoutineFailed": "지금은 이 루틴을 불러올 수 없습니다. 다시 시도해 주세요.",
+  "playerStepLoadFailedSkipping": "\"{title}\"을(를) 불러오지 못했습니다. 건너뜁니다…",
+  "@playerStepLoadFailedSkipping": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerStepLoadFailed": "\"{title}\"을(를) 불러오지 못했습니다.",
+  "@playerStepLoadFailed": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerSaveCompletionFailed": "완료 기록을 저장하지 못했습니다. 연속 기록을 업데이트하려면 재시도를 탭하세요.",
+  "playerStepPreviewSubtitle": "{duration} • 미리보기",
+  "@playerStepPreviewSubtitle": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerNoVideosReady": "이 루틴에는 아직 재생할 수 있는 동영상이 없습니다.",
+  "playerPlaybackFailed": "지금은 이 동영상을 재생할 수 없습니다. 다시 시도해 주세요.",
+  "libraryTabCurated": "엄선됨",
+  "libraryTabAiGenerated": "AI 생성",
+  "profileSavedRoutines": "저장된 루틴",
+  "savedRoutinesNoFavorites": "아직 즐겨찾기한 루틴이 없습니다.",
+  "savedRoutinesEmpty": "아직 저장된 루틴이 없습니다.",
+  "actionFavorite": "즐겨찾기",
+  "actionUnfavorite": "즐겨찾기 해제",
+  "routineDurationMinutes": "{minutes}분",
+  "@routineDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHoursMinutes": "{hours}시간 {minutes}분",
+  "@routineDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHours": "{hours}시간",
+  "@routineDurationHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "difficultyEasy": "쉬움",
+  "difficultyMedium": "보통",
+  "difficultyHard": "어려움",
+  "categoryStrength": "근력",
+  "categoryCardio": "유산소",
+  "categoryFlexibility": "유연성",
+  "categoryMindfulness": "마음챙김",
+  "categoryDance": "댄스",
+  "categoryHiit": "HIIT",
+  "categoryYoga": "요가",
+  "categoryCustom": "맞춤",
+  "navHome": "홈",
+  "navLibrary": "라이브러리",
+  "navChat": "채팅",
+  "navProfile": "프로필",
+  "equipmentNone": "없음",
+  "equipmentDumbbells": "덤벨",
+  "equipmentResistanceBands": "저항 밴드",
+  "equipmentYogaMat": "요가 매트",
+  "equipmentKettlebell": "케틀벨",
+  "equipmentPullUpBar": "풀업 바",
+  "equipmentJumpRope": "줄넘기",
+  "nutritionTitle": "영양",
+  "nutritionSubtitle": "칼로리, 매크로 및 식사 기록",
+  "nutritionSetGoalsTitle": "일일 영양 목표 설정",
+  "nutritionSetGoalsBody": "체중, 키, 나이, 성별을 입력하면 Celia가 매일 섭취해야 할 칼로리와 영양소를 계산해 드려요.",
+  "nutritionSetUpGoals": "목표 설정",
+  "nutritionDailyTarget": "일일 목표",
+  "nutritionDailyGoals": "일일 목표",
+  "nutritionKcal": "{calories} kcal",
+  "@nutritionKcal": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMacroSummary": "단백질 {protein}g · 탄수화물 {carbs}g · 지방 {fat}g",
+  "@nutritionMacroSummary": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionToday": "오늘",
+  "nutritionMealHistory": "식사 기록",
+  "nutritionCeliaInsights": "Celia 인사이트",
+  "nutritionWeeklyTrend": "주간 추이",
+  "nutritionTodayMeals": "kcal • {count, plural, one{{count}끼} other{{count}끼}}",
+  "@nutritionTodayMeals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionTodayOfTargetMeals": "목표 {target} kcal 중 • {count, plural, one{{count}끼} other{{count}끼}}",
+  "@nutritionTodayOfTargetMeals": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionWeekdayInitials": "월,화,수,목,금,토,일",
+  "@nutritionWeekdayInitials": {
+    "description": "Single-letter weekday labels for the weekly chart, Monday first, comma separated."
+  },
+  "nutritionFieldFoodName": "음식 이름",
+  "nutritionFieldGrams": "그램",
+  "nutritionFieldCalories": "칼로리",
+  "scannerStatusAnalyzing": "분석 중...",
+  "scannerStatusIdle": "CELIA SCANNER",
+  "scannerFieldFoodName": "음식 이름",
+  "scannerFieldGrams": "그램",
+  "scannerFieldCalories": "칼로리",
+  "scannerFieldPro": "Pro",
+  "scannerMacroPro": "PRO",
+  "scannerMacroCarb": "CARB",
+  "scannerMacroFat": "FAT",
+  "scannerRemainingAfterLogging": "오늘 {calories} kcal 및 단백질 {grams}g 남음",
+  "@scannerRemainingAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerOverTargetAfterLogging": "일일 목표보다 {calories} kcal 초과",
+  "@scannerOverTargetAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerButtonAnalyzing": "분석 중",
+  "scannerButtonQuotaNeeded": "할당량 필요",
+  "scannerButtonScanNow": "지금 스캔",
+  "scannerButtonLogging": "기록 중",
+  "scannerButtonLogMeal": "식사 기록",
+  "scannerNoClearFood": "아직 음식이 명확하게 감지되지 않았어요. 조명을 개선하거나 더 가까이 이동해 보세요.",
+  "scannerErrorCameraPermission": "식사를 스캔하려면 카메라 권한이 필요해요.",
+  "scannerErrorBackendMissing": "칼로리 스캐너 백엔드가 아직 설정되지 않았어요.",
+  "scannerErrorApiKeyInvalid": "칼로리 스캔용 OpenAI API 키가 유효하지 않아요. 백엔드 환경에서 키를 교체하고 재배포한 후 다시 시도하세요.",
+  "scannerErrorApiKeyMissing": "칼로리 스캔을 위해 OpenAI API 키가 필요해요. Vercel에 키를 추가하고 재배포한 후 다시 시도하세요.",
+  "scannerErrorQuotaExhausted": "칼로리 스캔에 사용할 OpenAI 크레딧이 소진되었어요. API 크레딧을 추가하거나 결제 한도를 높인 후 다시 시도하세요.",
+  "scannerErrorTimeout": "Celia가 이 식사를 분석하는 데 시간이 더 필요해요. 카메라를 steady하게 유지하고 다시 스캔하세요.",
+  "scannerErrorNotSignedIn": "식사를 스캔하기 전에 로그인해 주세요.",
+  "scannerErrorMealTableMissing": "식사 기록 테이블이 아직 준비되지 않았어요. 스캔 결과는 계속 확인할 수 있어요.",
+  "scannerErrorGeneric": "Celia가 아직 이 식사를 분석하지 못했어요. 카메라를 steady하게 유지하고 음식이 중앙에 오도록 한 뒤 다시 스캔하세요.",
+  "nutritionGrams": "{grams}g",
+  "@nutritionGrams": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionMealSubtitle": "{time} · {count, plural, one{{count}개 항목} other{{count}개 항목}}",
+  "@nutritionMealSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMealDetails": "식사 세부 정보",
+  "nutritionFoodItems": "음식 항목",
+  "nutritionItemSubtitle": "{grams}g · {calories} kcal",
+  "@nutritionItemSubtitle": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionNeedsOneItem": "식사에는 음식 항목이 하나 이상 필요합니다.",
+  "nutritionMealUpdated": "식사가 업데이트되었습니다",
+  "nutritionUpdateFailed": "식사를 업데이트할 수 없습니다: {error}",
+  "@nutritionUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionDeleteMealTitle": "식사를 삭제할까요?",
+  "nutritionDeleteMealBody": "영양 기록에서 이 식사가 삭제됩니다.",
+  "nutritionDeleteMeal": "식사 삭제",
+  "nutritionDeleteFailed": "식사를 삭제할 수 없습니다: {error}",
+  "@nutritionDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionEditFood": "음식 수정",
+  "nutritionSaveFood": "음식 저장",
+  "nutritionLoadFailed": "식사를 불러올 수 없습니다",
+  "nutritionLoadFailedBody": "당겨서 새로고침하거나 백엔드 연결을 확인하세요.",
+  "nutritionNoMeals": "아직 기록된 식사가 없습니다",
+  "nutritionNoMealsBody": "첫 식사를 스캔하면 Celia가 영양 기록을 만들어 드립니다.",
+  "progressToday": "오늘",
+  "progressSetGoals": "영양 목표를 설정하면 칼로리와 매크로 추적을 이용할 수 있습니다.",
+  "progressOfTarget": "{target} kcal 중",
+  "@progressOfTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressMacroAmount": "{consumed} / {target}g",
+  "@progressMacroAmount": {
+    "placeholders": {
+      "consumed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalOver": "{calories} kcal 초과",
+  "@progressKcalOver": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalLeft": "{calories} kcal 남음",
+  "@progressKcalLeft": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressProtein": "단백질",
+  "progressCarbs": "탄수화물",
+  "progressFat": "지방",
+  "scannerEditItem": "음식 항목 수정",
+  "scannerSaveChanges": "변경 사항 저장",
+  "scannerItemCalories": "{name} · {calories} kcal",
+  "@scannerItemCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerConfidence": "신뢰도 {percent}% · {provider}",
+  "@scannerConfidence": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerMoreItems": "+ {count}개 항목이 이 식사 기록에 포함됨",
+  "@scannerMoreItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerIfYouLog": "이 식사를 기록하면",
+  "scannerAfterLogging": "오늘 {after} / {target} kcal",
+  "@scannerAfterLogging": {
+    "placeholders": {
+      "after": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerGramsDecimal": "{grams}g",
+  "@scannerGramsDecimal": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerItemServing": "{name} · {grams}g",
+  "@scannerItemServing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerNoMealDetected": "감지된 식사가 없습니다",
+  "onboardingWelcome": "환영합니다, {name}님",
+  "@onboardingWelcome": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingGender": "성별",
+  "onboardingCalculateGoals": "내 목표 계산하기",
+  "onboardingScanFirstMeal": "첫 식사 스캔하기",
+  "onboardingExploreRoutines": "루틴 둘러보기",
+  "onboardingGoHome": "홈으로 가기",
+  "onboardingDailyTargets": "일일 목표",
+  "onboardingProtein": "단백질 {grams}g ·",
+  "@onboardingProtein": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingMacroTargets": "단백질 {protein}g • 탄수화물 {carbs}g • 지방 {fat}g",
+  "@onboardingMacroTargets": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingTargetsReady": "일일 영양 목표가 준비되었습니다. 시작 방법을 선택하세요.",
+  "onboardingWeightKg": "체중 (kg)",
+  "onboardingHeightCm": "키 (cm)",
+  "onboardingAge": "나이",
+  "onboardingInvalidWeight": "유효한 체중(kg)을 입력하세요.",
+  "onboardingInvalidHeight": "유효한 키(cm)를 입력하세요.",
+  "onboardingInvalidAge": "13세에서 100세 사이의 유효한 나이를 입력하세요.",
+  "onboardingSaveFailed": "영양 프로필을 저장할 수 없습니다.",
+  "genderMale": "남성",
+  "genderFemale": "여성",
+  "genderOther": "기타",
+  "nutritionSetupTitle": "일일 영양 목표",
+  "nutritionSetupBody": "Celia가 일일 칼로리와 매크로를 계산할 수 있도록 신체 정보를 알려주세요.",
+  "nutritionSetupGender": "성별",
+  "nutritionSetupFootnote": "Celia는 체중, 키, 나이, 성별을 사용하고 보통 활동 수준을 기준으로 일일 칼로리와 매크로 목표를 추정합니다.",
+  "nutritionSetupSave": "목표 저장",
+  "profileTitle": "프로필",
+  "profileCeliaAi": "Celia AI",
+  "profileEliteMember": "엘리트 멤버",
+  "profileAccount": "계정",
+  "profileSignedInAs": "로그인한 계정:\n{email}",
+  "@profileSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "profileUnknownEmail": "알 수 없음",
+  "profileDarkMode": "다크 모드",
+  "profileLanguage": "언어",
+  "profileLogOutTitle": "로그아웃할까요?",
+  "profileLogOutBody": "정말 로그아웃하시겠어요?",
+  "profileLogOut": "로그아웃",
+  "profileLogOutButton": "로그아웃",
+  "profileFavoriteRoutines": "즐겨찾는 루틴",
+  "profileSubscription": "구독",
+  "profileNutrition": "영양",
+  "profileHelpSupport": "도움말 및 지원",
+  "profileFriend": "친구",
+  "profileStatSaved": "저장됨",
+  "profileStatStreak": "연속 기록",
+  "profileStatWorkouts": "운동",
+  "streakDayOneStarted": "1일 차를 시작했어요 — 연속 기록을 이어가려면 내일 다시 방문하세요.",
+  "streakRebuild": "어제 활동했어요 — 오늘 식사를 기록하거나 운동을 완료해 연속 기록을 다시 이어가세요.",
+  "streakStart": "식사를 기록하거나 운동을 완료해 활동 연속 기록을 시작하세요.",
+  "streakLongRun": "{days}일 연속 기록! 계속 꾸준히 참여하세요 — Celia가 꾸준함을 기록하고 있어요.",
+  "@streakLongRun": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakBothLogged": "{days}일 연속 기록 — 오늘 운동과 영양을 모두 기록했어요.",
+  "@streakBothLogged": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedWorkout": "{days}일 연속 기록이에요. 짧은 운동으로 오늘을 완성해 보세요.",
+  "@streakNeedWorkout": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedMeal": "{days}일 연속 기록이에요. 식사를 기록해 영양 섭취를 추적하세요.",
+  "@streakNeedMeal": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakStayActive": "{days}일 연속 기록 — 오늘도 활동을 이어가세요.",
+  "@streakStayActive": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "editProfileTitle": "프로필 편집",
+  "editProfileName": "이름",
+  "editProfileFootnote": "변경 사항은 계정에 저장되며 홈/프로필에 표시됩니다.",
+  "editProfileSaveFailed": "프로필을 업데이트할 수 없습니다. 다시 시도해 주세요.",
+  "languageTitle": "언어",
+  "languageSystem": "기기 언어",
+  "languageSystemSubtitle": "휴대전화에 설정된 언어를 사용합니다",
+  "languageEnglish": "영어",
+  "languageSpanish": "스페인어",
+  "insightStartFuelingTitle": "오늘부터 영양을 채워 보세요",
+  "insightStartFuelingBody": "아직 일일 칼로리 예산을 모두 사용할 수 있어요. 첫 식사를 스캔하거나 기록해 목표를 지켜 보세요.",
+  "insightAboveTargetTitle": "오늘 목표 초과",
+  "insightAboveTargetBody": "일일 목표보다 {calories} kcal 초과했어요. 저녁을 가볍게 먹거나 짧은 운동을 추가해 보세요.",
+  "@insightAboveTargetBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightLowProteinTitle": "단백질이 아직 부족해요",
+  "insightLowProteinBody": "오늘 목표를 달성하려면 단백질이 약 {grams}g 더 필요해요.",
+  "@insightLowProteinBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightAlmostThereTitle": "목표에 거의 도달했어요",
+  "insightAlmostThereBody": "오늘 {calories} kcal가 남았어요. 균형 잡힌 간식이 잘 맞겠어요.",
+  "@insightAlmostThereBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightOnTrackTitle": "오늘 목표를 잘 지키고 있어요",
+  "insightOnTrackBody": "일일 목표까지 {calories} kcal와 단백질 {grams}g이 남았어요.",
+  "@insightOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightWeeklyRhythmTitle": "주간 리듬을 만들어 보세요",
+  "insightWeeklyRhythmBody": "일주일 동안 식사를 기록하면 Celia가 패턴을 파악해 더 나은 코칭을 제공할 수 있어요.",
+  "insightWeeklyTrendTitle": "주간 추이",
+  "insightWeeklyTrendBody": "지난 7일 중 {days}일에 식사를 기록했으며, 평균 {average} kcal를 섭취했어요 — {direction}.",
+  "@insightWeeklyTrendBody": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "average": {
+        "type": "int"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "insightTrendOnTarget": "일일 목표와 거의 같아요",
+  "insightTrendAbove": "평균적으로 목표보다 {delta} kcal 높아요",
+  "@insightTrendAbove": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightTrendBelow": "평균적으로 목표보다 {delta} kcal 낮아요",
+  "@insightTrendBelow": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsSectionTitle": "Celia 인사이트"
+}

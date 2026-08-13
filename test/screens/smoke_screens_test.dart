@@ -1,3 +1,4 @@
+import 'package:celia_flutter/l10n/app_localizations.dart';
 import 'package:celia_flutter/providers/auth_provider.dart';
 import 'package:celia_flutter/providers/chat_provider.dart';
 import 'package:celia_flutter/providers/navigation_provider.dart';
@@ -109,7 +110,12 @@ Widget _wrap(
         ChangeNotifierProvider<RoutineProvider>.value(value: routines),
         ChangeNotifierProvider<ChatProvider>.value(value: chat),
       ],
-      child: MaterialApp(home: child),
+      child: MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: const Locale('en'),
+        home: child,
+      ),
     ),
   );
 }

@@ -1,3 +1,4 @@
+import '../l10n/app_localizations.dart';
 import '../models/meal_log.dart';
 import '../models/routine.dart';
 
@@ -117,31 +118,21 @@ int computeLevel(List<UserRoutine> routines, {int completionsPerLevel = 5}) {
 }
 
 /// Short coaching copy for Home and Profile surfaces.
-String buildStreakNudge(ActiveStreakStats stats) {
+String buildStreakNudge(AppLocalizations l10n, ActiveStreakStats stats) {
   if (stats.streak == 0) {
-    if (stats.activeToday) {
-      return 'Day 1 started — come back tomorrow to build your streak.';
-    }
-    if (stats.wasActiveYesterday) {
-      return 'You were active yesterday — log a meal or finish a workout today to rebuild your streak.';
-    }
-    return 'Log a meal or finish a workout to start your active streak.';
+    if (stats.activeToday) return l10n.streakDayOneStarted;
+    if (stats.wasActiveYesterday) return l10n.streakRebuild;
+    return l10n.streakStart;
   }
 
-  if (stats.streak >= 7) {
-    return '${stats.streak}-day streak! Keep showing up — Celia is tracking your consistency.';
-  }
+  if (stats.streak >= 7) return l10n.streakLongRun(stats.streak);
 
   if (stats.loggedMealToday && stats.completedWorkoutToday) {
-    return '${stats.streak}-day streak — workout and nutrition both logged today.';
+    return l10n.streakBothLogged(stats.streak);
   }
-  if (stats.loggedMealToday) {
-    return '${stats.streak}-day streak. A quick workout would round out today.';
-  }
-  if (stats.completedWorkoutToday) {
-    return '${stats.streak}-day streak. Log a meal to track your fueling.';
-  }
-  return '${stats.streak}-day streak — stay active today.';
+  if (stats.loggedMealToday) return l10n.streakNeedWorkout(stats.streak);
+  if (stats.completedWorkoutToday) return l10n.streakNeedMeal(stats.streak);
+  return l10n.streakStayActive(stats.streak);
 }
 
 /// Hidden context appended to chat messages so Celia can coach on consistency.

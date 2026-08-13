@@ -15,6 +15,9 @@ RoutineStep _$RoutineStepFromJson(Map<String, dynamic> json) => RoutineStep(
   thumbnailUrl: json['thumbnail_url'] as String?,
   orderIndex: (json['order_index'] as num).toInt(),
   exerciseSlug: json['exercise_slug'] as String?,
+  sets: (json['sets'] as num?)?.toInt() ?? 1,
+  reps: (json['reps'] as num?)?.toInt(),
+  restSeconds: (json['rest_seconds'] as num?)?.toInt() ?? 0,
 );
 
 Map<String, dynamic> _$RoutineStepToJson(RoutineStep instance) =>
@@ -27,6 +30,9 @@ Map<String, dynamic> _$RoutineStepToJson(RoutineStep instance) =>
       'thumbnail_url': instance.thumbnailUrl,
       'order_index': instance.orderIndex,
       'exercise_slug': instance.exerciseSlug,
+      'sets': instance.sets,
+      'reps': instance.reps,
+      'rest_seconds': instance.restSeconds,
     };
 
 Routine _$RoutineFromJson(Map<String, dynamic> json) => Routine(

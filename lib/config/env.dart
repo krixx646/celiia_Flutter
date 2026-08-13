@@ -42,24 +42,43 @@ class Env {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpnd3hkcHhoZGRjc3dkbWVjdHNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQyMTUwODcsImV4cCI6MjA3OTc5MTA4N30.8FheIZEAlu5tgqUlGuz1pYIKnYFkw2s5SaEA0uj1EDg',
   );
 
-  /// Temporary stock-GIF fallback for routine steps that don't have a real
-  /// filmed video yet. Real Cloudflare videos always take priority when
-  /// available; this only fills the gap while filming is in progress.
+  /// The stock GIF pack, suspended in favour of the client's filmed clips.
   ///
-  /// Flip to false any time to hide GIF fallbacks app-wide without deleting
-  /// any code or data.
+  /// Suspended rather than deleted, on the same terms as [suspendRealVideos]:
+  /// the tables, resolvers and render paths all stay, but nothing sourced from
+  /// the GIF pack reaches the screen while this is false. Flip it back on to
+  /// restore GIF fallbacks app-wide.
   static const bool enableGifFallback = bool.fromEnvironment(
     'ENABLE_GIF_FALLBACK',
+    defaultValue: false,
+  );
+
+  /// The Cloudflare Stream pipeline the app was originally built around. It
+  /// was suspended while that pipeline was unfinished, and the client's
+  /// filmed clip library (served from Supabase storage) has since replaced it
+  /// for every routine. Left suspended rather than deleted so the code path
+  /// is one flag away if Cloudflare is ever picked back up.
+  static const bool suspendRealVideos = bool.fromEnvironment(
+    'SUSPEND_REAL_VIDEOS',
     defaultValue: true,
   );
 
-  /// Client request: pause the real Cloudflare video pipeline entirely and
-  /// run every routine step on the stock GIF library until that pipeline is
-  /// fully working end-to-end, then flip this back to false to resume real
-  /// videos everywhere. This never deletes the video code paths — it just
-  /// skips them, so re-enabling is a one-line change.
-  static const bool suspendRealVideos = bool.fromEnvironment(
-    'SUSPEND_REAL_VIDEOS',
+  /// Run routines through the guided, coached player: the demo clip loops
+  /// while the app counts the prescribed reps, holds the clock on timed
+  /// exercises, and rests with the user between sets.
+  ///
+  /// Turning this off falls back to the old playlist-style player, which is
+  /// kept intact for routines built before sets and reps existed.
+  static const bool enableGuidedWorkouts = bool.fromEnvironment(
+    'ENABLE_GUIDED_WORKOUTS',
+    defaultValue: true,
+  );
+
+  /// Spoken coaching during guided workouts (on-device TTS).
+  ///
+  /// When false, the guided player still counts and rests with haptics only.
+  static const bool enableVoiceCoach = bool.fromEnvironment(
+    'ENABLE_VOICE_COACH',
     defaultValue: true,
   );
 }

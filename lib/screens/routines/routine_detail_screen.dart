@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../config/env.dart';
+import '../../l10n/app_localizations.dart';
 import '../../models/routine.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/cloudflare_stream_service.dart';
+import '../../services/exercise_clip_library.dart';
 import '../../services/exercise_media_resolver.dart';
 import '../../services/supabase_service.dart';
-import 'routine_player_screen.dart';
+import '../../utils/routine_text.dart';
 import 'video_player_screen.dart';
+import 'workout_launcher.dart';
 import 'dart:ui';
 
 class RoutineDetailScreen extends StatefulWidget {
@@ -23,8 +26,10 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
   final CloudflareStreamService _cloudflareService = CloudflareStreamService();
   final SupabaseService _supabaseService = SupabaseService.instance;
   final ExerciseMediaResolver _exerciseMediaResolver = ExerciseMediaResolver();
+  final ExerciseClipLibrary _clipLibrary = ExerciseClipLibrary();
   Map<String, String?> _videoThumbnails = {};
   Map<String, bool> _videoAvailability = {};
+  Map<String, String?> _clipPosters = {};
   Map<String, String?> _gifFallbacks = {};
   bool _loadingVideos = false;
 
@@ -39,10 +44,18 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
 
     final thumbnails = <String, String?>{};
     final availability = <String, bool>{};
+    final clipPosters = <String, String?>{};
     final gifFallbacks = <String, String?>{};
 
     for (final step in widget.routine.steps) {
       var stepHasVideo = false;
+
+      try {
+        final poster = (await _clipLibrary.resolveForStep(step))?.posterUrl;
+        if (poster != null && poster.isNotEmpty) clipPosters[step.id] = poster;
+      } catch (_) {
+        // Artwork is best-effort; the step still lists and still plays.
+      }
       if (!Env.suspendRealVideos &&
           step.videoId != null &&
           step.videoId!.isNotEmpty) {
@@ -95,6 +108,7 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
     setState(() {
       _videoThumbnails = thumbnails;
       _videoAvailability = availability;
+      _clipPosters = clipPosters;
       _gifFallbacks = gifFallbacks;
       _loadingVideos = false;
     });
@@ -107,6 +121,8 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
       final videoThumb = _videoThumbnails[step.videoId];
       if (videoThumb != null && videoThumb.isNotEmpty) return videoThumb;
     }
+    final poster = _clipPosters[step.id];
+    if (poster != null && poster.isNotEmpty) return poster;
     if (!_isVideoAvailable(step)) {
       final gifUrl = _gifFallbacks[step.id];
       if (gifUrl != null && gifUrl.isNotEmpty) return gifUrl;
@@ -126,12 +142,12 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
     return gifUrl != null && gifUrl.isNotEmpty;
   }
 
-  Future<void> _playVideo(RoutineStep step) async {
+  Future<void> _playVideo(AppLocalizations l10n, RoutineStep step) async {
     if (Env.suspendRealVideos) return;
     if (step.videoId == null || step.videoId!.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('No video available for this step'),
+        SnackBar(
+          content: Text(l10n.routineNoVideoForStep),
           backgroundColor: Colors.red,
         ),
       );
@@ -140,8 +156,8 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
 
     if (!_isVideoAvailable(step)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Video is still processing. Please try again later.'),
+        SnackBar(
+          content: Text(l10n.routineVideoProcessing),
           backgroundColor: Colors.orange,
         ),
       );
@@ -166,8 +182,8 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
     if (playbackUrl.isEmpty) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Playback URL is missing for this video'),
+        SnackBar(
+          content: Text(l10n.routineMissingPlaybackUrl),
           backgroundColor: Colors.red,
         ),
       );
@@ -190,6 +206,7 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
 
     return Scaffold(
@@ -234,17 +251,23 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
                   runSpacing: 10,
                   children: [
                     _buildInfoChip(
-                      '${widget.routine.durationMinutes} min',
+                      localizedRoutineDuration(
+                        l10n,
+                        widget.routine.durationMinutes,
+                      ),
                       Icons.timer,
                       theme,
                     ),
                     _buildInfoChip(
-                      widget.routine.difficultyLabel,
+                      localizedRoutineDifficulty(
+                        l10n,
+                        widget.routine.difficulty,
+                      ),
                       Icons.fitness_center,
                       theme,
                     ),
                     _buildInfoChip(
-                      widget.routine.categoryLabel,
+                      localizedRoutineCategory(l10n, widget.routine.category),
                       Icons.category,
                       theme,
                     ),
@@ -253,13 +276,7 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) =>
-                            RoutinePlayerScreen(routine: widget.routine),
-                      ),
-                    );
+                    openWorkout(context, widget.routine);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: theme.accentOrange,
@@ -270,14 +287,14 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
                     ),
                     elevation: 8,
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.play_arrow),
-                      SizedBox(width: 8),
+                      const Icon(Icons.play_arrow),
+                      const SizedBox(width: 8),
                       Text(
-                        'Start Workout',
-                        style: TextStyle(
+                        l10n.routineStartWorkout,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -300,7 +317,7 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
                 : widget.routine.steps.isEmpty
                 ? Center(
                     child: Text(
-                      'No steps available',
+                      l10n.routineNoSteps,
                       style: TextStyle(color: theme.textSecondary),
                     ),
                   )
@@ -319,7 +336,7 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
                     itemCount: widget.routine.steps.length,
                     itemBuilder: (context, index) {
                       final step = widget.routine.steps[index];
-                      return _buildStepTile(step, theme);
+                      return _buildStepTile(l10n, step, theme);
                     },
                   ),
           ),
@@ -354,7 +371,7 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
     );
   }
 
-  void _previewGif(RoutineStep step) {
+  void _previewGif(AppLocalizations l10n, RoutineStep step) {
     final gifUrl = _gifFallbacks[step.id];
     if (gifUrl == null || gifUrl.isEmpty) return;
 
@@ -395,9 +412,12 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
                       vertical: 8,
                     ),
                     width: double.infinity,
-                    child: const Text(
-                      'PREVIEW — full video coming soon',
-                      style: TextStyle(color: Colors.white54, fontSize: 11),
+                    child: Text(
+                      l10n.routinePreviewBanner,
+                      style: const TextStyle(
+                        color: Colors.white54,
+                        fontSize: 11,
+                      ),
                     ),
                   ),
                 ],
@@ -413,7 +433,11 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
     );
   }
 
-  Widget _buildStepTile(RoutineStep step, ThemeProvider theme) {
+  Widget _buildStepTile(
+    AppLocalizations l10n,
+    RoutineStep step,
+    ThemeProvider theme,
+  ) {
     final thumbnailUrl = _getThumbnailForStep(step);
     final isAvailable = _isVideoAvailable(step);
     final hasVideo =
@@ -424,8 +448,8 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
 
     return GestureDetector(
       onTap: hasVideo
-          ? () => _playVideo(step)
-          : (hasGif ? () => _previewGif(step) : null),
+          ? () => _playVideo(l10n, step)
+          : (hasGif ? () => _previewGif(l10n, step) : null),
       child: Container(
         decoration: BoxDecoration(
           color: theme.surface,
@@ -551,9 +575,9 @@ class _RoutineDetailScreenState extends State<RoutineDetailScreen> {
                               vertical: 4,
                             ),
                             color: Colors.black.withValues(alpha: 0.6),
-                            child: const Text(
-                              'PREVIEW',
-                              style: TextStyle(
+                            child: Text(
+                              l10n.routinePreview,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,

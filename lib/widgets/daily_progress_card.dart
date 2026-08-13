@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../l10n/app_localizations.dart';
 import '../providers/nutrition_tracker_provider.dart';
 import '../providers/theme_provider.dart';
+import '../utils/insight_text.dart';
 import '../utils/progress.dart';
 
 /// Today's eating and activity at a glance: how far through the calorie budget
@@ -20,6 +22,7 @@ class DailyProgressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     final profile = tracker.profile;
     final insight = tracker.todayInsight;
@@ -47,7 +50,7 @@ class DailyProgressCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Today',
+                  l10n.progressToday,
                   style: TextStyle(
                     color: theme.textPrimary,
                     fontSize: 20,
@@ -65,7 +68,7 @@ class DailyProgressCard extends StatelessWidget {
           if (profile == null) ...[
             const SizedBox(height: 14),
             Text(
-              'Set your nutrition goals to unlock calorie and macro tracking.',
+              l10n.progressSetGoals,
               style: TextStyle(color: theme.textSecondary, height: 1.4),
             ),
           ] else ...[
@@ -81,21 +84,21 @@ class DailyProgressCard extends StatelessWidget {
                   child: Column(
                     children: [
                       _MacroBar(
-                        label: 'Protein',
+                        label: l10n.progressProtein,
                         consumed: tracker.todayProtein,
                         target: profile.dailyProteinGrams,
                         color: theme.accentOrange,
                       ),
                       const SizedBox(height: 12),
                       _MacroBar(
-                        label: 'Carbs',
+                        label: l10n.progressCarbs,
                         consumed: tracker.todayCarbs,
                         target: profile.dailyCarbsGrams,
                         color: const Color(0xFF3B9EFF),
                       ),
                       const SizedBox(height: 12),
                       _MacroBar(
-                        label: 'Fat',
+                        label: l10n.progressFat,
                         consumed: tracker.todayFat,
                         target: profile.dailyFatGrams,
                         color: const Color(0xFF00E475),
@@ -116,14 +119,14 @@ class DailyProgressCard extends StatelessWidget {
             iconColor: streakStats.streak > 0
                 ? theme.accentOrange
                 : theme.textSecondary,
-            text: buildStreakNudge(streakStats),
+            text: buildStreakNudge(l10n, streakStats),
           ),
           if (insight != null) ...[
             const SizedBox(height: 10),
             _CoachLine(
               icon: Icons.lightbulb_outline,
               iconColor: theme.textSecondary,
-              text: insight.message,
+              text: insight.message(l10n),
             ),
           ],
         ],
@@ -153,7 +156,9 @@ class _BudgetPill extends StatelessWidget {
         borderRadius: BorderRadius.circular(999),
       ),
       child: Text(
-        over ? '${-remaining} kcal over' : '$remaining kcal left',
+        over
+            ? AppLocalizations.of(context).progressKcalOver(-remaining)
+            : AppLocalizations.of(context).progressKcalLeft(remaining),
         style: TextStyle(
           color: color,
           fontSize: 12,
@@ -206,7 +211,7 @@ class _CalorieRing extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                'of ${target.round()} kcal',
+                AppLocalizations.of(context).progressOfTarget(target.round()),
                 style: TextStyle(color: theme.textSecondary, fontSize: 10),
               ),
             ],
@@ -251,7 +256,9 @@ class _MacroBar extends StatelessWidget {
               ),
             ),
             Text(
-              '${consumed.round()} / ${target.round()}g',
+              AppLocalizations.of(
+                context,
+              ).progressMacroAmount(consumed.round(), target.round()),
               style: TextStyle(
                 color: theme.textPrimary,
                 fontSize: 12,

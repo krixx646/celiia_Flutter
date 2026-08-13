@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../l10n/app_localizations.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/loading_indicator.dart';
 
@@ -26,12 +27,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: _authBackground,
       appBar: AppBar(
         backgroundColor: _authBackground,
         foregroundColor: Colors.white,
-        title: const Text('Forgot Password'),
+        title: Text(l10n.forgotPasswordTitle),
       ),
       body: Consumer<AuthProvider>(
         builder: (context, auth, child) {
@@ -55,9 +57,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              const Text(
-                                'Enter your email to receive a password reset link.',
-                                style: TextStyle(
+                              Text(
+                                l10n.forgotPasswordBody,
+                                style: const TextStyle(
                                   color: Colors.white70,
                                   fontWeight: FontWeight.w700,
                                   height: 1.35,
@@ -69,7 +71,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 keyboardType: TextInputType.emailAddress,
                                 style: const TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
-                                  labelText: 'Email',
+                                  labelText: l10n.authFieldEmail,
                                   filled: true,
                                   fillColor: _authSurface,
                                   labelStyle: const TextStyle(
@@ -118,9 +120,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                         final navigator = Navigator.of(context);
                                         if (email.isEmpty) {
                                           messenger.showSnackBar(
-                                            const SnackBar(
+                                            SnackBar(
                                               content: Text(
-                                                'Please enter an email',
+                                                l10n.forgotPasswordEmptyEmail,
                                               ),
                                             ),
                                           );
@@ -132,9 +134,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                             .uiState
                                             .passwordResetEmailSent) {
                                           messenger.showSnackBar(
-                                            const SnackBar(
+                                            SnackBar(
                                               content: Text(
-                                                'Password reset email sent.',
+                                                l10n.forgotPasswordSent,
                                               ),
                                             ),
                                           );
@@ -142,10 +144,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                         }
                                       },
                                 child: ui.isLoading
-                                    ? const LoadingIndicator(
-                                        message: 'Sending...',
+                                    ? LoadingIndicator(
+                                        message: l10n.forgotPasswordSending,
                                       )
-                                    : const Text('Send reset link'),
+                                    : Text(l10n.forgotPasswordSend),
                               ),
                             ],
                           ),

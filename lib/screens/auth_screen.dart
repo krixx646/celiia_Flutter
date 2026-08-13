@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:io' show Platform;
+import '../l10n/app_localizations.dart';
 import '../providers/auth_provider.dart';
 import '../providers/theme_provider.dart';
 import '../widgets/loading_indicator.dart';
@@ -35,6 +36,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     return Scaffold(
       backgroundColor: _authBackground,
@@ -43,8 +45,8 @@ class _AuthScreenState extends State<AuthScreen> {
           final ui = auth.uiState;
 
           if (ui.isLoading) {
-            return const Center(
-              child: LoadingIndicator(message: 'Authenticating...'),
+            return Center(
+              child: LoadingIndicator(message: l10n.authAuthenticating),
             );
           }
 
@@ -75,10 +77,10 @@ class _AuthScreenState extends State<AuthScreen> {
                             ),
                           ),
                           const SizedBox(height: 8),
-                          const Text(
-                            'Your fitness buddy',
+                          Text(
+                            l10n.authTagline,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFFFF6F00),
                               fontSize: 18,
                             ),
@@ -106,9 +108,9 @@ class _AuthScreenState extends State<AuthScreen> {
                                 _landing = false;
                                 _isSignIn = false;
                               }),
-                              child: const Text(
-                                'Sign Up',
-                                style: TextStyle(
+                              child: Text(
+                                l10n.authSignUp,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -120,19 +122,19 @@ class _AuthScreenState extends State<AuthScreen> {
                                 _landing = false;
                                 _isSignIn = true;
                               }),
-                              child: const Text(
-                                'Log In',
-                                style: TextStyle(
+                              child: Text(
+                                l10n.authLogIn,
+                                style: const TextStyle(
                                   color: Colors.white70,
                                   fontSize: 16,
                                 ),
                               ),
                             ),
                             const SizedBox(height: 24),
-                            const Center(
+                            Center(
                               child: Text(
-                                'Version 1.1.7',
-                                style: TextStyle(color: Colors.white38),
+                                l10n.authVersion('1.1.7'),
+                                style: const TextStyle(color: Colors.white38),
                               ),
                             ),
                             const SizedBox(height: 16),
@@ -143,7 +145,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 textCapitalization: TextCapitalization.words,
                                 style: const TextStyle(color: Colors.white),
                                 decoration: InputDecoration(
-                                  labelText: 'Your name',
+                                  labelText: l10n.authFieldName,
                                   filled: true,
                                   fillColor: _authSurface,
                                   labelStyle: const TextStyle(
@@ -170,7 +172,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               keyboardType: TextInputType.emailAddress,
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
-                                labelText: 'Email',
+                                labelText: l10n.authFieldEmail,
                                 filled: true,
                                 fillColor: _authSurface,
                                 labelStyle: const TextStyle(
@@ -197,7 +199,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               obscureText: true,
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
-                                labelText: 'Password',
+                                labelText: l10n.authFieldPassword,
                                 filled: true,
                                 fillColor: _authSurface,
                                 labelStyle: const TextStyle(
@@ -250,14 +252,16 @@ class _AuthScreenState extends State<AuthScreen> {
                                   final name = _nameController.text.trim();
                                   if (name.isEmpty) {
                                     auth.setAuthError(
-                                      'Please enter your name.',
+                                      l10n.authEnterYourName,
                                     );
                                     return;
                                   }
                                   auth.signUp(email, pwd, displayName: name);
                                 }
                               },
-                              child: Text(_isSignIn ? 'Log In' : 'Sign Up'),
+                              child: Text(
+                                _isSignIn ? l10n.authLogIn : l10n.authSignUp,
+                              ),
                             ),
                             const SizedBox(height: 8),
                             TextButton(
@@ -265,8 +269,8 @@ class _AuthScreenState extends State<AuthScreen> {
                                   setState(() => _isSignIn = !_isSignIn),
                               child: Text(
                                 _isSignIn
-                                    ? 'Need an account? Sign Up'
-                                    : "Already have an account? Log In",
+                                    ? l10n.authNeedAccount
+                                    : l10n.authHaveAccount,
                                 style: const TextStyle(color: Colors.white70),
                               ),
                             ),
@@ -280,23 +284,31 @@ class _AuthScreenState extends State<AuthScreen> {
                                   ),
                                 );
                               },
-                              child: const Text(
-                                'Forgot Password?',
-                                style: TextStyle(color: Colors.white70),
+                              child: Text(
+                                l10n.authForgotPassword,
+                                style: const TextStyle(color: Colors.white70),
                               ),
                             ),
                             const SizedBox(height: 8),
-                            const Row(
+                            Row(
                               children: [
-                                Expanded(child: Divider(color: Colors.white24)),
+                                const Expanded(
+                                  child: Divider(color: Colors.white24),
+                                ),
                                 Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 8),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                  ),
                                   child: Text(
-                                    'OR',
-                                    style: TextStyle(color: Colors.white54),
+                                    l10n.authOr,
+                                    style: const TextStyle(
+                                      color: Colors.white54,
+                                    ),
                                   ),
                                 ),
-                                Expanded(child: Divider(color: Colors.white24)),
+                                const Expanded(
+                                  child: Divider(color: Colors.white24),
+                                ),
                               ],
                             ),
                             const SizedBox(height: 12),
@@ -311,16 +323,16 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ),
                               ),
                               onPressed: auth.signInWithGoogle,
-                              child: const Row(
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  FaIcon(
+                                  const FaIcon(
                                     FontAwesomeIcons.google,
                                     color: Color(0xFF4285F4),
                                   ),
-                                  SizedBox(width: 8),
-                                  Text('Continue with Google'),
+                                  const SizedBox(width: 8),
+                                  Text(l10n.authContinueWithGoogle),
                                 ],
                               ),
                             ),
@@ -336,13 +348,13 @@ class _AuthScreenState extends State<AuthScreen> {
                                   ),
                                 ),
                                 onPressed: auth.signInWithApple,
-                                child: const Row(
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    FaIcon(FontAwesomeIcons.apple),
-                                    SizedBox(width: 8),
-                                    Text('Continue with Apple'),
+                                    const FaIcon(FontAwesomeIcons.apple),
+                                    const SizedBox(width: 8),
+                                    Text(l10n.authContinueWithApple),
                                   ],
                                 ),
                               ),
@@ -352,9 +364,11 @@ class _AuthScreenState extends State<AuthScreen> {
                                 onTap: () => setState(() {
                                   _landing = true;
                                 }),
-                                child: const Text(
-                                  'Cancel',
-                                  style: TextStyle(color: Colors.white54),
+                                child: Text(
+                                  l10n.actionCancel,
+                                  style: const TextStyle(
+                                    color: Colors.white54,
+                                  ),
                                 ),
                               ),
                             ),

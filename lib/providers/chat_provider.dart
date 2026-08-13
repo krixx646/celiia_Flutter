@@ -91,7 +91,7 @@ class ChatProvider extends ChangeNotifier {
     } catch (e) {
       _error = toUserFriendlyMessage(
         e,
-        fallback: 'Unable to load saved chats right now.',
+        fallbackOf: (l10n) => l10n.errorLoadChats,
       );
     } finally {
       _isLoadingHistory = false;
@@ -177,7 +177,7 @@ class ChatProvider extends ChangeNotifier {
           onError: (Object e) {
             _error = toUserFriendlyMessage(
               e,
-              fallback: 'Celia is unavailable right now. Please try again.',
+              fallbackOf: (l10n) => l10n.errorCeliaUnavailable,
             );
             update(error: _error);
           },
@@ -246,7 +246,7 @@ class ChatProvider extends ChangeNotifier {
     } catch (e) {
       _error = toUserFriendlyMessage(
         e,
-        fallback: 'Could not open that conversation.',
+        fallbackOf: (l10n) => l10n.errorOpenConversation,
       );
     } finally {
       _isLoadingConversation = false;
@@ -262,7 +262,7 @@ class ChatProvider extends ChangeNotifier {
     } catch (e) {
       _error = toUserFriendlyMessage(
         e,
-        fallback: 'Could not delete this conversation. Please try again.',
+        fallbackOf: (l10n) => l10n.errorDeleteConversation,
       );
       notifyListeners();
     }

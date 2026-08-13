@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui';
+import '../l10n/app_localizations.dart';
 import '../providers/navigation_provider.dart';
 import '../providers/nutrition_profile_provider.dart';
 import '../providers/nutrition_tracker_provider.dart';
 import '../providers/theme_provider.dart';
+import '../utils/responsive.dart';
 import 'home/home_screen.dart';
 import 'library/library_screen.dart';
 import 'chat_screen.dart';
@@ -75,6 +77,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final nav = context.watch<NavigationProvider>();
     final theme = context.watch<ThemeProvider>();
 
@@ -93,70 +96,73 @@ class _MainScreenState extends State<MainScreen> {
             alignment: Alignment.bottomCenter,
             child: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.isTablet ? 48 : 24,
                   vertical: 16,
                 ),
-                child: Container(
-                  height: 64,
-                  decoration: BoxDecoration(
-                    color: theme.isDarkMode
-                        ? const Color(0xFF1E2235).withValues(alpha: 0.8)
-                        : Colors.white.withValues(alpha: 0.9),
-                    borderRadius: BorderRadius.circular(32),
-                    border: Border.all(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 560),
+                  child: Container(
+                    height: 64,
+                    decoration: BoxDecoration(
                       color: theme.isDarkMode
-                          ? Colors.white.withValues(alpha: 0.1)
-                          : Colors.black.withValues(alpha: 0.05),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.15),
-                        blurRadius: 20,
-                        offset: const Offset(0, 8),
+                          ? const Color(0xFF1E2235).withValues(alpha: 0.8)
+                          : Colors.white.withValues(alpha: 0.9),
+                      borderRadius: BorderRadius.circular(32),
+                      border: Border.all(
+                        color: theme.isDarkMode
+                            ? Colors.white.withValues(alpha: 0.1)
+                            : Colors.black.withValues(alpha: 0.05),
                       ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(32),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          _buildNavItem(
-                            0,
-                            Icons.home_outlined,
-                            Icons.home,
-                            'Home',
-                            nav.currentIndex,
-                            theme,
-                          ),
-                          _buildNavItem(
-                            1,
-                            Icons.video_library_outlined,
-                            Icons.video_library,
-                            'Library',
-                            nav.currentIndex,
-                            theme,
-                          ),
-                          _buildNavItem(
-                            2,
-                            Icons.chat_bubble_outline,
-                            Icons.chat_bubble,
-                            'Chat',
-                            nav.currentIndex,
-                            theme,
-                          ),
-                          _buildNavItem(
-                            3,
-                            Icons.person_outline,
-                            Icons.person,
-                            'Profile',
-                            nav.currentIndex,
-                            theme,
-                          ),
-                        ],
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.15),
+                          blurRadius: 20,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(32),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            _buildNavItem(
+                              0,
+                              Icons.home_outlined,
+                              Icons.home,
+                              l10n.navHome,
+                              nav.currentIndex,
+                              theme,
+                            ),
+                            _buildNavItem(
+                              1,
+                              Icons.video_library_outlined,
+                              Icons.video_library,
+                              l10n.navLibrary,
+                              nav.currentIndex,
+                              theme,
+                            ),
+                            _buildNavItem(
+                              2,
+                              Icons.chat_bubble_outline,
+                              Icons.chat_bubble,
+                              l10n.navChat,
+                              nav.currentIndex,
+                              theme,
+                            ),
+                            _buildNavItem(
+                              3,
+                              Icons.person_outline,
+                              Icons.person,
+                              l10n.navProfile,
+                              nav.currentIndex,
+                              theme,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

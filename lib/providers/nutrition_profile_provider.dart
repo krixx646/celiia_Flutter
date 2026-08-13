@@ -33,7 +33,7 @@ class NutritionProfileProvider extends ChangeNotifier {
     } catch (e) {
       _error = toUserFriendlyMessage(
         e,
-        fallback: 'Could not load your nutrition profile.',
+        fallbackOf: (l10n) => l10n.errorLoadNutritionProfile,
       );
     } finally {
       _isLoading = false;
@@ -63,7 +63,7 @@ class NutritionProfileProvider extends ChangeNotifier {
     } catch (e) {
       _error = toUserFriendlyMessage(
         e,
-        fallback: 'Could not save your nutrition profile.',
+        fallbackOf: (l10n) => l10n.onboardingSaveFailed,
       );
       return false;
     } finally {

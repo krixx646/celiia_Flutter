@@ -1,3 +1,4 @@
+import 'package:celia_flutter/l10n/app_localizations.dart';
 import 'package:celia_flutter/models/nutrition_profile.dart';
 import 'package:celia_flutter/providers/nutrition_tracker_provider.dart';
 import 'package:celia_flutter/providers/theme_provider.dart';
@@ -52,6 +53,9 @@ Future<void> _pump(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
       child: MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: const Locale('en'),
         home: Scaffold(
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(24),

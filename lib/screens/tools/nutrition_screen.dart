@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../models/meal_analysis.dart';
 import '../../models/meal_log.dart';
 import '../../models/nutrition_profile.dart';
@@ -9,6 +10,7 @@ import '../../providers/nutrition_tracker_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/nutrition_insights_service.dart';
 import '../../services/calorie_scanner_service.dart';
+import '../../utils/insight_text.dart';
 import 'nutrition_profile_setup_screen.dart';
 
 class NutritionScreen extends StatefulWidget {
@@ -57,6 +59,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     final profileProvider = context.watch<NutritionProfileProvider>();
     final profile = profileProvider.profile;
@@ -95,14 +98,15 @@ class _NutritionScreenState extends State<NutritionScreen> {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(24, 16, 24, 120),
                 children: [
-                  _buildHeader(theme),
+                  _buildHeader(l10n, theme),
                   const SizedBox(height: 20),
                   if (!profileProvider.hasProfile)
-                    _buildProfilePrompt(theme)
+                    _buildProfilePrompt(l10n, theme)
                   else
-                    _buildGoalsSummary(theme, profile!),
+                    _buildGoalsSummary(l10n, theme, profile!),
                   const SizedBox(height: 18),
                   _buildTodayCard(
+                    l10n,
                     theme,
                     calories: todayCalories,
                     protein: todayProtein,
@@ -112,14 +116,14 @@ class _NutritionScreenState extends State<NutritionScreen> {
                     profile: profile,
                   ),
                   const SizedBox(height: 18),
-                  _buildWeeklyTrend(theme, meals),
+                  _buildWeeklyTrend(l10n, theme, meals),
                   if (tracker.todayInsight != null ||
                       tracker.weeklyInsight != null) ...[
                     const SizedBox(height: 18),
-                    _buildInsightsSection(theme, tracker),
+                    _buildInsightsSection(l10n, theme, tracker),
                   ],
                   const SizedBox(height: 24),
-                  _buildSectionTitle(theme, 'Meal History'),
+                  _buildSectionTitle(theme, l10n.nutritionMealHistory),
                   const SizedBox(height: 12),
                   if (isLoading)
                     const Padding(
@@ -130,20 +134,18 @@ class _NutritionScreenState extends State<NutritionScreen> {
                     _buildEmptyState(
                       theme,
                       icon: Icons.cloud_off,
-                      title: 'Could not load meals',
-                      subtitle:
-                          'Pull to refresh or check the backend connection.',
+                      title: l10n.nutritionLoadFailed,
+                      subtitle: l10n.nutritionLoadFailedBody,
                     )
                   else if (meals.isEmpty)
                     _buildEmptyState(
                       theme,
                       icon: Icons.restaurant_menu,
-                      title: 'No meals logged yet',
-                      subtitle:
-                          'Scan your first meal and Celia will build your nutrition history.',
+                      title: l10n.nutritionNoMeals,
+                      subtitle: l10n.nutritionNoMealsBody,
                     )
                   else
-                    ...meals.map((meal) => _buildMealTile(theme, meal)),
+                    ...meals.map((meal) => _buildMealTile(l10n, theme, meal)),
                 ],
               ),
             );
@@ -153,7 +155,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
     );
   }
 
-  Widget _buildHeader(ThemeProvider theme) {
+  Widget _buildHeader(AppLocalizations l10n, ThemeProvider theme) {
     return Row(
       children: [
         IconButton(
@@ -166,7 +168,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Nutrition',
+                l10n.nutritionTitle,
                 style: TextStyle(
                   color: theme.textPrimary,
                   fontSize: 30,
@@ -174,14 +176,14 @@ class _NutritionScreenState extends State<NutritionScreen> {
                 ),
               ),
               Text(
-                'Calories, macros, and meal history',
+                l10n.nutritionSubtitle,
                 style: TextStyle(color: theme.textSecondary),
               ),
             ],
           ),
         ),
         IconButton(
-          tooltip: 'Daily goals',
+          tooltip: l10n.nutritionDailyGoals,
           onPressed: _openProfileSetup,
           icon: Icon(Icons.tune, color: theme.textPrimary),
         ),
@@ -189,7 +191,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
     );
   }
 
-  Widget _buildProfilePrompt(ThemeProvider theme) {
+  Widget _buildProfilePrompt(AppLocalizations l10n, ThemeProvider theme) {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
@@ -201,7 +203,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Set your daily nutrition goals',
+            l10n.nutritionSetGoalsTitle,
             style: TextStyle(
               color: theme.textPrimary,
               fontSize: 18,
@@ -210,7 +212,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Add your weight, height, age, and gender so Celia can calculate how many calories and nutrients you should consume each day.',
+            l10n.nutritionSetGoalsBody,
             style: TextStyle(color: theme.textSecondary, height: 1.4),
           ),
           const SizedBox(height: 14),
@@ -223,14 +225,18 @@ class _NutritionScreenState extends State<NutritionScreen> {
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
-            child: const Text('Set Up Goals'),
+            child: Text(l10n.nutritionSetUpGoals),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildGoalsSummary(ThemeProvider theme, NutritionProfile profile) {
+  Widget _buildGoalsSummary(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    NutritionProfile profile,
+  ) {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
@@ -245,7 +251,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Daily target',
+                  l10n.nutritionDailyTarget,
                   style: TextStyle(
                     color: theme.textSecondary,
                     fontWeight: FontWeight.w700,
@@ -253,7 +259,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  '${profile.dailyCalories.round()} kcal',
+                  l10n.nutritionKcal(profile.dailyCalories.round()),
                   style: TextStyle(
                     color: theme.textPrimary,
                     fontSize: 24,
@@ -262,7 +268,11 @@ class _NutritionScreenState extends State<NutritionScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'P ${profile.dailyProteinGrams.round()}g • C ${profile.dailyCarbsGrams.round()}g • F ${profile.dailyFatGrams.round()}g',
+                  l10n.nutritionMacroSummary(
+                    profile.dailyProteinGrams.round(),
+                    profile.dailyCarbsGrams.round(),
+                    profile.dailyFatGrams.round(),
+                  ),
                   style: TextStyle(color: theme.textSecondary),
                 ),
               ],
@@ -270,7 +280,10 @@ class _NutritionScreenState extends State<NutritionScreen> {
           ),
           TextButton(
             onPressed: _openProfileSetup,
-            child: Text('Edit', style: TextStyle(color: theme.accentOrange)),
+            child: Text(
+              l10n.actionEdit,
+              style: TextStyle(color: theme.accentOrange),
+            ),
           ),
         ],
       ),
@@ -278,6 +291,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
   }
 
   Widget _buildInsightsSection(
+    AppLocalizations l10n,
     ThemeProvider theme,
     NutritionTrackerProvider tracker,
   ) {
@@ -289,14 +303,18 @@ class _NutritionScreenState extends State<NutritionScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildSectionTitle(theme, 'Celia Insights'),
+        _buildSectionTitle(theme, l10n.nutritionCeliaInsights),
         const SizedBox(height: 12),
-        ...insights.map((insight) => _buildInsightCard(theme, insight)),
+        ...insights.map((insight) => _buildInsightCard(l10n, theme, insight)),
       ],
     );
   }
 
-  Widget _buildInsightCard(ThemeProvider theme, NutritionInsight insight) {
+  Widget _buildInsightCard(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    NutritionInsight insight,
+  ) {
     final color = switch (insight.tone) {
       NutritionInsightTone.positive => theme.accentOrange,
       NutritionInsightTone.warning => Colors.redAccent,
@@ -326,7 +344,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  insight.title,
+                  insight.title(l10n),
                   style: TextStyle(
                     color: theme.textPrimary,
                     fontWeight: FontWeight.w800,
@@ -334,7 +352,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  insight.message,
+                  insight.message(l10n),
                   style: TextStyle(color: theme.textSecondary, height: 1.4),
                 ),
               ],
@@ -346,6 +364,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
   }
 
   Widget _buildTodayCard(
+    AppLocalizations l10n,
     ThemeProvider theme, {
     required double calories,
     required double protein,
@@ -375,7 +394,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Today',
+            l10n.nutritionToday,
             style: TextStyle(
               color: Colors.white.withValues(alpha: 0.78),
               fontWeight: FontWeight.w800,
@@ -399,8 +418,11 @@ class _NutritionScreenState extends State<NutritionScreen> {
                 padding: const EdgeInsets.only(bottom: 5),
                 child: Text(
                   profile == null
-                      ? 'kcal • $mealCount meals'
-                      : 'of ${profile.dailyCalories.round()} kcal • $mealCount meals',
+                      ? l10n.nutritionTodayMeals(mealCount)
+                      : l10n.nutritionTodayOfTargetMeals(
+                          profile.dailyCalories.round(),
+                          mealCount,
+                        ),
                   style: TextStyle(color: Colors.white.withValues(alpha: 0.72)),
                 ),
               ),
@@ -421,11 +443,11 @@ class _NutritionScreenState extends State<NutritionScreen> {
           const SizedBox(height: 18),
           Row(
             children: [
-              _buildMacroPill('Protein', protein),
+              _buildMacroPill(l10n, l10n.progressProtein, protein),
               const SizedBox(width: 10),
-              _buildMacroPill('Carbs', carbs),
+              _buildMacroPill(l10n, l10n.progressCarbs, carbs),
               const SizedBox(width: 10),
-              _buildMacroPill('Fat', fat),
+              _buildMacroPill(l10n, l10n.progressFat, fat),
             ],
           ),
         ],
@@ -433,7 +455,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
     );
   }
 
-  Widget _buildMacroPill(String label, double grams) {
+  Widget _buildMacroPill(AppLocalizations l10n, String label, double grams) {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -455,7 +477,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
             ),
             const SizedBox(height: 4),
             Text(
-              '${grams.toStringAsFixed(0)}g',
+              l10n.nutritionGrams(grams.toStringAsFixed(0)),
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w900,
@@ -467,7 +489,11 @@ class _NutritionScreenState extends State<NutritionScreen> {
     );
   }
 
-  Widget _buildWeeklyTrend(ThemeProvider theme, List<MealLog> meals) {
+  Widget _buildWeeklyTrend(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    List<MealLog> meals,
+  ) {
     final dailyCalories = List<double>.generate(7, (index) {
       final day = DateTime.now().subtract(Duration(days: 6 - index));
       return meals
@@ -485,7 +511,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSectionTitle(theme, 'Weekly Trend'),
+          _buildSectionTitle(theme, l10n.nutritionWeeklyTrend),
           const SizedBox(height: 18),
           SizedBox(
             height: 130,
@@ -532,7 +558,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
                             Positioned(
                               bottom: 0,
                               child: Text(
-                                _weekdayLabel(index),
+                                _weekdayLabel(l10n, index),
                                 style: TextStyle(
                                   color: theme.textSecondary,
                                   fontSize: 11,
@@ -554,7 +580,11 @@ class _NutritionScreenState extends State<NutritionScreen> {
     );
   }
 
-  Widget _buildMealTile(ThemeProvider theme, MealLog meal) {
+  Widget _buildMealTile(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    MealLog meal,
+  ) {
     final isHighlighted = meal.id == widget.highlightMealId;
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -605,14 +635,17 @@ class _NutritionScreenState extends State<NutritionScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${_timeLabel(meal.loggedAt)} • ${meal.items.length} items',
+                      l10n.nutritionMealSubtitle(
+                        _timeLabel(l10n, meal.loggedAt),
+                        meal.items.length,
+                      ),
                       style: TextStyle(color: theme.textSecondary),
                     ),
                   ],
                 ),
               ),
               Text(
-                '${meal.calories.round()} kcal',
+                l10n.nutritionKcal(meal.calories.round()),
                 style: TextStyle(
                   color: theme.accentOrange,
                   fontWeight: FontWeight.w900,
@@ -677,16 +710,18 @@ class _NutritionScreenState extends State<NutritionScreen> {
   bool _sameDay(DateTime a, DateTime b) =>
       a.year == b.year && a.month == b.month && a.day == b.day;
 
-  String _weekdayLabel(int trendIndex) {
+  String _weekdayLabel(AppLocalizations l10n, int trendIndex) {
     final day = DateTime.now().subtract(Duration(days: 6 - trendIndex));
-    const labels = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+    final labels = l10n.nutritionWeekdayInitials.split(',');
     return labels[day.weekday - 1];
   }
 
-  String _timeLabel(DateTime date) {
+  String _timeLabel(AppLocalizations l10n, DateTime date) {
     final hour = date.hour.toString().padLeft(2, '0');
     final minute = date.minute.toString().padLeft(2, '0');
-    if (_sameDay(date, DateTime.now())) return 'Today $hour:$minute';
+    if (_sameDay(date, DateTime.now())) {
+      return '${l10n.nutritionToday} $hour:$minute';
+    }
     return '${date.month}/${date.day} $hour:$minute';
   }
 }
@@ -713,6 +748,7 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     return Scaffold(
       backgroundColor: theme.background,
@@ -720,10 +756,10 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
         backgroundColor: theme.background,
         foregroundColor: theme.textPrimary,
         elevation: 0,
-        title: const Text('Meal Details'),
+        title: Text(l10n.nutritionMealDetails),
         actions: [
           IconButton(
-            tooltip: 'Delete meal',
+            tooltip: l10n.nutritionDeleteMeal,
             onPressed: _isSaving ? null : _deleteMeal,
             icon: const Icon(Icons.delete_outline),
           ),
@@ -732,10 +768,10 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(24, 12, 24, 120),
         children: [
-          _buildSummary(theme),
+          _buildSummary(l10n, theme),
           const SizedBox(height: 18),
           Text(
-            'Food Items',
+            l10n.nutritionFoodItems,
             style: TextStyle(
               color: theme.textPrimary,
               fontSize: 20,
@@ -743,13 +779,13 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
             ),
           ),
           const SizedBox(height: 12),
-          ..._meal.items.map((item) => _buildItemTile(theme, item)),
+          ..._meal.items.map((item) => _buildItemTile(l10n, theme, item)),
         ],
       ),
     );
   }
 
-  Widget _buildSummary(ThemeProvider theme) {
+  Widget _buildSummary(AppLocalizations l10n, ThemeProvider theme) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -770,7 +806,7 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
           ),
           const SizedBox(height: 12),
           Text(
-            '${_meal.calories.round()} kcal',
+            l10n.nutritionKcal(_meal.calories.round()),
             style: TextStyle(
               color: theme.accentOrange,
               fontSize: 38,
@@ -781,11 +817,16 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
           const SizedBox(height: 14),
           Row(
             children: [
-              _buildMacro(theme, 'Protein', _meal.proteinGrams),
+              _buildMacro(
+                l10n,
+                theme,
+                l10n.progressProtein,
+                _meal.proteinGrams,
+              ),
               const SizedBox(width: 10),
-              _buildMacro(theme, 'Carbs', _meal.carbsGrams),
+              _buildMacro(l10n, theme, l10n.progressCarbs, _meal.carbsGrams),
               const SizedBox(width: 10),
-              _buildMacro(theme, 'Fat', _meal.fatGrams),
+              _buildMacro(l10n, theme, l10n.progressFat, _meal.fatGrams),
             ],
           ),
         ],
@@ -793,7 +834,12 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
     );
   }
 
-  Widget _buildMacro(ThemeProvider theme, String label, double value) {
+  Widget _buildMacro(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    String label,
+    double value,
+  ) {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(12),
@@ -807,7 +853,7 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
             Text(label, style: TextStyle(color: theme.textSecondary)),
             const SizedBox(height: 4),
             Text(
-              '${value.toStringAsFixed(0)}g',
+              l10n.nutritionGrams(value.toStringAsFixed(0)),
               style: TextStyle(
                 color: theme.textPrimary,
                 fontWeight: FontWeight.w900,
@@ -819,7 +865,11 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
     );
   }
 
-  Widget _buildItemTile(ThemeProvider theme, MealFoodItem item) {
+  Widget _buildItemTile(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    MealFoodItem item,
+  ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(14),
@@ -843,7 +893,10 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${item.servingGrams.round()}g • ${item.calories.round()} kcal',
+                  l10n.nutritionItemSubtitle(
+                    item.servingGrams.round(),
+                    item.calories.round(),
+                  ),
                   style: TextStyle(color: theme.textSecondary),
                 ),
               ],
@@ -879,7 +932,9 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
   Future<void> _removeItem(MealFoodItem item) async {
     if (_meal.items.length == 1) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('A meal needs at least one food item.')),
+        SnackBar(
+          content: Text(AppLocalizations.of(context).nutritionNeedsOneItem),
+        ),
       );
       return;
     }
@@ -888,6 +943,7 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
   }
 
   Future<void> _saveMeal(MealLog meal) async {
+    final l10n = AppLocalizations.of(context);
     setState(() => _isSaving = true);
     try {
       final updated = await _service.updateMealLog(meal);
@@ -895,33 +951,32 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
       setState(() => _meal = updated);
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Meal updated')));
+      ).showSnackBar(SnackBar(content: Text(l10n.nutritionMealUpdated)));
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Could not update meal: $e')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.nutritionUpdateFailed('$e'))),
+      );
     } finally {
       if (mounted) setState(() => _isSaving = false);
     }
   }
 
   Future<void> _deleteMeal() async {
+    final l10n = AppLocalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete meal?'),
-        content: const Text(
-          'This removes the meal from your nutrition history.',
-        ),
+        title: Text(l10n.nutritionDeleteMealTitle),
+        content: Text(l10n.nutritionDeleteMealBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+            child: Text(l10n.actionCancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Delete'),
+            child: Text(l10n.actionDelete),
           ),
         ],
       ),
@@ -935,9 +990,9 @@ class _MealDetailScreenState extends State<MealDetailScreen> {
       Navigator.of(context).pop(true);
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Could not delete meal: $e')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.nutritionDeleteFailed('$e'))),
+      );
     } finally {
       if (mounted) setState(() => _isSaving = false);
     }
@@ -993,6 +1048,7 @@ class _MealItemEditorState extends State<_MealItemEditor> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     return Padding(
       padding: EdgeInsets.fromLTRB(
@@ -1014,7 +1070,7 @@ class _MealItemEditorState extends State<_MealItemEditor> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Edit Food',
+                l10n.nutritionEditFood,
                 style: TextStyle(
                   color: theme.textPrimary,
                   fontSize: 22,
@@ -1022,23 +1078,29 @@ class _MealItemEditorState extends State<_MealItemEditor> {
                 ),
               ),
               const SizedBox(height: 16),
-              _field(theme, _name, 'Food name'),
+              _field(theme, _name, l10n.nutritionFieldFoodName),
               const SizedBox(height: 10),
               Row(
                 children: [
-                  Expanded(child: _field(theme, _grams, 'Grams')),
+                  Expanded(
+                    child: _field(theme, _grams, l10n.nutritionFieldGrams),
+                  ),
                   const SizedBox(width: 10),
-                  Expanded(child: _field(theme, _calories, 'Calories')),
+                  Expanded(
+                    child: _field(theme, _calories, l10n.nutritionFieldCalories),
+                  ),
                 ],
               ),
               const SizedBox(height: 10),
               Row(
                 children: [
-                  Expanded(child: _field(theme, _protein, 'Protein')),
+                  Expanded(
+                    child: _field(theme, _protein, l10n.progressProtein),
+                  ),
                   const SizedBox(width: 10),
-                  Expanded(child: _field(theme, _carbs, 'Carbs')),
+                  Expanded(child: _field(theme, _carbs, l10n.progressCarbs)),
                   const SizedBox(width: 10),
-                  Expanded(child: _field(theme, _fat, 'Fat')),
+                  Expanded(child: _field(theme, _fat, l10n.progressFat)),
                 ],
               ),
               const SizedBox(height: 18),
@@ -1074,7 +1136,7 @@ class _MealItemEditorState extends State<_MealItemEditor> {
                     borderRadius: BorderRadius.circular(26),
                   ),
                 ),
-                child: const Text('Save Food'),
+                child: Text(l10n.nutritionSaveFood),
               ),
             ],
           ),

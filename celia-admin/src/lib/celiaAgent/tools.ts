@@ -143,9 +143,10 @@ async function resolveNearMissSlugs(unknown: string[]): Promise<{
   const unresolved: { slug: string; didYouMean: string[] }[] = [];
 
   const { data, error } = await supabase
-    .from('exercise_media')
-    .select('slug,display_name')
-    .limit(5000);
+    .from('exercise_clips')
+    .select('slug,name_en')
+    .eq('is_active', true)
+    .limit(500);
 
   if (error || !data) {
     return { resolved, unresolved: unknown.map((slug) => ({ slug, didYouMean: [] })) };
@@ -153,7 +154,7 @@ async function resolveNearMissSlugs(unknown: string[]): Promise<{
 
   const catalog = data.map((row) => ({
     slug: String(row.slug),
-    displayName: String(row.display_name),
+    displayName: String(row.name_en),
   }));
 
   const byFingerprint = new Map<string, SlugMatch[]>();
@@ -434,7 +435,7 @@ export const celiaTools = {
 
   search_exercises: tool({
     description:
-      "Search the app's exercise library. Use this to ground any exercise you recommend in something the app can actually show the user, and to check what is available for a muscle group before promising it.",
+      "Search the app's exercise library: the filmed clips Celia can demonstrate and coach a user through. Use this to ground any exercise you recommend in something the app can actually play, and to check what exists for a movement before promising it. Each result says whether it is counted in reps or held for time, and what equipment it needs.",
     inputSchema: z.object({
       query: z
         .string()
@@ -442,67 +443,59 @@ export const celiaTools = {
         .describe(
           'Free text matched word by word against exercise names, so a phrase like "shoulder press" works'
         ),
-      muscleGroup: z
-        .enum(['shoulders', 'chest', 'back_traps', 'core_abs', 'legs_glutes', 'calves'])
+      pattern: z
+        .enum(['squat', 'hinge', 'lunge', 'push', 'pull', 'carry', 'core', 'recovery'])
         .optional()
-        .describe(
-          'Narrows by muscle group, but about half the library has none recorded, so prefer `query` when you can'
-        ),
-      category: z
-        .enum(['strength', 'calisthenics', 'functional_hiit', 'stretching_mobility'])
-        .optional(),
+        .describe('The movement pattern the exercise belongs to'),
+      bodyweightOnly: z
+        .boolean()
+        .optional()
+        .describe('Only exercises needing no equipment at all. Use when the user trains at home with nothing.'),
       limit: z.number().int().min(1).max(40).default(15),
     }),
     contextSchema: userContext,
-    execute: async ({ query, muscleGroup, category, limit }) => {
+    execute: async ({ query, pattern, bodyweightOnly, limit }) => {
       const tokens = searchTokens(query);
 
-      const run = async (withMuscleGroup: boolean) => {
-        let builder = getSupabaseAdmin()
-          .from('exercise_media')
-          .select('slug,display_name,muscle_group,category');
+      let builder = getSupabaseAdmin()
+        .from('exercise_clips')
+        .select('slug,name_en,pattern,step_type,equipment,default_reps,default_hold_seconds')
+        .eq('is_active', true);
 
-        if (withMuscleGroup && muscleGroup) builder = builder.eq('muscle_group', muscleGroup);
-        if (category) builder = builder.eq('category', category);
-        // Any token is enough to be a candidate; ranking below sorts out how
-        // good each hit is. Requiring every token would drop "shoulder
-        // mobility", since no exercise name contains the word "mobility".
-        if (tokens.length > 0) {
-          builder = builder.or(tokens.map((t) => `display_name.ilike.%${t}%`).join(','));
-        }
-
-        return builder.limit(CANDIDATE_LIMIT);
-      };
-
-      let { data, error } = await run(true);
-      if (error) return { error: 'Could not search exercises', details: error.message };
-
-      // Roughly half the library has no muscle_group recorded, so a muscle
-      // group filter alone can hide perfectly good matches. Fall back to the
-      // text search rather than telling Celia nothing exists.
-      if (muscleGroup && (data || []).length === 0) {
-        ({ data, error } = await run(false));
-        if (error) return { error: 'Could not search exercises', details: error.message };
+      if (pattern) builder = builder.eq('pattern', pattern);
+      // Any token is enough to be a candidate; ranking below sorts out how
+      // good each hit is. Requiring every token would drop "shoulder
+      // mobility", since no exercise name contains the word "mobility".
+      if (tokens.length > 0) {
+        builder = builder.or(tokens.map((t) => `name_en.ilike.%${t}%`).join(','));
       }
+
+      const { data, error } = await builder.limit(CANDIDATE_LIMIT);
+      if (error) return { error: 'Could not search exercises', details: error.message };
 
       const ranked = (data || [])
         .map((row) => {
-          const name = String(row.display_name);
+          const name = String(row.name_en);
           const haystack = name.toLowerCase();
           const hits = tokens.filter((t) => haystack.includes(t)).length;
-          return { row, name, hits };
+          const equipment = Array.isArray(row.equipment) ? row.equipment.map(String) : [];
+          return { row, name, hits, equipment };
         })
+        .filter((entry) => !bodyweightOnly || entry.equipment.length === 0)
         // Most query words matched wins; shorter names break ties, which
         // favours "Shoulder press" over "Shoulder press machine seated".
         .sort((a, b) => b.hits - a.hits || a.name.length - b.name.length)
         .slice(0, limit);
 
       return {
-        exercises: ranked.map(({ row, name }) => ({
+        exercises: ranked.map(({ row, name, equipment }) => ({
           slug: String(row.slug),
           name,
-          muscleGroup: row.muscle_group ? String(row.muscle_group) : null,
-          category: row.category ? String(row.category) : null,
+          pattern: row.pattern ? String(row.pattern) : null,
+          countedInReps: row.step_type !== 'hold',
+          equipment,
+          suggestedReps: row.default_reps ?? null,
+          suggestedHoldSeconds: row.default_hold_seconds ?? null,
         })),
       };
     },
@@ -524,7 +517,36 @@ export const celiaTools = {
             exerciseSlug: z.string().describe('Exact slug from search_exercises'),
             title: z.string().optional().describe('Defaults to the exercise name'),
             coachingCue: z.string().max(200).optional().describe('One short line of form guidance'),
-            durationSeconds: z.number().int().min(10).max(600).default(40),
+            sets: z
+              .number()
+              .int()
+              .min(1)
+              .max(5)
+              .default(1)
+              .describe('Rounds of this exercise. More for strength work, one for stretches.'),
+            reps: z
+              .number()
+              .int()
+              .min(1)
+              .max(50)
+              .optional()
+              .describe(
+                'Reps per set, for exercises search_exercises reported as countedInReps. Celia counts these out loud. Leave unset for holds.'
+              ),
+            holdSeconds: z
+              .number()
+              .int()
+              .min(5)
+              .max(600)
+              .optional()
+              .describe('How long to hold each set, for exercises that are not counted in reps'),
+            restSeconds: z
+              .number()
+              .int()
+              .min(0)
+              .max(180)
+              .default(30)
+              .describe('Recovery after each set. 0 for stretches, 30-60 for strength.'),
           })
         )
         .min(2)
@@ -539,27 +561,47 @@ export const celiaTools = {
       const slugs = Array.from(new Set(input.steps.map((s) => s.exerciseSlug)));
 
       const { data: known, error: lookupError } = await supabase
-        .from('exercise_media')
-        .select('slug,display_name')
+        .from('exercise_clips')
+        .select('slug,name_en,step_type,clip_seconds,default_reps,default_hold_seconds,poster_url')
+        .eq('is_active', true)
         .in('slug', slugs);
 
       if (lookupError) {
         return { created: false, error: 'Could not verify the exercises', details: lookupError.message };
       }
 
-      const nameBySlug = new Map(
-        (known || []).map((row) => [String(row.slug), String(row.display_name)])
+      type ClipFacts = {
+        name: string;
+        countedInReps: boolean;
+        clipSeconds: number;
+        defaultReps: number | null;
+        defaultHoldSeconds: number | null;
+        posterUrl: string | null;
+      };
+
+      const clipBySlug = new Map<string, ClipFacts>(
+        (known || []).map((row) => [
+          String(row.slug),
+          {
+            name: String(row.name_en),
+            countedInReps: row.step_type !== 'hold',
+            clipSeconds: Number(row.clip_seconds) || 3,
+            defaultReps: row.default_reps == null ? null : Number(row.default_reps),
+            defaultHoldSeconds:
+              row.default_hold_seconds == null ? null : Number(row.default_hold_seconds),
+            posterUrl: row.poster_url ? String(row.poster_url) : null,
+          },
+        ])
       );
 
       // Slugs Celia wrote that don't exist verbatim, mapped to the real ones.
       const corrections = new Map<string, string>();
-      const unknown = slugs.filter((slug) => !nameBySlug.has(slug));
+      const unknown = slugs.filter((slug) => !clipBySlug.has(slug));
 
       if (unknown.length > 0) {
         const { resolved, unresolved } = await resolveNearMissSlugs(unknown);
         for (const [wrong, match] of resolved) {
           corrections.set(wrong, match.slug);
-          nameBySlug.set(match.slug, match.displayName);
         }
 
         if (unresolved.length > 0) {
@@ -573,21 +615,55 @@ export const celiaTools = {
             unknownSlugs: unresolved,
           };
         }
+
+        // The corrected slugs were matched by name, so their timings still
+        // need fetching before a prescription can be built from them.
+        const corrected = [...corrections.values()];
+        if (corrected.length > 0) {
+          const { data: extra } = await supabase
+            .from('exercise_clips')
+            .select('slug,name_en,step_type,clip_seconds,default_reps,default_hold_seconds,poster_url')
+            .in('slug', corrected);
+
+          for (const row of extra || []) {
+            clipBySlug.set(String(row.slug), {
+              name: String(row.name_en),
+              countedInReps: row.step_type !== 'hold',
+              clipSeconds: Number(row.clip_seconds) || 3,
+              defaultReps: row.default_reps == null ? null : Number(row.default_reps),
+              defaultHoldSeconds:
+                row.default_hold_seconds == null ? null : Number(row.default_hold_seconds),
+              posterUrl: row.poster_url ? String(row.poster_url) : null,
+            });
+          }
+        }
       }
 
       const steps = input.steps.map((step, index) => {
         const slug = corrections.get(step.exerciseSlug) ?? step.exerciseSlug;
+        const clip = clipBySlug.get(slug);
+
+        // The clip decides whether the step is counted or held; Celia only
+        // decides how much. Taking her word for it would let a plank be
+        // "10 reps", which the player has no way to count.
+        const counted = clip?.countedInReps ?? false;
+        const reps = counted ? (step.reps ?? clip?.defaultReps ?? 10) : null;
+        const durationSeconds = counted
+          ? Math.max(1, Math.round((reps ?? 1) * (clip?.clipSeconds ?? 3)))
+          : (step.holdSeconds ?? clip?.defaultHoldSeconds ?? 30);
+
         return {
           id: crypto.randomUUID(),
-          title: step.title || nameBySlug.get(slug) || 'Exercise',
+          title: step.title || clip?.name || 'Exercise',
           description: step.coachingCue || null,
-          duration_seconds: step.durationSeconds,
+          duration_seconds: durationSeconds,
           video_id: null,
           exercise_slug: slug,
-          // Left null on purpose: the app resolves the GIF from `exercise_slug`
-          // at display time, so the URL isn't duplicated here.
-          thumbnail_url: null,
+          thumbnail_url: clip?.posterUrl ?? null,
           order_index: index,
+          sets: step.sets,
+          reps,
+          rest_seconds: step.restSeconds,
         };
       });
 

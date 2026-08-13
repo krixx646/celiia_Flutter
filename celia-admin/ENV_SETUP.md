@@ -38,7 +38,10 @@ DEEPSEEK_TEXT_MODEL=deepseek-v4-pro
 
 # Mobile calorie scanner vision fallback
 OPENAI_API_KEY=...
-OPENAI_VISION_MODEL=gpt-5.4-mini
+OPENAI_VISION_MODEL=gpt-5.6-luna
+# Workout voice coaching (OpenAI TTS). tts-1 is cheap and low-latency for counts.
+OPENAI_TTS_MODEL=tts-1
+OPENAI_TTS_VOICE=nova
 FIREBASE_PROJECT_ID=...
 ```
 

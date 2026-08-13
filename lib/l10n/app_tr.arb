@@ -1,0 +1,1017 @@
+{
+  "@@locale": "tr",
+  "appName": "Celia Integral Coach",
+  "@appName": {
+    "description": "The app's name. Not translated."
+  },
+  "actionCancel": "İptal",
+  "actionSave": "Kaydet",
+  "actionDelete": "Sil",
+  "actionEdit": "Düzenle",
+  "actionRetry": "Tekrar Dene",
+  "actionDone": "Bitti",
+  "actionClose": "Kapat",
+  "actionContinue": "Devam Et",
+  "actionSeeAll": "Tümünü Gör",
+  "actionYesDoIt": "Evet, yap",
+  "actionNotNow": "Şimdi değil",
+  "loadingPreparing": "Celia hazırlanıyor...",
+  "loadingGeneric": "Yükleniyor...",
+  "errorGeneric": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+  "errorCanceled": "İşlem iptal edildi.",
+  "errorTooManyRequests": "Çok fazla deneme yapıldı. Lütfen bir dakika bekleyip tekrar deneyin.",
+  "errorNetwork": "Lütfen internet bağlantınızı kontrol edip tekrar deneyin.",
+  "errorBadCredentials": "E-posta veya şifre yanlış.",
+  "errorEmailInUse": "Bu e-posta zaten kullanılıyor. Bunun yerine giriş yapmayı deneyin.",
+  "errorWeakPassword": "Daha güçlü bir şifre kullanıp tekrar deneyin.",
+  "errorInvalidEmail": "Lütfen geçerli bir e-posta adresi girin.",
+  "errorNoPermission": "Bunu yapma izniniz yok.",
+  "errorNotSignedIn": "Lütfen giriş yapıp tekrar deneyin.",
+  "errorNoConversation": "Devam etmek için yeni bir sohbet başlatın.",
+  "errorNoPlayableVideos": "Bu rutin için henüz oynatılabilir video yok.",
+  "errorLoadRoutines": "Rutinler şu anda yüklenemedi. Lütfen tekrar deneyin.",
+  "errorLoadSavedRoutines": "Kayıtlı rutinler şu anda yüklenemedi. Lütfen tekrar deneyin.",
+  "errorGenerateRoutine": "Şu anda rutin oluşturulamadı. Lütfen tekrar deneyin.",
+  "errorLoadChats": "Kayıtlı sohbetler şu anda yüklenemiyor.",
+  "errorCeliaUnavailable": "Celia şu anda kullanılamıyor. Lütfen tekrar deneyin.",
+  "errorOpenConversation": "Bu konuşma açılamadı.",
+  "errorDeleteConversation": "Bu konuşma silinemedi. Lütfen tekrar deneyin.",
+  "errorSignIn": "Giriş yapılamadı. Lütfen tekrar deneyin.",
+  "errorCreateAccount": "Hesabınız oluşturulamadı. Lütfen tekrar deneyin.",
+  "errorSendResetEmail": "Şifre sıfırlama e-postası gönderilemedi. Lütfen tekrar deneyin.",
+  "errorSendVerificationEmail": "Doğrulama e-postası gönderilemedi. Lütfen tekrar deneyin.",
+  "errorGoogleSignIn": "Google ile giriş başarısız oldu. Lütfen tekrar deneyin.",
+  "errorAppleSignIn": "Apple ile giriş başarısız oldu. Lütfen tekrar deneyin.",
+  "errorRefreshNutrition": "Beslenme verileri yenilenemedi.",
+  "errorLoadNutritionProfile": "Beslenme profiliniz yüklenemedi.",
+  "startupErrorTitle": "Uygulama başlatılamıyor",
+  "startupErrorBody": "Lütfen uygulamayı kapatıp yeniden açın. Sorun devam ederse destek ekibiyle iletişime geçin.",
+  "authTagline": "Fitness arkadaşınız",
+  "authSignUp": "Kayıt Ol",
+  "authLogIn": "Giriş Yap",
+  "authVersion": "Sürüm {version}",
+  "@authVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "authForgotPassword": "Şifrenizi mi unuttunuz?",
+  "authOr": "VEYA",
+  "authContinueWithGoogle": "Google ile devam et",
+  "authContinueWithApple": "Apple ile devam et",
+  "authAuthenticating": "Kimlik doğrulanıyor...",
+  "authEnterYourName": "Lütfen adınızı girin.",
+  "authNeedAccount": "Hesabınız yok mu? Kayıt Ol",
+  "authHaveAccount": "Zaten hesabınız var mı? Giriş Yap",
+  "authFieldName": "Adınız",
+  "authFieldEmail": "E-posta",
+  "authFieldPassword": "Şifre",
+  "verifyEmailTitle": "E-postanızı doğrulayın",
+  "verifyEmailHeading": "Gelen kutunuzu kontrol edin",
+  "verifyEmailBody": "E-postanıza bir doğrulama bağlantısı gönderildi.",
+  "verifyEmailSent": "Doğrulama e-postası gönderildi!",
+  "verifyEmailContinue": "Doğruladım, devam et",
+  "verifyEmailSignOut": "Çıkış yap",
+  "verifyEmailSending": "Gönderiliyor...",
+  "verifyEmailResend": "Doğrulama e-postasını yeniden gönder",
+  "verifyEmailResendIn": "{seconds}s sonra yeniden gönder",
+  "@verifyEmailResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "verifyEmailAddress": "E-posta: {email}",
+  "@verifyEmailAddress": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "forgotPasswordTitle": "Şifremi Unuttum",
+  "forgotPasswordBody": "Şifre sıfırlama bağlantısı almak için e-postanızı girin.",
+  "forgotPasswordEmptyEmail": "Lütfen bir e-posta girin",
+  "forgotPasswordSent": "Şifre sıfırlama e-postası gönderildi.",
+  "forgotPasswordSend": "Sıfırlama bağlantısı gönder",
+  "forgotPasswordSending": "Gönderiliyor...",
+  "nameSetupTitle": "Celia sana nasıl hitap etsin?",
+  "nameSetupBody": "Koçluk deneyimini kişiselleştirmek için adınızı uygulama genelinde kullanırız.",
+  "nameSetupSaveFailed": "Adınız kaydedilemedi. Lütfen tekrar deneyin.",
+  "homeGoodMorning": "Günaydın,",
+  "homeCeliaActive": "CELIA AKTİF",
+  "homeGenerateRoutine": "Yapay zekâyla\nkişiselleştirilmiş\nrutinini oluştur",
+  "homeCreateRoutine": "Rutin Oluştur",
+  "homeQuickActions": "Hızlı İşlemler",
+  "homeUpNext": "Sırada",
+  "homeNoUpcoming": "Henüz yaklaşan bir rutin yok.\nBir rutin oluşturun veya kütüphaneye göz atın.",
+  "homeChatWithCelia": "Celia ile Sohbet Et",
+  "homeChatSubtitle": "Formun veya beslenmen hakkında sor",
+  "homeScanMeal": "Öğün Tara",
+  "homeScanMealSubtitle": "Yiyecekleri ve kalorileri tanımla",
+  "homeNutrition": "Beslenme",
+  "homeNutritionSubtitle": "Kalorileri, makroları ve öğünleri görüntüle",
+  "homeBrowseLibrary": "Kütüphaneye\nGöz At",
+  "homeTrackProgress": "İlerlemeni\nTakip Et",
+  "chatTitle": "Koç Celia",
+  "chatEmptyPrompt": "Bugün forma girmen için\nnasıl yardımcı olabilirim?",
+  "chatYourChats": "Sohbetlerin",
+  "chatNoSavedChats": "Henüz kayıtlı sohbet yok.",
+  "chatHistory": "Sohbet geçmişi",
+  "chatNew": "Yeni sohbet",
+  "chatOpening": "Sohbet açılıyor...",
+  "chatScanAMeal": "Bir öğün tara",
+  "chatInputHint": "Antrenmanın hakkında Celia'ya her şeyi sor...",
+  "chatCouldNotOpenRoutine": "Bu rutin açılamadı",
+  "chatThisRoutine": "bu rutin",
+  "chatThisMeal": "bu öğün",
+  "chatYourRoutine": "Rutinin",
+  "chatMoreExercises": "+ {count} egzersiz daha",
+  "@chatMoreExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatEmptySubtitle": "Antrenmanın, beslenmen veya ilerlemen hakkında soru sor.",
+  "chatLoggedToday": "Bugün {calories} kcal kaydettin.",
+  "@chatLoggedToday": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "chatSuggestionHiit": "Bana 20 dakikalık bir HIIT rutini oluştur",
+  "chatSuggestionDinner": "Bu akşam ne yemeliyim?",
+  "chatSuggestionProgress": "Bu hafta nasıl gidiyorum?",
+  "chatSuggestionIngredients": "Tavuk, pirinç ve ıspanağım var",
+  "chatJustNow": "Az önce",
+  "chatMinutesAgo": "{minutes} dk önce",
+  "@chatMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "chatHoursAgo": "{hours} sa önce",
+  "@chatHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "chatDaysAgo": "{days} gün önce",
+  "@chatDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "chatRoutineAlreadySaved": "Kütüphanende zaten kayıtlı — açmak için dokun",
+  "chatRoutineTapToOpen": "Açmak için dokun",
+  "chatToolCancelled": "İptal edildi",
+  "chatToolFailed": "{label} — işlem başarısız oldu",
+  "@chatToolFailed": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "chatToolRoutineSaveFailed": "Rutin kaydedilemedi",
+  "chatToolRoutineSaved": "Kütüphanenize kaydedildi",
+  "chatToolMealLogged": "Bugünkü günlüğe eklendi",
+  "chatToolRoutineAdded": "Kütüphanenize eklendi",
+  "activityCheckingProgress": "İlerlemeniz kontrol ediliyor",
+  "activityCheckingNutrition": "Bugün ne yediğiniz kontrol ediliyor",
+  "activityReviewingMeals": "Son öğünleriniz inceleniyor",
+  "activityLookingAtRoutines": "Rutinleriniz görüntüleniyor",
+  "activityReadingRoutine": "Bu rutin okunuyor",
+  "activitySearchingLibrary": "Egzersiz kütüphanesinde aranıyor",
+  "activityBuildingRoutine": "Rutin oluşturuluyor",
+  "activityLoggingMeal": "Öğününüz günlüğe ekleniyor",
+  "activitySavingToLibrary": "Kütüphanenize kaydediliyor",
+  "activityWorking": "Üzerinde çalışılıyor",
+  "approvalSaveRoutineWithCount": "\"{name}\" rutini {count} egzersizle kütüphanenize kaydedilsin mi?",
+  "@approvalSaveRoutineWithCount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalSaveRoutine": "\"{name}\" rutini kütüphanenize kaydedilsin mi?",
+  "@approvalSaveRoutine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalLogMealWithCalories": "\"{name}\" öğünü {calories} kcal olarak günlüğe eklensin mi?",
+  "@approvalLogMealWithCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalLogMeal": "\"{name}\" günlüğe eklensin mi?",
+  "@approvalLogMeal": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalAddRoutine": "Bu rutin kütüphanenize eklensin mi?",
+  "approvalGeneric": "Celia'nın bunu yapmasına izin verilsin mi?",
+  "libraryTitle": "Rutin Kütüphanesi",
+  "librarySteps": "{count, plural, one{{count} adım} other{{count} adım}}",
+  "@librarySteps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryEmpty": "Henüz rutin yok",
+  "libraryEmptyBody": "Yönetici panelinde rutinler oluşturup yayınlayın.",
+  "libraryLoadFailed": "Rutinler yüklenemedi",
+  "routineStartWorkout": "Antrenmanı Başlat",
+  "routineNoSteps": "Kullanılabilir adım yok",
+  "routineNoVideoForStep": "Bu adım için kullanılabilir video yok",
+  "routineVideoProcessing": "Video hâlâ işleniyor. Lütfen daha sonra tekrar deneyin.",
+  "routineMissingPlaybackUrl": "Bu video için oynatma URL'si eksik",
+  "routinePreviewBanner": "ÖNİZLEME — tam video yakında",
+  "routinePreview": "ÖNİZLEME",
+  "routineDetails": "Ayrıntılar",
+  "routineNotFound": "Rutin bulunamadı",
+  "routineCompletedTimes": "{count} kez tamamlandı",
+  "@routineCompletedTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "playerVideoUnavailable": "Bu video şu anda kullanılamıyor.",
+  "playerSteps": "Adımlar",
+  "playerStepCounter": "{current}/{total}",
+  "@playerStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoPlayableVideos": "Oynatılabilir video yok",
+  "playerWorkoutComplete": "Antrenman tamamlandı!",
+  "playerSavingStreak": "Serinize kaydediliyor…",
+  "playerSavedStreak": "Serinize kaydedildi",
+  "playerRetrySave": "Kaydetmeyi tekrar dene",
+  "playerReplay": "Tekrar oynat",
+  "playerNotReady": "Oynatıcı hazır değil",
+  "playerPreviewUnavailable": "Önizleme şu anda kullanılamıyor.",
+  "playerClipCounter": "Klip {current}/{total} · {duration}",
+  "@playerClipCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerErrorLoadingVideo": "Video yüklenirken hata oluştu",
+  "playerLoadingVideo": "Video yükleniyor...",
+  "playerFailedToLoadVideo": "Video yüklenemedi",
+  "playerNotInitialized": "Video oynatıcı başlatılmadı",
+  "guidedExerciseCounter": "Egzersiz {current}/{total}",
+  "@guidedExerciseCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedGetReady": "HAZIR OL",
+  "guidedSetOf": "Set {current}/{total}",
+  "@guidedSetOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedRest": "DİNLEN",
+  "guidedSkipRest": "Dinlenmeyi atla",
+  "guidedPaused": "Duraklatıldı",
+  "guidedResume": "Devam et",
+  "guidedWorkoutComplete": "Antrenman tamamlandı",
+  "guidedEndTitle": "Antrenman bitirilsin mi?",
+  "guidedEndBody": "Bu oturumdaki ilerlemeniz kaydedilmeyecek.",
+  "guidedKeepGoing": "Devam et",
+  "guidedEnd": "Bitir",
+  "guidedReps": "{count, plural, one{{count} tekrar} other{{count} tekrar}}",
+  "@guidedReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetTitle": "Yapay Zekâyla Rutin Oluştur",
+  "generateSheetPrompt": "Ne tür bir antrenman yapmak istiyorsunuz?",
+  "generateSheetHint": "ör. \"Uyanmak için hızlı bir sabah esnemesi\" veya \"Yeni başlayanlar için tüm vücut kuvvet antrenmanı\"",
+  "generateSheetDuration": "Süre",
+  "generateSheetMinutes": "{count} dk",
+  "@generateSheetMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetDifficulty": "Zorluk",
+  "generateSheetEquipment": "Mevcut Ekipman",
+  "generateSheetGenerating": "Oluşturuluyor...",
+  "generateSheetSubmit": "Rutin Oluştur",
+  "generateSheetDescribeFirst": "Lütfen istediğiniz antrenmanı açıklayın",
+  "generateSheetAlreadyExists": "Buna zaten sahipsiniz: {title}",
+  "@generateSheetAlreadyExists": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetCreated": "Oluşturuldu: {title}",
+  "@generateSheetCreated": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetFailed": "Rutin oluşturulamadı",
+  "guidedNoExercises": "Bu rutinde henüz egzersiz yok.",
+  "guidedStartFailed": "Bu antrenman şu anda başlatılamıyor. Lütfen tekrar deneyin.",
+  "guidedSaveFailed": "Bu antrenman kaydedilemedi. Serinizi güncellemek için yeniden dene'ye dokunun.",
+  "guidedOfReps": "{count} tekrardan",
+  "@guidedOfReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedHold": "tut",
+  "guidedNextSet": "Sonraki set",
+  "guidedUpNext": "Sırada",
+  "guidedSetsHold": "{sets} × {seconds} sn tut",
+  "@guidedSetsHold": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachGetReady": "Hazır olun. {exercise}",
+  "@coachGetReady": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachStartReps": "Başla. {count} tekrar.",
+  "@coachStartReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachStartHold": "{seconds} saniye tutun.",
+  "@coachStartHold": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachRest": "Dinlenin. Sırada: {exercise}",
+  "@coachRest": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachRestShort": "Dinlenin.",
+  "coachComplete": "Harika iş. Antrenman tamamlandı.",
+  "coachRep": "{count}",
+  "@coachRep": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachCountdown": "{seconds}",
+  "@coachCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoVideosInRoutine": "Bu rutinde oynatılabilir video bulunamadı.",
+  "playerLoadRoutineFailed": "Bu rutin şu anda yüklenemiyor. Lütfen tekrar deneyin.",
+  "playerStepLoadFailedSkipping": "\"{title}\" yüklenemedi. Atlanıyor…",
+  "@playerStepLoadFailedSkipping": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerStepLoadFailed": "\"{title}\" yüklenemedi.",
+  "@playerStepLoadFailed": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerSaveCompletionFailed": "Tamamlanma kaydedilemedi. Serinizi güncellemek için yeniden dene'ye dokunun.",
+  "playerStepPreviewSubtitle": "{duration} • Önizleme",
+  "@playerStepPreviewSubtitle": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerNoVideosReady": "Bu rutinde henüz oynatılmaya hazır video yok.",
+  "playerPlaybackFailed": "Bu video şu anda oynatılamıyor. Lütfen tekrar deneyin.",
+  "libraryTabCurated": "Seçkiler",
+  "libraryTabAiGenerated": "Yapay zekâ tarafından oluşturulan",
+  "profileSavedRoutines": "Kayıtlı Rutinler",
+  "savedRoutinesNoFavorites": "Henüz favori rutin yok.",
+  "savedRoutinesEmpty": "Henüz kayıtlı rutin yok.",
+  "actionFavorite": "Favorilere ekle",
+  "actionUnfavorite": "Favorilerden kaldır",
+  "routineDurationMinutes": "{minutes} dk",
+  "@routineDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHoursMinutes": "{hours} sa {minutes} dk",
+  "@routineDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHours": "{hours} sa",
+  "@routineDurationHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "difficultyEasy": "Kolay",
+  "difficultyMedium": "Orta",
+  "difficultyHard": "Zor",
+  "categoryStrength": "Kuvvet",
+  "categoryCardio": "Kardiyo",
+  "categoryFlexibility": "Esneklik",
+  "categoryMindfulness": "Farkındalık",
+  "categoryDance": "Dans",
+  "categoryHiit": "HIIT",
+  "categoryYoga": "Yoga",
+  "categoryCustom": "Özel",
+  "navHome": "Ana Sayfa",
+  "navLibrary": "Kütüphane",
+  "navChat": "Sohbet",
+  "navProfile": "Profil",
+  "equipmentNone": "Yok",
+  "equipmentDumbbells": "Dambıllar",
+  "equipmentResistanceBands": "Direnç Bantları",
+  "equipmentYogaMat": "Yoga Matı",
+  "equipmentKettlebell": "Kettlebell",
+  "equipmentPullUpBar": "Barfiks Barı",
+  "equipmentJumpRope": "İp Atlama İpi",
+  "nutritionTitle": "Beslenme",
+  "nutritionSubtitle": "Kaloriler, makrolar ve öğün geçmişi",
+  "nutritionSetGoalsTitle": "Günlük beslenme hedeflerini belirle",
+  "nutritionSetGoalsBody": "Celia'nın günlük tüketmen gereken kalori ve besin miktarını hesaplayabilmesi için kilonu, boyunu, yaşını ve cinsiyetini ekle.",
+  "nutritionSetUpGoals": "Hedefleri Belirle",
+  "nutritionDailyTarget": "Günlük hedef",
+  "nutritionDailyGoals": "Günlük hedefler",
+  "nutritionKcal": "{calories} kcal",
+  "@nutritionKcal": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMacroSummary": "P {protein}g · C {carbs}g · F {fat}g",
+  "@nutritionMacroSummary": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionToday": "Bugün",
+  "nutritionMealHistory": "Öğün Geçmişi",
+  "nutritionCeliaInsights": "Celia İçgörüleri",
+  "nutritionWeeklyTrend": "Haftalık Trend",
+  "nutritionTodayMeals": "kcal • {count, plural, one{{count} öğün} other{{count} öğün}}",
+  "@nutritionTodayMeals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionTodayOfTargetMeals": "{target} kcal hedefine göre • {count, plural, one{{count} öğün} other{{count} öğün}}",
+  "@nutritionTodayOfTargetMeals": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionWeekdayInitials": "P,S,Ç,P,C,C,P",
+  "@nutritionWeekdayInitials": {
+    "description": "Single-letter weekday labels for the weekly chart, Monday first, comma separated."
+  },
+  "nutritionFieldFoodName": "Yiyecek adı",
+  "nutritionFieldGrams": "Gram",
+  "nutritionFieldCalories": "Kalori",
+  "scannerStatusAnalyzing": "ANALİZ EDİLİYOR...",
+  "scannerStatusIdle": "CELIA SCANNER",
+  "scannerFieldFoodName": "Yiyecek adı",
+  "scannerFieldGrams": "Gram",
+  "scannerFieldCalories": "Kalori",
+  "scannerFieldPro": "Pro",
+  "scannerMacroPro": "PRO",
+  "scannerMacroCarb": "CARB",
+  "scannerMacroFat": "FAT",
+  "scannerRemainingAfterLogging": "Bugün {calories} kcal ve {grams}g protein kaldı",
+  "@scannerRemainingAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerOverTargetAfterLogging": "Günlük hedefini {calories} kcal aştın",
+  "@scannerOverTargetAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerButtonAnalyzing": "Analiz Ediliyor",
+  "scannerButtonQuotaNeeded": "Kota Gerekli",
+  "scannerButtonScanNow": "Şimdi Tara",
+  "scannerButtonLogging": "Kaydediliyor",
+  "scannerButtonLogMeal": "Öğünü Kaydet",
+  "scannerNoClearFood": "Henüz net bir yiyecek algılanmadı. Daha iyi aydınlatmayı dene veya biraz yaklaş.",
+  "scannerErrorCameraPermission": "Öğünleri taramak için kamera izni gerekiyor.",
+  "scannerErrorBackendMissing": "Kalori tarayıcısının arka ucu henüz yapılandırılmadı.",
+  "scannerErrorApiKeyInvalid": "Kalori taraması için kullanılan OpenAI API anahtarı geçersiz. Arka uç ortamında değiştir, yeniden dağıt ve tekrar dene.",
+  "scannerErrorApiKeyMissing": "Kalori taraması için OpenAI API anahtarı gerekiyor. Anahtarı Vercel'e ekle, yeniden dağıt ve tekrar dene.",
+  "scannerErrorQuotaExhausted": "Kalori taraması için OpenAI kredileri tükendi. API kredisi ekle veya faturalandırma limitini yükselt, ardından tekrar dene.",
+  "scannerErrorTimeout": "Celia bu öğünü analiz etmek için daha fazla zamana ihtiyaç duydu. Kamerayı sabit tut ve tekrar tara.",
+  "scannerErrorNotSignedIn": "Öğünleri taramadan önce lütfen giriş yap.",
+  "scannerErrorMealTableMissing": "Öğün kayıt tablosu henüz hazır değil. Tarama sonucu hâlâ kullanılabilir.",
+  "scannerErrorGeneric": "Celia bu öğünü henüz analiz edemedi. Kamerayı sabit tut, yiyeceği ortada tut ve tekrar tara.",
+  "nutritionGrams": "{grams}g",
+  "@nutritionGrams": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionMealSubtitle": "{time} · {count, plural, one{{count} öğe} other{{count} öğe}}",
+  "@nutritionMealSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMealDetails": "Öğün Ayrıntıları",
+  "nutritionFoodItems": "Yiyecekler",
+  "nutritionItemSubtitle": "{grams}g · {calories} kcal",
+  "@nutritionItemSubtitle": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionNeedsOneItem": "Bir öğünde en az bir yiyecek bulunmalıdır.",
+  "nutritionMealUpdated": "Öğün güncellendi",
+  "nutritionUpdateFailed": "Öğün güncellenemedi: {error}",
+  "@nutritionUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionDeleteMealTitle": "Öğün silinsin mi?",
+  "nutritionDeleteMealBody": "Bu işlem öğünü beslenme geçmişinizden kaldırır.",
+  "nutritionDeleteMeal": "Öğünü sil",
+  "nutritionDeleteFailed": "Öğün silinemedi: {error}",
+  "@nutritionDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionEditFood": "Yiyeceği Düzenle",
+  "nutritionSaveFood": "Yiyeceği Kaydet",
+  "nutritionLoadFailed": "Öğünler yüklenemedi",
+  "nutritionLoadFailedBody": "Yenilemek için aşağı çekin veya backend bağlantısını kontrol edin.",
+  "nutritionNoMeals": "Henüz kaydedilmiş öğün yok",
+  "nutritionNoMealsBody": "İlk öğününüzü tarayın, Celia beslenme geçmişinizi oluştursun.",
+  "progressToday": "Bugün",
+  "progressSetGoals": "Kalori ve makro takibini etkinleştirmek için beslenme hedeflerinizi belirleyin.",
+  "progressOfTarget": "{target} kcal değerinin",
+  "@progressOfTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressMacroAmount": "{consumed} / {target}g",
+  "@progressMacroAmount": {
+    "placeholders": {
+      "consumed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalOver": "{calories} kcal fazla",
+  "@progressKcalOver": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalLeft": "{calories} kcal kaldı",
+  "@progressKcalLeft": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressProtein": "Protein",
+  "progressCarbs": "Karbonhidrat",
+  "progressFat": "Yağ",
+  "scannerEditItem": "Yiyecek Öğesini Düzenle",
+  "scannerSaveChanges": "Değişiklikleri Kaydet",
+  "scannerItemCalories": "{name} · {calories} kcal",
+  "@scannerItemCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerConfidence": "Güven %{percent} · {provider}",
+  "@scannerConfidence": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerMoreItems": "+ {count} öğe daha bu öğün kaydına dahil edildi",
+  "@scannerMoreItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerIfYouLog": "Bu öğünü kaydederseniz",
+  "scannerAfterLogging": "Bugün {after} / {target} kcal",
+  "@scannerAfterLogging": {
+    "placeholders": {
+      "after": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerGramsDecimal": "{grams}g",
+  "@scannerGramsDecimal": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerItemServing": "{name} · {grams}g",
+  "@scannerItemServing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerNoMealDetected": "Öğün algılanmadı",
+  "onboardingWelcome": "Hoş geldin, {name}",
+  "@onboardingWelcome": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingGender": "Cinsiyet",
+  "onboardingCalculateGoals": "Hedeflerimi Hesapla",
+  "onboardingScanFirstMeal": "İlk Öğünümü Tara",
+  "onboardingExploreRoutines": "Rutinleri Keşfet",
+  "onboardingGoHome": "Ana Sayfaya Git",
+  "onboardingDailyTargets": "Günlük hedefleriniz",
+  "onboardingProtein": "Protein {grams}g ·",
+  "@onboardingProtein": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingMacroTargets": "Protein {protein}g • Karbonhidrat {carbs}g • Yağ {fat}g",
+  "@onboardingMacroTargets": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingTargetsReady": "Günlük beslenme hedefleriniz hazır. Nasıl başlamak istediğinizi seçin.",
+  "onboardingWeightKg": "Kilo (kg)",
+  "onboardingHeightCm": "Boy (cm)",
+  "onboardingAge": "Yaş",
+  "onboardingInvalidWeight": "kg cinsinden geçerli bir kilo girin.",
+  "onboardingInvalidHeight": "cm cinsinden geçerli bir boy girin.",
+  "onboardingInvalidAge": "13 ile 100 arasında geçerli bir yaş girin.",
+  "onboardingSaveFailed": "Beslenme profiliniz kaydedilemedi.",
+  "genderMale": "Erkek",
+  "genderFemale": "Kadın",
+  "genderOther": "Diğer",
+  "nutritionSetupTitle": "Günlük Beslenme Hedefleri",
+  "nutritionSetupBody": "Günlük kalori ve makrolarınızı hesaplayabilmesi için Celia'ya vücudunuz hakkında bilgi verin.",
+  "nutritionSetupGender": "Cinsiyet",
+  "nutritionSetupFootnote": "Celia, orta düzeyde aktivite seviyesine göre günlük kalori ve makro hedeflerinizi tahmin etmek için kilonuzu, boyunuzu, yaşınızı ve cinsiyetinizi kullanır.",
+  "nutritionSetupSave": "Hedefleri Kaydet",
+  "profileTitle": "Profil",
+  "profileCeliaAi": "Celia AI",
+  "profileEliteMember": "Elit Üye",
+  "profileAccount": "Hesap",
+  "profileSignedInAs": "Şu hesapla giriş yapıldı:\n{email}",
+  "@profileSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "profileUnknownEmail": "Bilinmiyor",
+  "profileDarkMode": "Koyu Mod",
+  "profileLanguage": "Dil",
+  "profileLogOutTitle": "Çıkış yapılsın mı?",
+  "profileLogOutBody": "Çıkış yapmak istediğinizden emin misiniz?",
+  "profileLogOut": "Çıkış yap",
+  "profileLogOutButton": "Çıkış Yap",
+  "profileFavoriteRoutines": "Favori Rutinler",
+  "profileSubscription": "Abonelik",
+  "profileNutrition": "Beslenme",
+  "profileHelpSupport": "Yardım ve Destek",
+  "profileFriend": "Arkadaş",
+  "profileStatSaved": "Kaydedilenler",
+  "profileStatStreak": "Seri",
+  "profileStatWorkouts": "Antrenmanlar",
+  "streakDayOneStarted": "1. gün başladı — serinizi oluşturmak için yarın tekrar gelin.",
+  "streakRebuild": "Dün aktiftiniz — serinizi yeniden oluşturmak için bugün bir öğün kaydedin veya antrenmanı tamamlayın.",
+  "streakStart": "Aktif serinizi başlatmak için bir öğün kaydedin veya antrenmanı tamamlayın.",
+  "streakLongRun": "{days} günlük seri! Devam edin — Celia istikrarınızı takip ediyor.",
+  "@streakLongRun": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakBothLogged": "{days} günlük seri — bugün hem antrenman hem de beslenme kaydedildi.",
+  "@streakBothLogged": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedWorkout": "{days} günlük seri. Kısa bir antrenman bugününü tamamlar.",
+  "@streakNeedWorkout": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedMeal": "{days} günlük seri. Beslenmenizi takip etmek için bir öğün kaydedin.",
+  "@streakNeedMeal": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakStayActive": "{days} günlük seri — bugün aktif kalın.",
+  "@streakStayActive": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "editProfileTitle": "Profili Düzenle",
+  "editProfileName": "Ad",
+  "editProfileFootnote": "Değişiklikler hesabınıza kaydedilir ve Ana Sayfa/Profil bölümlerinde görünür.",
+  "editProfileSaveFailed": "Profil güncellenemedi. Lütfen tekrar deneyin.",
+  "languageTitle": "Dil",
+  "languageSystem": "Cihaz dili",
+  "languageSystemSubtitle": "Telefonunuzda ayarlanan dili kullanın",
+  "languageEnglish": "İngilizce",
+  "languageSpanish": "İspanyolca",
+  "insightStartFuelingTitle": "Bugün beslenmeye başlayın",
+  "insightStartFuelingBody": "Günlük kalori bütçenizin tamamı duruyor. Yolunda kalmak için ilk öğününüzü tarayın veya kaydedin.",
+  "insightAboveTargetTitle": "Bugün hedefin üzerinde",
+  "insightAboveTargetBody": "Günlük hedefinizin {calories} kcal üzerindesiniz. Akşam yemeğini daha hafif tutun veya kısa bir antrenman ekleyin.",
+  "@insightAboveTargetBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightLowProteinTitle": "Protein hâlâ düşük",
+  "insightLowProteinBody": "Hedefinize ulaşmak için bugün yaklaşık {grams}g daha protein almanız gerekiyor.",
+  "@insightLowProteinBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightAlmostThereTitle": "Hedefinize neredeyse ulaştınız",
+  "insightAlmostThereBody": "Bugün {calories} kcal hakkınız kaldı. Dengeli bir atıştırmalık iyi uyacaktır.",
+  "@insightAlmostThereBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightOnTrackTitle": "Bugün yolundasınız",
+  "insightOnTrackBody": "Günlük hedeflerinize ulaşmak için {calories} kcal ve {grams}g protein hakkınız kaldı.",
+  "@insightOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightWeeklyRhythmTitle": "Haftalık ritminizi oluşturun",
+  "insightWeeklyRhythmBody": "Celia'nın alışkanlıkları fark edip size daha iyi rehberlik edebilmesi için hafta boyunca öğünlerinizi kaydedin.",
+  "insightWeeklyTrendTitle": "Haftalık trend",
+  "insightWeeklyTrendBody": "Son 7 günün {days} gününde öğün kaydettiniz; ortalama {average} kcal — {direction}.",
+  "@insightWeeklyTrendBody": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "average": {
+        "type": "int"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "insightTrendOnTarget": "günlük hedefinizin hemen hemen çevresinde",
+  "insightTrendAbove": "ortalama olarak hedefinizin {delta} kcal üzerinde",
+  "@insightTrendAbove": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightTrendBelow": "ortalama olarak hedefinizin {delta} kcal altında",
+  "@insightTrendBelow": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsSectionTitle": "Celia İçgörüleri"
+}

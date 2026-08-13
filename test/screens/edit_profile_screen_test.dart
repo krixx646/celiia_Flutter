@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:celia_flutter/l10n/app_localizations.dart';
 import 'package:celia_flutter/providers/auth_provider.dart' as app_auth;
 import 'package:celia_flutter/providers/theme_provider.dart';
 import 'package:celia_flutter/repositories/auth_repository.dart';
@@ -151,7 +152,12 @@ Widget _wrap(
       ChangeNotifierProvider<ThemeProvider>.value(value: theme),
       ChangeNotifierProvider<app_auth.AuthProvider>.value(value: auth),
     ],
-    child: MaterialApp(home: child),
+    child: MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale('en'),
+      home: child,
+    ),
   );
 }
 

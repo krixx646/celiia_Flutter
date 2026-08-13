@@ -1,0 +1,1017 @@
+{
+  "@@locale": "hi",
+  "appName": "Celia Integral Coach",
+  "@appName": {
+    "description": "The app's name. Not translated."
+  },
+  "actionCancel": "रद्द करें",
+  "actionSave": "सहेजें",
+  "actionDelete": "हटाएँ",
+  "actionEdit": "संपादित करें",
+  "actionRetry": "फिर कोशिश करें",
+  "actionDone": "हो गया",
+  "actionClose": "बंद करें",
+  "actionContinue": "जारी रखें",
+  "actionSeeAll": "सभी देखें",
+  "actionYesDoIt": "हाँ, करें",
+  "actionNotNow": "अभी नहीं",
+  "loadingPreparing": "Celia तैयार हो रही है...",
+  "loadingGeneric": "लोड हो रहा है...",
+  "errorGeneric": "कुछ गलत हो गया। कृपया फिर कोशिश करें।",
+  "errorCanceled": "कार्रवाई रद्द कर दी गई।",
+  "errorTooManyRequests": "बहुत अधिक प्रयास किए गए। कृपया एक मिनट प्रतीक्षा करें और फिर कोशिश करें।",
+  "errorNetwork": "कृपया अपना इंटरनेट कनेक्शन जाँचें और फिर कोशिश करें।",
+  "errorBadCredentials": "ईमेल या पासवर्ड गलत है।",
+  "errorEmailInUse": "यह ईमेल पहले से उपयोग में है। इसके बजाय लॉग इन करने की कोशिश करें।",
+  "errorWeakPassword": "ज़्यादा मज़बूत पासवर्ड इस्तेमाल करें और फिर कोशिश करें।",
+  "errorInvalidEmail": "कृपया मान्य ईमेल पता दर्ज करें।",
+  "errorNoPermission": "आपको ऐसा करने की अनुमति नहीं है।",
+  "errorNotSignedIn": "कृपया साइन इन करें और फिर कोशिश करें।",
+  "errorNoConversation": "जारी रखने के लिए नई चैट शुरू करें।",
+  "errorNoPlayableVideos": "इस रूटीन के लिए अभी कोई चलने योग्य वीडियो उपलब्ध नहीं है।",
+  "errorLoadRoutines": "अभी रूटीन लोड नहीं हो सकीं। कृपया फिर कोशिश करें।",
+  "errorLoadSavedRoutines": "अभी सेव की गई रूटीन लोड नहीं हो सकीं। कृपया फिर कोशिश करें।",
+  "errorGenerateRoutine": "अभी रूटीन बनाई नहीं जा सकी। कृपया फिर कोशिश करें।",
+  "errorLoadChats": "अभी सेव की गई चैट लोड नहीं हो सकीं।",
+  "errorCeliaUnavailable": "Celia अभी उपलब्ध नहीं है। कृपया फिर कोशिश करें।",
+  "errorOpenConversation": "यह बातचीत खोली नहीं जा सकी।",
+  "errorDeleteConversation": "यह बातचीत हटाई नहीं जा सकी। कृपया फिर कोशिश करें।",
+  "errorSignIn": "साइन इन नहीं हो सका। कृपया फिर कोशिश करें।",
+  "errorCreateAccount": "आपका खाता नहीं बनाया जा सका। कृपया फिर कोशिश करें।",
+  "errorSendResetEmail": "पासवर्ड रीसेट ईमेल नहीं भेजा जा सका। कृपया फिर कोशिश करें।",
+  "errorSendVerificationEmail": "सत्यापन ईमेल नहीं भेजा जा सका। कृपया फिर कोशिश करें।",
+  "errorGoogleSignIn": "Google से साइन इन विफल रहा। कृपया फिर कोशिश करें।",
+  "errorAppleSignIn": "Apple से साइन इन विफल रहा। कृपया फिर कोशिश करें।",
+  "errorRefreshNutrition": "पोषण डेटा रीफ़्रेश नहीं किया जा सका।",
+  "errorLoadNutritionProfile": "आपकी पोषण प्रोफ़ाइल लोड नहीं की जा सकी।",
+  "startupErrorTitle": "ऐप शुरू नहीं हो सका",
+  "startupErrorBody": "कृपया ऐप बंद करके फिर खोलें। अगर समस्या बनी रहती है, तो सहायता टीम से संपर्क करें।",
+  "authTagline": "आपका फिटनेस साथी",
+  "authSignUp": "साइन अप करें",
+  "authLogIn": "लॉग इन करें",
+  "authVersion": "वर्ज़न {version}",
+  "@authVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "authForgotPassword": "पासवर्ड भूल गए?",
+  "authOr": "या",
+  "authContinueWithGoogle": "Google के साथ जारी रखें",
+  "authContinueWithApple": "Apple के साथ जारी रखें",
+  "authAuthenticating": "प्रमाणीकरण हो रहा है...",
+  "authEnterYourName": "कृपया अपना नाम दर्ज करें।",
+  "authNeedAccount": "खाता चाहिए? साइन अप करें",
+  "authHaveAccount": "पहले से खाता है? लॉग इन करें",
+  "authFieldName": "आपका नाम",
+  "authFieldEmail": "ईमेल",
+  "authFieldPassword": "पासवर्ड",
+  "verifyEmailTitle": "अपना ईमेल सत्यापित करें",
+  "verifyEmailHeading": "अपना इनबॉक्स देखें",
+  "verifyEmailBody": "आपके ईमेल पर सत्यापन लिंक भेजा गया है।",
+  "verifyEmailSent": "सत्यापन ईमेल भेज दिया गया!",
+  "verifyEmailContinue": "मैंने सत्यापित कर लिया, आगे बढ़ें",
+  "verifyEmailSignOut": "साइन आउट करें",
+  "verifyEmailSending": "भेजा जा रहा है...",
+  "verifyEmailResend": "सत्यापन ईमेल फिर से भेजें",
+  "verifyEmailResendIn": "{seconds} सेकंड में फिर से भेजें",
+  "@verifyEmailResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "verifyEmailAddress": "ईमेल: {email}",
+  "@verifyEmailAddress": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "forgotPasswordTitle": "पासवर्ड भूल गए?",
+  "forgotPasswordBody": "पासवर्ड रीसेट लिंक पाने के लिए अपना ईमेल दर्ज करें।",
+  "forgotPasswordEmptyEmail": "कृपया ईमेल दर्ज करें",
+  "forgotPasswordSent": "पासवर्ड रीसेट ईमेल भेज दिया गया।",
+  "forgotPasswordSend": "रीसेट लिंक भेजें",
+  "forgotPasswordSending": "भेजा जा रहा है...",
+  "nameSetupTitle": "Celia आपको किस नाम से बुलाए?",
+  "nameSetupBody": "कोचिंग को व्यक्तिगत बनाने के लिए हम पूरे ऐप में आपके नाम का उपयोग करते हैं।",
+  "nameSetupSaveFailed": "आपका नाम सेव नहीं हो सका। कृपया फिर से कोशिश करें।",
+  "homeGoodMorning": "सुप्रभात,",
+  "homeCeliaActive": "CELIA सक्रिय",
+  "homeGenerateRoutine": "AI की मदद से अपनी\nव्यक्तिगत\nरूटीन बनाएं",
+  "homeCreateRoutine": "रूटीन बनाएं",
+  "homeQuickActions": "त्वरित कार्रवाइयां",
+  "homeUpNext": "आगे",
+  "homeNoUpcoming": "अभी कोई आगामी रूटीन नहीं है।\nएक बनाएं या लाइब्रेरी देखें।",
+  "homeChatWithCelia": "Celia से चैट करें",
+  "homeChatSubtitle": "अपने फॉर्म या डाइट के बारे में पूछें",
+  "homeScanMeal": "मील स्कैन करें",
+  "homeScanMealSubtitle": "खाने और कैलोरी की पहचान करें",
+  "homeNutrition": "पोषण",
+  "homeNutritionSubtitle": "कैलोरी, मैक्रोज़ और मील देखें",
+  "homeBrowseLibrary": "लाइब्रेरी\nदेखें",
+  "homeTrackProgress": "प्रगति\nट्रैक करें",
+  "chatTitle": "कोच Celia",
+  "chatEmptyPrompt": "आज फिट होने के लिए\nमैं आपकी कैसे मदद कर सकती हूं?",
+  "chatYourChats": "आपकी चैट",
+  "chatNoSavedChats": "अभी कोई सेव की गई चैट नहीं है।",
+  "chatHistory": "चैट इतिहास",
+  "chatNew": "नई चैट",
+  "chatOpening": "चैट खोली जा रही है...",
+  "chatScanAMeal": "मील स्कैन करें",
+  "chatInputHint": "अपनी ट्रेनिंग के बारे में Celia से कुछ भी पूछें...",
+  "chatCouldNotOpenRoutine": "वह रूटीन खोली नहीं जा सकी",
+  "chatThisRoutine": "यह रूटीन",
+  "chatThisMeal": "यह मील",
+  "chatYourRoutine": "आपकी रूटीन",
+  "chatMoreExercises": "+ {count} और",
+  "@chatMoreExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatEmptySubtitle": "अपनी ट्रेनिंग, खाने या प्रगति के बारे में पूछें।",
+  "chatLoggedToday": "आज आपने {calories} kcal लॉग की हैं।",
+  "@chatLoggedToday": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "chatSuggestionHiit": "मेरे लिए 20 मिनट की HIIT रूटीन बनाएं",
+  "chatSuggestionDinner": "आज रात मुझे क्या खाना चाहिए?",
+  "chatSuggestionProgress": "इस हफ्ते मेरी प्रगति कैसी रही?",
+  "chatSuggestionIngredients": "मेरे पास चिकन, चावल और पालक हैं",
+  "chatJustNow": "अभी-अभी",
+  "chatMinutesAgo": "{minutes} मिनट पहले",
+  "@chatMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "chatHoursAgo": "{hours} घंटे पहले",
+  "@chatHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "chatDaysAgo": "{days} दिन पहले",
+  "@chatDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "chatRoutineAlreadySaved": "आपकी लाइब्रेरी में पहले से है — खोलने के लिए टैप करें",
+  "chatRoutineTapToOpen": "खोलने के लिए टैप करें",
+  "chatToolCancelled": "रद्द किया गया",
+  "chatToolFailed": "{label} — यह काम नहीं कर पाया",
+  "@chatToolFailed": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "chatToolRoutineSaveFailed": "रूटीन सेव नहीं हो सकी",
+  "chatToolRoutineSaved": "आपकी लाइब्रेरी में सेव की गई",
+  "chatToolMealLogged": "आज के लॉग में जोड़ा गया",
+  "chatToolRoutineAdded": "आपकी लाइब्रेरी में जोड़ा गया",
+  "activityCheckingProgress": "आपकी प्रगति देखी जा रही है",
+  "activityCheckingNutrition": "आज आपने क्या खाया, यह देखा जा रहा है",
+  "activityReviewingMeals": "आपके हाल के भोजन की समीक्षा की जा रही है",
+  "activityLookingAtRoutines": "आपकी रूटीन देखी जा रही हैं",
+  "activityReadingRoutine": "उस रूटीन को पढ़ा जा रहा है",
+  "activitySearchingLibrary": "एक्सरसाइज़ लाइब्रेरी में खोजा जा रहा है",
+  "activityBuildingRoutine": "आपकी रूटीन बनाई जा रही है",
+  "activityLoggingMeal": "आपका भोजन लॉग किया जा रहा है",
+  "activitySavingToLibrary": "आपकी लाइब्रेरी में सेव किया जा रहा है",
+  "activityWorking": "इस पर काम हो रहा है",
+  "approvalSaveRoutineWithCount": "\"{name}\" को {count} एक्सरसाइज़ के साथ अपनी लाइब्रेरी में सेव करें?",
+  "@approvalSaveRoutineWithCount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalSaveRoutine": "\"{name}\" को अपनी लाइब्रेरी में सेव करें?",
+  "@approvalSaveRoutine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalLogMealWithCalories": "\"{name}\" को {calories} kcal के रूप में लॉग करें?",
+  "@approvalLogMealWithCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalLogMeal": "\"{name}\" को लॉग करें?",
+  "@approvalLogMeal": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalAddRoutine": "इस रूटीन को अपनी लाइब्रेरी में जोड़ें?",
+  "approvalGeneric": "क्या Celia को यह करने की अनुमति दें?",
+  "libraryTitle": "रूटीन लाइब्रेरी",
+  "librarySteps": "{count, plural, one{{count} स्टेप} other{{count} स्टेप}}",
+  "@librarySteps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryEmpty": "अभी कोई रूटीन नहीं है",
+  "libraryEmptyBody": "एडमिन डैशबोर्ड में रूटीन बनाएँ और प्रकाशित करें।",
+  "libraryLoadFailed": "रूटीन लोड नहीं हो सकीं",
+  "routineStartWorkout": "वर्कआउट शुरू करें",
+  "routineNoSteps": "कोई स्टेप उपलब्ध नहीं है",
+  "routineNoVideoForStep": "इस स्टेप के लिए कोई वीडियो उपलब्ध नहीं है",
+  "routineVideoProcessing": "वीडियो अभी प्रोसेस हो रहा है। कृपया बाद में फिर कोशिश करें।",
+  "routineMissingPlaybackUrl": "इस वीडियो का प्लेबैक URL मौजूद नहीं है",
+  "routinePreviewBanner": "प्रीव्यू — पूरा वीडियो जल्द आ रहा है",
+  "routinePreview": "प्रीव्यू",
+  "routineDetails": "विवरण",
+  "routineNotFound": "रूटीन नहीं मिली",
+  "routineCompletedTimes": "{count} बार पूरा किया गया",
+  "@routineCompletedTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "playerVideoUnavailable": "यह वीडियो अभी उपलब्ध नहीं है।",
+  "playerSteps": "स्टेप्स",
+  "playerStepCounter": "{current}/{total}",
+  "@playerStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoPlayableVideos": "चलाने योग्य कोई वीडियो नहीं है",
+  "playerWorkoutComplete": "वर्कआउट पूरा हुआ!",
+  "playerSavingStreak": "आपकी स्ट्रीक में सेव किया जा रहा है…",
+  "playerSavedStreak": "आपकी स्ट्रीक में सेव किया गया",
+  "playerRetrySave": "फिर से सेव करें",
+  "playerReplay": "दोबारा चलाएँ",
+  "playerNotReady": "प्लेयर तैयार नहीं है",
+  "playerPreviewUnavailable": "प्रीव्यू अभी उपलब्ध नहीं है।",
+  "playerClipCounter": "Clip {current} of {total} · {duration}",
+  "@playerClipCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerErrorLoadingVideo": "वीडियो लोड करने में त्रुटि",
+  "playerLoadingVideo": "वीडियो लोड हो रहा है...",
+  "playerFailedToLoadVideo": "वीडियो लोड नहीं हो सका",
+  "playerNotInitialized": "वीडियो प्लेयर शुरू नहीं किया गया है",
+  "guidedExerciseCounter": "एक्सरसाइज़ {current}/{total}",
+  "@guidedExerciseCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedGetReady": "तैयार हो जाएँ",
+  "guidedSetOf": "Set {current} of {total}",
+  "@guidedSetOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedRest": "आराम",
+  "guidedSkipRest": "आराम छोड़ें",
+  "guidedPaused": "रुका हुआ",
+  "guidedResume": "फिर शुरू करें",
+  "guidedWorkoutComplete": "वर्कआउट पूरा हुआ",
+  "guidedEndTitle": "वर्कआउट समाप्त करें?",
+  "guidedEndBody": "इस सत्र की आपकी प्रगति सहेजी नहीं जाएगी।",
+  "guidedKeepGoing": "जारी रखें",
+  "guidedEnd": "समाप्त करें",
+  "guidedReps": "{count, plural, one{{count} प्रतिनिधि} other{{count} प्रतिनिधि}}",
+  "@guidedReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetTitle": "AI से रूटीन बनाएं",
+  "generateSheetPrompt": "आप किस तरह की वर्कआउट चाहते हैं?",
+  "generateSheetHint": "जैसे, \"जागने के लिए सुबह की एक त्वरित स्ट्रेचिंग\" या \"शुरुआती लोगों के लिए पूरे शरीर की स्ट्रेंथ ट्रेनिंग\"",
+  "generateSheetDuration": "अवधि",
+  "generateSheetMinutes": "{count} मिनट",
+  "@generateSheetMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetDifficulty": "कठिनाई",
+  "generateSheetEquipment": "उपलब्ध उपकरण",
+  "generateSheetGenerating": "बनाया जा रहा है...",
+  "generateSheetSubmit": "रूटीन बनाएं",
+  "generateSheetDescribeFirst": "कृपया अपनी इच्छित वर्कआउट का वर्णन करें",
+  "generateSheetAlreadyExists": "आपके पास यह पहले से है: {title}",
+  "@generateSheetAlreadyExists": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetCreated": "बनाया गया: {title}",
+  "@generateSheetCreated": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetFailed": "रूटीन बनाने में विफल",
+  "guidedNoExercises": "इस रूटीन में अभी कोई एक्सरसाइज़ नहीं है।",
+  "guidedStartFailed": "अभी यह वर्कआउट शुरू नहीं हो सका। कृपया फिर कोशिश करें।",
+  "guidedSaveFailed": "यह वर्कआउट सहेजा नहीं जा सका। अपनी स्ट्रीक अपडेट करने के लिए पुनः प्रयास करें।",
+  "guidedOfReps": "{count} प्रतिनिधियों में से",
+  "@guidedOfReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedHold": "रोकें",
+  "guidedNextSet": "अगला सेट",
+  "guidedUpNext": "आगे",
+  "guidedSetsHold": "{sets} × {seconds} सेकंड रोकें",
+  "@guidedSetsHold": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachGetReady": "तैयार हो जाएं। {exercise}",
+  "@coachGetReady": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachStartReps": "शुरू करें। {count} प्रतिनिधि।",
+  "@coachStartReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachStartHold": "{seconds} सेकंड तक रोकें।",
+  "@coachStartHold": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachRest": "आराम करें। आगे: {exercise}",
+  "@coachRest": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachRestShort": "आराम करें।",
+  "coachComplete": "बहुत बढ़िया। वर्कआउट पूरा हुआ।",
+  "coachRep": "{count}",
+  "@coachRep": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachCountdown": "{seconds}",
+  "@coachCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoVideosInRoutine": "इस रूटीन में चलाने योग्य कोई वीडियो नहीं मिला।",
+  "playerLoadRoutineFailed": "अभी यह रूटीन लोड नहीं हो सकी। कृपया फिर कोशिश करें।",
+  "playerStepLoadFailedSkipping": "\"{title}\" लोड नहीं हो सका। छोड़ा जा रहा है…",
+  "@playerStepLoadFailedSkipping": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerStepLoadFailed": "\"{title}\" लोड नहीं हो सका।",
+  "@playerStepLoadFailed": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerSaveCompletionFailed": "पूरा होने की जानकारी सहेजी नहीं जा सकी। अपनी स्ट्रीक अपडेट करने के लिए पुनः प्रयास करें।",
+  "playerStepPreviewSubtitle": "{duration} • पूर्वावलोकन",
+  "@playerStepPreviewSubtitle": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerNoVideosReady": "इस रूटीन में अभी चलाने के लिए कोई वीडियो तैयार नहीं है।",
+  "playerPlaybackFailed": "अभी यह वीडियो चल नहीं सका। कृपया फिर कोशिश करें।",
+  "libraryTabCurated": "चयनित",
+  "libraryTabAiGenerated": "AI से बनाए गए",
+  "profileSavedRoutines": "सहेजी गई रूटीनें",
+  "savedRoutinesNoFavorites": "अभी कोई पसंदीदा रूटीन नहीं है।",
+  "savedRoutinesEmpty": "अभी कोई सहेजी गई रूटीन नहीं है।",
+  "actionFavorite": "पसंदीदा में जोड़ें",
+  "actionUnfavorite": "पसंदीदा से हटाएं",
+  "routineDurationMinutes": "{minutes} मिनट",
+  "@routineDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHoursMinutes": "{hours} घंटे {minutes} मिनट",
+  "@routineDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHours": "{hours} घंटे",
+  "@routineDurationHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "difficultyEasy": "आसान",
+  "difficultyMedium": "मध्यम",
+  "difficultyHard": "कठिन",
+  "categoryStrength": "स्ट्रेंथ",
+  "categoryCardio": "कार्डियो",
+  "categoryFlexibility": "लचीलापन",
+  "categoryMindfulness": "माइंडफुलनेस",
+  "categoryDance": "डांस",
+  "categoryHiit": "HIIT",
+  "categoryYoga": "योग",
+  "categoryCustom": "कस्टम",
+  "navHome": "होम",
+  "navLibrary": "लाइब्रेरी",
+  "navChat": "चैट",
+  "navProfile": "प्रोफ़ाइल",
+  "equipmentNone": "कोई नहीं",
+  "equipmentDumbbells": "डंबल",
+  "equipmentResistanceBands": "रेज़िस्टेंस बैंड",
+  "equipmentYogaMat": "योगा मैट",
+  "equipmentKettlebell": "केटलबेल",
+  "equipmentPullUpBar": "पुल-अप बार",
+  "equipmentJumpRope": "रस्सी कूदने की रज्जु",
+  "nutritionTitle": "पोषण",
+  "nutritionSubtitle": "कैलोरी, मैक्रोज़ और भोजन का इतिहास",
+  "nutritionSetGoalsTitle": "अपने दैनिक पोषण लक्ष्य तय करें",
+  "nutritionSetGoalsBody": "अपना वज़न, लंबाई, उम्र और लिंग जोड़ें, ताकि Celia हर दिन आपके लिए आवश्यक कैलोरी और पोषक तत्वों की गणना कर सके।",
+  "nutritionSetUpGoals": "लक्ष्य तय करें",
+  "nutritionDailyTarget": "दैनिक लक्ष्य",
+  "nutritionDailyGoals": "दैनिक लक्ष्य",
+  "nutritionKcal": "{calories} kcal",
+  "@nutritionKcal": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMacroSummary": "P {protein}g · C {carbs}g · F {fat}g",
+  "@nutritionMacroSummary": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionToday": "आज",
+  "nutritionMealHistory": "भोजन का इतिहास",
+  "nutritionCeliaInsights": "Celia इनसाइट्स",
+  "nutritionWeeklyTrend": "साप्ताहिक रुझान",
+  "nutritionTodayMeals": "kcal • {count, plural, one{{count} भोजन} other{{count} भोजन}}",
+  "@nutritionTodayMeals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionTodayOfTargetMeals": "{target} kcal में से • {count, plural, one{{count} भोजन} other{{count} भोजन}}",
+  "@nutritionTodayOfTargetMeals": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionWeekdayInitials": "सो,मं,मं,बु,गु,शु,र",
+  "@nutritionWeekdayInitials": {
+    "description": "Single-letter weekday labels for the weekly chart, Monday first, comma separated."
+  },
+  "nutritionFieldFoodName": "भोजन का नाम",
+  "nutritionFieldGrams": "ग्राम",
+  "nutritionFieldCalories": "कैलोरी",
+  "scannerStatusAnalyzing": "विश्लेषण हो रहा है...",
+  "scannerStatusIdle": "CELIA SCANNER",
+  "scannerFieldFoodName": "भोजन का नाम",
+  "scannerFieldGrams": "ग्राम",
+  "scannerFieldCalories": "कैलोरी",
+  "scannerFieldPro": "Pro",
+  "scannerMacroPro": "PRO",
+  "scannerMacroCarb": "CARB",
+  "scannerMacroFat": "FAT",
+  "scannerRemainingAfterLogging": "आज {calories} kcal और {grams}g प्रोटीन बाकी है",
+  "@scannerRemainingAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerOverTargetAfterLogging": "आपके दैनिक लक्ष्य से {calories} kcal अधिक",
+  "@scannerOverTargetAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerButtonAnalyzing": "विश्लेषण हो रहा है",
+  "scannerButtonQuotaNeeded": "कोटा चाहिए",
+  "scannerButtonScanNow": "अभी स्कैन करें",
+  "scannerButtonLogging": "दर्ज हो रहा है",
+  "scannerButtonLogMeal": "भोजन दर्ज करें",
+  "scannerNoClearFood": "अभी कोई स्पष्ट भोजन नहीं मिला। बेहतर रोशनी में कोशिश करें या पास जाएँ।",
+  "scannerErrorCameraPermission": "भोजन स्कैन करने के लिए कैमरा अनुमति आवश्यक है।",
+  "scannerErrorBackendMissing": "कैलोरी स्कैनर का बैकएंड अभी कॉन्फ़िगर नहीं है।",
+  "scannerErrorApiKeyInvalid": "कैलोरी स्कैनिंग के लिए OpenAI API कुंजी अमान्य है। इसे बैकएंड एनवायरनमेंट में बदलें, फिर से डिप्लॉय करें और दोबारा कोशिश करें।",
+  "scannerErrorApiKeyMissing": "कैलोरी स्कैनिंग के लिए OpenAI API कुंजी आवश्यक है। इसे Vercel में जोड़ें, फिर से डिप्लॉय करें और दोबारा कोशिश करें।",
+  "scannerErrorQuotaExhausted": "कैलोरी स्कैनिंग के लिए OpenAI क्रेडिट समाप्त हो गए हैं। API क्रेडिट जोड़ें या बिलिंग सीमा बढ़ाएँ, फिर दोबारा कोशिश करें।",
+  "scannerErrorTimeout": "Celia को इस भोजन का विश्लेषण करने में अधिक समय चाहिए। कैमरा स्थिर रखें और फिर से स्कैन करें।",
+  "scannerErrorNotSignedIn": "भोजन स्कैन करने से पहले कृपया साइन इन करें।",
+  "scannerErrorMealTableMissing": "भोजन दर्ज करने वाली तालिका अभी तैयार नहीं है। स्कैन का परिणाम अभी भी उपलब्ध है।",
+  "scannerErrorGeneric": "Celia अभी इस भोजन का विश्लेषण नहीं कर सकी। कैमरा स्थिर रखें, भोजन को बीच में रखें और फिर से स्कैन करें।",
+  "nutritionGrams": "{grams}g",
+  "@nutritionGrams": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionMealSubtitle": "{time} · {count, plural, one{{count} आइटम} other{{count} आइटम}}",
+  "@nutritionMealSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMealDetails": "भोजन का विवरण",
+  "nutritionFoodItems": "खाद्य पदार्थ",
+  "nutritionItemSubtitle": "{grams}g · {calories} kcal",
+  "@nutritionItemSubtitle": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionNeedsOneItem": "भोजन में कम से कम एक खाद्य पदार्थ होना चाहिए।",
+  "nutritionMealUpdated": "भोजन अपडेट हो गया",
+  "nutritionUpdateFailed": "भोजन अपडेट नहीं किया जा सका: {error}",
+  "@nutritionUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionDeleteMealTitle": "भोजन हटाएँ?",
+  "nutritionDeleteMealBody": "इससे आपका पोषण इतिहास से यह भोजन हट जाएगा।",
+  "nutritionDeleteMeal": "भोजन हटाएँ",
+  "nutritionDeleteFailed": "भोजन हटाया नहीं जा सका: {error}",
+  "@nutritionDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionEditFood": "खाद्य पदार्थ संपादित करें",
+  "nutritionSaveFood": "खाद्य पदार्थ सेव करें",
+  "nutritionLoadFailed": "भोजन लोड नहीं हो सके",
+  "nutritionLoadFailedBody": "रिफ्रेश करने के लिए नीचे खींचें या बैकएंड कनेक्शन जाँचें।",
+  "nutritionNoMeals": "अभी तक कोई भोजन लॉग नहीं किया गया",
+  "nutritionNoMealsBody": "अपना पहला भोजन स्कैन करें और Celia आपका पोषण इतिहास तैयार करेगी।",
+  "progressToday": "आज",
+  "progressSetGoals": "कैलोरी और मैक्रो ट्रैकिंग अनलॉक करने के लिए अपने पोषण लक्ष्य सेट करें।",
+  "progressOfTarget": "{target} kcal में से",
+  "@progressOfTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressMacroAmount": "{consumed} / {target}g",
+  "@progressMacroAmount": {
+    "placeholders": {
+      "consumed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalOver": "{calories} kcal अधिक",
+  "@progressKcalOver": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalLeft": "{calories} kcal शेष",
+  "@progressKcalLeft": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressProtein": "प्रोटीन",
+  "progressCarbs": "कार्ब्स",
+  "progressFat": "फैट",
+  "scannerEditItem": "खाद्य पदार्थ संपादित करें",
+  "scannerSaveChanges": "बदलाव सेव करें",
+  "scannerItemCalories": "{name} · {calories} kcal",
+  "@scannerItemCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerConfidence": "विश्वसनीयता {percent}% · {provider}",
+  "@scannerConfidence": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerMoreItems": "+ {count} और खाद्य पदार्थ इस भोजन लॉग में शामिल हैं",
+  "@scannerMoreItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerIfYouLog": "अगर आप यह भोजन लॉग करते हैं",
+  "scannerAfterLogging": "आज {after} / {target} kcal",
+  "@scannerAfterLogging": {
+    "placeholders": {
+      "after": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerGramsDecimal": "{grams}g",
+  "@scannerGramsDecimal": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerItemServing": "{name} · {grams}g",
+  "@scannerItemServing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerNoMealDetected": "कोई भोजन नहीं मिला",
+  "onboardingWelcome": "स्वागत है, {name}",
+  "@onboardingWelcome": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingGender": "लिंग",
+  "onboardingCalculateGoals": "मेरे लक्ष्य कैलकुलेट करें",
+  "onboardingScanFirstMeal": "अपना पहला भोजन स्कैन करें",
+  "onboardingExploreRoutines": "रूटीन देखें",
+  "onboardingGoHome": "होम पर जाएँ",
+  "onboardingDailyTargets": "आपके दैनिक लक्ष्य",
+  "onboardingProtein": "प्रोटीन {grams}g ·",
+  "@onboardingProtein": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingMacroTargets": "प्रोटीन {protein}g • कार्ब्स {carbs}g • फैट {fat}g",
+  "@onboardingMacroTargets": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingTargetsReady": "आपके दैनिक पोषण लक्ष्य तैयार हैं। चुनें कि आप कैसे शुरुआत करना चाहते हैं।",
+  "onboardingWeightKg": "वज़न (kg)",
+  "onboardingHeightCm": "लंबाई (cm)",
+  "onboardingAge": "उम्र",
+  "onboardingInvalidWeight": "kg में मान्य वज़न दर्ज करें।",
+  "onboardingInvalidHeight": "cm में मान्य लंबाई दर्ज करें।",
+  "onboardingInvalidAge": "13 से 100 के बीच मान्य उम्र दर्ज करें।",
+  "onboardingSaveFailed": "आपकी पोषण प्रोफ़ाइल सेव नहीं की जा सकी।",
+  "genderMale": "पुरुष",
+  "genderFemale": "महिला",
+  "genderOther": "अन्य",
+  "nutritionSetupTitle": "दैनिक पोषण लक्ष्य",
+  "nutritionSetupBody": "Celia को अपने शरीर के बारे में बताएं, ताकि वह आपकी दैनिक कैलोरी और मैक्रो की गणना कर सके।",
+  "nutritionSetupGender": "लिंग",
+  "nutritionSetupFootnote": "Celia मध्यम गतिविधि स्तर के आधार पर दैनिक कैलोरी और मैक्रो लक्ष्यों का अनुमान लगाने के लिए आपके वज़न, लंबाई, उम्र और लिंग का उपयोग करती है।",
+  "nutritionSetupSave": "लक्ष्य सेव करें",
+  "profileTitle": "प्रोफ़ाइल",
+  "profileCeliaAi": "Celia AI",
+  "profileEliteMember": "एलीट सदस्य",
+  "profileAccount": "खाता",
+  "profileSignedInAs": "इस रूप में साइन इन हैं:\n{email}",
+  "@profileSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "profileUnknownEmail": "अज्ञात",
+  "profileDarkMode": "डार्क मोड",
+  "profileLanguage": "भाषा",
+  "profileLogOutTitle": "लॉग आउट करें?",
+  "profileLogOutBody": "क्या आप वाकई लॉग आउट करना चाहते हैं?",
+  "profileLogOut": "लॉग आउट",
+  "profileLogOutButton": "लॉग आउट",
+  "profileFavoriteRoutines": "पसंदीदा रूटीन",
+  "profileSubscription": "सब्सक्रिप्शन",
+  "profileNutrition": "पोषण",
+  "profileHelpSupport": "सहायता और सपोर्ट",
+  "profileFriend": "मित्र",
+  "profileStatSaved": "सेव किए गए",
+  "profileStatStreak": "स्ट्रीक",
+  "profileStatWorkouts": "वर्कआउट",
+  "streakDayOneStarted": "दिन 1 शुरू हो गया है — अपनी स्ट्रीक बनाने के लिए कल फिर आएँ।",
+  "streakRebuild": "आप कल सक्रिय थे — अपनी स्ट्रीक फिर से बनाने के लिए आज कोई भोजन लॉग करें या वर्कआउट पूरा करें।",
+  "streakStart": "अपनी सक्रिय स्ट्रीक शुरू करने के लिए कोई भोजन लॉग करें या वर्कआउट पूरा करें।",
+  "streakLongRun": "{days} दिनों की स्ट्रीक! लगातार आते रहें — Celia आपकी निरंतरता पर नज़र रख रही है।",
+  "@streakLongRun": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakBothLogged": "{days} दिनों की स्ट्रीक — आज वर्कआउट और पोषण, दोनों लॉग किए गए।",
+  "@streakBothLogged": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedWorkout": "{days} दिनों की स्ट्रीक। आज एक छोटा वर्कआउट आपकी दिनचर्या पूरी कर देगा।",
+  "@streakNeedWorkout": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedMeal": "{days} दिनों की स्ट्रीक। अपने पोषण पर नज़र रखने के लिए कोई भोजन लॉग करें।",
+  "@streakNeedMeal": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakStayActive": "{days} दिनों की स्ट्रीक — आज सक्रिय रहें।",
+  "@streakStayActive": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "editProfileTitle": "प्रोफ़ाइल संपादित करें",
+  "editProfileName": "नाम",
+  "editProfileFootnote": "बदलाव आपके खाते में सेव हो जाएँगे और होम/प्रोफ़ाइल पर दिखाई देंगे।",
+  "editProfileSaveFailed": "प्रोफ़ाइल अपडेट नहीं हो सकी। कृपया फिर कोशिश करें।",
+  "languageTitle": "भाषा",
+  "languageSystem": "डिवाइस की भाषा",
+  "languageSystemSubtitle": "आपके फ़ोन पर सेट भाषा का उपयोग करें",
+  "languageEnglish": "अंग्रेज़ी",
+  "languageSpanish": "स्पैनिश",
+  "insightStartFuelingTitle": "आज से पोषण शुरू करें",
+  "insightStartFuelingBody": "आपका पूरा कैलोरी बजट अभी बाकी है। सही राह पर बने रहने के लिए अपना पहला भोजन स्कैन या लॉग करें।",
+  "insightAboveTargetTitle": "आज लक्ष्य से अधिक",
+  "insightAboveTargetBody": "आप अपने दैनिक लक्ष्य से {calories} kcal अधिक हैं। रात का खाना हल्का रखें या छोटा वर्कआउट करें।",
+  "@insightAboveTargetBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightLowProteinTitle": "प्रोटीन अभी भी कम है",
+  "insightLowProteinBody": "अपने लक्ष्य तक पहुँचने के लिए आज आपको अभी लगभग {grams}g प्रोटीन चाहिए।",
+  "@insightLowProteinBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightAlmostThereTitle": "आप अपने लक्ष्य के करीब हैं",
+  "insightAlmostThereBody": "आज आपके पास {calories} kcal बाकी हैं। एक संतुलित स्नैक अच्छी तरह फिट हो जाएगा।",
+  "@insightAlmostThereBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightOnTrackTitle": "आज सही राह पर",
+  "insightOnTrackBody": "अपने दैनिक लक्ष्यों तक पहुँचने के लिए {calories} kcal और {grams}g प्रोटीन बाकी है।",
+  "@insightOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightWeeklyRhythmTitle": "अपनी साप्ताहिक लय बनाएँ",
+  "insightWeeklyRhythmBody": "पूरे सप्ताह भोजन लॉग करें, ताकि Celia पैटर्न पहचानकर आपको बेहतर मार्गदर्शन दे सके।",
+  "insightWeeklyTrendTitle": "साप्ताहिक रुझान",
+  "insightWeeklyTrendBody": "आपने पिछले 7 में से {days} दिनों में भोजन लॉग किया, औसतन {average} kcal — {direction}।",
+  "@insightWeeklyTrendBody": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "average": {
+        "type": "int"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "insightTrendOnTarget": "आपके दैनिक लक्ष्य के लगभग बराबर",
+  "insightTrendAbove": "औसतन आपके लक्ष्य से {delta} kcal अधिक",
+  "@insightTrendAbove": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightTrendBelow": "औसतन आपके लक्ष्य से {delta} kcal कम",
+  "@insightTrendBelow": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsSectionTitle": "Celia की जानकारियाँ"
+}

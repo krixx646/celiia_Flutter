@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../l10n/app_localizations.dart';
 import '../providers/auth_provider.dart';
 import '../providers/chat_provider.dart';
 import '../providers/nutrition_profile_provider.dart';
@@ -18,11 +19,11 @@ import 'tools/calorie_scanner_screen.dart';
 
 /// Things Celia can actually do, offered up front so the abilities are
 /// discoverable instead of hidden behind knowing what to ask.
-const _suggestions = <String>[
-  'Build me a 20-minute HIIT routine',
-  'What should I eat tonight?',
-  'How am I doing this week?',
-  'I have chicken, rice and spinach',
+List<String> _suggestions(AppLocalizations l10n) => <String>[
+  l10n.chatSuggestionHiit,
+  l10n.chatSuggestionDinner,
+  l10n.chatSuggestionProgress,
+  l10n.chatSuggestionIngredients,
 ];
 
 class ChatScreen extends StatefulWidget {
@@ -100,13 +101,14 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> _openRoutine(String routineId) async {
+    final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     final navigator = Navigator.of(context);
     try {
       final routine = await SupabaseService.instance.getRoutine(routineId);
       if (routine == null) {
         messenger.showSnackBar(
-          const SnackBar(content: Text('Could not open that routine')),
+          SnackBar(content: Text(l10n.chatCouldNotOpenRoutine)),
         );
         return;
       }
@@ -115,7 +117,7 @@ class _ChatScreenState extends State<ChatScreen> {
       );
     } catch (_) {
       messenger.showSnackBar(
-        const SnackBar(content: Text('Could not open that routine')),
+        SnackBar(content: Text(l10n.chatCouldNotOpenRoutine)),
       );
     }
   }
@@ -142,6 +144,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
 
     return Scaffold(
@@ -180,7 +183,7 @@ class _ChatScreenState extends State<ChatScreen> {
             const SizedBox(width: 12),
             Expanded(
               child: Text(
-                'Coach Celia',
+                l10n.chatTitle,
                 style: TextStyle(
                   color: theme.textPrimary,
                   fontWeight: FontWeight.bold,
@@ -193,12 +196,12 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         actions: [
           IconButton(
-            tooltip: 'Chat history',
+            tooltip: l10n.chatHistory,
             icon: Icon(Icons.history, color: theme.textPrimary),
             onPressed: _showHistory,
           ),
           IconButton(
-            tooltip: 'New chat',
+            tooltip: l10n.chatNew,
             icon: Icon(Icons.add_comment, color: theme.textPrimary),
             onPressed: () => context.read<ChatProvider>().startNewConversation(),
           ),
@@ -207,8 +210,8 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Consumer<ChatProvider>(
         builder: (context, chat, child) {
           if (chat.isLoadingConversation) {
-            return const Center(
-              child: LoadingIndicator(message: 'Opening chat...'),
+            return Center(
+              child: LoadingIndicator(message: l10n.chatOpening),
             );
           }
 
@@ -266,11 +269,12 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     final tracker = context.watch<NutritionTrackerProvider>();
     final hint = tracker.todayCalories > 0
-        ? 'You\'ve logged ${tracker.todayCalories.round()} kcal today.'
-        : 'Ask about your training, your food, or your progress.';
+        ? l10n.chatLoggedToday(tracker.todayCalories.round())
+        : l10n.chatEmptySubtitle;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
@@ -293,7 +297,7 @@ class _EmptyState extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            'How can I help you\nget fit today?',
+            l10n.chatEmptyPrompt,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -314,7 +318,7 @@ class _EmptyState extends StatelessWidget {
             spacing: 8,
             runSpacing: 8,
             children: [
-              for (final prompt in _suggestions)
+              for (final prompt in _suggestions(l10n))
                 ActionChip(
                   label: Text(prompt),
                   labelStyle: TextStyle(
@@ -384,6 +388,7 @@ class _Composer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     final keyboard = MediaQuery.of(context).viewInsets.bottom;
 
@@ -412,7 +417,7 @@ class _Composer extends StatelessWidget {
                 // Celia's model cannot see photos, so a picture goes to the
                 // scanner, which reads it and logs the meal she can then talk
                 // about.
-                tooltip: 'Scan a meal',
+                tooltip: l10n.chatScanAMeal,
                 icon: Icon(
                   Icons.photo_camera_outlined,
                   size: 24,
@@ -430,7 +435,7 @@ class _Composer extends StatelessWidget {
                   onSubmitted: (_) => isBusy ? null : onSend(),
                   style: TextStyle(color: theme.textPrimary, fontSize: 16),
                   decoration: InputDecoration(
-                    hintText: 'Ask Celia anything about your training...',
+                    hintText: l10n.chatInputHint,
                     border: InputBorder.none,
                     isDense: true,
                     contentPadding: const EdgeInsets.symmetric(vertical: 16),
@@ -477,6 +482,7 @@ class _HistorySheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
 
     return Container(
@@ -495,7 +501,7 @@ class _HistorySheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Your chats',
+                l10n.chatYourChats,
                 style: TextStyle(
                   color: theme.textPrimary,
                   fontSize: 18,
@@ -512,7 +518,7 @@ class _HistorySheet extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 32),
                   child: Text(
-                    'No saved chats yet.',
+                    l10n.chatNoSavedChats,
                     style: TextStyle(color: theme.textSecondary),
                   ),
                 )
@@ -532,7 +538,7 @@ class _HistorySheet extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         subtitle: Text(
-                          _relativeTime(conversation.updatedAt),
+                          _relativeTime(l10n, conversation.updatedAt),
                           style: TextStyle(
                             color: theme.textSecondary,
                             fontSize: 12,
@@ -557,12 +563,12 @@ class _HistorySheet extends StatelessWidget {
     );
   }
 
-  String _relativeTime(DateTime time) {
+  String _relativeTime(AppLocalizations l10n, DateTime time) {
     final diff = DateTime.now().difference(time);
-    if (diff.inMinutes < 1) return 'Just now';
-    if (diff.inHours < 1) return '${diff.inMinutes}m ago';
-    if (diff.inDays < 1) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
+    if (diff.inMinutes < 1) return l10n.chatJustNow;
+    if (diff.inHours < 1) return l10n.chatMinutesAgo(diff.inMinutes);
+    if (diff.inDays < 1) return l10n.chatHoursAgo(diff.inHours);
+    if (diff.inDays < 7) return l10n.chatDaysAgo(diff.inDays);
     return '${time.day}/${time.month}/${time.year}';
   }
 }

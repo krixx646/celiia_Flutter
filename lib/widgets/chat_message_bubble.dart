@@ -3,8 +3,10 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../l10n/app_localizations.dart';
 import '../models/celia_chat_message.dart';
 import '../providers/theme_provider.dart';
+import '../utils/chat_activity_text.dart';
 
 /// Renders one turn of the conversation: Celia's text, whatever she looked up
 /// while answering, any permission she is waiting on, and links to things she
@@ -23,6 +25,7 @@ class ChatMessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
 
     if (message.isUser) {
@@ -71,8 +74,8 @@ class ChatMessageBubble extends StatelessWidget {
             _RoutineCard(
               title: routine.title,
               subtitle: routine.alreadyExisted
-                  ? 'Already in your library — tap to open'
-                  : 'Tap to open',
+                  ? l10n.chatRoutineAlreadySaved
+                  : l10n.chatRoutineTapToOpen,
               onOpen: () => onOpenRoutine(routine.routineId),
             ),
           ],
@@ -204,6 +207,7 @@ class _ToolActivityRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     final (icon, color) = switch (call.phase) {
       ToolPhase.done => (Icons.check_circle_outline, theme.accentOrange),
@@ -213,10 +217,10 @@ class _ToolActivityRow extends StatelessWidget {
     };
 
     final label = switch (call.phase) {
-      ToolPhase.done => _pastTense(call),
-      ToolPhase.denied => 'Cancelled',
-      ToolPhase.failed => '${call.activityLabel} — that did not work',
-      _ => '${call.activityLabel}…',
+      ToolPhase.done => _pastTense(l10n, call),
+      ToolPhase.denied => l10n.chatToolCancelled,
+      ToolPhase.failed => l10n.chatToolFailed(call.activityLabel(l10n)),
+      _ => '${call.activityLabel(l10n)}…',
     };
 
     return Padding(
@@ -250,17 +254,19 @@ class _ToolActivityRow extends StatelessWidget {
     );
   }
 
-  String _pastTense(ChatToolCall call) {
+  String _pastTense(AppLocalizations l10n, ChatToolCall call) {
     switch (call.toolName) {
       case 'create_routine':
         final failed = call.output?['created'] == false;
-        return failed ? 'Could not save the routine' : 'Saved to your library';
+        return failed
+            ? l10n.chatToolRoutineSaveFailed
+            : l10n.chatToolRoutineSaved;
       case 'log_meal':
-        return 'Added to today\'s log';
+        return l10n.chatToolMealLogged;
       case 'save_routine':
-        return 'Added to your library';
+        return l10n.chatToolRoutineAdded;
       default:
-        return call.activityLabel;
+        return call.activityLabel(l10n);
     }
   }
 }
@@ -274,6 +280,7 @@ class _ApprovalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     final exercises = call.proposedExercises;
 
@@ -288,7 +295,7 @@ class _ApprovalCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            call.approvalPrompt,
+            call.approvalPrompt(l10n),
             style: TextStyle(
               color: theme.textPrimary,
               fontSize: 15,
@@ -308,7 +315,7 @@ class _ApprovalCard extends StatelessWidget {
               ),
             if (exercises.length > 6)
               Text(
-                '+ ${exercises.length - 6} more',
+                l10n.chatMoreExercises(exercises.length - 6),
                 style: TextStyle(color: theme.textSecondary, fontSize: 13),
               ),
           ],
@@ -325,7 +332,7 @@ class _ApprovalCard extends StatelessWidget {
                     ),
                   ),
                   onPressed: () => onDecision(true),
-                  child: const Text('Yes, do it'),
+                  child: Text(l10n.actionYesDoIt),
                 ),
               ),
               const SizedBox(width: 10),
@@ -341,7 +348,7 @@ class _ApprovalCard extends StatelessWidget {
                     ),
                   ),
                   onPressed: () => onDecision(false),
-                  child: const Text('Not now'),
+                  child: Text(l10n.actionNotNow),
                 ),
               ),
             ],

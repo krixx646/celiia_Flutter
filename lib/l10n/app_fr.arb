@@ -1,0 +1,1017 @@
+{
+  "@@locale": "fr",
+  "appName": "Celia Coach intégral",
+  "@appName": {
+    "description": "The app's name. Not translated."
+  },
+  "actionCancel": "Annuler",
+  "actionSave": "Enregistrer",
+  "actionDelete": "Supprimer",
+  "actionEdit": "Modifier",
+  "actionRetry": "Réessayer",
+  "actionDone": "Terminé",
+  "actionClose": "Fermer",
+  "actionContinue": "Continuer",
+  "actionSeeAll": "Tout voir",
+  "actionYesDoIt": "Oui, allez-y",
+  "actionNotNow": "Pas maintenant",
+  "loadingPreparing": "Préparation de Celia...",
+  "loadingGeneric": "Chargement...",
+  "errorGeneric": "Une erreur s’est produite. Veuillez réessayer.",
+  "errorCanceled": "Action annulée.",
+  "errorTooManyRequests": "Trop de tentatives. Veuillez patienter une minute, puis réessayer.",
+  "errorNetwork": "Vérifiez votre connexion Internet, puis réessayez.",
+  "errorBadCredentials": "Adresse e-mail ou mot de passe incorrect.",
+  "errorEmailInUse": "Cette adresse e-mail est déjà utilisée. Essayez plutôt de vous connecter.",
+  "errorWeakPassword": "Utilisez un mot de passe plus sécurisé, puis réessayez.",
+  "errorInvalidEmail": "Veuillez saisir une adresse e-mail valide.",
+  "errorNoPermission": "Vous n’avez pas l’autorisation d’effectuer cette action.",
+  "errorNotSignedIn": "Veuillez vous connecter, puis réessayer.",
+  "errorNoConversation": "Démarrez une nouvelle discussion pour continuer.",
+  "errorNoPlayableVideos": "Aucune vidéo lisible n’est encore disponible pour cette routine.",
+  "errorLoadRoutines": "Impossible de charger les routines pour le moment. Veuillez réessayer.",
+  "errorLoadSavedRoutines": "Impossible de charger les routines enregistrées pour le moment. Veuillez réessayer.",
+  "errorGenerateRoutine": "Impossible de générer une routine pour le moment. Veuillez réessayer.",
+  "errorLoadChats": "Impossible de charger les discussions enregistrées pour le moment.",
+  "errorCeliaUnavailable": "Celia est indisponible pour le moment. Veuillez réessayer.",
+  "errorOpenConversation": "Impossible d’ouvrir cette conversation.",
+  "errorDeleteConversation": "Impossible de supprimer cette conversation. Veuillez réessayer.",
+  "errorSignIn": "Impossible de se connecter. Veuillez réessayer.",
+  "errorCreateAccount": "Impossible de créer votre compte. Veuillez réessayer.",
+  "errorSendResetEmail": "Impossible d’envoyer l’e-mail de réinitialisation. Veuillez réessayer.",
+  "errorSendVerificationEmail": "Impossible d’envoyer l’e-mail de vérification. Veuillez réessayer.",
+  "errorGoogleSignIn": "La connexion avec Google a échoué. Veuillez réessayer.",
+  "errorAppleSignIn": "La connexion avec Apple a échoué. Veuillez réessayer.",
+  "errorRefreshNutrition": "Impossible d’actualiser les données nutritionnelles.",
+  "errorLoadNutritionProfile": "Impossible de charger votre profil nutritionnel.",
+  "startupErrorTitle": "Impossible de démarrer l’application",
+  "startupErrorBody": "Fermez et rouvrez l’application. Si le problème persiste, contactez l’assistance.",
+  "authTagline": "Votre compagnon fitness",
+  "authSignUp": "S’inscrire",
+  "authLogIn": "Se connecter",
+  "authVersion": "Version {version}",
+  "@authVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "authForgotPassword": "Mot de passe oublié ?",
+  "authOr": "OU",
+  "authContinueWithGoogle": "Continuer avec Google",
+  "authContinueWithApple": "Continuer avec Apple",
+  "authAuthenticating": "Authentification...",
+  "authEnterYourName": "Veuillez saisir votre nom.",
+  "authNeedAccount": "Besoin d’un compte ? S’inscrire",
+  "authHaveAccount": "Vous avez déjà un compte ? Se connecter",
+  "authFieldName": "Votre nom",
+  "authFieldEmail": "E-mail",
+  "authFieldPassword": "Mot de passe",
+  "verifyEmailTitle": "Vérifiez votre adresse e-mail",
+  "verifyEmailHeading": "Consultez votre boîte de réception",
+  "verifyEmailBody": "Un lien de vérification a été envoyé à votre adresse e-mail.",
+  "verifyEmailSent": "E-mail de vérification envoyé !",
+  "verifyEmailContinue": "J’ai vérifié, continuer",
+  "verifyEmailSignOut": "Se déconnecter",
+  "verifyEmailSending": "Envoi...",
+  "verifyEmailResend": "Renvoyer l’e-mail de vérification",
+  "verifyEmailResendIn": "Renvoyer dans {seconds}s",
+  "@verifyEmailResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "verifyEmailAddress": "E-mail : {email}",
+  "@verifyEmailAddress": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "forgotPasswordTitle": "Mot de passe oublié",
+  "forgotPasswordBody": "Saisissez votre adresse e-mail pour recevoir un lien de réinitialisation du mot de passe.",
+  "forgotPasswordEmptyEmail": "Veuillez saisir une adresse e-mail",
+  "forgotPasswordSent": "E-mail de réinitialisation envoyé.",
+  "forgotPasswordSend": "Envoyer le lien de réinitialisation",
+  "forgotPasswordSending": "Envoi...",
+  "nameSetupTitle": "Comment Celia doit-elle vous appeler ?",
+  "nameSetupBody": "Nous utilisons votre nom dans toute l’application pour personnaliser votre accompagnement.",
+  "nameSetupSaveFailed": "Impossible d’enregistrer votre nom. Veuillez réessayer.",
+  "homeGoodMorning": "Bonjour,",
+  "homeCeliaActive": "CELIA ACTIVE",
+  "homeGenerateRoutine": "Générez votre\nprogramme\npersonnalisé avec l’IA",
+  "homeCreateRoutine": "Créer un programme",
+  "homeQuickActions": "Actions rapides",
+  "homeUpNext": "À venir",
+  "homeNoUpcoming": "Aucun programme à venir pour le moment.\nCréez-en un ou parcourez la bibliothèque.",
+  "homeChatWithCelia": "Discuter avec Celia",
+  "homeChatSubtitle": "Posez vos questions sur votre technique ou votre alimentation",
+  "homeScanMeal": "Scanner un repas",
+  "homeScanMealSubtitle": "Identifier les aliments et les calories",
+  "homeNutrition": "Nutrition",
+  "homeNutritionSubtitle": "Voir les calories, les macros et les repas",
+  "homeBrowseLibrary": "Parcourir la\nbibliothèque",
+  "homeTrackProgress": "Suivre\nvos progrès",
+  "chatTitle": "Coach Celia",
+  "chatEmptyPrompt": "Comment puis-je vous aider\nà vous remettre en forme aujourd’hui ?",
+  "chatYourChats": "Vos conversations",
+  "chatNoSavedChats": "Aucune conversation enregistrée pour le moment.",
+  "chatHistory": "Historique des conversations",
+  "chatNew": "Nouvelle conversation",
+  "chatOpening": "Ouverture de la conversation...",
+  "chatScanAMeal": "Scanner un repas",
+  "chatInputHint": "Posez une question à Celia sur votre entraînement...",
+  "chatCouldNotOpenRoutine": "Impossible d’ouvrir ce programme",
+  "chatThisRoutine": "ce programme",
+  "chatThisMeal": "ce repas",
+  "chatYourRoutine": "Votre programme",
+  "chatMoreExercises": "+ {count} de plus",
+  "@chatMoreExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatEmptySubtitle": "Posez vos questions sur votre entraînement, votre alimentation ou vos progrès.",
+  "chatLoggedToday": "Vous avez enregistré {calories} kcal aujourd’hui.",
+  "@chatLoggedToday": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "chatSuggestionHiit": "Crée-moi un programme HIIT de 20 minutes",
+  "chatSuggestionDinner": "Que devrais-je manger ce soir ?",
+  "chatSuggestionProgress": "Comment est-ce que je progresse cette semaine ?",
+  "chatSuggestionIngredients": "J’ai du poulet, du riz et des épinards",
+  "chatJustNow": "À l’instant",
+  "chatMinutesAgo": "Il y a {minutes} min",
+  "@chatMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "chatHoursAgo": "Il y a {hours} h",
+  "@chatHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "chatDaysAgo": "Il y a {days} j",
+  "@chatDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "chatRoutineAlreadySaved": "Déjà dans votre bibliothèque — appuyez pour ouvrir",
+  "chatRoutineTapToOpen": "Appuyez pour ouvrir",
+  "chatToolCancelled": "Annulé",
+  "chatToolFailed": "{label} — cela n’a pas fonctionné",
+  "@chatToolFailed": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "chatToolRoutineSaveFailed": "Impossible d’enregistrer la routine",
+  "chatToolRoutineSaved": "Enregistrée dans votre bibliothèque",
+  "chatToolMealLogged": "Ajouté au journal d’aujourd’hui",
+  "chatToolRoutineAdded": "Ajoutée à votre bibliothèque",
+  "activityCheckingProgress": "Vérification de votre progression",
+  "activityCheckingNutrition": "Vérification de ce que vous avez mangé aujourd’hui",
+  "activityReviewingMeals": "Analyse de vos repas récents",
+  "activityLookingAtRoutines": "Consultation de vos routines",
+  "activityReadingRoutine": "Lecture de cette routine",
+  "activitySearchingLibrary": "Recherche dans la bibliothèque d’exercices",
+  "activityBuildingRoutine": "Création de votre routine",
+  "activityLoggingMeal": "Ajout de votre repas au journal",
+  "activitySavingToLibrary": "Enregistrement dans votre bibliothèque",
+  "activityWorking": "Traitement en cours",
+  "approvalSaveRoutineWithCount": "Enregistrer « {name} » avec {count} exercices dans votre bibliothèque ?",
+  "@approvalSaveRoutineWithCount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalSaveRoutine": "Enregistrer « {name} » dans votre bibliothèque ?",
+  "@approvalSaveRoutine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalLogMealWithCalories": "Enregistrer « {name} » avec {calories} kcal ?",
+  "@approvalLogMealWithCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalLogMeal": "Enregistrer « {name} » ?",
+  "@approvalLogMeal": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalAddRoutine": "Ajouter cette routine à votre bibliothèque ?",
+  "approvalGeneric": "Autoriser Celia à effectuer cette action ?",
+  "libraryTitle": "Bibliothèque de routines",
+  "librarySteps": "{count, plural, one{{count} étape} other{{count} étapes}}",
+  "@librarySteps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryEmpty": "Aucune routine pour le moment",
+  "libraryEmptyBody": "Créez et publiez des routines dans le tableau de bord d’administration.",
+  "libraryLoadFailed": "Impossible de charger les routines",
+  "routineStartWorkout": "Commencer la séance",
+  "routineNoSteps": "Aucune étape disponible",
+  "routineNoVideoForStep": "Aucune vidéo disponible pour cette étape",
+  "routineVideoProcessing": "La vidéo est encore en cours de traitement. Veuillez réessayer plus tard.",
+  "routineMissingPlaybackUrl": "L’URL de lecture est manquante pour cette vidéo",
+  "routinePreviewBanner": "APERÇU — la vidéo complète sera bientôt disponible",
+  "routinePreview": "APERÇU",
+  "routineDetails": "Détails",
+  "routineNotFound": "Routine introuvable",
+  "routineCompletedTimes": "Terminée {count} fois",
+  "@routineCompletedTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "playerVideoUnavailable": "Cette vidéo n’est pas disponible pour le moment.",
+  "playerSteps": "Étapes",
+  "playerStepCounter": "{current}/{total}",
+  "@playerStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoPlayableVideos": "Aucune vidéo lisible",
+  "playerWorkoutComplete": "Séance terminée !",
+  "playerSavingStreak": "Enregistrement dans votre série…",
+  "playerSavedStreak": "Enregistré dans votre série",
+  "playerRetrySave": "Réessayer l’enregistrement",
+  "playerReplay": "Rejouer",
+  "playerNotReady": "Lecteur non prêt",
+  "playerPreviewUnavailable": "L’aperçu n’est pas disponible pour le moment.",
+  "playerClipCounter": "Clip {current} sur {total} · {duration}",
+  "@playerClipCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerErrorLoadingVideo": "Erreur lors du chargement de la vidéo",
+  "playerLoadingVideo": "Chargement de la vidéo…",
+  "playerFailedToLoadVideo": "Impossible de charger la vidéo",
+  "playerNotInitialized": "Le lecteur vidéo n’est pas initialisé",
+  "guidedExerciseCounter": "Exercice {current}/{total}",
+  "@guidedExerciseCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedGetReady": "PRÉPAREZ-VOUS",
+  "guidedSetOf": "Série {current} sur {total}",
+  "@guidedSetOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedRest": "REPOS",
+  "guidedSkipRest": "Passer le repos",
+  "guidedPaused": "En pause",
+  "guidedResume": "Reprendre",
+  "guidedWorkoutComplete": "Séance terminée",
+  "guidedEndTitle": "Terminer la séance ?",
+  "guidedEndBody": "Votre progression pour cette séance ne sera pas enregistrée.",
+  "guidedKeepGoing": "Continuez",
+  "guidedEnd": "Terminer",
+  "guidedReps": "{count, plural, one{{count} répétition} other{{count} répétitions}}",
+  "@guidedReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetTitle": "Générer une routine avec l’IA",
+  "generateSheetPrompt": "Quel type d’entraînement souhaitez-vous ?",
+  "generateSheetHint": "ex. : « Des étirements rapides le matin pour se réveiller » ou « Renforcement musculaire complet pour débutants »",
+  "generateSheetDuration": "Durée",
+  "generateSheetMinutes": "{count} min",
+  "@generateSheetMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetDifficulty": "Difficulté",
+  "generateSheetEquipment": "Matériel disponible",
+  "generateSheetGenerating": "Génération…",
+  "generateSheetSubmit": "Générer la routine",
+  "generateSheetDescribeFirst": "Veuillez décrire l’entraînement souhaité",
+  "generateSheetAlreadyExists": "Vous avez déjà celle-ci : {title}",
+  "@generateSheetAlreadyExists": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetCreated": "Créée : {title}",
+  "@generateSheetCreated": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetFailed": "Échec de la génération de la routine",
+  "guidedNoExercises": "Cette routine ne contient encore aucun exercice.",
+  "guidedStartFailed": "Impossible de démarrer cet entraînement pour le moment. Veuillez réessayer.",
+  "guidedSaveFailed": "Impossible d’enregistrer cet entraînement. Appuyez sur Réessayer pour mettre à jour votre série.",
+  "guidedOfReps": "sur {count} répétitions",
+  "@guidedOfReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedHold": "maintenir",
+  "guidedNextSet": "Série suivante",
+  "guidedUpNext": "À suivre",
+  "guidedSetsHold": "{sets} × {seconds}s de maintien",
+  "@guidedSetsHold": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachGetReady": "Préparez-vous. {exercise}",
+  "@coachGetReady": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachStartReps": "C’est parti. {count} répétitions.",
+  "@coachStartReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachStartHold": "Maintenez pendant {seconds} secondes.",
+  "@coachStartHold": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachRest": "Repos. À suivre : {exercise}",
+  "@coachRest": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachRestShort": "Repos.",
+  "coachComplete": "Excellent travail. Entraînement terminé.",
+  "coachRep": "{count}",
+  "@coachRep": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachCountdown": "{seconds}",
+  "@coachCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoVideosInRoutine": "Aucune vidéo lisible trouvée dans cette routine.",
+  "playerLoadRoutineFailed": "Impossible de charger cette routine pour le moment. Veuillez réessayer.",
+  "playerStepLoadFailedSkipping": "Échec du chargement de « {title} ». Passage à la suite…",
+  "@playerStepLoadFailedSkipping": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerStepLoadFailed": "Échec du chargement de « {title} ».",
+  "@playerStepLoadFailed": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerSaveCompletionFailed": "Impossible d’enregistrer la séance terminée. Appuyez sur Réessayer pour mettre à jour votre série.",
+  "playerStepPreviewSubtitle": "{duration} • Aperçu",
+  "@playerStepPreviewSubtitle": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerNoVideosReady": "Cette routine ne contient pas encore de vidéos prêtes à être lues.",
+  "playerPlaybackFailed": "Impossible de lire cette vidéo pour le moment. Veuillez réessayer.",
+  "libraryTabCurated": "Sélection",
+  "libraryTabAiGenerated": "Générées par l’IA",
+  "profileSavedRoutines": "Routines enregistrées",
+  "savedRoutinesNoFavorites": "Aucune routine favorite pour le moment.",
+  "savedRoutinesEmpty": "Aucune routine enregistrée pour le moment.",
+  "actionFavorite": "Ajouter aux favoris",
+  "actionUnfavorite": "Retirer des favoris",
+  "routineDurationMinutes": "{minutes} min",
+  "@routineDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHoursMinutes": "{hours} h {minutes} min",
+  "@routineDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHours": "{hours} h",
+  "@routineDurationHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "difficultyEasy": "Facile",
+  "difficultyMedium": "Moyenne",
+  "difficultyHard": "Difficile",
+  "categoryStrength": "Renforcement",
+  "categoryCardio": "Cardio",
+  "categoryFlexibility": "Souplesse",
+  "categoryMindfulness": "Pleine conscience",
+  "categoryDance": "Danse",
+  "categoryHiit": "HIIT",
+  "categoryYoga": "Yoga",
+  "categoryCustom": "Personnalisé",
+  "navHome": "Accueil",
+  "navLibrary": "Bibliothèque",
+  "navChat": "Chat",
+  "navProfile": "Profil",
+  "equipmentNone": "Aucun",
+  "equipmentDumbbells": "Haltères",
+  "equipmentResistanceBands": "Bandes de résistance",
+  "equipmentYogaMat": "Tapis de yoga",
+  "equipmentKettlebell": "Kettlebell",
+  "equipmentPullUpBar": "Barre de traction",
+  "equipmentJumpRope": "Corde à sauter",
+  "nutritionTitle": "Nutrition",
+  "nutritionSubtitle": "Calories, macros et historique des repas",
+  "nutritionSetGoalsTitle": "Définissez vos objectifs nutritionnels quotidiens",
+  "nutritionSetGoalsBody": "Ajoutez votre poids, votre taille, votre âge et votre sexe pour que Celia puisse calculer combien de calories et de nutriments vous devriez consommer chaque jour.",
+  "nutritionSetUpGoals": "Définir les objectifs",
+  "nutritionDailyTarget": "Objectif quotidien",
+  "nutritionDailyGoals": "Objectifs quotidiens",
+  "nutritionKcal": "{calories} kcal",
+  "@nutritionKcal": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMacroSummary": "P {protein}g · C {carbs}g · F {fat}g",
+  "@nutritionMacroSummary": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionToday": "Aujourd’hui",
+  "nutritionMealHistory": "Historique des repas",
+  "nutritionCeliaInsights": "Conseils de Celia",
+  "nutritionWeeklyTrend": "Tendance hebdomadaire",
+  "nutritionTodayMeals": "kcal • {count, plural, one{{count} repas} other{{count} repas}}",
+  "@nutritionTodayMeals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionTodayOfTargetMeals": "sur {target} kcal • {count, plural, one{{count} repas} other{{count} repas}}",
+  "@nutritionTodayOfTargetMeals": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionWeekdayInitials": "L,M,M,J,V,S,D",
+  "@nutritionWeekdayInitials": {
+    "description": "Single-letter weekday labels for the weekly chart, Monday first, comma separated."
+  },
+  "nutritionFieldFoodName": "Nom de l’aliment",
+  "nutritionFieldGrams": "Grammes",
+  "nutritionFieldCalories": "Calories",
+  "scannerStatusAnalyzing": "ANALYSE EN COURS...",
+  "scannerStatusIdle": "SCANNER CELIA",
+  "scannerFieldFoodName": "Nom de l’aliment",
+  "scannerFieldGrams": "Grammes",
+  "scannerFieldCalories": "Calories",
+  "scannerFieldPro": "Pro",
+  "scannerMacroPro": "PRO",
+  "scannerMacroCarb": "CARB",
+  "scannerMacroFat": "FAT",
+  "scannerRemainingAfterLogging": "Il vous reste {calories} kcal et {grams}g de protéines aujourd’hui",
+  "@scannerRemainingAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerOverTargetAfterLogging": "{calories} kcal au-dessus de votre objectif quotidien",
+  "@scannerOverTargetAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerButtonAnalyzing": "Analyse en cours",
+  "scannerButtonQuotaNeeded": "Quota requis",
+  "scannerButtonScanNow": "Scanner maintenant",
+  "scannerButtonLogging": "Enregistrement",
+  "scannerButtonLogMeal": "Enregistrer le repas",
+  "scannerNoClearFood": "Aucun aliment clairement détecté pour le moment. Essayez avec un meilleur éclairage ou rapprochez-vous.",
+  "scannerErrorCameraPermission": "L’autorisation d’utiliser la caméra est nécessaire pour scanner les repas.",
+  "scannerErrorBackendMissing": "Le système de scan des calories n’est pas encore configuré.",
+  "scannerErrorApiKeyInvalid": "La clé API OpenAI utilisée pour scanner les calories est invalide. Remplacez-la dans l’environnement backend, redéployez, puis réessayez.",
+  "scannerErrorApiKeyMissing": "Une clé API OpenAI est requise pour scanner les calories. Ajoutez-la dans Vercel, redéployez, puis réessayez.",
+  "scannerErrorQuotaExhausted": "Les crédits OpenAI pour le scan des calories sont épuisés. Ajoutez des crédits API ou augmentez la limite de facturation, puis réessayez.",
+  "scannerErrorTimeout": "Celia a besoin de plus de temps pour analyser ce repas. Gardez la caméra immobile et scannez à nouveau.",
+  "scannerErrorNotSignedIn": "Veuillez vous connecter avant de scanner des repas.",
+  "scannerErrorMealTableMissing": "La table d’enregistrement des repas n’est pas encore prête. Le résultat du scan est toujours disponible.",
+  "scannerErrorGeneric": "Celia n’a pas encore pu analyser ce repas. Gardez la caméra immobile, centrez l’aliment et scannez à nouveau.",
+  "nutritionGrams": "{grams}g",
+  "@nutritionGrams": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionMealSubtitle": "{time} · {count, plural, one{{count} élément} other{{count} éléments}}",
+  "@nutritionMealSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMealDetails": "Détails du repas",
+  "nutritionFoodItems": "Aliments",
+  "nutritionItemSubtitle": "{grams}g · {calories} kcal",
+  "@nutritionItemSubtitle": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionNeedsOneItem": "Un repas doit contenir au moins un aliment.",
+  "nutritionMealUpdated": "Repas mis à jour",
+  "nutritionUpdateFailed": "Impossible de mettre à jour le repas : {error}",
+  "@nutritionUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionDeleteMealTitle": "Supprimer le repas ?",
+  "nutritionDeleteMealBody": "Cette action supprimera le repas de votre historique nutritionnel.",
+  "nutritionDeleteMeal": "Supprimer le repas",
+  "nutritionDeleteFailed": "Impossible de supprimer le repas : {error}",
+  "@nutritionDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionEditFood": "Modifier l’aliment",
+  "nutritionSaveFood": "Enregistrer l’aliment",
+  "nutritionLoadFailed": "Impossible de charger les repas",
+  "nutritionLoadFailedBody": "Tirez vers le bas pour actualiser ou vérifiez la connexion au backend.",
+  "nutritionNoMeals": "Aucun repas enregistré",
+  "nutritionNoMealsBody": "Scannez votre premier repas et Celia constituera votre historique nutritionnel.",
+  "progressToday": "Aujourd’hui",
+  "progressSetGoals": "Définissez vos objectifs nutritionnels pour activer le suivi des calories et des macros.",
+  "progressOfTarget": "sur {target} kcal",
+  "@progressOfTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressMacroAmount": "{consumed} / {target}g",
+  "@progressMacroAmount": {
+    "placeholders": {
+      "consumed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalOver": "{calories} kcal en trop",
+  "@progressKcalOver": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalLeft": "{calories} kcal restantes",
+  "@progressKcalLeft": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressProtein": "Protéines",
+  "progressCarbs": "Glucides",
+  "progressFat": "Lipides",
+  "scannerEditItem": "Modifier l’aliment",
+  "scannerSaveChanges": "Enregistrer les modifications",
+  "scannerItemCalories": "{name} · {calories} kcal",
+  "@scannerItemCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerConfidence": "Fiabilité {percent}% · {provider}",
+  "@scannerConfidence": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerMoreItems": "+ {count} aliments supplémentaires inclus dans ce journal de repas",
+  "@scannerMoreItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerIfYouLog": "Si vous enregistrez ce repas",
+  "scannerAfterLogging": "{after} / {target} kcal aujourd’hui",
+  "@scannerAfterLogging": {
+    "placeholders": {
+      "after": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerGramsDecimal": "{grams}g",
+  "@scannerGramsDecimal": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerItemServing": "{name} · {grams}g",
+  "@scannerItemServing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerNoMealDetected": "Aucun repas détecté",
+  "onboardingWelcome": "Bienvenue, {name}",
+  "@onboardingWelcome": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingGender": "Genre",
+  "onboardingCalculateGoals": "Calculer mes objectifs",
+  "onboardingScanFirstMeal": "Scanner mon premier repas",
+  "onboardingExploreRoutines": "Découvrir les routines",
+  "onboardingGoHome": "Accéder à l’accueil",
+  "onboardingDailyTargets": "Vos objectifs quotidiens",
+  "onboardingProtein": "Protéines {grams}g ·",
+  "@onboardingProtein": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingMacroTargets": "Protéines {protein}g • Glucides {carbs}g • Lipides {fat}g",
+  "@onboardingMacroTargets": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingTargetsReady": "Vos objectifs nutritionnels quotidiens sont prêts. Choisissez comment commencer.",
+  "onboardingWeightKg": "Poids (kg)",
+  "onboardingHeightCm": "Taille (cm)",
+  "onboardingAge": "Âge",
+  "onboardingInvalidWeight": "Saisissez un poids valide en kg.",
+  "onboardingInvalidHeight": "Saisissez une taille valide en cm.",
+  "onboardingInvalidAge": "Saisissez un âge valide entre 13 et 100 ans.",
+  "onboardingSaveFailed": "Impossible d’enregistrer votre profil nutritionnel.",
+  "genderMale": "Homme",
+  "genderFemale": "Femme",
+  "genderOther": "Autre",
+  "nutritionSetupTitle": "Objectifs nutritionnels quotidiens",
+  "nutritionSetupBody": "Parlez à Celia de votre morphologie afin qu’elle calcule vos calories et macros quotidiennes.",
+  "nutritionSetupGender": "Genre",
+  "nutritionSetupFootnote": "Celia utilise votre poids, votre taille, votre âge et votre genre pour estimer vos objectifs quotidiens de calories et de macros selon un niveau d’activité modéré.",
+  "nutritionSetupSave": "Enregistrer les objectifs",
+  "profileTitle": "Profil",
+  "profileCeliaAi": "Celia AI",
+  "profileEliteMember": "Membre Elite",
+  "profileAccount": "Compte",
+  "profileSignedInAs": "Connecté en tant que :\n{email}",
+  "@profileSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "profileUnknownEmail": "Inconnu",
+  "profileDarkMode": "Mode sombre",
+  "profileLanguage": "Langue",
+  "profileLogOutTitle": "Se déconnecter ?",
+  "profileLogOutBody": "Voulez-vous vraiment vous déconnecter ?",
+  "profileLogOut": "Se déconnecter",
+  "profileLogOutButton": "Se déconnecter",
+  "profileFavoriteRoutines": "Routines favorites",
+  "profileSubscription": "Abonnement",
+  "profileNutrition": "Nutrition",
+  "profileHelpSupport": "Aide et assistance",
+  "profileFriend": "Ami",
+  "profileStatSaved": "Enregistrés",
+  "profileStatStreak": "Série",
+  "profileStatWorkouts": "Entraînements",
+  "streakDayOneStarted": "Jour 1 commencé — revenez demain pour prolonger votre série.",
+  "streakRebuild": "Vous étiez actif hier — enregistrez un repas ou terminez un entraînement aujourd’hui pour reconstruire votre série.",
+  "streakStart": "Enregistrez un repas ou terminez un entraînement pour commencer votre série active.",
+  "streakLongRun": "Série de {days} jours ! Continuez à être régulier — Celia suit votre assiduité.",
+  "@streakLongRun": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakBothLogged": "Série de {days} jours — entraînement et nutrition enregistrés aujourd’hui.",
+  "@streakBothLogged": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedWorkout": "Série de {days} jours. Un entraînement rapide compléterait bien votre journée.",
+  "@streakNeedWorkout": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedMeal": "Série de {days} jours. Enregistrez un repas pour suivre votre alimentation.",
+  "@streakNeedMeal": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakStayActive": "Série de {days} jours — restez actif aujourd’hui.",
+  "@streakStayActive": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "editProfileTitle": "Modifier le profil",
+  "editProfileName": "Nom",
+  "editProfileFootnote": "Les modifications sont enregistrées dans votre compte et s’afficheront dans Accueil/Profil.",
+  "editProfileSaveFailed": "Impossible de mettre à jour le profil. Veuillez réessayer.",
+  "languageTitle": "Langue",
+  "languageSystem": "Langue de l’appareil",
+  "languageSystemSubtitle": "Utiliser la langue définie sur votre téléphone",
+  "languageEnglish": "Anglais",
+  "languageSpanish": "Espagnol",
+  "insightStartFuelingTitle": "Commencez à vous alimenter aujourd’hui",
+  "insightStartFuelingBody": "Il vous reste tout votre budget calorique. Scannez ou enregistrez votre premier repas pour rester sur la bonne voie.",
+  "insightAboveTargetTitle": "Objectif dépassé aujourd’hui",
+  "insightAboveTargetBody": "Vous dépassez votre objectif quotidien de {calories} kcal. Optez pour un dîner plus léger ou ajoutez un court entraînement.",
+  "@insightAboveTargetBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightLowProteinTitle": "Protéines encore insuffisantes",
+  "insightLowProteinBody": "Il vous manque encore environ {grams}g de protéines aujourd’hui pour atteindre votre objectif.",
+  "@insightLowProteinBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightAlmostThereTitle": "Objectif presque atteint",
+  "insightAlmostThereBody": "Il vous reste {calories} kcal aujourd’hui. Une collation équilibrée devrait parfaitement convenir.",
+  "@insightAlmostThereBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightOnTrackTitle": "Bonne journée jusqu’ici",
+  "insightOnTrackBody": "Il vous reste {calories} kcal et {grams}g de protéines pour atteindre vos objectifs quotidiens.",
+  "@insightOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightWeeklyRhythmTitle": "Trouvez votre rythme hebdomadaire",
+  "insightWeeklyRhythmBody": "Enregistrez vos repas tout au long de la semaine pour que Celia puisse repérer vos habitudes et mieux vous guider.",
+  "insightWeeklyTrendTitle": "Tendance hebdomadaire",
+  "insightWeeklyTrendBody": "Vous avez enregistré des repas pendant {days} des 7 derniers jours, avec une moyenne de {average} kcal — {direction}.",
+  "@insightWeeklyTrendBody": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "average": {
+        "type": "int"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "insightTrendOnTarget": "tout près de votre objectif quotidien",
+  "insightTrendAbove": "{delta} kcal au-dessus de votre objectif en moyenne",
+  "@insightTrendAbove": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightTrendBelow": "{delta} kcal en dessous de votre objectif en moyenne",
+  "@insightTrendBelow": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsSectionTitle": "Analyses Celia"
+}

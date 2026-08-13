@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../config/env.dart';
+import '../../l10n/app_localizations.dart';
 import '../../models/routine.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/routine_provider.dart';
@@ -121,9 +122,12 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
       _currentIndex = 0;
       await _loadCurrentVideo(autoPlay: true);
     } catch (e) {
+      if (!mounted) return;
+      final l10n = AppLocalizations.of(context);
       _error = toUserFriendlyMessage(
         e,
-        fallback: 'Unable to load this routine right now. Please try again.',
+        l10n: l10n,
+        fallback: l10n.playerLoadRoutineFailed,
       );
     } finally {
       if (mounted) {
@@ -287,12 +291,12 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
             ? 16 / 9
             : controller.value.aspectRatio,
         errorBuilder: (context, _) {
-          return const Center(
+          return Center(
             child: Padding(
-              padding: EdgeInsets.all(24),
+              padding: const EdgeInsets.all(24),
               child: Text(
-                'This video is not available right now.',
-                style: TextStyle(color: Colors.white70),
+                AppLocalizations.of(context).playerVideoUnavailable,
+                style: const TextStyle(color: Colors.white70),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -399,7 +403,7 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
     await _loadCurrentVideo(autoPlay: autoPlay);
   }
 
-  void _openSteps() {
+  void _openSteps(AppLocalizations l10n) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -428,7 +432,7 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
                 Row(
                   children: [
                     Text(
-                      'Steps',
+                      l10n.playerSteps,
                       style: TextStyle(
                         color: theme.textPrimary,
                         fontSize: 16,
@@ -437,7 +441,10 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
                     ),
                     const Spacer(),
                     Text(
-                      '${_currentIndex + 1}/${_playableSteps.length}',
+                      l10n.playerStepCounter(
+                        _currentIndex + 1,
+                        _playableSteps.length,
+                      ),
                       style: TextStyle(color: theme.textSecondary),
                     ),
                   ],
@@ -492,6 +499,7 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
 
     return Scaffold(
@@ -522,12 +530,12 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
         ),
         actions: [
           IconButton(
-            tooltip: 'Steps',
-            onPressed: _openSteps,
+            tooltip: l10n.playerSteps,
+            onPressed: () => _openSteps(l10n),
             icon: const Icon(Icons.list, color: Colors.white),
           ),
           IconButton(
-            tooltip: 'Details',
+            tooltip: l10n.routineDetails,
             onPressed: () {
               Navigator.push(
                 context,
@@ -547,17 +555,17 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
               ),
             )
           : _error != null && _playableSteps.isEmpty
-          ? _buildFatalError(theme)
+          ? _buildFatalError(l10n, theme)
           : Column(
               children: [
-                Expanded(child: _buildPlayerArea(theme)),
-                _buildBottomControls(theme),
+                Expanded(child: _buildPlayerArea(l10n, theme)),
+                _buildBottomControls(l10n, theme),
               ],
             ),
     );
   }
 
-  Widget _buildFatalError(ThemeProvider theme) {
+  Widget _buildFatalError(AppLocalizations l10n, ThemeProvider theme) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -566,9 +574,9 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
           children: [
             const Icon(Icons.error_outline, color: Colors.red, size: 56),
             const SizedBox(height: 14),
-            const Text(
-              'No playable videos',
-              style: TextStyle(
+            Text(
+              l10n.playerNoPlayableVideos,
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -587,7 +595,7 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
                 backgroundColor: theme.accentOrange,
                 foregroundColor: Colors.white,
               ),
-              child: const Text('Retry'),
+              child: Text(l10n.actionRetry),
             ),
           ],
         ),
@@ -595,7 +603,7 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
     );
   }
 
-  Widget _buildPlayerArea(ThemeProvider theme) {
+  Widget _buildPlayerArea(AppLocalizations l10n, ThemeProvider theme) {
     if (_isWorkoutComplete) {
       return Center(
         child: Padding(
@@ -605,9 +613,9 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
             children: [
               Icon(Icons.celebration, color: theme.accentOrange, size: 56),
               const SizedBox(height: 12),
-              const Text(
-                'Workout complete!',
-                style: TextStyle(
+              Text(
+                l10n.playerWorkoutComplete,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -627,15 +635,15 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    const Text(
-                      'Saving to your streak…',
-                      style: TextStyle(color: Colors.white70),
+                    Text(
+                      l10n.playerSavingStreak,
+                      style: const TextStyle(color: Colors.white70),
                     ),
                   ],
                 )
               else if (_completionRecorded)
                 Text(
-                  'Saved to your streak',
+                  l10n.playerSavedStreak,
                   style: TextStyle(
                     color: theme.accentOrange,
                     fontWeight: FontWeight.w700,
@@ -656,7 +664,7 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
                       foregroundColor: theme.accentOrange,
                       side: BorderSide(color: theme.accentOrange),
                     ),
-                    child: const Text('Retry save'),
+                    child: Text(l10n.playerRetrySave),
                   ),
                 ),
               ],
@@ -675,7 +683,7 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
                   backgroundColor: theme.accentOrange,
                   foregroundColor: Colors.white,
                 ),
-                child: const Text('Replay'),
+                child: Text(l10n.playerReplay),
               ),
             ],
           ),
@@ -692,7 +700,10 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
               valueColor: AlwaysStoppedAnimation(theme.accentOrange),
             ),
             const SizedBox(height: 12),
-            const Text('Loading…', style: TextStyle(color: Colors.white70)),
+            Text(
+              l10n.loadingGeneric,
+              style: const TextStyle(color: Colors.white70),
+            ),
           ],
         ),
       );
@@ -703,15 +714,15 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
         : null;
 
     if (current != null && current.isGifFallback) {
-      return _buildGifPreview(theme, current);
+      return _buildGifPreview(l10n, theme, current);
     }
 
     final chewie = _chewieController;
     if (chewie == null) {
-      return const Center(
+      return Center(
         child: Text(
-          'Player not ready',
-          style: TextStyle(color: Colors.white70),
+          l10n.playerNotReady,
+          style: const TextStyle(color: Colors.white70),
         ),
       );
     }
@@ -719,7 +730,11 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
     return Chewie(controller: chewie);
   }
 
-  Widget _buildGifPreview(ThemeProvider theme, _PlayableStep current) {
+  Widget _buildGifPreview(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    _PlayableStep current,
+  ) {
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -729,11 +744,11 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
             current.gifUrl!,
             fit: BoxFit.contain,
             gaplessPlayback: true,
-            errorBuilder: (context, _, __) => const Padding(
-              padding: EdgeInsets.all(24),
+            errorBuilder: (context, _, __) => Padding(
+              padding: const EdgeInsets.all(24),
               child: Text(
-                'Preview not available right now.',
-                style: TextStyle(color: Colors.white70),
+                l10n.playerPreviewUnavailable,
+                style: const TextStyle(color: Colors.white70),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -761,9 +776,9 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
               borderRadius: BorderRadius.circular(999),
               border: Border.all(color: Colors.white24),
             ),
-            child: const Text(
-              'PREVIEW — full video coming soon',
-              style: TextStyle(
+            child: Text(
+              l10n.routinePreviewBanner,
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
@@ -776,7 +791,7 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
     );
   }
 
-  Widget _buildBottomControls(ThemeProvider theme) {
+  Widget _buildBottomControls(AppLocalizations l10n, ThemeProvider theme) {
     final hasPrev = _currentIndex > 0;
     final hasNext = _currentIndex + 1 < _playableSteps.length;
     final current = _playableSteps.isNotEmpty
@@ -816,7 +831,11 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
           ),
           const SizedBox(height: 6),
           Text(
-            'Clip ${_currentIndex + 1} of ${_playableSteps.length} • ${_formatDuration(current?.step.durationSeconds ?? 0)}',
+            l10n.playerClipCounter(
+              _currentIndex + 1,
+              _playableSteps.length,
+              _formatDuration(current?.step.durationSeconds ?? 0),
+            ),
             style: const TextStyle(color: Colors.white70, fontSize: 12.5),
           ),
           const SizedBox(height: 10),
@@ -848,10 +867,10 @@ class _RoutinePlayerScreenState extends State<RoutinePlayerScreen> {
               ),
               const Spacer(),
               TextButton.icon(
-                onPressed: _openSteps,
+                onPressed: () => _openSteps(l10n),
                 icon: Icon(Icons.list, color: theme.accentOrange),
                 label: Text(
-                  'Steps',
+                  l10n.playerSteps,
                   style: TextStyle(color: theme.accentOrange),
                 ),
               ),

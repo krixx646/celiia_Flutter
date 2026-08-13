@@ -1,7 +1,9 @@
+import 'package:celia_flutter/models/exercise_clip.dart';
 import 'package:celia_flutter/models/exercise_media.dart';
 import 'package:celia_flutter/models/routine.dart';
 import 'package:celia_flutter/models/video.dart';
 import 'package:celia_flutter/services/cloudflare_stream_service.dart';
+import 'package:celia_flutter/services/exercise_clip_library.dart';
 import 'package:celia_flutter/services/exercise_media_resolver.dart';
 import 'package:celia_flutter/services/routine_thumbnail_resolver.dart';
 import 'package:celia_flutter/services/supabase_service.dart';
@@ -110,7 +112,9 @@ void main() {
       final resolver = RoutineThumbnailResolver(
         supabase: supabase,
         exerciseMedia: ExerciseMediaResolver(supabase: supabase),
+        clips: ExerciseClipLibrary(supabase: supabase),
         suspendRealVideos: true,
+        enableGifFallback: true,
       );
 
       final thumb = await resolver.resolve(
@@ -174,7 +178,7 @@ void main() {
   });
 
   test('skips real video lookup entirely and prefers a stock GIF when real '
-      'videos are suspended (the current app-wide default)', () async {
+      'videos are suspended and the GIF pack is switched back on', () async {
     final supabase = MockSupabaseService();
     when(() => supabase.getExerciseMediaLibrary()).thenAnswer(
       (_) async => [
@@ -189,7 +193,9 @@ void main() {
     final resolver = RoutineThumbnailResolver(
       supabase: supabase,
       exerciseMedia: ExerciseMediaResolver(supabase: supabase),
+      clips: ExerciseClipLibrary(supabase: supabase),
       suspendRealVideos: true,
+      enableGifFallback: true,
     );
 
     final thumb = await resolver.resolve(
@@ -203,7 +209,8 @@ void main() {
   });
 
   test(
-    'falls back to a stock GIF when the routine has no thumbnail or video at all',
+    'falls back to a stock GIF when the routine has no thumbnail or video at '
+    'all and the GIF pack is switched back on',
     () async {
       final supabase = MockSupabaseService();
       when(() => supabase.getExerciseMediaLibrary()).thenAnswer(
@@ -219,6 +226,8 @@ void main() {
       final resolver = RoutineThumbnailResolver(
         supabase: supabase,
         exerciseMedia: ExerciseMediaResolver(supabase: supabase),
+        clips: ExerciseClipLibrary(supabase: supabase),
+        enableGifFallback: true,
       );
 
       final thumb = await resolver.resolve(
@@ -226,6 +235,72 @@ void main() {
       );
 
       expect(thumb, 'https://gifs.test/jumping-jacks.gif');
+    },
+  );
+
+  test(
+    'prefers the filmed clip poster over everything else, because that is the '
+    'media the app actually plays',
+    () async {
+      final supabase = MockSupabaseService();
+      when(() => supabase.getExerciseClips()).thenAnswer(
+        (_) async => [
+          const ExerciseClip(
+            slug: 'bodyweight-squat',
+            nameEn: 'Bodyweight Squat',
+            nameEs: 'Sentadilla sin peso',
+            pattern: 'squat',
+            videoUrl: 'https://clips.test/squat.mp4',
+            posterUrl: 'https://clips.test/squat.jpg',
+            isCounted: true,
+            clipSeconds: 2.8,
+          ),
+        ],
+      );
+      final resolver = RoutineThumbnailResolver(
+        supabase: supabase,
+        exerciseMedia: ExerciseMediaResolver(supabase: supabase),
+        clips: ExerciseClipLibrary(supabase: supabase),
+      );
+
+      final thumb = await resolver.resolve(
+        _routine(
+          thumbnailUrl: 'https://img.test/stale.jpg',
+          steps: [_step(title: 'Bodyweight Squat')],
+        ),
+      );
+
+      expect(thumb, 'https://clips.test/squat.jpg');
+    },
+  );
+
+  test(
+    'does not fall back to a stock GIF while the GIF pack is suspended, even '
+    'when one would have matched',
+    () async {
+      final supabase = MockSupabaseService();
+      when(() => supabase.getExerciseMediaLibrary()).thenAnswer(
+        (_) async => [
+          const ExerciseMedia(
+            slug: 'jumping-jacks',
+            displayName: 'Jumping Jacks',
+            category: 'functional_hiit',
+            gifUrl: 'https://gifs.test/jumping-jacks.gif',
+          ),
+        ],
+      );
+      final resolver = RoutineThumbnailResolver(
+        supabase: supabase,
+        exerciseMedia: ExerciseMediaResolver(supabase: supabase),
+        clips: ExerciseClipLibrary(supabase: supabase),
+        enableGifFallback: false,
+      );
+
+      final thumb = await resolver.resolve(
+        _routine(steps: [_step(title: 'Jumping Jacks')]),
+      );
+
+      expect(thumb, isNull);
     },
   );
 

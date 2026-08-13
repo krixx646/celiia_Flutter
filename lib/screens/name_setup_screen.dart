@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../l10n/app_localizations.dart';
 import '../providers/auth_provider.dart';
 import '../providers/theme_provider.dart';
 
@@ -22,10 +23,10 @@ class _NameSetupScreenState extends State<NameSetupScreen> {
     super.dispose();
   }
 
-  Future<void> _save() async {
+  Future<void> _save(AppLocalizations l10n) async {
     final name = _nameController.text.trim();
     if (name.isEmpty) {
-      setState(() => _error = 'Please enter your name.');
+      setState(() => _error = l10n.authEnterYourName);
       return;
     }
 
@@ -39,7 +40,7 @@ class _NameSetupScreenState extends State<NameSetupScreen> {
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _error = 'Could not save your name. Please try again.';
+        _error = l10n.nameSetupSaveFailed;
         _saving = false;
       });
       return;
@@ -50,6 +51,7 @@ class _NameSetupScreenState extends State<NameSetupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
 
     return Scaffold(
@@ -62,7 +64,7 @@ class _NameSetupScreenState extends State<NameSetupScreen> {
             children: [
               const Spacer(),
               Text(
-                'What should Celia call you?',
+                l10n.nameSetupTitle,
                 style: TextStyle(
                   color: theme.textPrimary,
                   fontSize: 30,
@@ -71,7 +73,7 @@ class _NameSetupScreenState extends State<NameSetupScreen> {
               ),
               const SizedBox(height: 12),
               Text(
-                'We use your name across the app so coaching feels personal.',
+                l10n.nameSetupBody,
                 style: TextStyle(
                   color: theme.textSecondary,
                   fontSize: 16,
@@ -84,7 +86,7 @@ class _NameSetupScreenState extends State<NameSetupScreen> {
                 textCapitalization: TextCapitalization.words,
                 style: TextStyle(color: theme.textPrimary),
                 decoration: InputDecoration(
-                  labelText: 'Your name',
+                  labelText: l10n.authFieldName,
                   filled: true,
                   fillColor: theme.surface,
                   labelStyle: TextStyle(color: theme.textSecondary),
@@ -104,7 +106,7 @@ class _NameSetupScreenState extends State<NameSetupScreen> {
               ],
               const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: _saving ? null : _save,
+                onPressed: _saving ? null : () => _save(l10n),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: theme.accentOrange,
                   foregroundColor: Colors.white,
@@ -122,9 +124,9 @@ class _NameSetupScreenState extends State<NameSetupScreen> {
                           color: Colors.white,
                         ),
                       )
-                    : const Text(
-                        'Continue',
-                        style: TextStyle(
+                    : Text(
+                        l10n.actionContinue,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),

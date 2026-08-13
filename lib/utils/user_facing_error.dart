@@ -1,12 +1,36 @@
+import 'package:flutter/widgets.dart';
+
+import '../l10n/app_localizations.dart';
+
+/// The language providers use when they format an error without a BuildContext.
+///
+/// [LocaleProvider] keeps this in sync with the language the UI is showing, so
+/// a Spanish user still gets Spanish copy when a sign-in failure is phrased
+/// deep in [AuthProvider].
+class AppLocale {
+  AppLocale._();
+
+  static Locale current = const Locale('en');
+}
+
+/// Turns whatever went wrong into a sentence worth showing someone.
+///
+/// Prefer passing [l10n] from a widget. Providers may omit it; the active
+/// [AppLocale] is used instead. [fallback] is a ready-made sentence; use
+/// [fallbackOf] when the fallback itself needs translating.
 String toUserFriendlyMessage(
   Object? error, {
-  String fallback = 'Something went wrong. Please try again.',
+  AppLocalizations? l10n,
+  String? fallback,
+  String Function(AppLocalizations l10n)? fallbackOf,
 }) {
-  if (error == null) return fallback;
+  final loc = l10n ?? lookupAppLocalizations(AppLocale.current);
+  final generic = fallback ?? fallbackOf?.call(loc) ?? loc.errorGeneric;
+  if (error == null) return generic;
   final isRawString = error is String;
 
   var raw = error.toString().trim();
-  if (raw.isEmpty) return fallback;
+  if (raw.isEmpty) return generic;
 
   raw = raw
       .replaceFirst(
@@ -21,53 +45,56 @@ String toUserFriendlyMessage(
   final lower = raw.toLowerCase();
 
   if (lower.contains('canceled') || lower.contains('cancelled')) {
-    return 'Action canceled.';
+    return loc.errorCanceled;
   }
   if (lower.contains('too-many-requests')) {
-    return 'Too many attempts. Please wait a minute and try again.';
+    return loc.errorTooManyRequests;
   }
   if (lower.contains('network') ||
       lower.contains('socket') ||
       lower.contains('timeout') ||
       lower.contains('timed out') ||
       lower.contains('unavailable')) {
-    return 'Please check your internet connection and try again.';
+    return loc.errorNetwork;
   }
   if (lower.contains('invalid-credential') ||
       lower.contains('wrong-password') ||
       lower.contains('user-not-found') ||
       lower.contains('invalid email') ||
       lower.contains('authentication failed')) {
-    return 'Incorrect email or password.';
+    return loc.errorBadCredentials;
   }
   if (lower.contains('email-already-in-use')) {
-    return 'This email is already in use. Try logging in instead.';
+    return loc.errorEmailInUse;
   }
   if (lower.contains('weak-password')) {
-    return 'Use a stronger password and try again.';
+    return loc.errorWeakPassword;
   }
   if (lower.contains('invalid-email')) {
-    return 'Please enter a valid email address.';
+    return loc.errorInvalidEmail;
   }
   if (lower.contains('permission-denied') ||
       lower.contains('forbidden') ||
       lower.contains('unauthorized')) {
-    return 'You do not have permission to do that.';
+    return loc.errorNoPermission;
   }
   if (lower.contains('not signed in') ||
       lower.contains('no authenticated user') ||
       lower.contains('no user logged in')) {
-    return 'Please sign in and try again.';
+    return loc.errorNotSignedIn;
   }
   if (lower.contains('no active conversation')) {
-    return 'Start a new chat to continue.';
+    return loc.errorNoConversation;
   }
   if (lower.contains('no playable videos')) {
-    return 'No playable videos are available for this routine yet.';
+    return loc.errorNoPlayableVideos;
   }
 
-  if (_looksTechnical(raw, lower)) return fallback;
-  return isRawString ? raw : fallback;
+  // Anything left is either a message written for a person, which is worth
+  // showing as-is, or a machine's idea of one, which is not. The raw text is
+  // only trusted when a caller passed a plain string in the first place.
+  if (_looksTechnical(raw, lower)) return generic;
+  return isRawString ? raw : generic;
 }
 
 bool _looksTechnical(String raw, String lower) {

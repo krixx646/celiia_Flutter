@@ -1,0 +1,1017 @@
+{
+  "@@locale": "id",
+  "appName": "Pelatih Integral Celia",
+  "@appName": {
+    "description": "The app's name. Not translated."
+  },
+  "actionCancel": "Batal",
+  "actionSave": "Simpan",
+  "actionDelete": "Hapus",
+  "actionEdit": "Edit",
+  "actionRetry": "Coba lagi",
+  "actionDone": "Selesai",
+  "actionClose": "Tutup",
+  "actionContinue": "Lanjutkan",
+  "actionSeeAll": "Lihat Semua",
+  "actionYesDoIt": "Ya, lakukan",
+  "actionNotNow": "Jangan sekarang",
+  "loadingPreparing": "Menyiapkan Celia...",
+  "loadingGeneric": "Memuat...",
+  "errorGeneric": "Terjadi kesalahan. Silakan coba lagi.",
+  "errorCanceled": "Tindakan dibatalkan.",
+  "errorTooManyRequests": "Terlalu banyak percobaan. Tunggu sebentar lalu coba lagi.",
+  "errorNetwork": "Periksa koneksi internet Anda lalu coba lagi.",
+  "errorBadCredentials": "Email atau kata sandi salah.",
+  "errorEmailInUse": "Email ini sudah digunakan. Coba masuk sebagai gantinya.",
+  "errorWeakPassword": "Gunakan kata sandi yang lebih kuat lalu coba lagi.",
+  "errorInvalidEmail": "Masukkan alamat email yang valid.",
+  "errorNoPermission": "Anda tidak memiliki izin untuk melakukan itu.",
+  "errorNotSignedIn": "Silakan masuk lalu coba lagi.",
+  "errorNoConversation": "Mulai chat baru untuk melanjutkan.",
+  "errorNoPlayableVideos": "Belum ada video yang dapat diputar untuk rutinitas ini.",
+  "errorLoadRoutines": "Rutinitas tidak dapat dimuat saat ini. Silakan coba lagi.",
+  "errorLoadSavedRoutines": "Rutinitas tersimpan tidak dapat dimuat saat ini. Silakan coba lagi.",
+  "errorGenerateRoutine": "Rutinitas tidak dapat dibuat saat ini. Silakan coba lagi.",
+  "errorLoadChats": "Chat tersimpan tidak dapat dimuat saat ini.",
+  "errorCeliaUnavailable": "Celia tidak tersedia saat ini. Silakan coba lagi.",
+  "errorOpenConversation": "Percakapan tersebut tidak dapat dibuka.",
+  "errorDeleteConversation": "Percakapan ini tidak dapat dihapus. Silakan coba lagi.",
+  "errorSignIn": "Gagal masuk. Silakan coba lagi.",
+  "errorCreateAccount": "Akun Anda tidak dapat dibuat. Silakan coba lagi.",
+  "errorSendResetEmail": "Email pengaturan ulang tidak dapat dikirim. Silakan coba lagi.",
+  "errorSendVerificationEmail": "Email verifikasi tidak dapat dikirim. Silakan coba lagi.",
+  "errorGoogleSignIn": "Gagal masuk dengan Google. Silakan coba lagi.",
+  "errorAppleSignIn": "Gagal masuk dengan Apple. Silakan coba lagi.",
+  "errorRefreshNutrition": "Data nutrisi tidak dapat diperbarui.",
+  "errorLoadNutritionProfile": "Profil nutrisi Anda tidak dapat dimuat.",
+  "startupErrorTitle": "Aplikasi tidak dapat dimulai",
+  "startupErrorBody": "Tutup dan buka kembali aplikasi. Jika masalah berlanjut, hubungi dukungan.",
+  "authTagline": "Teman kebugaran Anda",
+  "authSignUp": "Daftar",
+  "authLogIn": "Masuk",
+  "authVersion": "Versi {version}",
+  "@authVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "authForgotPassword": "Lupa Kata Sandi?",
+  "authOr": "ATAU",
+  "authContinueWithGoogle": "Lanjutkan dengan Google",
+  "authContinueWithApple": "Lanjutkan dengan Apple",
+  "authAuthenticating": "Mengautentikasi...",
+  "authEnterYourName": "Silakan masukkan nama Anda.",
+  "authNeedAccount": "Belum punya akun? Daftar",
+  "authHaveAccount": "Sudah punya akun? Masuk",
+  "authFieldName": "Nama Anda",
+  "authFieldEmail": "Email",
+  "authFieldPassword": "Kata Sandi",
+  "verifyEmailTitle": "Verifikasi email Anda",
+  "verifyEmailHeading": "Periksa kotak masuk Anda",
+  "verifyEmailBody": "Tautan verifikasi telah dikirim ke email Anda.",
+  "verifyEmailSent": "Email verifikasi telah dikirim!",
+  "verifyEmailContinue": "Saya sudah memverifikasi, lanjutkan",
+  "verifyEmailSignOut": "Keluar",
+  "verifyEmailSending": "Mengirim...",
+  "verifyEmailResend": "Kirim ulang email verifikasi",
+  "verifyEmailResendIn": "Kirim ulang dalam {seconds} dtk",
+  "@verifyEmailResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "verifyEmailAddress": "Email: {email}",
+  "@verifyEmailAddress": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "forgotPasswordTitle": "Lupa Kata Sandi",
+  "forgotPasswordBody": "Masukkan email Anda untuk menerima tautan pengaturan ulang kata sandi.",
+  "forgotPasswordEmptyEmail": "Masukkan email",
+  "forgotPasswordSent": "Email pengaturan ulang kata sandi telah dikirim.",
+  "forgotPasswordSend": "Kirim tautan pengaturan ulang",
+  "forgotPasswordSending": "Mengirim...",
+  "nameSetupTitle": "Celia harus memanggil Anda siapa?",
+  "nameSetupBody": "Kami menggunakan nama Anda di seluruh aplikasi agar panduan terasa lebih personal.",
+  "nameSetupSaveFailed": "Nama Anda tidak dapat disimpan. Silakan coba lagi.",
+  "homeGoodMorning": "Selamat Pagi,",
+  "homeCeliaActive": "CELIA AKTIF",
+  "homeGenerateRoutine": "Buat rutinitas\npersonal\nAnda dengan AI",
+  "homeCreateRoutine": "Buat Rutinitas",
+  "homeQuickActions": "Aksi Cepat",
+  "homeUpNext": "Berikutnya",
+  "homeNoUpcoming": "Belum ada rutinitas mendatang.\nBuat rutinitas atau jelajahi pustaka.",
+  "homeChatWithCelia": "Chat dengan Celia",
+  "homeChatSubtitle": "Tanyakan tentang teknik atau pola makan Anda",
+  "homeScanMeal": "Pindai Makanan",
+  "homeScanMealSubtitle": "Identifikasi makanan & kalori",
+  "homeNutrition": "Nutrisi",
+  "homeNutritionSubtitle": "Lihat kalori, makro & makanan",
+  "homeBrowseLibrary": "Jelajahi\nPustaka",
+  "homeTrackProgress": "Lacak\nProgres",
+  "chatTitle": "Pelatih Celia",
+  "chatEmptyPrompt": "Bagaimana saya bisa membantu Anda\nmenjadi bugar hari ini?",
+  "chatYourChats": "Chat Anda",
+  "chatNoSavedChats": "Belum ada chat tersimpan.",
+  "chatHistory": "Riwayat chat",
+  "chatNew": "Chat baru",
+  "chatOpening": "Membuka chat...",
+  "chatScanAMeal": "Pindai makanan",
+  "chatInputHint": "Tanyakan apa saja kepada Celia tentang latihan Anda...",
+  "chatCouldNotOpenRoutine": "Rutinitas tersebut tidak dapat dibuka",
+  "chatThisRoutine": "rutinitas ini",
+  "chatThisMeal": "makanan ini",
+  "chatYourRoutine": "Rutinitas Anda",
+  "chatMoreExercises": "+ {count} lagi",
+  "@chatMoreExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatEmptySubtitle": "Tanyakan tentang latihan, makanan, atau progres Anda.",
+  "chatLoggedToday": "Anda telah mencatat {calories} kcal hari ini.",
+  "@chatLoggedToday": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "chatSuggestionHiit": "Buatkan rutinitas HIIT 20 menit",
+  "chatSuggestionDinner": "Apa yang sebaiknya saya makan malam ini?",
+  "chatSuggestionProgress": "Bagaimana progres saya minggu ini?",
+  "chatSuggestionIngredients": "Saya punya ayam, nasi, dan bayam",
+  "chatJustNow": "Baru saja",
+  "chatMinutesAgo": "{minutes}m yang lalu",
+  "@chatMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "chatHoursAgo": "{hours}j yang lalu",
+  "@chatHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "chatDaysAgo": "{days}h yang lalu",
+  "@chatDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "chatRoutineAlreadySaved": "Sudah ada di pustaka Anda — ketuk untuk membuka",
+  "chatRoutineTapToOpen": "Ketuk untuk membuka",
+  "chatToolCancelled": "Dibatalkan",
+  "chatToolFailed": "{label} — tindakan tersebut gagal",
+  "@chatToolFailed": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "chatToolRoutineSaveFailed": "Gagal menyimpan rutinitas",
+  "chatToolRoutineSaved": "Disimpan ke pustaka Anda",
+  "chatToolMealLogged": "Ditambahkan ke catatan hari ini",
+  "chatToolRoutineAdded": "Ditambahkan ke pustaka Anda",
+  "activityCheckingProgress": "Memeriksa progres Anda",
+  "activityCheckingNutrition": "Memeriksa makanan yang Anda konsumsi hari ini",
+  "activityReviewingMeals": "Meninjau makanan terbaru Anda",
+  "activityLookingAtRoutines": "Melihat rutinitas Anda",
+  "activityReadingRoutine": "Membaca rutinitas tersebut",
+  "activitySearchingLibrary": "Mencari di pustaka latihan",
+  "activityBuildingRoutine": "Menyusun rutinitas Anda",
+  "activityLoggingMeal": "Mencatat makanan Anda",
+  "activitySavingToLibrary": "Menyimpan ke pustaka Anda",
+  "activityWorking": "Sedang memproses",
+  "approvalSaveRoutineWithCount": "Simpan \"{name}\" dengan {count} latihan ke pustaka Anda?",
+  "@approvalSaveRoutineWithCount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalSaveRoutine": "Simpan \"{name}\" ke pustaka Anda?",
+  "@approvalSaveRoutine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalLogMealWithCalories": "Catat \"{name}\" sebesar {calories} kcal?",
+  "@approvalLogMealWithCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalLogMeal": "Catat \"{name}\"?",
+  "@approvalLogMeal": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalAddRoutine": "Tambahkan rutinitas ini ke pustaka Anda?",
+  "approvalGeneric": "Izinkan Celia melakukan ini?",
+  "libraryTitle": "Pustaka Rutinitas",
+  "librarySteps": "{count, plural, one{{count} langkah} other{{count} langkah}}",
+  "@librarySteps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryEmpty": "Belum ada rutinitas",
+  "libraryEmptyBody": "Buat dan publikasikan rutinitas di dasbor admin.",
+  "libraryLoadFailed": "Gagal memuat rutinitas",
+  "routineStartWorkout": "Mulai Latihan",
+  "routineNoSteps": "Tidak ada langkah yang tersedia",
+  "routineNoVideoForStep": "Tidak ada video untuk langkah ini",
+  "routineVideoProcessing": "Video masih diproses. Silakan coba lagi nanti.",
+  "routineMissingPlaybackUrl": "URL pemutaran tidak tersedia untuk video ini",
+  "routinePreviewBanner": "PRATINJAU — video lengkap segera hadir",
+  "routinePreview": "PRATINJAU",
+  "routineDetails": "Detail",
+  "routineNotFound": "Rutinitas tidak ditemukan",
+  "routineCompletedTimes": "Selesai {count}x",
+  "@routineCompletedTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "playerVideoUnavailable": "Video ini sedang tidak tersedia.",
+  "playerSteps": "Langkah",
+  "playerStepCounter": "{current}/{total}",
+  "@playerStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoPlayableVideos": "Tidak ada video yang dapat diputar",
+  "playerWorkoutComplete": "Latihan selesai!",
+  "playerSavingStreak": "Menyimpan ke streak Anda…",
+  "playerSavedStreak": "Disimpan ke streak Anda",
+  "playerRetrySave": "Coba simpan lagi",
+  "playerReplay": "Putar ulang",
+  "playerNotReady": "Pemutar belum siap",
+  "playerPreviewUnavailable": "Pratinjau sedang tidak tersedia.",
+  "playerClipCounter": "Klip {current} dari {total} · {duration}",
+  "@playerClipCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerErrorLoadingVideo": "Terjadi kesalahan saat memuat video",
+  "playerLoadingVideo": "Memuat video...",
+  "playerFailedToLoadVideo": "Gagal memuat video",
+  "playerNotInitialized": "Pemutar video belum diinisialisasi",
+  "guidedExerciseCounter": "Latihan {current}/{total}",
+  "@guidedExerciseCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedGetReady": "BERSIAP",
+  "guidedSetOf": "Set {current} dari {total}",
+  "@guidedSetOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedRest": "ISTIRAHAT",
+  "guidedSkipRest": "Lewati istirahat",
+  "guidedPaused": "Dijeda",
+  "guidedResume": "Lanjutkan",
+  "guidedWorkoutComplete": "Latihan selesai",
+  "guidedEndTitle": "Akhiri latihan?",
+  "guidedEndBody": "Progres Anda untuk sesi ini tidak akan disimpan.",
+  "guidedKeepGoing": "Lanjutkan",
+  "guidedEnd": "Selesai",
+  "guidedReps": "{count, plural, one{{count} repetisi} other{{count} repetisi}}",
+  "@guidedReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetTitle": "Buat Rutinitas dengan AI",
+  "generateSheetPrompt": "Jenis latihan apa yang Anda inginkan?",
+  "generateSheetHint": "misalnya, \"Peregangan pagi singkat untuk membangunkan tubuh\" atau \"Latihan kekuatan seluruh tubuh untuk pemula\"",
+  "generateSheetDuration": "Durasi",
+  "generateSheetMinutes": "{count} mnt",
+  "@generateSheetMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetDifficulty": "Tingkat Kesulitan",
+  "generateSheetEquipment": "Peralatan yang Tersedia",
+  "generateSheetGenerating": "Membuat...",
+  "generateSheetSubmit": "Buat Rutinitas",
+  "generateSheetDescribeFirst": "Deskripsikan latihan yang Anda inginkan",
+  "generateSheetAlreadyExists": "Anda sudah memiliki ini: {title}",
+  "@generateSheetAlreadyExists": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetCreated": "Dibuat: {title}",
+  "@generateSheetCreated": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetFailed": "Gagal membuat rutinitas",
+  "guidedNoExercises": "Rutinitas ini belum memiliki latihan.",
+  "guidedStartFailed": "Tidak dapat memulai latihan ini sekarang. Silakan coba lagi.",
+  "guidedSaveFailed": "Tidak dapat menyimpan latihan ini. Ketuk coba lagi untuk memperbarui streak Anda.",
+  "guidedOfReps": "dari {count} repetisi",
+  "@guidedOfReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedHold": "tahan",
+  "guidedNextSet": "Set berikutnya",
+  "guidedUpNext": "Selanjutnya",
+  "guidedSetsHold": "{sets} × {seconds} d tahan",
+  "@guidedSetsHold": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachGetReady": "Bersiap. {exercise}",
+  "@coachGetReady": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachStartReps": "Mulai. {count} repetisi.",
+  "@coachStartReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachStartHold": "Tahan selama {seconds} detik.",
+  "@coachStartHold": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachRest": "Istirahat. Selanjutnya: {exercise}",
+  "@coachRest": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachRestShort": "Istirahat.",
+  "coachComplete": "Kerja bagus. Latihan selesai.",
+  "coachRep": "{count}",
+  "@coachRep": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachCountdown": "{seconds}",
+  "@coachCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoVideosInRoutine": "Tidak ditemukan video yang dapat diputar dalam rutinitas ini.",
+  "playerLoadRoutineFailed": "Tidak dapat memuat rutinitas ini sekarang. Silakan coba lagi.",
+  "playerStepLoadFailedSkipping": "Gagal memuat \"{title}\". Melewati…",
+  "@playerStepLoadFailedSkipping": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerStepLoadFailed": "Gagal memuat \"{title}\".",
+  "@playerStepLoadFailed": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerSaveCompletionFailed": "Tidak dapat menyimpan penyelesaian. Ketuk coba lagi untuk memperbarui streak Anda.",
+  "playerStepPreviewSubtitle": "{duration} • Pratinjau",
+  "@playerStepPreviewSubtitle": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerNoVideosReady": "Rutinitas ini belum memiliki video yang siap diputar.",
+  "playerPlaybackFailed": "Tidak dapat memutar video ini sekarang. Silakan coba lagi.",
+  "libraryTabCurated": "Pilihan",
+  "libraryTabAiGenerated": "Dibuat oleh AI",
+  "profileSavedRoutines": "Rutinitas Tersimpan",
+  "savedRoutinesNoFavorites": "Belum ada rutinitas favorit.",
+  "savedRoutinesEmpty": "Belum ada rutinitas tersimpan.",
+  "actionFavorite": "Tambahkan ke Favorit",
+  "actionUnfavorite": "Hapus dari Favorit",
+  "routineDurationMinutes": "{minutes} mnt",
+  "@routineDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHoursMinutes": "{hours}j {minutes}m",
+  "@routineDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHours": "{hours}j",
+  "@routineDurationHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "difficultyEasy": "Mudah",
+  "difficultyMedium": "Sedang",
+  "difficultyHard": "Sulit",
+  "categoryStrength": "Kekuatan",
+  "categoryCardio": "Kardio",
+  "categoryFlexibility": "Fleksibilitas",
+  "categoryMindfulness": "Kesadaran Penuh",
+  "categoryDance": "Tari",
+  "categoryHiit": "HIIT",
+  "categoryYoga": "Yoga",
+  "categoryCustom": "Khusus",
+  "navHome": "Beranda",
+  "navLibrary": "Pustaka",
+  "navChat": "Chat",
+  "navProfile": "Profil",
+  "equipmentNone": "Tidak ada",
+  "equipmentDumbbells": "Dumbbell",
+  "equipmentResistanceBands": "Resistance band",
+  "equipmentYogaMat": "Matras yoga",
+  "equipmentKettlebell": "Kettlebell",
+  "equipmentPullUpBar": "Palang pull-up",
+  "equipmentJumpRope": "Tali lompat",
+  "nutritionTitle": "Nutrisi",
+  "nutritionSubtitle": "Kalori, makro, dan riwayat makanan",
+  "nutritionSetGoalsTitle": "Tetapkan sasaran nutrisi harian",
+  "nutritionSetGoalsBody": "Tambahkan berat badan, tinggi badan, usia, dan jenis kelamin agar Celia dapat menghitung jumlah kalori dan nutrisi yang perlu Anda konsumsi setiap hari.",
+  "nutritionSetUpGoals": "Atur Sasaran",
+  "nutritionDailyTarget": "Target harian",
+  "nutritionDailyGoals": "Sasaran harian",
+  "nutritionKcal": "{calories} kcal",
+  "@nutritionKcal": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMacroSummary": "P {protein}g · C {carbs}g · F {fat}g",
+  "@nutritionMacroSummary": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionToday": "Hari ini",
+  "nutritionMealHistory": "Riwayat Makanan",
+  "nutritionCeliaInsights": "Insight Celia",
+  "nutritionWeeklyTrend": "Tren Mingguan",
+  "nutritionTodayMeals": "kcal • {count, plural, one{{count} kali makan} other{{count} kali makan}}",
+  "@nutritionTodayMeals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionTodayOfTargetMeals": "dari {target} kcal • {count, plural, one{{count} kali makan} other{{count} kali makan}}",
+  "@nutritionTodayOfTargetMeals": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionWeekdayInitials": "S,S,R,K,J,S,M",
+  "@nutritionWeekdayInitials": {
+    "description": "Single-letter weekday labels for the weekly chart, Monday first, comma separated."
+  },
+  "nutritionFieldFoodName": "Nama makanan",
+  "nutritionFieldGrams": "Gram",
+  "nutritionFieldCalories": "Kalori",
+  "scannerStatusAnalyzing": "MENGANALISIS...",
+  "scannerStatusIdle": "PEMINDAI CELIA",
+  "scannerFieldFoodName": "Nama makanan",
+  "scannerFieldGrams": "Gram",
+  "scannerFieldCalories": "Kalori",
+  "scannerFieldPro": "Pro",
+  "scannerMacroPro": "PRO",
+  "scannerMacroCarb": "CARB",
+  "scannerMacroFat": "FAT",
+  "scannerRemainingAfterLogging": "Sisa {calories} kcal dan {grams}g protein hari ini",
+  "@scannerRemainingAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerOverTargetAfterLogging": "{calories} kcal melebihi target harian Anda",
+  "@scannerOverTargetAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerButtonAnalyzing": "Menganalisis",
+  "scannerButtonQuotaNeeded": "Kuota Diperlukan",
+  "scannerButtonScanNow": "Pindai Sekarang",
+  "scannerButtonLogging": "Mencatat",
+  "scannerButtonLogMeal": "Catat Makanan",
+  "scannerNoClearFood": "Belum ada makanan yang terdeteksi dengan jelas. Coba gunakan pencahayaan yang lebih baik atau mendekat.",
+  "scannerErrorCameraPermission": "Izin kamera diperlukan untuk memindai makanan.",
+  "scannerErrorBackendMissing": "Backend pemindai kalori belum dikonfigurasi.",
+  "scannerErrorApiKeyInvalid": "Kunci API OpenAI untuk pemindaian kalori tidak valid. Ganti di lingkungan backend, lakukan deploy ulang, lalu coba lagi.",
+  "scannerErrorApiKeyMissing": "Kunci API OpenAI diperlukan untuk pemindaian kalori. Tambahkan di Vercel, lakukan deploy ulang, lalu coba lagi.",
+  "scannerErrorQuotaExhausted": "Kredit OpenAI untuk pemindaian kalori telah habis. Tambahkan kredit API atau naikkan batas penagihan, lalu coba lagi.",
+  "scannerErrorTimeout": "Celia memerlukan waktu lebih lama untuk menganalisis makanan ini. Pegang kamera tetap stabil dan pindai lagi.",
+  "scannerErrorNotSignedIn": "Silakan masuk sebelum memindai makanan.",
+  "scannerErrorMealTableMissing": "Tabel pencatatan makanan belum siap. Hasil pemindaian tetap tersedia.",
+  "scannerErrorGeneric": "Celia belum dapat menganalisis makanan ini. Pegang kamera tetap stabil, posisikan makanan di tengah, lalu pindai lagi.",
+  "nutritionGrams": "{grams}g",
+  "@nutritionGrams": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionMealSubtitle": "{time} · {count, plural, one{{count} item} other{{count} item}}",
+  "@nutritionMealSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMealDetails": "Detail Makanan",
+  "nutritionFoodItems": "Item Makanan",
+  "nutritionItemSubtitle": "{grams}g · {calories} kcal",
+  "@nutritionItemSubtitle": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionNeedsOneItem": "Makanan harus memiliki setidaknya satu item makanan.",
+  "nutritionMealUpdated": "Makanan diperbarui",
+  "nutritionUpdateFailed": "Tidak dapat memperbarui makanan: {error}",
+  "@nutritionUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionDeleteMealTitle": "Hapus makanan?",
+  "nutritionDeleteMealBody": "Ini akan menghapus makanan dari riwayat nutrisi Anda.",
+  "nutritionDeleteMeal": "Hapus makanan",
+  "nutritionDeleteFailed": "Tidak dapat menghapus makanan: {error}",
+  "@nutritionDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionEditFood": "Edit Makanan",
+  "nutritionSaveFood": "Simpan Makanan",
+  "nutritionLoadFailed": "Tidak dapat memuat makanan",
+  "nutritionLoadFailedBody": "Tarik untuk menyegarkan atau periksa koneksi backend.",
+  "nutritionNoMeals": "Belum ada makanan yang dicatat",
+  "nutritionNoMealsBody": "Pindai makanan pertama Anda dan Celia akan membuat riwayat nutrisi Anda.",
+  "progressToday": "Hari ini",
+  "progressSetGoals": "Tetapkan sasaran nutrisi untuk membuka pelacakan kalori dan makro.",
+  "progressOfTarget": "dari {target} kcal",
+  "@progressOfTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressMacroAmount": "{consumed} / {target}g",
+  "@progressMacroAmount": {
+    "placeholders": {
+      "consumed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalOver": "{calories} kcal berlebih",
+  "@progressKcalOver": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalLeft": "tersisa {calories} kcal",
+  "@progressKcalLeft": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressProtein": "Protein",
+  "progressCarbs": "Karbohidrat",
+  "progressFat": "Lemak",
+  "scannerEditItem": "Edit Item Makanan",
+  "scannerSaveChanges": "Simpan Perubahan",
+  "scannerItemCalories": "{name} · {calories} kcal",
+  "@scannerItemCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerConfidence": "Keyakinan {percent}% · {provider}",
+  "@scannerConfidence": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerMoreItems": "+ {count} item lainnya termasuk dalam catatan makanan ini",
+  "@scannerMoreItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerIfYouLog": "Jika Anda mencatat makanan ini",
+  "scannerAfterLogging": "{after} / {target} kcal hari ini",
+  "@scannerAfterLogging": {
+    "placeholders": {
+      "after": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerGramsDecimal": "{grams}g",
+  "@scannerGramsDecimal": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerItemServing": "{name} · {grams}g",
+  "@scannerItemServing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerNoMealDetected": "Makanan tidak terdeteksi",
+  "onboardingWelcome": "Selamat datang, {name}",
+  "@onboardingWelcome": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingGender": "Jenis Kelamin",
+  "onboardingCalculateGoals": "Hitung Sasaran Saya",
+  "onboardingScanFirstMeal": "Pindai Makanan Pertama Saya",
+  "onboardingExploreRoutines": "Jelajahi Rutinitas",
+  "onboardingGoHome": "Ke Beranda",
+  "onboardingDailyTargets": "Target harian Anda",
+  "onboardingProtein": "Protein {grams}g ·",
+  "@onboardingProtein": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingMacroTargets": "Protein {protein}g • Karbohidrat {carbs}g • Lemak {fat}g",
+  "@onboardingMacroTargets": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingTargetsReady": "Target nutrisi harian Anda siap. Pilih cara untuk memulai.",
+  "onboardingWeightKg": "Berat (kg)",
+  "onboardingHeightCm": "Tinggi (cm)",
+  "onboardingAge": "Usia",
+  "onboardingInvalidWeight": "Masukkan berat yang valid dalam kg.",
+  "onboardingInvalidHeight": "Masukkan tinggi yang valid dalam cm.",
+  "onboardingInvalidAge": "Masukkan usia yang valid antara 13 dan 100.",
+  "onboardingSaveFailed": "Tidak dapat menyimpan profil nutrisi Anda.",
+  "genderMale": "Laki-laki",
+  "genderFemale": "Perempuan",
+  "genderOther": "Lainnya",
+  "nutritionSetupTitle": "Sasaran Nutrisi Harian",
+  "nutritionSetupBody": "Beri tahu Celia tentang tubuh Anda agar ia dapat menghitung kalori dan makro harian Anda.",
+  "nutritionSetupGender": "Jenis Kelamin",
+  "nutritionSetupFootnote": "Celia menggunakan berat, tinggi, usia, dan jenis kelamin Anda untuk memperkirakan target kalori dan makro harian dengan tingkat aktivitas sedang.",
+  "nutritionSetupSave": "Simpan Sasaran",
+  "profileTitle": "Profil",
+  "profileCeliaAi": "Celia AI",
+  "profileEliteMember": "Anggota Elite",
+  "profileAccount": "Akun",
+  "profileSignedInAs": "Masuk sebagai:\n{email}",
+  "@profileSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "profileUnknownEmail": "Tidak diketahui",
+  "profileDarkMode": "Mode Gelap",
+  "profileLanguage": "Bahasa",
+  "profileLogOutTitle": "Keluar?",
+  "profileLogOutBody": "Apakah Anda yakin ingin keluar?",
+  "profileLogOut": "Keluar",
+  "profileLogOutButton": "Keluar",
+  "profileFavoriteRoutines": "Rutinitas Favorit",
+  "profileSubscription": "Langganan",
+  "profileNutrition": "Nutrisi",
+  "profileHelpSupport": "Bantuan & Dukungan",
+  "profileFriend": "Teman",
+  "profileStatSaved": "Tersimpan",
+  "profileStatStreak": "Rangkaian",
+  "profileStatWorkouts": "Latihan",
+  "streakDayOneStarted": "Hari pertama dimulai — kembali besok untuk membangun rangkaian Anda.",
+  "streakRebuild": "Anda aktif kemarin — catat makanan atau selesaikan latihan hari ini untuk membangun kembali rangkaian Anda.",
+  "streakStart": "Catat makanan atau selesaikan latihan untuk memulai rangkaian aktif Anda.",
+  "streakLongRun": "Rangkaian {days} hari! Terus konsisten — Celia memantau kemajuan Anda.",
+  "@streakLongRun": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakBothLogged": "Rangkaian {days} hari — latihan dan nutrisi hari ini sudah dicatat.",
+  "@streakBothLogged": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedWorkout": "Rangkaian {days} hari. Latihan singkat akan melengkapi hari ini.",
+  "@streakNeedWorkout": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedMeal": "Rangkaian {days} hari. Catat makanan untuk melacak asupan Anda.",
+  "@streakNeedMeal": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakStayActive": "Rangkaian {days} hari — tetap aktif hari ini.",
+  "@streakStayActive": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "editProfileTitle": "Edit Profil",
+  "editProfileName": "Nama",
+  "editProfileFootnote": "Perubahan disimpan ke akun Anda dan akan ditampilkan di Beranda/Profil.",
+  "editProfileSaveFailed": "Profil tidak dapat diperbarui. Silakan coba lagi.",
+  "languageTitle": "Bahasa",
+  "languageSystem": "Bahasa perangkat",
+  "languageSystemSubtitle": "Ikuti bahasa yang digunakan di ponsel Anda",
+  "languageEnglish": "Bahasa Inggris",
+  "languageSpanish": "Bahasa Spanyol",
+  "insightStartFuelingTitle": "Mulai penuhi asupan hari ini",
+  "insightStartFuelingBody": "Anda masih memiliki seluruh anggaran kalori. Pindai atau catat makanan pertama Anda agar tetap sesuai target.",
+  "insightAboveTargetTitle": "Di atas target hari ini",
+  "insightAboveTargetBody": "Anda mengonsumsi {calories} kcal di atas target harian. Kurangi porsi makan malam atau tambahkan latihan singkat.",
+  "@insightAboveTargetBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightLowProteinTitle": "Protein masih kurang",
+  "insightLowProteinBody": "Anda masih membutuhkan sekitar {grams}g protein hari ini untuk mencapai target.",
+  "@insightLowProteinBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightAlmostThereTitle": "Hampir mencapai tujuan",
+  "insightAlmostThereBody": "Anda memiliki sisa {calories} kcal hari ini. Camilan seimbang akan cocok untuk Anda.",
+  "@insightAlmostThereBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightOnTrackTitle": "Sesuai target hari ini",
+  "insightOnTrackBody": "Tersisa {calories} kcal dan {grams}g protein untuk mencapai target harian Anda.",
+  "@insightOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightWeeklyRhythmTitle": "Bangun ritme mingguan",
+  "insightWeeklyRhythmBody": "Catat makanan sepanjang minggu agar Celia dapat menemukan pola dan membimbing Anda dengan lebih baik.",
+  "insightWeeklyTrendTitle": "Tren mingguan",
+  "insightWeeklyTrendBody": "Anda mencatat makanan pada {days} dari 7 hari terakhir, dengan rata-rata {average} kcal — {direction}.",
+  "@insightWeeklyTrendBody": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "average": {
+        "type": "int"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "insightTrendOnTarget": "tepat di sekitar target harian Anda",
+  "insightTrendAbove": "rata-rata {delta} kcal di atas target Anda",
+  "@insightTrendAbove": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightTrendBelow": "rata-rata {delta} kcal di bawah target Anda",
+  "@insightTrendBelow": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsSectionTitle": "Wawasan Celia"
+}

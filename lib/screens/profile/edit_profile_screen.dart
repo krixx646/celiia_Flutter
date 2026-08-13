@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../providers/auth_provider.dart' as app_auth;
 import '../../providers/theme_provider.dart';
 import '../../utils/user_facing_error.dart';
@@ -77,7 +78,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return await ref.getDownloadURL();
   }
 
-  Future<void> _save() async {
+  Future<void> _save(AppLocalizations l10n) async {
     if (_saving) return;
     setState(() => _saving = true);
 
@@ -106,7 +107,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           content: Text(
             toUserFriendlyMessage(
               e,
-              fallback: 'Could not update profile. Please try again.',
+              l10n: l10n,
+              fallback: l10n.editProfileSaveFailed,
             ),
           ),
         ),
@@ -118,6 +120,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     final user = widget.auth.currentUser;
     final existingPhoto = user?.photoURL;
@@ -136,7 +139,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         elevation: 0,
         iconTheme: IconThemeData(color: theme.textPrimary),
         title: Text(
-          'Edit Profile',
+          l10n.editProfileTitle,
           style: TextStyle(
             color: theme.textPrimary,
             fontWeight: FontWeight.bold,
@@ -144,7 +147,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         actions: [
           TextButton(
-            onPressed: _saving ? null : _save,
+            onPressed: _saving ? null : () => _save(l10n),
             child: _saving
                 ? SizedBox(
                     width: 18,
@@ -155,7 +158,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                   )
                 : Text(
-                    'Save',
+                    l10n.actionSave,
                     style: TextStyle(
                       color: theme.accentOrange,
                       fontWeight: FontWeight.bold,
@@ -219,7 +222,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Name',
+                l10n.editProfileName,
                 style: TextStyle(
                   color: theme.textSecondary,
                   fontWeight: FontWeight.w600,
@@ -231,7 +234,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               controller: _nameController,
               style: TextStyle(color: theme.textPrimary),
               decoration: InputDecoration(
-                hintText: 'Your name',
+                hintText: l10n.authFieldName,
                 filled: true,
                 fillColor: theme.isDarkMode
                     ? Colors.white.withValues(alpha: 0.05)
@@ -244,7 +247,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             const SizedBox(height: 14),
             Text(
-              'Changes are saved to your account and will show on Home/Profile.',
+              l10n.editProfileFootnote,
               style: TextStyle(color: theme.textSecondary),
             ),
           ],

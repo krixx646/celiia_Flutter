@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../models/nutrition_profile.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/navigation_provider.dart';
@@ -36,21 +37,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.dispose();
   }
 
-  Future<void> _saveProfile() async {
+  Future<void> _saveProfile(AppLocalizations l10n) async {
     final weight = double.tryParse(_weightController.text.trim());
     final height = double.tryParse(_heightController.text.trim());
     final age = int.tryParse(_ageController.text.trim());
 
     if (weight == null || weight <= 0) {
-      _showSnack('Enter a valid weight in kg.');
+      _showSnack(l10n.onboardingInvalidWeight);
       return;
     }
     if (height == null || height <= 0) {
-      _showSnack('Enter a valid height in cm.');
+      _showSnack(l10n.onboardingInvalidHeight);
       return;
     }
     if (age == null || age < 13 || age > 100) {
-      _showSnack('Enter a valid age between 13 and 100.');
+      _showSnack(l10n.onboardingInvalidAge);
       return;
     }
 
@@ -67,7 +68,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (!ok) {
       setState(() => _saving = false);
       _showSnack(
-        profileProvider.error ?? 'Could not save your nutrition profile.',
+        profileProvider.error ?? l10n.onboardingSaveFailed,
       );
       return;
     }
@@ -103,10 +104,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     final userName =
         context.watch<AuthProvider>().uiState.currentUser?.displayName ??
-        'there';
+        l10n.profileFriend;
 
     return Scaffold(
       backgroundColor: theme.background,
@@ -115,7 +117,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
           children: [
             Text(
-              'Welcome, $userName',
+              l10n.onboardingWelcome(userName),
               style: TextStyle(
                 color: theme.textPrimary,
                 fontSize: 32,
@@ -125,20 +127,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             const SizedBox(height: 8),
             Text(
               _showGetStarted
-                  ? 'Your daily nutrition targets are ready. Choose how you want to start.'
-                  : 'Tell Celia about your body so she can calculate your daily calories and macros.',
+                  ? l10n.onboardingTargetsReady
+                  : l10n.nutritionSetupBody,
               style: TextStyle(color: theme.textSecondary, height: 1.4),
             ),
             const SizedBox(height: 28),
             if (!_showGetStarted) ...[
-              _buildField(theme, _weightController, 'Weight (kg)'),
+              _buildField(theme, _weightController, l10n.onboardingWeightKg),
               const SizedBox(height: 12),
-              _buildField(theme, _heightController, 'Height (cm)'),
+              _buildField(theme, _heightController, l10n.onboardingHeightCm),
               const SizedBox(height: 12),
-              _buildField(theme, _ageController, 'Age'),
+              _buildField(theme, _ageController, l10n.onboardingAge),
               const SizedBox(height: 18),
               Text(
-                'Gender',
+                l10n.onboardingGender,
                 style: TextStyle(
                   color: theme.textPrimary,
                   fontWeight: FontWeight.w700,
@@ -150,7 +152,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 children: NutritionGender.values.map((gender) {
                   final selected = _gender == gender;
                   return ChoiceChip(
-                    label: Text(_genderLabel(gender)),
+                    label: Text(_genderLabel(l10n, gender)),
                     selected: selected,
                     onSelected: (_) => setState(() => _gender = gender),
                     selectedColor: theme.accentOrange.withValues(alpha: 0.2),
@@ -166,7 +168,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
               const SizedBox(height: 28),
               ElevatedButton(
-                onPressed: _saving ? null : _saveProfile,
+                onPressed: _saving ? null : () => _saveProfile(l10n),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: theme.accentOrange,
                   foregroundColor: Colors.white,
@@ -184,21 +186,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           color: Colors.white,
                         ),
                       )
-                    : const Text(
-                        'Calculate My Goals',
-                        style: TextStyle(
+                    : Text(
+                        l10n.onboardingCalculateGoals,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
               ),
             ] else ...[
-              _buildTargetsPreview(theme, _savedProfile!),
+              _buildTargetsPreview(l10n, theme, _savedProfile!),
               const SizedBox(height: 24),
               ElevatedButton.icon(
                 onPressed: () => _finish(openScanner: true),
                 icon: const Icon(Icons.camera_alt_outlined),
-                label: const Text('Scan My First Meal'),
+                label: Text(l10n.onboardingScanFirstMeal),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: theme.accentOrange,
                   foregroundColor: Colors.white,
@@ -216,7 +218,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 },
                 icon: Icon(Icons.fitness_center, color: theme.textPrimary),
                 label: Text(
-                  'Explore Routines',
+                  l10n.onboardingExploreRoutines,
                   style: TextStyle(color: theme.textPrimary),
                 ),
                 style: OutlinedButton.styleFrom(
@@ -231,7 +233,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               TextButton(
                 onPressed: () => _finish(openScanner: false),
                 child: Text(
-                  'Go to Home',
+                  l10n.onboardingGoHome,
                   style: TextStyle(color: theme.textSecondary),
                 ),
               ),
@@ -242,7 +244,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildTargetsPreview(ThemeProvider theme, NutritionProfile profile) {
+  Widget _buildTargetsPreview(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    NutritionProfile profile,
+  ) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -257,7 +263,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Your daily targets',
+            l10n.onboardingDailyTargets,
             style: TextStyle(
               color: Colors.white.withValues(alpha: 0.78),
               fontWeight: FontWeight.w800,
@@ -265,7 +271,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
           const SizedBox(height: 10),
           Text(
-            '${profile.dailyCalories.round()} kcal',
+            l10n.nutritionKcal(profile.dailyCalories.round()),
             style: const TextStyle(
               color: Colors.white,
               fontSize: 40,
@@ -274,9 +280,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
           const SizedBox(height: 12),
           Text(
-            'Protein ${profile.dailyProteinGrams.round()}g • '
-            'Carbs ${profile.dailyCarbsGrams.round()}g • '
-            'Fat ${profile.dailyFatGrams.round()}g',
+            l10n.onboardingMacroTargets(
+              profile.dailyProteinGrams.round(),
+              profile.dailyCarbsGrams.round(),
+              profile.dailyFatGrams.round(),
+            ),
             style: TextStyle(color: Colors.white.withValues(alpha: 0.78)),
           ),
         ],
@@ -310,11 +318,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  String _genderLabel(NutritionGender gender) {
+  String _genderLabel(AppLocalizations l10n, NutritionGender gender) {
     return switch (gender) {
-      NutritionGender.male => 'Male',
-      NutritionGender.female => 'Female',
-      NutritionGender.other => 'Other',
+      NutritionGender.male => l10n.genderMale,
+      NutritionGender.female => l10n.genderFemale,
+      NutritionGender.other => l10n.genderOther,
     };
   }
 }

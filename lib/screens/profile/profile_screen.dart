@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../l10n/app_localizations.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/nutrition_profile_provider.dart';
 import '../../providers/nutrition_tracker_provider.dart';
@@ -9,6 +10,7 @@ import '../../providers/theme_provider.dart';
 import '../../utils/progress.dart';
 import '../tools/nutrition_screen.dart';
 import 'edit_profile_screen.dart';
+import 'language_screen.dart';
 import 'saved_routines_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -35,13 +37,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final auth = context.watch<AuthProvider>().uiState;
     final user = auth.currentUser;
     final theme = context.watch<ThemeProvider>();
     final routineProvider = context.watch<RoutineProvider>();
     final nutritionTracker = context.watch<NutritionTrackerProvider>();
     final userName =
-        user?.displayName ?? user?.email?.split('@')[0] ?? 'Friend';
+        user?.displayName ?? user?.email?.split('@')[0] ?? l10n.profileFriend;
 
     final savedCount = routineProvider.userRoutines.length;
     final streakStats = computeActiveStreakStats(
@@ -59,7 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           children: [
             // TopAppBar
-            _buildHeader(theme),
+            _buildHeader(l10n, theme),
 
             // Main Content
             Expanded(
@@ -70,12 +73,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const SizedBox(height: 32),
 
                     // Profile Header
-                    _buildProfileHeader(theme, userName, user?.photoURL),
+                    _buildProfileHeader(l10n, theme, userName, user?.photoURL),
 
                     const SizedBox(height: 32),
 
                     // Stats Bento Card
                     _buildStatsCard(
+                      l10n,
                       theme,
                       savedCount,
                       streakStats,
@@ -85,12 +89,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const SizedBox(height: 32),
 
                     // Settings List
-                    _buildSettingsList(theme, user?.email),
+                    _buildSettingsList(l10n, theme, user?.email),
 
                     const SizedBox(height: 24),
 
                     // Log Out
-                    _buildLogoutButton(theme),
+                    _buildLogoutButton(l10n, theme),
 
                     const SizedBox(height: 120), // Padding for bottom nav
                   ],
@@ -103,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildHeader(ThemeProvider theme) {
+  Widget _buildHeader(AppLocalizations l10n, ThemeProvider theme) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
       child: Row(
@@ -114,7 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Icon(Icons.menu, color: theme.accentOrange),
               const SizedBox(width: 16),
               Text(
-                'Celia AI',
+                l10n.profileCeliaAi,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w800,
@@ -133,6 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildProfileHeader(
+    AppLocalizations l10n,
     ThemeProvider theme,
     String userName,
     String? photoUrl,
@@ -216,7 +221,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         const SizedBox(height: 4),
         Text(
-          'Elite Member',
+          l10n.profileEliteMember,
           style: TextStyle(
             fontSize: 16,
             color: theme.accentOrange,
@@ -228,6 +233,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildStatsCard(
+    AppLocalizations l10n,
     ThemeProvider theme,
     int savedCount,
     ActiveStreakStats streakStats,
@@ -259,7 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: _buildStatItem(
                     theme,
                     '$savedCount',
-                    'Saved',
+                    l10n.profileStatSaved,
                     Icons.bookmark,
                   ),
                 ),
@@ -268,7 +274,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: _buildStatItem(
                     theme,
                     '${streakStats.streak}',
-                    'Streak',
+                    l10n.profileStatStreak,
                     Icons.local_fire_department,
                   ),
                 ),
@@ -277,7 +283,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: _buildStatItem(
                     theme,
                     '$workoutCompletions',
-                    'Workouts',
+                    l10n.profileStatWorkouts,
                     Icons.fitness_center,
                   ),
                 ),
@@ -289,7 +295,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            buildStreakNudge(streakStats),
+            buildStreakNudge(l10n, streakStats),
             style: TextStyle(color: theme.textSecondary, height: 1.35),
           ),
         ),
@@ -354,23 +360,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildSettingsList(ThemeProvider theme, String? email) {
+  Widget _buildSettingsList(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    String? email,
+  ) {
     return Column(
       children: [
         _buildMenuItem(
           theme: theme,
           icon: Icons.person,
-          title: 'Profile',
+          title: l10n.profileTitle,
           onTap: () {
             showDialog<void>(
               context: context,
               builder: (_) => AlertDialog(
-                title: const Text('Account'),
-                content: Text('Signed in as:\n${email ?? "Unknown"}'),
+                title: Text(l10n.profileAccount),
+                content: Text(
+                  l10n.profileSignedInAs(email ?? l10n.profileUnknownEmail),
+                ),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Close'),
+                    child: Text(l10n.actionClose),
                   ),
                 ],
               ),
@@ -381,7 +393,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _buildMenuItem(
           theme: theme,
           icon: Icons.favorite_border,
-          title: 'Favorite Routines',
+          title: l10n.profileFavoriteRoutines,
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -395,14 +407,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _buildMenuItem(
           theme: theme,
           icon: Icons.workspace_premium,
-          title: 'Subscription',
+          title: l10n.profileSubscription,
           onTap: () {},
         ),
         const SizedBox(height: 8),
         _buildMenuItem(
           theme: theme,
           icon: Icons.restaurant_menu,
-          title: 'Nutrition',
+          title: l10n.profileNutrition,
           onTap: () {
             Navigator.of(
               context,
@@ -410,12 +422,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
         ),
         const SizedBox(height: 8),
-        _buildDarkModeToggle(theme),
+        _buildMenuItem(
+          theme: theme,
+          icon: Icons.language,
+          title: l10n.profileLanguage,
+          onTap: () {
+            Navigator.of(
+              context,
+            ).push(MaterialPageRoute(builder: (_) => const LanguageScreen()));
+          },
+        ),
+        const SizedBox(height: 8),
+        _buildDarkModeToggle(l10n, theme),
         const SizedBox(height: 16), // Extra space before Help
         _buildMenuItem(
           theme: theme,
           icon: Icons.help_outline,
-          title: 'Help & Support',
+          title: l10n.profileHelpSupport,
           iconColor: theme.textSecondary,
           iconBg: theme.textSecondary.withValues(alpha: 0.1),
           onTap: () async {
@@ -478,7 +501,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildDarkModeToggle(ThemeProvider theme) {
+  Widget _buildDarkModeToggle(AppLocalizations l10n, ThemeProvider theme) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -500,7 +523,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           const SizedBox(width: 16),
           Expanded(
             child: Text(
-              'Dark Mode',
+              l10n.profileDarkMode,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -519,7 +542,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildLogoutButton(ThemeProvider theme) {
+  Widget _buildLogoutButton(AppLocalizations l10n, ThemeProvider theme) {
     return TextButton.icon(
       onPressed: () async {
         final auth = context.read<AuthProvider>();
@@ -528,16 +551,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         final confirm = await showDialog<bool>(
           context: context,
           builder: (_) => AlertDialog(
-            title: const Text('Log out?'),
-            content: const Text('Are you sure you want to log out?'),
+            title: Text(l10n.profileLogOutTitle),
+            content: Text(l10n.profileLogOutBody),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('Cancel'),
+                child: Text(l10n.actionCancel),
               ),
               ElevatedButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('Log out'),
+                child: Text(l10n.profileLogOut),
               ),
             ],
           ),
@@ -551,7 +574,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
       icon: Icon(Icons.logout, color: theme.textSecondary),
       label: Text(
-        'Log Out',
+        l10n.profileLogOutButton,
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w600,

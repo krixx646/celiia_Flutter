@@ -34,7 +34,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<!-- Make the app iPhone-only to remove iPad screenshot requirements -->
+	<!-- iPhone-only to avoid iPad screenshot requirements for App Store -->
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>

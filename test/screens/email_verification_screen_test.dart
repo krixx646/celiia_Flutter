@@ -1,3 +1,4 @@
+import 'package:celia_flutter/l10n/app_localizations.dart';
 import 'package:celia_flutter/providers/auth_provider.dart';
 import 'package:celia_flutter/repositories/auth_repository.dart';
 import 'package:celia_flutter/screens/email_verification_screen.dart';
@@ -32,7 +33,12 @@ void main() {
       await tester.pumpWidget(
         ChangeNotifierProvider<AuthProvider>(
           create: (_) => AuthProvider(authRepository: repo, now: DateTime.now),
-          child: const MaterialApp(home: EmailVerificationScreen()),
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale('en'),
+            home: EmailVerificationScreen(),
+          ),
         ),
       );
 

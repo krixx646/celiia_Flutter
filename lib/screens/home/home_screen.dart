@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../l10n/app_localizations.dart';
 import '../../models/routine.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/navigation_provider.dart';
@@ -9,10 +10,12 @@ import '../../providers/theme_provider.dart';
 import '../../services/routine_thumbnail_resolver.dart';
 import '../../services/supabase_service.dart';
 import '../../utils/progress.dart';
+import '../../utils/responsive.dart';
+import '../../utils/routine_text.dart';
 import '../../widgets/daily_progress_card.dart';
 import '../../widgets/generate_routine_sheet.dart';
 import '../routines/routine_detail_screen.dart';
-import '../routines/routine_player_screen.dart';
+import '../routines/workout_launcher.dart';
 import '../tools/calorie_scanner_screen.dart';
 import '../tools/nutrition_screen.dart';
 
@@ -51,12 +54,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final user = context.watch<AuthProvider>().uiState.currentUser;
     final theme = context.watch<ThemeProvider>();
     final rp = context.watch<RoutineProvider>();
     final tracker = context.watch<NutritionTrackerProvider>();
     final userName =
-        user?.displayName ?? user?.email?.split('@')[0] ?? 'Friend';
+        user?.displayName ?? user?.email?.split('@')[0] ?? l10n.profileFriend;
 
     final streakStats = computeActiveStreakStats(
       routines: rp.userRoutines,
@@ -70,17 +74,26 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             // TopAppBar
-            _buildHeader(theme, userName, user?.photoURL, streakStats.streak),
+            _buildHeader(
+              l10n,
+              theme,
+              userName,
+              user?.photoURL,
+              streakStats.streak,
+            ),
 
             // Main Content
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.contentHorizontalPadding,
+                ),
+                child: AdaptivePageBody(
+                  child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 16),
-                    _buildHeroSection(theme),
+                    _buildHeroSection(l10n, theme),
                     const SizedBox(height: 24),
                     DailyProgressCard(
                       tracker: tracker,
@@ -89,18 +102,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 32),
 
                     // Up Next Section
-                    _buildUpNextHeader(theme),
+                    _buildUpNextHeader(l10n, theme),
                     const SizedBox(height: 16),
                     SizedBox(
                       height: 220,
-                      child: _buildUpNextList(theme, rp, userId: user?.uid),
+                      child: _buildUpNextList(
+                        l10n,
+                        theme,
+                        rp,
+                        userId: user?.uid,
+                      ),
                     ),
 
                     const SizedBox(height: 32),
 
                     // Quick Actions Bento Grid
                     Text(
-                      'Quick Actions',
+                      l10n.homeQuickActions,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -108,10 +126,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    _buildQuickActionsGrid(theme),
+                    _buildQuickActionsGrid(l10n, theme),
 
                     const SizedBox(height: 120), // Padding for bottom nav
                   ],
+                  ),
                 ),
               ),
             ),
@@ -122,6 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildHeader(
+    AppLocalizations l10n,
     ThemeProvider theme,
     String userName,
     String? photoUrl,
@@ -142,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Good Morning,',
+                        l10n.homeGoodMorning,
                         style: TextStyle(
                           fontSize: 14,
                           color: theme.textSecondary,
@@ -249,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildHeroSection(ThemeProvider theme) {
+  Widget _buildHeroSection(AppLocalizations l10n, ThemeProvider theme) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -362,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'CELIA ACTIVE',
+                        l10n.homeCeliaActive,
                         style: TextStyle(
                           color: theme.accentOrange,
                           fontSize: 12,
@@ -374,9 +394,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Text(
-                  'Generate your\npersonalized\nroutine with AI',
-                  style: TextStyle(
+                Text(
+                  l10n.homeGenerateRoutine,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 28,
                     fontWeight: FontWeight.w700,
@@ -406,14 +426,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     elevation: 8,
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.auto_awesome),
-                      SizedBox(width: 8),
+                      const Icon(Icons.auto_awesome),
+                      const SizedBox(width: 8),
                       Text(
-                        'Create Routine',
-                        style: TextStyle(
+                        l10n.homeCreateRoutine,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
@@ -429,13 +449,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildUpNextHeader(ThemeProvider theme) {
+  Widget _buildUpNextHeader(AppLocalizations l10n, ThemeProvider theme) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
-          'Up Next',
+          l10n.homeUpNext,
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -445,7 +465,7 @@ class _HomeScreenState extends State<HomeScreen> {
         InkWell(
           onTap: () => context.read<NavigationProvider>().setIndex(1),
           child: Text(
-            'See All',
+            l10n.actionSeeAll,
             style: TextStyle(
               fontSize: 14,
               color: theme.accentOrange,
@@ -458,6 +478,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildUpNextList(
+    AppLocalizations l10n,
     ThemeProvider theme,
     RoutineProvider rp, {
     required String? userId,
@@ -510,6 +531,7 @@ class _HomeScreenState extends State<HomeScreen> {
               future: _getRoutineThumbnail(routine),
               builder: (context, thumbSnap) {
                 return _buildNewRoutineCard(
+                  l10n: l10n,
                   routine: routine,
                   theme: theme,
                   thumbnailUrl: thumbSnap.data,
@@ -529,6 +551,7 @@ class _HomeScreenState extends State<HomeScreen> {
           future: _getRoutineThumbnail(r),
           builder: (context, snap) {
             return _buildNewRoutineCard(
+              l10n: l10n,
               routine: r,
               theme: theme,
               thumbnailUrl: snap.data,
@@ -551,7 +574,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(16),
         child: Center(
           child: Text(
-            'No upcoming routines yet.\nCreate one or browse the library.',
+            l10n.homeNoUpcoming,
             textAlign: TextAlign.center,
             style: TextStyle(color: theme.textSecondary),
           ),
@@ -571,6 +594,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildNewRoutineCard({
+    required AppLocalizations l10n,
     required Routine routine,
     required ThemeProvider theme,
     String? thumbnailUrl,
@@ -680,7 +704,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        routine.durationLabel,
+                        localizedRoutineDuration(l10n, routine.durationMinutes),
                         style: TextStyle(
                           fontSize: 14,
                           color: theme.textSecondary,
@@ -699,7 +723,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Icon(Icons.speed, size: 16, color: theme.textSecondary),
                       const SizedBox(width: 4),
                       Text(
-                        routine.difficultyLabel,
+                        localizedRoutineDifficulty(l10n, routine.difficulty),
                         style: TextStyle(
                           fontSize: 14,
                           color: theme.textSecondary,
@@ -742,12 +766,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _openRoutinePlayer(Routine routine) {
-    Navigator.of(context, rootNavigator: true).push(
-      MaterialPageRoute(builder: (_) => RoutinePlayerScreen(routine: routine)),
-    );
+    openWorkout(context, routine, useRootNavigator: true);
   }
 
-  Widget _buildQuickActionsGrid(ThemeProvider theme) {
+  Widget _buildQuickActionsGrid(AppLocalizations l10n, ThemeProvider theme) {
     return Column(
       children: [
         // Chat Full Width
@@ -756,8 +778,8 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: Icons.forum,
           iconColor: theme.accentOrange,
           iconBg: theme.accentOrange.withValues(alpha: 0.1),
-          title: 'Chat with Celia',
-          subtitle: 'Ask about your form or diet',
+          title: l10n.homeChatWithCelia,
+          subtitle: l10n.homeChatSubtitle,
           onTap: () => context.read<NavigationProvider>().setIndex(2),
         ),
         const SizedBox(height: 16),
@@ -767,8 +789,8 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: Icons.photo_camera,
           iconColor: const Color(0xFFFFB691),
           iconBg: const Color(0xFFFF6F00).withValues(alpha: 0.2),
-          title: 'Scan Meal',
-          subtitle: 'Identify food & calories',
+          title: l10n.homeScanMeal,
+          subtitle: l10n.homeScanMealSubtitle,
           onTap: () => Navigator.of(context, rootNavigator: true).push(
             MaterialPageRoute(builder: (_) => const CalorieScannerScreen()),
           ),
@@ -779,8 +801,8 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: Icons.restaurant_menu,
           iconColor: const Color(0xFF00D1FF),
           iconBg: const Color(0xFF00D1FF).withValues(alpha: 0.12),
-          title: 'Nutrition',
-          subtitle: 'View calories, macros & meals',
+          title: l10n.homeNutrition,
+          subtitle: l10n.homeNutritionSubtitle,
           onTap: () => Navigator.of(
             context,
             rootNavigator: true,
@@ -796,7 +818,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icons.video_library,
                 iconColor: const Color(0xFFFFB954),
                 iconBg: const Color(0xFFFFB954).withValues(alpha: 0.1),
-                title: 'Browse\nLibrary',
+                title: l10n.homeBrowseLibrary,
                 onTap: () => context.read<NavigationProvider>().setIndex(1),
               ),
             ),
@@ -807,7 +829,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icons.show_chart,
                 iconColor: const Color(0xFF00E475),
                 iconBg: const Color(0xFF00E475).withValues(alpha: 0.1),
-                title: 'Track\nProgress',
+                title: l10n.homeTrackProgress,
                 onTap: () => context.read<NavigationProvider>().setIndex(3),
               ),
             ),

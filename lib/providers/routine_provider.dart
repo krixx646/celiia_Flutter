@@ -77,7 +77,7 @@ class RoutineProvider extends ChangeNotifier {
       debugPrint('$st');
       _error = toUserFriendlyMessage(
         e,
-        fallback: 'Could not load routines right now. Please try again.',
+        fallbackOf: (l10n) => l10n.errorLoadRoutines,
       );
     } finally {
       _isLoading = false;
@@ -100,7 +100,7 @@ class RoutineProvider extends ChangeNotifier {
       debugPrint('$st');
       _error = toUserFriendlyMessage(
         e,
-        fallback: 'Could not load routines right now. Please try again.',
+        fallbackOf: (l10n) => l10n.errorLoadRoutines,
       );
     } finally {
       _isLoading = false;
@@ -120,7 +120,7 @@ class RoutineProvider extends ChangeNotifier {
       debugPrint('$st');
       _error = toUserFriendlyMessage(
         e,
-        fallback: 'Could not load saved routines right now. Please try again.',
+        fallbackOf: (l10n) => l10n.errorLoadSavedRoutines,
       );
     } finally {
       _isLoadingUserRoutines = false;
@@ -174,7 +174,7 @@ class RoutineProvider extends ChangeNotifier {
       debugPrint('$st');
       _error = toUserFriendlyMessage(
         e,
-        fallback: 'Could not generate a routine right now. Please try again.',
+        fallbackOf: (l10n) => l10n.errorGenerateRoutine,
       );
       return null;
     } finally {

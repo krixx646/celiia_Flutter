@@ -1,0 +1,1017 @@
+{
+  "@@locale": "nl",
+  "appName": "Celia Integral Coach",
+  "@appName": {
+    "description": "The app's name. Not translated."
+  },
+  "actionCancel": "Annuleren",
+  "actionSave": "Opslaan",
+  "actionDelete": "Verwijderen",
+  "actionEdit": "Bewerken",
+  "actionRetry": "Opnieuw proberen",
+  "actionDone": "Gereed",
+  "actionClose": "Sluiten",
+  "actionContinue": "Doorgaan",
+  "actionSeeAll": "Alles bekijken",
+  "actionYesDoIt": "Ja, doen",
+  "actionNotNow": "Niet nu",
+  "loadingPreparing": "Celia voorbereiden...",
+  "loadingGeneric": "Laden...",
+  "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw.",
+  "errorCanceled": "Actie geannuleerd.",
+  "errorTooManyRequests": "Te veel pogingen. Wacht een minuut en probeer het opnieuw.",
+  "errorNetwork": "Controleer je internetverbinding en probeer het opnieuw.",
+  "errorBadCredentials": "Onjuist e-mailadres of wachtwoord.",
+  "errorEmailInUse": "Dit e-mailadres is al in gebruik. Probeer in plaats daarvan in te loggen.",
+  "errorWeakPassword": "Gebruik een sterker wachtwoord en probeer het opnieuw.",
+  "errorInvalidEmail": "Voer een geldig e-mailadres in.",
+  "errorNoPermission": "Je hebt geen toestemming om dit te doen.",
+  "errorNotSignedIn": "Log in en probeer het opnieuw.",
+  "errorNoConversation": "Start een nieuwe chat om door te gaan.",
+  "errorNoPlayableVideos": "Er zijn nog geen afspeelbare video's beschikbaar voor deze routine.",
+  "errorLoadRoutines": "De routines kunnen momenteel niet worden geladen. Probeer het opnieuw.",
+  "errorLoadSavedRoutines": "De opgeslagen routines kunnen momenteel niet worden geladen. Probeer het opnieuw.",
+  "errorGenerateRoutine": "Er kan momenteel geen routine worden gegenereerd. Probeer het opnieuw.",
+  "errorLoadChats": "De opgeslagen chats kunnen momenteel niet worden geladen.",
+  "errorCeliaUnavailable": "Celia is momenteel niet beschikbaar. Probeer het opnieuw.",
+  "errorOpenConversation": "Dit gesprek kon niet worden geopend.",
+  "errorDeleteConversation": "Dit gesprek kon niet worden verwijderd. Probeer het opnieuw.",
+  "errorSignIn": "Inloggen is mislukt. Probeer het opnieuw.",
+  "errorCreateAccount": "Je account kon niet worden aangemaakt. Probeer het opnieuw.",
+  "errorSendResetEmail": "De e-mail voor het opnieuw instellen kon niet worden verzonden. Probeer het opnieuw.",
+  "errorSendVerificationEmail": "De verificatiemail kon niet worden verzonden. Probeer het opnieuw.",
+  "errorGoogleSignIn": "Inloggen met Google is mislukt. Probeer het opnieuw.",
+  "errorAppleSignIn": "Inloggen met Apple is mislukt. Probeer het opnieuw.",
+  "errorRefreshNutrition": "De voedingsgegevens konden niet worden vernieuwd.",
+  "errorLoadNutritionProfile": "Je voedingsprofiel kon niet worden geladen.",
+  "startupErrorTitle": "De app kan niet worden gestart",
+  "startupErrorBody": "Sluit de app en open deze opnieuw. Neem contact op met support als dit probleem aanhoudt.",
+  "authTagline": "Je fitnessmaatje",
+  "authSignUp": "Registreren",
+  "authLogIn": "Inloggen",
+  "authVersion": "Versie {version}",
+  "@authVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "authForgotPassword": "Wachtwoord vergeten?",
+  "authOr": "OF",
+  "authContinueWithGoogle": "Doorgaan met Google",
+  "authContinueWithApple": "Doorgaan met Apple",
+  "authAuthenticating": "Verifiëren...",
+  "authEnterYourName": "Voer je naam in.",
+  "authNeedAccount": "Nog geen account? Registreren",
+  "authHaveAccount": "Al een account? Inloggen",
+  "authFieldName": "Je naam",
+  "authFieldEmail": "E-mailadres",
+  "authFieldPassword": "Wachtwoord",
+  "verifyEmailTitle": "Verifieer je e-mailadres",
+  "verifyEmailHeading": "Controleer je inbox",
+  "verifyEmailBody": "Er is een verificatielink naar je e-mail gestuurd.",
+  "verifyEmailSent": "Verificatie-e-mail verzonden!",
+  "verifyEmailContinue": "Ik heb geverifieerd, doorgaan",
+  "verifyEmailSignOut": "Uitloggen",
+  "verifyEmailSending": "Verzenden...",
+  "verifyEmailResend": "Verificatie-e-mail opnieuw verzenden",
+  "verifyEmailResendIn": "Opnieuw verzenden over {seconds}s",
+  "@verifyEmailResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "verifyEmailAddress": "E-mail: {email}",
+  "@verifyEmailAddress": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "forgotPasswordTitle": "Wachtwoord vergeten",
+  "forgotPasswordBody": "Voer je e-mailadres in om een link voor het opnieuw instellen van je wachtwoord te ontvangen.",
+  "forgotPasswordEmptyEmail": "Vul een e-mailadres in",
+  "forgotPasswordSent": "E-mail voor het opnieuw instellen van je wachtwoord verzonden.",
+  "forgotPasswordSend": "Resetlink verzenden",
+  "forgotPasswordSending": "Verzenden...",
+  "nameSetupTitle": "Hoe moet Celia je noemen?",
+  "nameSetupBody": "We gebruiken je naam in de hele app, zodat de coaching persoonlijk aanvoelt.",
+  "nameSetupSaveFailed": "Je naam kon niet worden opgeslagen. Probeer het opnieuw.",
+  "homeGoodMorning": "Goedemorgen,",
+  "homeCeliaActive": "CELIA ACTIEF",
+  "homeGenerateRoutine": "Genereer je\npersoonlijke\nroutine met AI",
+  "homeCreateRoutine": "Routine maken",
+  "homeQuickActions": "Snelle acties",
+  "homeUpNext": "Hierna",
+  "homeNoUpcoming": "Nog geen aankomende routines.\nMaak er een of bekijk de bibliotheek.",
+  "homeChatWithCelia": "Chat met Celia",
+  "homeChatSubtitle": "Vraag naar je techniek of voeding",
+  "homeScanMeal": "Maaltijd scannen",
+  "homeScanMealSubtitle": "Voeding en calorieën herkennen",
+  "homeNutrition": "Voeding",
+  "homeNutritionSubtitle": "Bekijk calorieën, macro's en maaltijden",
+  "homeBrowseLibrary": "Bibliotheek\nbekijken",
+  "homeTrackProgress": "Voortgang\nbijhouden",
+  "chatTitle": "Coach Celia",
+  "chatEmptyPrompt": "Hoe kan ik je vandaag\nhelpen fitter te worden?",
+  "chatYourChats": "Je chats",
+  "chatNoSavedChats": "Nog geen opgeslagen chats.",
+  "chatHistory": "Chatgeschiedenis",
+  "chatNew": "Nieuwe chat",
+  "chatOpening": "Chat openen...",
+  "chatScanAMeal": "Een maaltijd scannen",
+  "chatInputHint": "Vraag Celia alles over je training...",
+  "chatCouldNotOpenRoutine": "Die routine kon niet worden geopend",
+  "chatThisRoutine": "deze routine",
+  "chatThisMeal": "deze maaltijd",
+  "chatYourRoutine": "Je routine",
+  "chatMoreExercises": "+ {count} meer",
+  "@chatMoreExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatEmptySubtitle": "Vraag naar je training, voeding of voortgang.",
+  "chatLoggedToday": "Je hebt vandaag {calories} kcal gelogd.",
+  "@chatLoggedToday": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "chatSuggestionHiit": "Maak een HIIT-routine van 20 minuten voor me",
+  "chatSuggestionDinner": "Wat zal ik vanavond eten?",
+  "chatSuggestionProgress": "Hoe doe ik het deze week?",
+  "chatSuggestionIngredients": "Ik heb kip, rijst en spinazie",
+  "chatJustNow": "Zojuist",
+  "chatMinutesAgo": "{minutes} min geleden",
+  "@chatMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "chatHoursAgo": "{hours} uur geleden",
+  "@chatHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "chatDaysAgo": "{days} dagen geleden",
+  "@chatDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "chatRoutineAlreadySaved": "Al in je bibliotheek — tik om te openen",
+  "chatRoutineTapToOpen": "Tik om te openen",
+  "chatToolCancelled": "Geannuleerd",
+  "chatToolFailed": "{label} — dat is niet gelukt",
+  "@chatToolFailed": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "chatToolRoutineSaveFailed": "Kan de routine niet opslaan",
+  "chatToolRoutineSaved": "Opgeslagen in je bibliotheek",
+  "chatToolMealLogged": "Toegevoegd aan het logboek van vandaag",
+  "chatToolRoutineAdded": "Toegevoegd aan je bibliotheek",
+  "activityCheckingProgress": "Je voortgang controleren",
+  "activityCheckingNutrition": "Controleren wat je vandaag hebt gegeten",
+  "activityReviewingMeals": "Je recente maaltijden bekijken",
+  "activityLookingAtRoutines": "Je routines bekijken",
+  "activityReadingRoutine": "Die routine doornemen",
+  "activitySearchingLibrary": "De oefeningenbibliotheek doorzoeken",
+  "activityBuildingRoutine": "Je routine samenstellen",
+  "activityLoggingMeal": "Je maaltijd registreren",
+  "activitySavingToLibrary": "Opslaan in je bibliotheek",
+  "activityWorking": "Even bezig",
+  "approvalSaveRoutineWithCount": "\"{name}\" met {count} oefeningen opslaan in je bibliotheek?",
+  "@approvalSaveRoutineWithCount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalSaveRoutine": "\"{name}\" opslaan in je bibliotheek?",
+  "@approvalSaveRoutine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalLogMealWithCalories": "\"{name}\" registreren met {calories} kcal?",
+  "@approvalLogMealWithCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalLogMeal": "\"{name}\" registreren?",
+  "@approvalLogMeal": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalAddRoutine": "Deze routine aan je bibliotheek toevoegen?",
+  "approvalGeneric": "Celia toestaan dit te doen?",
+  "libraryTitle": "Routinesbibliotheek",
+  "librarySteps": "{count, plural, one{{count} stap} other{{count} stappen}}",
+  "@librarySteps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryEmpty": "Nog geen routines",
+  "libraryEmptyBody": "Maak routines en publiceer ze in het beheerdersdashboard.",
+  "libraryLoadFailed": "Routines laden mislukt",
+  "routineStartWorkout": "Training starten",
+  "routineNoSteps": "Geen stappen beschikbaar",
+  "routineNoVideoForStep": "Geen video beschikbaar voor deze stap",
+  "routineVideoProcessing": "De video wordt nog verwerkt. Probeer het later opnieuw.",
+  "routineMissingPlaybackUrl": "Afspeel-URL ontbreekt voor deze video",
+  "routinePreviewBanner": "VOORBEELD — volledige video binnenkort beschikbaar",
+  "routinePreview": "VOORBEELD",
+  "routineDetails": "Details",
+  "routineNotFound": "Routine niet gevonden",
+  "routineCompletedTimes": "{count}x voltooid",
+  "@routineCompletedTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "playerVideoUnavailable": "Deze video is momenteel niet beschikbaar.",
+  "playerSteps": "Stappen",
+  "playerStepCounter": "{current}/{total}",
+  "@playerStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoPlayableVideos": "Geen afspeelbare video's",
+  "playerWorkoutComplete": "Training voltooid!",
+  "playerSavingStreak": "Opslaan in je reeks…",
+  "playerSavedStreak": "Opgeslagen in je reeks",
+  "playerRetrySave": "Opnieuw opslaan",
+  "playerReplay": "Opnieuw afspelen",
+  "playerNotReady": "Speler niet gereed",
+  "playerPreviewUnavailable": "Voorbeeld momenteel niet beschikbaar.",
+  "playerClipCounter": "Clip {current} van {total} · {duration}",
+  "@playerClipCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerErrorLoadingVideo": "Fout bij het laden van de video",
+  "playerLoadingVideo": "Video laden...",
+  "playerFailedToLoadVideo": "Video laden mislukt",
+  "playerNotInitialized": "Videospeler niet geïnitialiseerd",
+  "guidedExerciseCounter": "Oefening {current}/{total}",
+  "@guidedExerciseCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedGetReady": "MAAK JE KLAAR",
+  "guidedSetOf": "Set {current} van {total}",
+  "@guidedSetOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedRest": "RUST",
+  "guidedSkipRest": "Rust overslaan",
+  "guidedPaused": "Gepauzeerd",
+  "guidedResume": "Hervatten",
+  "guidedWorkoutComplete": "Training voltooid",
+  "guidedEndTitle": "Training beëindigen?",
+  "guidedEndBody": "Je voortgang voor deze sessie wordt niet opgeslagen.",
+  "guidedKeepGoing": "Ga door",
+  "guidedEnd": "Beëindigen",
+  "guidedReps": "{count, plural, one{{count} herhaling} other{{count} herhalingen}}",
+  "@guidedReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetTitle": "Routine genereren met AI",
+  "generateSheetPrompt": "Wat voor training wil je doen?",
+  "generateSheetHint": "bijv. \"Een korte ochtendstretch om wakker te worden\" of \"Krachttraining voor het hele lichaam voor beginners\"",
+  "generateSheetDuration": "Duur",
+  "generateSheetMinutes": "{count} min",
+  "@generateSheetMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetDifficulty": "Moeilijkheidsgraad",
+  "generateSheetEquipment": "Beschikbare apparatuur",
+  "generateSheetGenerating": "Genereren...",
+  "generateSheetSubmit": "Routine genereren",
+  "generateSheetDescribeFirst": "Beschrijf eerst de training die je wilt",
+  "generateSheetAlreadyExists": "Je hebt deze al: {title}",
+  "@generateSheetAlreadyExists": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetCreated": "Aangemaakt: {title}",
+  "@generateSheetCreated": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetFailed": "Routine genereren mislukt",
+  "guidedNoExercises": "Deze routine bevat nog geen oefeningen.",
+  "guidedStartFailed": "Deze training kan momenteel niet worden gestart. Probeer het opnieuw.",
+  "guidedSaveFailed": "Deze training kon niet worden opgeslagen. Tik op Opnieuw proberen om je reeks bij te werken.",
+  "guidedOfReps": "van {count} herhalingen",
+  "@guidedOfReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedHold": "vasthouden",
+  "guidedNextSet": "Volgende set",
+  "guidedUpNext": "Hierna",
+  "guidedSetsHold": "{sets} × {seconds}s vasthouden",
+  "@guidedSetsHold": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachGetReady": "Maak je klaar. {exercise}",
+  "@coachGetReady": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachStartReps": "Start. {count} herhalingen.",
+  "@coachStartReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachStartHold": "Houd {seconds} seconden vast.",
+  "@coachStartHold": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachRest": "Rust. Hierna: {exercise}",
+  "@coachRest": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachRestShort": "Rust.",
+  "coachComplete": "Goed gedaan. Training voltooid.",
+  "coachRep": "{count}",
+  "@coachRep": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachCountdown": "{seconds}",
+  "@coachCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoVideosInRoutine": "Geen afspeelbare video's gevonden in deze routine.",
+  "playerLoadRoutineFailed": "Deze routine kan momenteel niet worden geladen. Probeer het opnieuw.",
+  "playerStepLoadFailedSkipping": "Laden van \"{title}\" mislukt. Overslaan…",
+  "@playerStepLoadFailedSkipping": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerStepLoadFailed": "Laden van \"{title}\" mislukt.",
+  "@playerStepLoadFailed": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerSaveCompletionFailed": "Voltooien kon niet worden opgeslagen. Tik op Opnieuw proberen om je reeks bij te werken.",
+  "playerStepPreviewSubtitle": "{duration} • Voorbeeld",
+  "@playerStepPreviewSubtitle": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerNoVideosReady": "Deze routine bevat nog geen video's die kunnen worden afgespeeld.",
+  "playerPlaybackFailed": "Deze video kan momenteel niet worden afgespeeld. Probeer het opnieuw.",
+  "libraryTabCurated": "Samengesteld",
+  "libraryTabAiGenerated": "Door AI gegenereerd",
+  "profileSavedRoutines": "Opgeslagen routines",
+  "savedRoutinesNoFavorites": "Nog geen favoriete routines.",
+  "savedRoutinesEmpty": "Nog geen opgeslagen routines.",
+  "actionFavorite": "Aan favorieten toevoegen",
+  "actionUnfavorite": "Uit favorieten verwijderen",
+  "routineDurationMinutes": "{minutes} min",
+  "@routineDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHoursMinutes": "{hours}u {minutes}m",
+  "@routineDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHours": "{hours}u",
+  "@routineDurationHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "difficultyEasy": "Makkelijk",
+  "difficultyMedium": "Gemiddeld",
+  "difficultyHard": "Moeilijk",
+  "categoryStrength": "Kracht",
+  "categoryCardio": "Cardio",
+  "categoryFlexibility": "Flexibiliteit",
+  "categoryMindfulness": "Mindfulness",
+  "categoryDance": "Dans",
+  "categoryHiit": "HIIT",
+  "categoryYoga": "Yoga",
+  "categoryCustom": "Aangepast",
+  "navHome": "Home",
+  "navLibrary": "Bibliotheek",
+  "navChat": "Chat",
+  "navProfile": "Profiel",
+  "equipmentNone": "Geen",
+  "equipmentDumbbells": "Halters",
+  "equipmentResistanceBands": "Weerstandsbanden",
+  "equipmentYogaMat": "Yogamat",
+  "equipmentKettlebell": "Kettlebell",
+  "equipmentPullUpBar": "Optrekstang",
+  "equipmentJumpRope": "Springtouw",
+  "nutritionTitle": "Voeding",
+  "nutritionSubtitle": "Calorieën, macro's en maaltijdgeschiedenis",
+  "nutritionSetGoalsTitle": "Stel je dagelijkse voedingsdoelen in",
+  "nutritionSetGoalsBody": "Voeg je gewicht, lengte, leeftijd en geslacht toe, zodat Celia kan berekenen hoeveel calorieën en voedingsstoffen je elke dag moet binnenkrijgen.",
+  "nutritionSetUpGoals": "Doelen instellen",
+  "nutritionDailyTarget": "Dagelijks doel",
+  "nutritionDailyGoals": "Dagelijkse doelen",
+  "nutritionKcal": "{calories} kcal",
+  "@nutritionKcal": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMacroSummary": "P {protein}g · C {carbs}g · F {fat}g",
+  "@nutritionMacroSummary": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionToday": "Vandaag",
+  "nutritionMealHistory": "Maaltijdgeschiedenis",
+  "nutritionCeliaInsights": "Celia-inzichten",
+  "nutritionWeeklyTrend": "Wekelijkse trend",
+  "nutritionTodayMeals": "kcal • {count, plural, one{{count} maaltijd} other{{count} maaltijden}}",
+  "@nutritionTodayMeals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionTodayOfTargetMeals": "van {target} kcal • {count, plural, one{{count} maaltijd} other{{count} maaltijden}}",
+  "@nutritionTodayOfTargetMeals": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionWeekdayInitials": "M,D,W,D,V,Z,Z",
+  "@nutritionWeekdayInitials": {
+    "description": "Single-letter weekday labels for the weekly chart, Monday first, comma separated."
+  },
+  "nutritionFieldFoodName": "Naam van voedingsmiddel",
+  "nutritionFieldGrams": "Gram",
+  "nutritionFieldCalories": "Calorieën",
+  "scannerStatusAnalyzing": "ANALYSEREN...",
+  "scannerStatusIdle": "CELIA SCANNER",
+  "scannerFieldFoodName": "Naam van voedingsmiddel",
+  "scannerFieldGrams": "Gram",
+  "scannerFieldCalories": "Calorieën",
+  "scannerFieldPro": "Pro",
+  "scannerMacroPro": "PRO",
+  "scannerMacroCarb": "CARB",
+  "scannerMacroFat": "FAT",
+  "scannerRemainingAfterLogging": "Nog {calories} kcal en {grams}g eiwit over voor vandaag",
+  "@scannerRemainingAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerOverTargetAfterLogging": "{calories} kcal boven je dagelijkse doel",
+  "@scannerOverTargetAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerButtonAnalyzing": "Analyseren",
+  "scannerButtonQuotaNeeded": "Quotum vereist",
+  "scannerButtonScanNow": "Nu scannen",
+  "scannerButtonLogging": "Loggen",
+  "scannerButtonLogMeal": "Maaltijd loggen",
+  "scannerNoClearFood": "Er is nog geen duidelijk voedingsmiddel gedetecteerd. Zorg voor betere belichting of houd de camera dichterbij.",
+  "scannerErrorCameraPermission": "Cameratoegang is nodig om maaltijden te scannen.",
+  "scannerErrorBackendMissing": "De backend voor de caloriescanner is nog niet geconfigureerd.",
+  "scannerErrorApiKeyInvalid": "De OpenAI API-sleutel voor het scannen van calorieën is ongeldig. Vervang deze in de backendomgeving, implementeer opnieuw en probeer het nogmaals.",
+  "scannerErrorApiKeyMissing": "Een OpenAI API-sleutel is vereist om calorieën te scannen. Voeg deze toe in Vercel, implementeer opnieuw en probeer het nogmaals.",
+  "scannerErrorQuotaExhausted": "De OpenAI-tegoeden voor het scannen van calorieën zijn op. Voeg API-tegoed toe of verhoog de factureringslimiet en probeer het nogmaals.",
+  "scannerErrorTimeout": "Celia had meer tijd nodig om deze maaltijd te analyseren. Houd de camera stil en scan opnieuw.",
+  "scannerErrorNotSignedIn": "Meld je aan voordat je maaltijden scant.",
+  "scannerErrorMealTableMissing": "De tabel voor het loggen van maaltijden is nog niet klaar. Het scanresultaat is nog steeds beschikbaar.",
+  "scannerErrorGeneric": "Celia kon deze maaltijd nog niet analyseren. Houd de camera stil, houd het eten in het midden en scan opnieuw.",
+  "nutritionGrams": "{grams}g",
+  "@nutritionGrams": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionMealSubtitle": "{time} · {count, plural, one{{count} item} other{{count} items}}",
+  "@nutritionMealSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMealDetails": "Maaltijddetails",
+  "nutritionFoodItems": "Voedingsmiddelen",
+  "nutritionItemSubtitle": "{grams}g · {calories} kcal",
+  "@nutritionItemSubtitle": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionNeedsOneItem": "Een maaltijd moet minstens één voedingsmiddel bevatten.",
+  "nutritionMealUpdated": "Maaltijd bijgewerkt",
+  "nutritionUpdateFailed": "Maaltijd bijwerken mislukt: {error}",
+  "@nutritionUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionDeleteMealTitle": "Maaltijd verwijderen?",
+  "nutritionDeleteMealBody": "Hiermee verwijder je de maaltijd uit je voedingsgeschiedenis.",
+  "nutritionDeleteMeal": "Maaltijd verwijderen",
+  "nutritionDeleteFailed": "Maaltijd verwijderen mislukt: {error}",
+  "@nutritionDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionEditFood": "Voedingsmiddel bewerken",
+  "nutritionSaveFood": "Voedingsmiddel opslaan",
+  "nutritionLoadFailed": "Maaltijden laden mislukt",
+  "nutritionLoadFailedBody": "Trek omlaag om te vernieuwen of controleer de verbinding met de backend.",
+  "nutritionNoMeals": "Nog geen maaltijden geregistreerd",
+  "nutritionNoMealsBody": "Scan je eerste maaltijd en Celia bouwt je voedingsgeschiedenis op.",
+  "progressToday": "Vandaag",
+  "progressSetGoals": "Stel je voedingsdoelen in om calorieën en macro's bij te houden.",
+  "progressOfTarget": "van {target} kcal",
+  "@progressOfTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressMacroAmount": "{consumed} / {target}g",
+  "@progressMacroAmount": {
+    "placeholders": {
+      "consumed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalOver": "{calories} kcal boven doel",
+  "@progressKcalOver": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalLeft": "{calories} kcal over",
+  "@progressKcalLeft": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressProtein": "Eiwit",
+  "progressCarbs": "Koolhydraten",
+  "progressFat": "Vet",
+  "scannerEditItem": "Voedingsmiddel bewerken",
+  "scannerSaveChanges": "Wijzigingen opslaan",
+  "scannerItemCalories": "{name} · {calories} kcal",
+  "@scannerItemCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerConfidence": "Betrouwbaarheid {percent}% · {provider}",
+  "@scannerConfidence": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerMoreItems": "+ {count} extra voedingsmiddelen in deze maaltijdregistratie",
+  "@scannerMoreItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerIfYouLog": "Als je deze maaltijd registreert",
+  "scannerAfterLogging": "{after} / {target} kcal vandaag",
+  "@scannerAfterLogging": {
+    "placeholders": {
+      "after": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerGramsDecimal": "{grams}g",
+  "@scannerGramsDecimal": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerItemServing": "{name} · {grams}g",
+  "@scannerItemServing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerNoMealDetected": "Geen maaltijd gedetecteerd",
+  "onboardingWelcome": "Welkom, {name}",
+  "@onboardingWelcome": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingGender": "Geslacht",
+  "onboardingCalculateGoals": "Mijn doelen berekenen",
+  "onboardingScanFirstMeal": "Mijn eerste maaltijd scannen",
+  "onboardingExploreRoutines": "Routines ontdekken",
+  "onboardingGoHome": "Naar Home",
+  "onboardingDailyTargets": "Je dagelijkse doelen",
+  "onboardingProtein": "Eiwit {grams}g ·",
+  "@onboardingProtein": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingMacroTargets": "Eiwit {protein}g • Koolhydraten {carbs}g • Vet {fat}g",
+  "@onboardingMacroTargets": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingTargetsReady": "Je dagelijkse voedingsdoelen zijn klaar. Kies hoe je wilt beginnen.",
+  "onboardingWeightKg": "Gewicht (kg)",
+  "onboardingHeightCm": "Lengte (cm)",
+  "onboardingAge": "Leeftijd",
+  "onboardingInvalidWeight": "Voer een geldig gewicht in kg in.",
+  "onboardingInvalidHeight": "Voer een geldige lengte in cm in.",
+  "onboardingInvalidAge": "Voer een geldige leeftijd tussen 13 en 100 in.",
+  "onboardingSaveFailed": "Je voedingsprofiel kon niet worden opgeslagen.",
+  "genderMale": "Man",
+  "genderFemale": "Vrouw",
+  "genderOther": "Anders",
+  "nutritionSetupTitle": "Dagelijkse voedingsdoelen",
+  "nutritionSetupBody": "Vertel Celia over je lichaam, zodat ze je dagelijkse calorieën en macro's kan berekenen.",
+  "nutritionSetupGender": "Geslacht",
+  "nutritionSetupFootnote": "Celia gebruikt je gewicht, lengte, leeftijd en geslacht om je dagelijkse calorie- en macronutriëntendoelen te schatten op basis van een gemiddeld activiteitsniveau.",
+  "nutritionSetupSave": "Doelen opslaan",
+  "profileTitle": "Profiel",
+  "profileCeliaAi": "Celia AI",
+  "profileEliteMember": "Elite-lid",
+  "profileAccount": "Account",
+  "profileSignedInAs": "Ingelogd als:\n{email}",
+  "@profileSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "profileUnknownEmail": "Onbekend",
+  "profileDarkMode": "Donkere modus",
+  "profileLanguage": "Taal",
+  "profileLogOutTitle": "Uitloggen?",
+  "profileLogOutBody": "Weet je zeker dat je wilt uitloggen?",
+  "profileLogOut": "Uitloggen",
+  "profileLogOutButton": "Uitloggen",
+  "profileFavoriteRoutines": "Favoriete routines",
+  "profileSubscription": "Abonnement",
+  "profileNutrition": "Voeding",
+  "profileHelpSupport": "Help en ondersteuning",
+  "profileFriend": "Vriend",
+  "profileStatSaved": "Opgeslagen",
+  "profileStatStreak": "Reeks",
+  "profileStatWorkouts": "Work-outs",
+  "streakDayOneStarted": "Dag 1 is begonnen — kom morgen terug om je reeks op te bouwen.",
+  "streakRebuild": "Je was gisteren actief — log vandaag een maaltijd of voltooi een work-out om je reeks opnieuw op te bouwen.",
+  "streakStart": "Log een maaltijd of voltooi een work-out om je actieve reeks te starten.",
+  "streakLongRun": "Reeks van {days} dagen! Blijf komen opdagen — Celia houdt je consistentie bij.",
+  "@streakLongRun": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakBothLogged": "Reeks van {days} dagen — vandaag zijn zowel je work-out als voeding geregistreerd.",
+  "@streakBothLogged": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedWorkout": "Reeks van {days} dagen. Met een korte work-out maak je vandaag compleet.",
+  "@streakNeedWorkout": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedMeal": "Reeks van {days} dagen. Log een maaltijd om je voeding bij te houden.",
+  "@streakNeedMeal": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakStayActive": "Reeks van {days} dagen — blijf vandaag actief.",
+  "@streakStayActive": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "editProfileTitle": "Profiel bewerken",
+  "editProfileName": "Naam",
+  "editProfileFootnote": "Wijzigingen worden opgeslagen in je account en weergegeven op Home/Profiel.",
+  "editProfileSaveFailed": "Profiel bijwerken mislukt. Probeer het opnieuw.",
+  "languageTitle": "Taal",
+  "languageSystem": "Apparaattaal",
+  "languageSystemSubtitle": "Volg de taal die op je telefoon is ingesteld",
+  "languageEnglish": "Engels",
+  "languageSpanish": "Spaans",
+  "insightStartFuelingTitle": "Begin vandaag met eten",
+  "insightStartFuelingBody": "Je hebt nog je volledige calorieënbudget over. Scan of log je eerste maaltijd om op koers te blijven.",
+  "insightAboveTargetTitle": "Vandaag boven je doel",
+  "insightAboveTargetBody": "Je zit {calories} kcal boven je dagelijkse doel. Eet een lichtere avondmaaltijd of voeg een korte work-out toe.",
+  "@insightAboveTargetBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightLowProteinTitle": "Nog weinig eiwitten",
+  "insightLowProteinBody": "Je hebt vandaag nog ongeveer {grams}g eiwitten nodig om je doel te halen.",
+  "@insightLowProteinBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightAlmostThereTitle": "Bijna bij je doel",
+  "insightAlmostThereBody": "Je hebt vandaag nog {calories} kcal over. Een uitgebalanceerde snack past hier goed bij.",
+  "@insightAlmostThereBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightOnTrackTitle": "Vandaag op koers",
+  "insightOnTrackBody": "Nog {calories} kcal en {grams}g eiwitten om je dagelijkse doelen te bereiken.",
+  "@insightOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightWeeklyRhythmTitle": "Bouw je wekelijkse ritme op",
+  "insightWeeklyRhythmBody": "Log maaltijden gedurende de week, zodat Celia patronen kan herkennen en je beter kan begeleiden.",
+  "insightWeeklyTrendTitle": "Wekelijkse trend",
+  "insightWeeklyTrendBody": "Je hebt op {days} van de afgelopen 7 dagen maaltijden gelogd, gemiddeld {average} kcal — {direction}.",
+  "@insightWeeklyTrendBody": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "average": {
+        "type": "int"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "insightTrendOnTarget": "precies rond je dagelijkse doel",
+  "insightTrendAbove": "gemiddeld {delta} kcal boven je doel",
+  "@insightTrendAbove": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightTrendBelow": "gemiddeld {delta} kcal onder je doel",
+  "@insightTrendBelow": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsSectionTitle": "Inzichten van Celia"
+}

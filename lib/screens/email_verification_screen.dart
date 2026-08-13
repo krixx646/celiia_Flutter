@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../l10n/app_localizations.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/loading_indicator.dart';
 
@@ -13,12 +14,13 @@ class EmailVerificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: _authBackground,
       appBar: AppBar(
         backgroundColor: _authBackground,
         foregroundColor: Colors.white,
-        title: const Text('Verify your email'),
+        title: Text(l10n.verifyEmailTitle),
       ),
       body: Consumer<AuthProvider>(
         builder: (context, auth, child) {
@@ -42,26 +44,29 @@ class EmailVerificationScreen extends StatelessWidget {
                       size: 54,
                     ),
                     const SizedBox(height: 16),
-                    const Text(
-                      'Check your inbox',
+                    Text(
+                      l10n.verifyEmailHeading,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24,
                         fontWeight: FontWeight.w900,
                       ),
                     ),
                     const SizedBox(height: 10),
-                    const Text(
-                      'A verification link has been sent to your email.',
+                    Text(
+                      l10n.verifyEmailBody,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white70, height: 1.35),
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        height: 1.35,
+                      ),
                     ),
                     const SizedBox(height: 12),
                     if (ui.verificationEmailSent)
-                      const Text(
-                        'Verification email sent!',
-                        style: TextStyle(color: Colors.green),
+                      Text(
+                        l10n.verifyEmailSent,
+                        style: const TextStyle(color: Colors.green),
                       ),
                     if (ui.authError != null)
                       Text(
@@ -82,11 +87,13 @@ class EmailVerificationScreen extends StatelessWidget {
                           ? null
                           : auth.sendVerificationEmail,
                       child: ui.isLoading
-                          ? const LoadingIndicator(message: 'Sending...')
+                          ? LoadingIndicator(message: l10n.verifyEmailSending)
                           : Text(
                               ui.resendCooldownSeconds > 0
-                                  ? 'Resend in ${ui.resendCooldownSeconds}s'
-                                  : 'Resend verification email',
+                                  ? l10n.verifyEmailResendIn(
+                                      ui.resendCooldownSeconds,
+                                    )
+                                  : l10n.verifyEmailResend,
                             ),
                     ),
                     const SizedBox(height: 8),
@@ -100,12 +107,12 @@ class EmailVerificationScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
                       onPressed: auth.checkEmailVerification,
-                      child: const Text('I have verified, continue'),
+                      child: Text(l10n.verifyEmailContinue),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       ui.lastUsedEmail.isNotEmpty
-                          ? 'Email: ${ui.lastUsedEmail}'
+                          ? l10n.verifyEmailAddress(ui.lastUsedEmail)
                           : '',
                       textAlign: TextAlign.center,
                       style: const TextStyle(color: Colors.white54),
@@ -113,9 +120,9 @@ class EmailVerificationScreen extends StatelessWidget {
                     const Spacer(),
                     TextButton(
                       onPressed: auth.signOut,
-                      child: const Text(
-                        'Sign out',
-                        style: TextStyle(color: Colors.white70),
+                      child: Text(
+                        l10n.verifyEmailSignOut,
+                        style: const TextStyle(color: Colors.white70),
                       ),
                     ),
                   ],

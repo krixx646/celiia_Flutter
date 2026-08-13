@@ -30,6 +30,23 @@ const DEEPSEEK_TIMEOUT_MS = 45_000;
 // code path — it just skips it while suspended.
 const SUSPEND_REAL_VIDEOS = process.env.SUSPEND_REAL_VIDEOS !== 'false';
 
+// Mirrors `Env.enableGifFallback` on the Flutter side. The client's filmed
+// clip library replaced the stock GIF pack, and the app no longer renders a
+// GIF anywhere, so building routines out of them would produce steps that
+// show nothing. Suspended rather than removed, exactly like the videos above.
+const ENABLE_GIF_FALLBACK = process.env.ENABLE_GIF_FALLBACK === 'true';
+
+// What the clip library calls the kit an exercise needs, mapped from what the
+// Create Routine sheet offers. Everything a home has anyway — a wall, a chair,
+// and the bench or box a chair stands in for — is always available; only the
+// bought equipment is gated on the user actually owning it.
+const ALWAYS_AVAILABLE_EQUIPMENT = ['wall', 'chair', 'bench', 'box'];
+
+const EQUIPMENT_SYNONYMS: Record<string, string[]> = {
+  dumbbell: ['dumbbell', 'dumbbells', 'kettlebell', 'weight', 'weights'],
+  band: ['band', 'bands', 'resistance band', 'resistance bands'],
+};
+
 export type Difficulty = 'easy' | 'medium' | 'hard';
 
 type Category =
@@ -76,15 +93,43 @@ type CatalogGif = {
   category: string | null;
 };
 
+type ExerciseClipRow = {
+  slug: unknown;
+  name_en: unknown;
+  pattern?: unknown;
+  step_type?: unknown;
+  equipment?: unknown;
+  default_reps?: unknown;
+  default_hold_seconds?: unknown;
+  clip_seconds?: unknown;
+  poster_url?: unknown;
+};
+
+type CatalogClip = {
+  slug: string;
+  name: string;
+  pattern: string | null;
+  /** 'reps' exercises are counted out loud, 'hold' ones run a countdown. */
+  stepType: 'reps' | 'hold';
+  equipment: string[];
+  defaultReps: number | null;
+  defaultHoldSeconds: number | null;
+  clipSeconds: number;
+  posterUrl: string | null;
+};
+
 // What the model actually sees: a flattened list it can reference by exact
 // id, tagged with which pool ("video" or "gif") that id belongs to.
 type CatalogEntryForPrompt = {
-  refType: 'video' | 'gif';
+  refType: 'video' | 'gif' | 'clip';
   refId: string;
   name: string;
   category: string | null;
   muscleGroup: string | null;
   durationSeconds?: number;
+  /** Clips only: tells the model whether to prescribe reps or a hold. */
+  stepType?: 'reps' | 'hold';
+  equipment?: string[];
 };
 
 type RoutineJson = {
@@ -104,6 +149,9 @@ type RoutineStepJson = {
   refType?: unknown;
   refId?: unknown;
   orderIndex?: unknown;
+  sets?: unknown;
+  reps?: unknown;
+  restSeconds?: unknown;
 };
 
 type StepPayload = {
@@ -115,6 +163,12 @@ type StepPayload = {
   exercise_slug: string | null;
   thumbnail_url: string | null;
   order_index: number;
+  /** Rounds of this exercise before moving on. */
+  sets: number;
+  /** Reps per set, or null when the exercise is held for time instead. */
+  reps: number | null;
+  /** Recovery after each set, including the last one. */
+  rest_seconds: number;
 };
 
 type DeepSeekChatResponse = {
@@ -280,6 +334,18 @@ function topUpAcrossCategories(
   return out;
 }
 
+// Which of the clip library's equipment tags this user can actually work
+// with, given what they ticked on the Create Routine sheet.
+function availableEquipment(selected: string[]): Set<string> {
+  const available = new Set(ALWAYS_AVAILABLE_EQUIPMENT);
+  const haystack = selected.join(' ').toLowerCase();
+
+  for (const [tag, synonyms] of Object.entries(EQUIPMENT_SYNONYMS)) {
+    if (synonyms.some((synonym) => haystack.includes(synonym))) available.add(tag);
+  }
+  return available;
+}
+
 function selectCatalogForPrompt(
   entries: CatalogEntryForPrompt[],
   requestText: string,
@@ -351,30 +417,69 @@ export async function generateRoutine(
     }));
   }
 
-  // Stock GIF exercise library — the primary catalog while real videos are
-  // suspended, and always a fallback for exercises without a filmed video.
-  const { data: gifs, error: gifErr } = await supabase
-    .from('exercise_media')
-    .select('slug,display_name,muscle_group,category')
-    .limit(1000);
+  // The client's filmed clip library: the primary catalog, and the only pool
+  // the guided player can coach a user through, because these are the only
+  // exercises with a known rep cycle to count against.
+  const { data: clips, error: clipErr } = await supabase
+    .from('exercise_clips')
+    .select(
+      'slug,name_en,pattern,step_type,equipment,default_reps,' +
+        'default_hold_seconds,clip_seconds,poster_url'
+    )
+    .eq('is_active', true)
+    .limit(500);
 
-  if (gifErr) {
+  if (clipErr) {
     return {
       ok: false,
       status: 500,
       error: 'Failed to load exercise library',
-      details: gifErr.message,
+      details: clipErr.message,
     };
   }
 
-  const gifCatalog: CatalogGif[] = ((gifs || []) as ExerciseMediaRow[]).map((g) => ({
-    slug: String(g.slug || ''),
-    displayName: String(g.display_name || ''),
-    muscleGroup: g.muscle_group ? String(g.muscle_group) : null,
-    category: g.category ? String(g.category) : null,
-  }));
+  const usable = availableEquipment(equipment);
+  const clipCatalog: CatalogClip[] = ((clips || []) as unknown as ExerciseClipRow[])
+    .map((c) => ({
+      slug: String(c.slug || ''),
+      name: String(c.name_en || ''),
+      pattern: c.pattern ? String(c.pattern) : null,
+      stepType: c.step_type === 'hold' ? ('hold' as const) : ('reps' as const),
+      equipment: Array.isArray(c.equipment) ? c.equipment.map(String) : [],
+      defaultReps: c.default_reps == null ? null : safeInt(c.default_reps, 0) || null,
+      defaultHoldSeconds:
+        c.default_hold_seconds == null ? null : safeInt(c.default_hold_seconds, 0) || null,
+      clipSeconds: Number(c.clip_seconds) || 0,
+      posterUrl: c.poster_url ? String(c.poster_url) : null,
+    }))
+    .filter((c) => c.slug && c.equipment.every((item) => usable.has(item)));
 
-  if (videoCatalog.length === 0 && gifCatalog.length === 0) {
+  // Stock GIF exercise library, suspended alongside the app's GIF rendering.
+  let gifCatalog: CatalogGif[] = [];
+  if (ENABLE_GIF_FALLBACK) {
+    const { data: gifs, error: gifErr } = await supabase
+      .from('exercise_media')
+      .select('slug,display_name,muscle_group,category')
+      .limit(1000);
+
+    if (gifErr) {
+      return {
+        ok: false,
+        status: 500,
+        error: 'Failed to load exercise library',
+        details: gifErr.message,
+      };
+    }
+
+    gifCatalog = ((gifs || []) as ExerciseMediaRow[]).map((g) => ({
+      slug: String(g.slug || ''),
+      displayName: String(g.display_name || ''),
+      muscleGroup: g.muscle_group ? String(g.muscle_group) : null,
+      category: g.category ? String(g.category) : null,
+    }));
+  }
+
+  if (videoCatalog.length === 0 && clipCatalog.length === 0 && gifCatalog.length === 0) {
     return { ok: false, status: 400, error: 'No exercises available to build a routine' };
   }
 
@@ -387,6 +492,16 @@ export async function generateRoutine(
     durationSeconds: v.durationSeconds,
   }));
 
+  const clipEntries: CatalogEntryForPrompt[] = clipCatalog.map((c) => ({
+    refType: 'clip' as const,
+    refId: c.slug,
+    name: c.name,
+    category: c.pattern,
+    muscleGroup: c.pattern,
+    stepType: c.stepType,
+    equipment: c.equipment,
+  }));
+
   const gifEntries: CatalogEntryForPrompt[] = gifCatalog.map((g) => ({
     refType: 'gif' as const,
     refId: g.slug,
@@ -395,16 +510,22 @@ export async function generateRoutine(
     muscleGroup: g.muscleGroup,
   }));
 
-  // Real filmed videos are the preferred pool and capped at 200, so they all
-  // stay in the prompt; only the much larger GIF library gets narrowed.
-  const gifBudget = Math.max(40, MAX_CATALOG_ENTRIES - videoEntries.length);
+  // Filmed clips and videos are the preferred pools and small enough to send
+  // whole; only the much larger GIF library ever gets narrowed.
+  const gifBudget = Math.max(
+    0,
+    MAX_CATALOG_ENTRIES - videoEntries.length - clipEntries.length
+  );
   const promptCatalog: CatalogEntryForPrompt[] = [
+    ...clipEntries,
     ...videoEntries,
-    ...selectCatalogForPrompt(gifEntries, requestText, equipment, gifBudget),
+    ...(gifBudget > 0
+      ? selectCatalogForPrompt(gifEntries, requestText, equipment, gifBudget)
+      : []),
   ];
 
-  const preferVideoRule = videoCatalog.length > 0
-    ? '- When both a "video" and a "gif" entry fit the same exercise, prefer "video".'
+  const preferClipRule = clipEntries.length > 0
+    ? '- Prefer "clip" entries over every other type. They are the only exercises Celia can demonstrate and count out loud.'
     : '';
 
   const system = `
@@ -423,10 +544,13 @@ Respond ONLY with valid JSON:
     {
       "title": "Step title",
       "description": "Short coaching cue",
-      "durationSeconds": 30,
-      "refType": "video" or "gif",
+      "refType": "clip" | "video" | "gif",
       "refId": "EXACT_ID_FROM_CATALOG",
-      "orderIndex": 0
+      "orderIndex": 0,
+      "sets": 3,
+      "reps": 12,
+      "durationSeconds": 0,
+      "restSeconds": 45
     }
   ],
   "tags": ["tag1","tag2"],
@@ -437,8 +561,14 @@ Respond ONLY with valid JSON:
 Rules:
 - Build a varied routine that actually fits the user's request (target muscle groups / workout style), not just whatever is easiest — the catalog has strength, calisthenics, functional/HIIT, and stretching/mobility exercises to choose from.
 - It's fine to reuse the same exercise as multiple steps (e.g. as a superset or second round), but don't make the whole routine a single exercise repeated unless the user explicitly asked for that.
-- durationSeconds must be an integer > 0 (typically 20-60s per step).
-${preferVideoRule}
+${preferClipRule}
+- Every step is prescribed as sets, and each set is either counted in reps or held for time. Catalog entries carry a "stepType" saying which:
+  - "reps": set "reps" to a whole number (typically 8-15) and "durationSeconds" to 0. Celia counts these out loud.
+  - "hold": set "reps" to 0 and "durationSeconds" to how long to hold each set (typically 20-60s). Celia runs a countdown.
+  Entries with no "stepType" are older library entries; treat those as "hold".
+- "sets" is 1-5. Use more sets for strength work, one for stretches and cool-downs.
+- "restSeconds" is the recovery after each set: 0-30s for mobility and easy work, 30-60s for strength, 60-90s for hard compound lifts. Use 0 only for stretches.
+- The whole routine, including rest, should come to roughly the requested duration.
 - Keep steps <= 40.
 `;
 
@@ -538,7 +668,33 @@ ${preferVideoRule}
 
   const videoById = new Map(videoCatalog.map((v) => [v.id, v]));
   const gifBySlug = new Map(gifCatalog.map((g) => [g.slug, g]));
+  const clipBySlug = new Map(clipCatalog.map((c) => [c.slug, c]));
   const rawSteps = Array.isArray(routineJson.steps) ? routineJson.steps : [];
+
+  // A prescription the player can actually run. The model is asked for sets,
+  // reps and rest, but a routine is too important to leave at the mercy of
+  // whether it obliged, so anything missing falls back to the clip library's
+  // own reviewed defaults.
+  const prescriptionFor = (s: RoutineStepJson, clip: CatalogClip | undefined) => {
+    const sets = Math.max(1, Math.min(5, safeInt(s?.sets, 1)));
+    const rest = Math.max(0, Math.min(180, safeInt(s?.restSeconds, 30)));
+
+    const counted = clip ? clip.stepType === 'reps' : false;
+    const reps = counted
+      ? Math.max(1, safeInt(s?.reps, clip?.defaultReps ?? 10))
+      : null;
+
+    let duration = safeInt(s?.durationSeconds, 0);
+    if (counted) {
+      // Time is the product of the reps and the clip, not a separate number
+      // the model gets to invent; the player derives it from the loop.
+      duration = Math.max(1, Math.round((reps ?? 1) * (clip?.clipSeconds || 3)));
+    } else if (duration <= 0) {
+      duration = clip?.defaultHoldSeconds ?? 30;
+    }
+
+    return { sets, reps, rest_seconds: rest, duration_seconds: duration };
+  };
 
   const steps = rawSteps
     .slice(0, 40)
@@ -546,6 +702,23 @@ ${preferVideoRule}
       if (!isRoutineStepJson(s)) return null;
       const refType = String(s?.refType || '').trim();
       const refId = String(s?.refId || '').trim();
+
+      if (refType === 'clip') {
+        const meta = clipBySlug.get(refId);
+        if (!meta) return null;
+
+        const step: StepPayload = {
+          id: crypto.randomUUID(),
+          title: String(s?.title || meta.name || 'Exercise'),
+          description: s?.description ? String(s.description) : null,
+          video_id: null,
+          exercise_slug: refId,
+          thumbnail_url: meta.posterUrl,
+          order_index: safeInt(s?.orderIndex, idx),
+          ...prescriptionFor(s, meta),
+        };
+        return step;
+      }
 
       if (refType === 'video') {
         const meta = videoById.get(refId);
@@ -565,6 +738,9 @@ ${preferVideoRule}
           exercise_slug: null,
           thumbnail_url: meta.thumbnailUrl,
           order_index: safeInt(s?.orderIndex, idx),
+          sets: Math.max(1, Math.min(5, safeInt(s?.sets, 1))),
+          reps: null,
+          rest_seconds: Math.max(0, Math.min(180, safeInt(s?.restSeconds, 0))),
         };
         return step;
       }
@@ -588,6 +764,9 @@ ${preferVideoRule}
           // rather than duplicating the GIF URL here.
           thumbnail_url: null,
           order_index: safeInt(s?.orderIndex, idx),
+          sets: Math.max(1, Math.min(5, safeInt(s?.sets, 1))),
+          reps: null,
+          rest_seconds: Math.max(0, Math.min(180, safeInt(s?.restSeconds, 0))),
         };
         return step;
       }

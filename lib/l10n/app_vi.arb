@@ -1,0 +1,1017 @@
+{
+  "@@locale": "vi",
+  "appName": "Celia - Huấn luyện viên toàn diện",
+  "@appName": {
+    "description": "The app's name. Not translated."
+  },
+  "actionCancel": "Hủy",
+  "actionSave": "Lưu",
+  "actionDelete": "Xóa",
+  "actionEdit": "Chỉnh sửa",
+  "actionRetry": "Thử lại",
+  "actionDone": "Xong",
+  "actionClose": "Đóng",
+  "actionContinue": "Tiếp tục",
+  "actionSeeAll": "Xem tất cả",
+  "actionYesDoIt": "Có, thực hiện",
+  "actionNotNow": "Để sau",
+  "loadingPreparing": "Đang chuẩn bị Celia...",
+  "loadingGeneric": "Đang tải...",
+  "errorGeneric": "Đã xảy ra lỗi. Vui lòng thử lại.",
+  "errorCanceled": "Đã hủy thao tác.",
+  "errorTooManyRequests": "Quá nhiều lần thử. Vui lòng đợi một phút rồi thử lại.",
+  "errorNetwork": "Vui lòng kiểm tra kết nối internet và thử lại.",
+  "errorBadCredentials": "Email hoặc mật khẩu không đúng.",
+  "errorEmailInUse": "Email này đã được sử dụng. Hãy thử đăng nhập.",
+  "errorWeakPassword": "Hãy dùng mật khẩu mạnh hơn rồi thử lại.",
+  "errorInvalidEmail": "Vui lòng nhập địa chỉ email hợp lệ.",
+  "errorNoPermission": "Bạn không có quyền thực hiện việc này.",
+  "errorNotSignedIn": "Vui lòng đăng nhập rồi thử lại.",
+  "errorNoConversation": "Bắt đầu cuộc trò chuyện mới để tiếp tục.",
+  "errorNoPlayableVideos": "Hiện chưa có video nào có thể phát cho bài tập này.",
+  "errorLoadRoutines": "Không thể tải bài tập lúc này. Vui lòng thử lại.",
+  "errorLoadSavedRoutines": "Không thể tải các bài tập đã lưu lúc này. Vui lòng thử lại.",
+  "errorGenerateRoutine": "Không thể tạo bài tập lúc này. Vui lòng thử lại.",
+  "errorLoadChats": "Hiện không thể tải các cuộc trò chuyện đã lưu.",
+  "errorCeliaUnavailable": "Celia hiện không khả dụng. Vui lòng thử lại.",
+  "errorOpenConversation": "Không thể mở cuộc trò chuyện đó.",
+  "errorDeleteConversation": "Không thể xóa cuộc trò chuyện này. Vui lòng thử lại.",
+  "errorSignIn": "Không thể đăng nhập. Vui lòng thử lại.",
+  "errorCreateAccount": "Không thể tạo tài khoản. Vui lòng thử lại.",
+  "errorSendResetEmail": "Không thể gửi email đặt lại mật khẩu. Vui lòng thử lại.",
+  "errorSendVerificationEmail": "Không thể gửi email xác minh. Vui lòng thử lại.",
+  "errorGoogleSignIn": "Đăng nhập bằng Google không thành công. Vui lòng thử lại.",
+  "errorAppleSignIn": "Đăng nhập bằng Apple không thành công. Vui lòng thử lại.",
+  "errorRefreshNutrition": "Không thể làm mới dữ liệu dinh dưỡng.",
+  "errorLoadNutritionProfile": "Không thể tải hồ sơ dinh dưỡng của bạn.",
+  "startupErrorTitle": "Không thể khởi động ứng dụng",
+  "startupErrorBody": "Vui lòng đóng rồi mở lại ứng dụng. Nếu sự cố vẫn tiếp diễn, hãy liên hệ bộ phận hỗ trợ.",
+  "authTagline": "Người bạn đồng hành thể hình của bạn",
+  "authSignUp": "Đăng ký",
+  "authLogIn": "Đăng nhập",
+  "authVersion": "Phiên bản {version}",
+  "@authVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "authForgotPassword": "Quên mật khẩu?",
+  "authOr": "HOẶC",
+  "authContinueWithGoogle": "Tiếp tục với Google",
+  "authContinueWithApple": "Tiếp tục với Apple",
+  "authAuthenticating": "Đang xác thực...",
+  "authEnterYourName": "Vui lòng nhập tên của bạn.",
+  "authNeedAccount": "Chưa có tài khoản? Đăng ký",
+  "authHaveAccount": "Đã có tài khoản? Đăng nhập",
+  "authFieldName": "Tên của bạn",
+  "authFieldEmail": "Email",
+  "authFieldPassword": "Mật khẩu",
+  "verifyEmailTitle": "Xác minh email của bạn",
+  "verifyEmailHeading": "Kiểm tra hộp thư đến",
+  "verifyEmailBody": "Một liên kết xác minh đã được gửi đến email của bạn.",
+  "verifyEmailSent": "Đã gửi email xác minh!",
+  "verifyEmailContinue": "Tôi đã xác minh, tiếp tục",
+  "verifyEmailSignOut": "Đăng xuất",
+  "verifyEmailSending": "Đang gửi...",
+  "verifyEmailResend": "Gửi lại email xác minh",
+  "verifyEmailResendIn": "Gửi lại sau {seconds} giây",
+  "@verifyEmailResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "verifyEmailAddress": "Email: {email}",
+  "@verifyEmailAddress": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "forgotPasswordTitle": "Quên mật khẩu",
+  "forgotPasswordBody": "Nhập email của bạn để nhận liên kết đặt lại mật khẩu.",
+  "forgotPasswordEmptyEmail": "Vui lòng nhập email",
+  "forgotPasswordSent": "Đã gửi email đặt lại mật khẩu.",
+  "forgotPasswordSend": "Gửi liên kết đặt lại",
+  "forgotPasswordSending": "Đang gửi...",
+  "nameSetupTitle": "Bạn muốn Celia gọi bạn là gì?",
+  "nameSetupBody": "Chúng tôi sử dụng tên của bạn trong ứng dụng để việc huấn luyện trở nên thân thiện hơn.",
+  "nameSetupSaveFailed": "Không thể lưu tên của bạn. Vui lòng thử lại.",
+  "homeGoodMorning": "Chào buổi sáng,",
+  "homeCeliaActive": "CELIA ACTIVE",
+  "homeGenerateRoutine": "Tạo\nlịch tập\ncá nhân hóa bằng AI",
+  "homeCreateRoutine": "Tạo lịch tập",
+  "homeQuickActions": "Tác vụ nhanh",
+  "homeUpNext": "Sắp tới",
+  "homeNoUpcoming": "Chưa có lịch tập nào sắp tới.\nHãy tạo một lịch tập hoặc duyệt thư viện.",
+  "homeChatWithCelia": "Trò chuyện với Celia",
+  "homeChatSubtitle": "Hỏi về kỹ thuật hoặc chế độ ăn",
+  "homeScanMeal": "Quét món ăn",
+  "homeScanMealSubtitle": "Nhận diện thực phẩm & calo",
+  "homeNutrition": "Dinh dưỡng",
+  "homeNutritionSubtitle": "Xem calo, macro & bữa ăn",
+  "homeBrowseLibrary": "Duyệt\nthư viện",
+  "homeTrackProgress": "Theo dõi\ntiến độ",
+  "chatTitle": "Huấn luyện viên Celia",
+  "chatEmptyPrompt": "Hôm nay tôi có thể giúp bạn\nrèn luyện sức khỏe thế nào?",
+  "chatYourChats": "Các cuộc trò chuyện",
+  "chatNoSavedChats": "Chưa có cuộc trò chuyện nào được lưu.",
+  "chatHistory": "Lịch sử trò chuyện",
+  "chatNew": "Cuộc trò chuyện mới",
+  "chatOpening": "Đang mở cuộc trò chuyện...",
+  "chatScanAMeal": "Quét món ăn",
+  "chatInputHint": "Hỏi Celia bất cứ điều gì về việc tập luyện của bạn...",
+  "chatCouldNotOpenRoutine": "Không thể mở lịch tập đó",
+  "chatThisRoutine": "lịch tập này",
+  "chatThisMeal": "bữa ăn này",
+  "chatYourRoutine": "Lịch tập của bạn",
+  "chatMoreExercises": "+ {count} bài tập nữa",
+  "@chatMoreExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatEmptySubtitle": "Hỏi về việc tập luyện, chế độ ăn hoặc tiến độ của bạn.",
+  "chatLoggedToday": "Hôm nay bạn đã ghi nhận {calories} kcal.",
+  "@chatLoggedToday": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "chatSuggestionHiit": "Tạo cho tôi một lịch HIIT 20 phút",
+  "chatSuggestionDinner": "Tối nay tôi nên ăn gì?",
+  "chatSuggestionProgress": "Tuần này tôi tiến bộ thế nào?",
+  "chatSuggestionIngredients": "Tôi có thịt gà, cơm và rau bina",
+  "chatJustNow": "Vừa xong",
+  "chatMinutesAgo": "{minutes} phút trước",
+  "@chatMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "chatHoursAgo": "{hours} giờ trước",
+  "@chatHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "chatDaysAgo": "{days} ngày trước",
+  "@chatDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "chatRoutineAlreadySaved": "Đã có trong thư viện — chạm để mở",
+  "chatRoutineTapToOpen": "Chạm để mở",
+  "chatToolCancelled": "Đã hủy",
+  "chatToolFailed": "{label} — thao tác không thành công",
+  "@chatToolFailed": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "chatToolRoutineSaveFailed": "Không thể lưu bài tập",
+  "chatToolRoutineSaved": "Đã lưu vào thư viện",
+  "chatToolMealLogged": "Đã thêm vào nhật ký hôm nay",
+  "chatToolRoutineAdded": "Đã thêm vào thư viện",
+  "activityCheckingProgress": "Đang kiểm tra tiến độ của bạn",
+  "activityCheckingNutrition": "Đang kiểm tra những gì bạn đã ăn hôm nay",
+  "activityReviewingMeals": "Đang xem lại các bữa ăn gần đây",
+  "activityLookingAtRoutines": "Đang xem các bài tập của bạn",
+  "activityReadingRoutine": "Đang đọc bài tập đó",
+  "activitySearchingLibrary": "Đang tìm kiếm trong thư viện bài tập",
+  "activityBuildingRoutine": "Đang tạo bài tập cho bạn",
+  "activityLoggingMeal": "Đang ghi lại bữa ăn của bạn",
+  "activitySavingToLibrary": "Đang lưu vào thư viện",
+  "activityWorking": "Đang xử lý",
+  "approvalSaveRoutineWithCount": "Lưu \"{name}\" với {count} bài tập vào thư viện?",
+  "@approvalSaveRoutineWithCount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalSaveRoutine": "Lưu \"{name}\" vào thư viện?",
+  "@approvalSaveRoutine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalLogMealWithCalories": "Ghi \"{name}\" với {calories} kcal?",
+  "@approvalLogMealWithCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalLogMeal": "Ghi \"{name}\"?",
+  "@approvalLogMeal": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalAddRoutine": "Thêm bài tập này vào thư viện?",
+  "approvalGeneric": "Cho phép Celia thực hiện việc này?",
+  "libraryTitle": "Thư viện bài tập",
+  "librarySteps": "{count, plural, one{{count} bước} other{{count} bước}}",
+  "@librarySteps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryEmpty": "Chưa có bài tập nào",
+  "libraryEmptyBody": "Tạo và đăng bài tập trong trang quản trị.",
+  "libraryLoadFailed": "Không thể tải các bài tập",
+  "routineStartWorkout": "Bắt đầu tập",
+  "routineNoSteps": "Không có bước nào",
+  "routineNoVideoForStep": "Không có video cho bước này",
+  "routineVideoProcessing": "Video vẫn đang được xử lý. Vui lòng thử lại sau.",
+  "routineMissingPlaybackUrl": "Thiếu URL phát cho video này",
+  "routinePreviewBanner": "BẢN XEM TRƯỚC — video đầy đủ sắp có",
+  "routinePreview": "BẢN XEM TRƯỚC",
+  "routineDetails": "Chi tiết",
+  "routineNotFound": "Không tìm thấy bài tập",
+  "routineCompletedTimes": "Đã hoàn thành {count} lần",
+  "@routineCompletedTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "playerVideoUnavailable": "Video này hiện không khả dụng.",
+  "playerSteps": "Các bước",
+  "playerStepCounter": "{current}/{total}",
+  "@playerStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoPlayableVideos": "Không có video có thể phát",
+  "playerWorkoutComplete": "Đã hoàn thành buổi tập!",
+  "playerSavingStreak": "Đang lưu vào chuỗi ngày tập…",
+  "playerSavedStreak": "Đã lưu vào chuỗi ngày tập",
+  "playerRetrySave": "Thử lưu lại",
+  "playerReplay": "Phát lại",
+  "playerNotReady": "Trình phát chưa sẵn sàng",
+  "playerPreviewUnavailable": "Bản xem trước hiện không khả dụng.",
+  "playerClipCounter": "Đoạn {current} trên {total} · {duration}",
+  "@playerClipCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerErrorLoadingVideo": "Lỗi khi tải video",
+  "playerLoadingVideo": "Đang tải video...",
+  "playerFailedToLoadVideo": "Không thể tải video",
+  "playerNotInitialized": "Trình phát video chưa được khởi tạo",
+  "guidedExerciseCounter": "Bài tập {current}/{total}",
+  "@guidedExerciseCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedGetReady": "CHUẨN BỊ",
+  "guidedSetOf": "Hiệp {current} trên {total}",
+  "@guidedSetOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedRest": "NGHỈ",
+  "guidedSkipRest": "Bỏ qua thời gian nghỉ",
+  "guidedPaused": "Đã tạm dừng",
+  "guidedResume": "Tiếp tục",
+  "guidedWorkoutComplete": "Đã hoàn thành buổi tập",
+  "guidedEndTitle": "Kết thúc buổi tập?",
+  "guidedEndBody": "Tiến trình của bạn trong buổi tập này sẽ không được lưu.",
+  "guidedKeepGoing": "Tiếp tục",
+  "guidedEnd": "Kết thúc",
+  "guidedReps": "{count, plural, one{{count} lần} other{{count} lần}}",
+  "@guidedReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetTitle": "Tạo giáo án bằng AI",
+  "generateSheetPrompt": "Bạn muốn tập luyện như thế nào?",
+  "generateSheetHint": "ví dụ: \"Bài giãn cơ buổi sáng nhanh để tỉnh táo\" hoặc \"Tập sức mạnh toàn thân cho người mới bắt đầu\"",
+  "generateSheetDuration": "Thời lượng",
+  "generateSheetMinutes": "{count} phút",
+  "@generateSheetMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetDifficulty": "Độ khó",
+  "generateSheetEquipment": "Thiết bị sẵn có",
+  "generateSheetGenerating": "Đang tạo...",
+  "generateSheetSubmit": "Tạo giáo án",
+  "generateSheetDescribeFirst": "Vui lòng mô tả bài tập bạn muốn",
+  "generateSheetAlreadyExists": "Bạn đã có bài này: {title}",
+  "@generateSheetAlreadyExists": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetCreated": "Đã tạo: {title}",
+  "@generateSheetCreated": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetFailed": "Không thể tạo giáo án",
+  "guidedNoExercises": "Giáo án này chưa có bài tập nào.",
+  "guidedStartFailed": "Hiện không thể bắt đầu buổi tập này. Vui lòng thử lại.",
+  "guidedSaveFailed": "Không thể lưu buổi tập này. Nhấn thử lại để cập nhật chuỗi ngày tập.",
+  "guidedOfReps": "trên tổng số {count} lần",
+  "@guidedOfReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedHold": "giữ",
+  "guidedNextSet": "Hiệp tiếp theo",
+  "guidedUpNext": "Tiếp theo",
+  "guidedSetsHold": "{sets} × giữ {seconds} giây",
+  "@guidedSetsHold": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachGetReady": "Sẵn sàng. {exercise}",
+  "@coachGetReady": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachStartReps": "Bắt đầu. {count} lần.",
+  "@coachStartReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachStartHold": "Giữ trong {seconds} giây.",
+  "@coachStartHold": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachRest": "Nghỉ. Tiếp theo: {exercise}",
+  "@coachRest": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachRestShort": "Nghỉ.",
+  "coachComplete": "Tuyệt vời. Đã hoàn thành buổi tập.",
+  "coachRep": "{count}",
+  "@coachRep": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachCountdown": "{seconds}",
+  "@coachCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoVideosInRoutine": "Không tìm thấy video có thể phát trong giáo án này.",
+  "playerLoadRoutineFailed": "Hiện không thể tải giáo án này. Vui lòng thử lại.",
+  "playerStepLoadFailedSkipping": "Không thể tải \"{title}\". Đang bỏ qua…",
+  "@playerStepLoadFailedSkipping": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerStepLoadFailed": "Không thể tải \"{title}\".",
+  "@playerStepLoadFailed": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerSaveCompletionFailed": "Không thể lưu trạng thái hoàn thành. Nhấn thử lại để cập nhật chuỗi ngày tập.",
+  "playerStepPreviewSubtitle": "{duration} • Xem trước",
+  "@playerStepPreviewSubtitle": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerNoVideosReady": "Giáo án này chưa có video sẵn sàng để phát.",
+  "playerPlaybackFailed": "Hiện không thể phát video này. Vui lòng thử lại.",
+  "libraryTabCurated": "Tuyển chọn",
+  "libraryTabAiGenerated": "Được tạo bằng AI",
+  "profileSavedRoutines": "Giáo án đã lưu",
+  "savedRoutinesNoFavorites": "Chưa có giáo án yêu thích nào.",
+  "savedRoutinesEmpty": "Chưa có giáo án nào được lưu.",
+  "actionFavorite": "Thêm vào yêu thích",
+  "actionUnfavorite": "Bỏ khỏi yêu thích",
+  "routineDurationMinutes": "{minutes} phút",
+  "@routineDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHoursMinutes": "{hours} giờ {minutes} phút",
+  "@routineDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHours": "{hours} giờ",
+  "@routineDurationHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "difficultyEasy": "Dễ",
+  "difficultyMedium": "Trung bình",
+  "difficultyHard": "Khó",
+  "categoryStrength": "Sức mạnh",
+  "categoryCardio": "Cardio",
+  "categoryFlexibility": "Độ dẻo",
+  "categoryMindfulness": "Chánh niệm",
+  "categoryDance": "Khiêu vũ",
+  "categoryHiit": "HIIT",
+  "categoryYoga": "Yoga",
+  "categoryCustom": "Tùy chỉnh",
+  "navHome": "Trang chủ",
+  "navLibrary": "Thư viện",
+  "navChat": "Trò chuyện",
+  "navProfile": "Hồ sơ",
+  "equipmentNone": "Không có",
+  "equipmentDumbbells": "Tạ tay",
+  "equipmentResistanceBands": "Dây kháng lực",
+  "equipmentYogaMat": "Thảm Yoga",
+  "equipmentKettlebell": "Tạ ấm",
+  "equipmentPullUpBar": "Xà đơn",
+  "equipmentJumpRope": "Dây nhảy",
+  "nutritionTitle": "Dinh dưỡng",
+  "nutritionSubtitle": "Calo, macro và lịch sử bữa ăn",
+  "nutritionSetGoalsTitle": "Đặt mục tiêu dinh dưỡng hằng ngày",
+  "nutritionSetGoalsBody": "Thêm cân nặng, chiều cao, tuổi và giới tính để Celia tính toán lượng calo và dưỡng chất bạn nên tiêu thụ mỗi ngày.",
+  "nutritionSetUpGoals": "Thiết lập mục tiêu",
+  "nutritionDailyTarget": "Mục tiêu hằng ngày",
+  "nutritionDailyGoals": "Mục tiêu hằng ngày",
+  "nutritionKcal": "{calories} kcal",
+  "@nutritionKcal": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMacroSummary": "P {protein}g · C {carbs}g · F {fat}g",
+  "@nutritionMacroSummary": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionToday": "Hôm nay",
+  "nutritionMealHistory": "Lịch sử bữa ăn",
+  "nutritionCeliaInsights": "Thông tin từ Celia",
+  "nutritionWeeklyTrend": "Xu hướng theo tuần",
+  "nutritionTodayMeals": "kcal • {count, plural, one{{count} bữa ăn} other{{count} bữa ăn}}",
+  "@nutritionTodayMeals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionTodayOfTargetMeals": "trên {target} kcal • {count, plural, one{{count} bữa ăn} other{{count} bữa ăn}}",
+  "@nutritionTodayOfTargetMeals": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionWeekdayInitials": "T,H,B,T,S,S,C",
+  "@nutritionWeekdayInitials": {
+    "description": "Single-letter weekday labels for the weekly chart, Monday first, comma separated."
+  },
+  "nutritionFieldFoodName": "Tên món ăn",
+  "nutritionFieldGrams": "Số gram",
+  "nutritionFieldCalories": "Calo",
+  "scannerStatusAnalyzing": "ĐANG PHÂN TÍCH...",
+  "scannerStatusIdle": "BỘ QUÉT CELIA",
+  "scannerFieldFoodName": "Tên món ăn",
+  "scannerFieldGrams": "Số gram",
+  "scannerFieldCalories": "Calo",
+  "scannerFieldPro": "Pro",
+  "scannerMacroPro": "PRO",
+  "scannerMacroCarb": "CARB",
+  "scannerMacroFat": "FAT",
+  "scannerRemainingAfterLogging": "Còn lại {calories} kcal và {grams}g protein cho hôm nay",
+  "@scannerRemainingAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerOverTargetAfterLogging": "Vượt {calories} kcal so với mục tiêu hằng ngày",
+  "@scannerOverTargetAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerButtonAnalyzing": "Đang phân tích",
+  "scannerButtonQuotaNeeded": "Cần hạn mức",
+  "scannerButtonScanNow": "Quét ngay",
+  "scannerButtonLogging": "Đang ghi nhận",
+  "scannerButtonLogMeal": "Ghi nhận bữa ăn",
+  "scannerNoClearFood": "Chưa phát hiện rõ món ăn. Hãy thử nơi có ánh sáng tốt hơn hoặc đưa máy ảnh lại gần.",
+  "scannerErrorCameraPermission": "Cần cấp quyền máy ảnh để quét bữa ăn.",
+  "scannerErrorBackendMissing": "Backend quét calo chưa được cấu hình.",
+  "scannerErrorApiKeyInvalid": "Khóa API OpenAI dùng để quét calo không hợp lệ. Hãy thay khóa trong môi trường backend, triển khai lại rồi thử lại.",
+  "scannerErrorApiKeyMissing": "Cần có khóa API OpenAI để quét calo. Hãy thêm khóa trong Vercel, triển khai lại rồi thử lại.",
+  "scannerErrorQuotaExhausted": "Tín dụng OpenAI cho việc quét calo đã hết. Hãy thêm tín dụng API hoặc tăng giới hạn thanh toán rồi thử lại.",
+  "scannerErrorTimeout": "Celia cần thêm thời gian để phân tích bữa ăn này. Giữ máy ảnh ổn định và quét lại.",
+  "scannerErrorNotSignedIn": "Vui lòng đăng nhập trước khi quét bữa ăn.",
+  "scannerErrorMealTableMissing": "Bảng ghi nhận bữa ăn chưa sẵn sàng. Kết quả quét vẫn khả dụng.",
+  "scannerErrorGeneric": "Celia chưa thể phân tích bữa ăn này. Giữ máy ảnh ổn định, đặt món ăn ở giữa khung hình và quét lại.",
+  "nutritionGrams": "{grams}g",
+  "@nutritionGrams": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionMealSubtitle": "{time} · {count, plural, one{{count} món} other{{count} món}}",
+  "@nutritionMealSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMealDetails": "Chi tiết bữa ăn",
+  "nutritionFoodItems": "Món ăn",
+  "nutritionItemSubtitle": "{grams}g · {calories} kcal",
+  "@nutritionItemSubtitle": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionNeedsOneItem": "Bữa ăn cần ít nhất một món ăn.",
+  "nutritionMealUpdated": "Đã cập nhật bữa ăn",
+  "nutritionUpdateFailed": "Không thể cập nhật bữa ăn: {error}",
+  "@nutritionUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionDeleteMealTitle": "Xóa bữa ăn?",
+  "nutritionDeleteMealBody": "Thao tác này sẽ xóa bữa ăn khỏi lịch sử dinh dưỡng của bạn.",
+  "nutritionDeleteMeal": "Xóa bữa ăn",
+  "nutritionDeleteFailed": "Không thể xóa bữa ăn: {error}",
+  "@nutritionDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionEditFood": "Chỉnh sửa món ăn",
+  "nutritionSaveFood": "Lưu món ăn",
+  "nutritionLoadFailed": "Không thể tải các bữa ăn",
+  "nutritionLoadFailedBody": "Kéo xuống để làm mới hoặc kiểm tra kết nối đến máy chủ.",
+  "nutritionNoMeals": "Chưa có bữa ăn nào được ghi lại",
+  "nutritionNoMealsBody": "Quét bữa ăn đầu tiên và Celia sẽ xây dựng lịch sử dinh dưỡng cho bạn.",
+  "progressToday": "Hôm nay",
+  "progressSetGoals": "Đặt mục tiêu dinh dưỡng để theo dõi calo và các chất dinh dưỡng đa lượng.",
+  "progressOfTarget": "trên {target} kcal",
+  "@progressOfTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressMacroAmount": "{consumed} / {target}g",
+  "@progressMacroAmount": {
+    "placeholders": {
+      "consumed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalOver": "Vượt {calories} kcal",
+  "@progressKcalOver": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalLeft": "Còn lại {calories} kcal",
+  "@progressKcalLeft": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressProtein": "Chất đạm",
+  "progressCarbs": "Tinh bột",
+  "progressFat": "Chất béo",
+  "scannerEditItem": "Chỉnh sửa món ăn",
+  "scannerSaveChanges": "Lưu thay đổi",
+  "scannerItemCalories": "{name} · {calories} kcal",
+  "@scannerItemCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerConfidence": "Độ tin cậy {percent}% · {provider}",
+  "@scannerConfidence": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerMoreItems": "+ {count} món khác trong nhật ký bữa ăn này",
+  "@scannerMoreItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerIfYouLog": "Nếu bạn ghi lại bữa ăn này",
+  "scannerAfterLogging": "{after} / {target} kcal hôm nay",
+  "@scannerAfterLogging": {
+    "placeholders": {
+      "after": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerGramsDecimal": "{grams}g",
+  "@scannerGramsDecimal": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerItemServing": "{name} · {grams}g",
+  "@scannerItemServing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerNoMealDetected": "Không phát hiện bữa ăn",
+  "onboardingWelcome": "Chào mừng, {name}",
+  "@onboardingWelcome": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingGender": "Giới tính",
+  "onboardingCalculateGoals": "Tính mục tiêu của tôi",
+  "onboardingScanFirstMeal": "Quét bữa ăn đầu tiên",
+  "onboardingExploreRoutines": "Khám phá bài tập",
+  "onboardingGoHome": "Về trang chủ",
+  "onboardingDailyTargets": "Mục tiêu hằng ngày của bạn",
+  "onboardingProtein": "Chất đạm {grams}g ·",
+  "@onboardingProtein": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingMacroTargets": "Chất đạm {protein}g • Tinh bột {carbs}g • Chất béo {fat}g",
+  "@onboardingMacroTargets": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingTargetsReady": "Mục tiêu dinh dưỡng hằng ngày của bạn đã sẵn sàng. Hãy chọn cách bạn muốn bắt đầu.",
+  "onboardingWeightKg": "Cân nặng (kg)",
+  "onboardingHeightCm": "Chiều cao (cm)",
+  "onboardingAge": "Tuổi",
+  "onboardingInvalidWeight": "Nhập cân nặng hợp lệ tính bằng kg.",
+  "onboardingInvalidHeight": "Nhập chiều cao hợp lệ tính bằng cm.",
+  "onboardingInvalidAge": "Nhập độ tuổi hợp lệ từ 13 đến 100.",
+  "onboardingSaveFailed": "Không thể lưu hồ sơ dinh dưỡng của bạn.",
+  "genderMale": "Nam",
+  "genderFemale": "Nữ",
+  "genderOther": "Khác",
+  "nutritionSetupTitle": "Mục tiêu dinh dưỡng hằng ngày",
+  "nutritionSetupBody": "Cho Celia biết thông tin cơ thể của bạn để tính lượng calo và các chất dinh dưỡng đa lượng hằng ngày.",
+  "nutritionSetupGender": "Giới tính",
+  "nutritionSetupFootnote": "Celia sử dụng cân nặng, chiều cao, tuổi và giới tính của bạn để ước tính mục tiêu calo và các chất dinh dưỡng đa lượng hằng ngày dựa trên mức độ vận động vừa phải.",
+  "nutritionSetupSave": "Lưu mục tiêu",
+  "profileTitle": "Hồ sơ",
+  "profileCeliaAi": "Celia AI",
+  "profileEliteMember": "Hội viên Elite",
+  "profileAccount": "Tài khoản",
+  "profileSignedInAs": "Đã đăng nhập bằng:\n{email}",
+  "@profileSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "profileUnknownEmail": "Không rõ",
+  "profileDarkMode": "Chế độ tối",
+  "profileLanguage": "Ngôn ngữ",
+  "profileLogOutTitle": "Đăng xuất?",
+  "profileLogOutBody": "Bạn có chắc muốn đăng xuất không?",
+  "profileLogOut": "Đăng xuất",
+  "profileLogOutButton": "Đăng xuất",
+  "profileFavoriteRoutines": "Bài tập yêu thích",
+  "profileSubscription": "Gói đăng ký",
+  "profileNutrition": "Dinh dưỡng",
+  "profileHelpSupport": "Trợ giúp & Hỗ trợ",
+  "profileFriend": "Bạn bè",
+  "profileStatSaved": "Đã lưu",
+  "profileStatStreak": "Chuỗi ngày",
+  "profileStatWorkouts": "Bài tập",
+  "streakDayOneStarted": "Ngày 1 đã bắt đầu — hãy quay lại vào ngày mai để xây dựng chuỗi ngày của bạn.",
+  "streakRebuild": "Bạn đã hoạt động hôm qua — hãy ghi lại một bữa ăn hoặc hoàn thành bài tập hôm nay để khôi phục chuỗi ngày.",
+  "streakStart": "Ghi lại một bữa ăn hoặc hoàn thành bài tập để bắt đầu chuỗi ngày hoạt động.",
+  "streakLongRun": "Chuỗi {days} ngày! Hãy tiếp tục duy trì — Celia đang theo dõi sự đều đặn của bạn.",
+  "@streakLongRun": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakBothLogged": "Chuỗi {days} ngày — hôm nay bạn đã ghi lại cả bài tập và dinh dưỡng.",
+  "@streakBothLogged": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedWorkout": "Chuỗi {days} ngày. Một bài tập nhanh sẽ giúp bạn hoàn thiện ngày hôm nay.",
+  "@streakNeedWorkout": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedMeal": "Chuỗi {days} ngày. Hãy ghi lại một bữa ăn để theo dõi việc nạp năng lượng.",
+  "@streakNeedMeal": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakStayActive": "Chuỗi {days} ngày — hãy duy trì hoạt động hôm nay.",
+  "@streakStayActive": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "editProfileTitle": "Chỉnh sửa hồ sơ",
+  "editProfileName": "Tên",
+  "editProfileFootnote": "Các thay đổi sẽ được lưu vào tài khoản và hiển thị trên Trang chủ/Hồ sơ.",
+  "editProfileSaveFailed": "Không thể cập nhật hồ sơ. Vui lòng thử lại.",
+  "languageTitle": "Ngôn ngữ",
+  "languageSystem": "Ngôn ngữ thiết bị",
+  "languageSystemSubtitle": "Sử dụng ngôn ngữ được cài đặt trên điện thoại của bạn",
+  "languageEnglish": "Tiếng Anh",
+  "languageSpanish": "Tiếng Tây Ban Nha",
+  "insightStartFuelingTitle": "Bắt đầu nạp năng lượng hôm nay",
+  "insightStartFuelingBody": "Bạn vẫn còn toàn bộ ngân sách calo. Hãy quét hoặc ghi lại bữa ăn đầu tiên để duy trì đúng kế hoạch.",
+  "insightAboveTargetTitle": "Vượt mục tiêu hôm nay",
+  "insightAboveTargetBody": "Bạn đã vượt {calories} kcal so với mục tiêu hằng ngày. Hãy ăn tối nhẹ hơn hoặc thêm một bài tập ngắn.",
+  "@insightAboveTargetBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightLowProteinTitle": "Lượng protein vẫn còn thấp",
+  "insightLowProteinBody": "Hôm nay bạn vẫn cần khoảng {grams}g protein để đạt mục tiêu.",
+  "@insightLowProteinBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightAlmostThereTitle": "Sắp đạt mục tiêu",
+  "insightAlmostThereBody": "Hôm nay bạn còn {calories} kcal. Một bữa ăn nhẹ cân bằng sẽ rất phù hợp.",
+  "@insightAlmostThereBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightOnTrackTitle": "Đang đi đúng hướng hôm nay",
+  "insightOnTrackBody": "Còn {calories} kcal và {grams}g protein để đạt mục tiêu hằng ngày.",
+  "@insightOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightWeeklyRhythmTitle": "Xây dựng nhịp độ hằng tuần",
+  "insightWeeklyRhythmBody": "Hãy ghi lại các bữa ăn trong suốt tuần để Celia nhận ra các xu hướng và hướng dẫn bạn tốt hơn.",
+  "insightWeeklyTrendTitle": "Xu hướng hằng tuần",
+  "insightWeeklyTrendBody": "Bạn đã ghi lại bữa ăn trong {days} trên 7 ngày qua, trung bình {average} kcal — {direction}.",
+  "@insightWeeklyTrendBody": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "average": {
+        "type": "int"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "insightTrendOnTarget": "gần đúng với mục tiêu hằng ngày",
+  "insightTrendAbove": "trung bình cao hơn mục tiêu {delta} kcal",
+  "@insightTrendAbove": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightTrendBelow": "trung bình thấp hơn mục tiêu {delta} kcal",
+  "@insightTrendBelow": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsSectionTitle": "Thông tin chuyên sâu từ Celia"
+}

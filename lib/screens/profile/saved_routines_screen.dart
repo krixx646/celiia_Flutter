@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../l10n/app_localizations.dart';
 import '../../models/routine.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/routine_provider.dart';
@@ -39,13 +40,13 @@ class _SavedRoutinesScreenState extends State<SavedRoutinesScreen> {
     });
   }
 
-  Future<void> _openRoutine(String routineId) async {
+  Future<void> _openRoutine(AppLocalizations l10n, String routineId) async {
     final Routine? routine = await _supabase.getRoutine(routineId);
     if (!mounted) return;
     if (routine == null) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Routine not found')));
+      ).showSnackBar(SnackBar(content: Text(l10n.routineNotFound)));
       return;
     }
     Navigator.of(context).push(
@@ -59,6 +60,7 @@ class _SavedRoutinesScreenState extends State<SavedRoutinesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     final rp = context.watch<RoutineProvider>();
     final items = widget.showFavoritesOnly
@@ -71,7 +73,9 @@ class _SavedRoutinesScreenState extends State<SavedRoutinesScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          widget.showFavoritesOnly ? 'Favorite Routines' : 'Saved Routines',
+          widget.showFavoritesOnly
+              ? l10n.profileFavoriteRoutines
+              : l10n.profileSavedRoutines,
           style: TextStyle(
             color: theme.textPrimary,
             fontWeight: FontWeight.bold,
@@ -91,8 +95,8 @@ class _SavedRoutinesScreenState extends State<SavedRoutinesScreen> {
                 padding: const EdgeInsets.all(24),
                 child: Text(
                   widget.showFavoritesOnly
-                      ? 'No favorite routines yet.'
-                      : 'No saved routines yet.',
+                      ? l10n.savedRoutinesNoFavorites
+                      : l10n.savedRoutinesEmpty,
                   style: TextStyle(color: theme.textSecondary),
                   textAlign: TextAlign.center,
                 ),
@@ -119,7 +123,7 @@ class _SavedRoutinesScreenState extends State<SavedRoutinesScreen> {
                       future: _titleForRoutine(ur.routineId),
                       builder: (context, snap) {
                         return Text(
-                          snap.data ?? 'Loading…',
+                          snap.data ?? l10n.loadingGeneric,
                           style: TextStyle(
                             color: theme.textPrimary,
                             fontWeight: FontWeight.w600,
@@ -130,11 +134,13 @@ class _SavedRoutinesScreenState extends State<SavedRoutinesScreen> {
                       },
                     ),
                     subtitle: Text(
-                      'Completed ${ur.timesCompleted}x',
+                      l10n.routineCompletedTimes(ur.timesCompleted),
                       style: TextStyle(color: theme.textSecondary),
                     ),
                     trailing: IconButton(
-                      tooltip: ur.isFavorite ? 'Unfavorite' : 'Favorite',
+                      tooltip: ur.isFavorite
+                          ? l10n.actionUnfavorite
+                          : l10n.actionFavorite,
                       icon: Icon(
                         ur.isFavorite ? Icons.favorite : Icons.favorite_border,
                         color: ur.isFavorite
@@ -147,7 +153,7 @@ class _SavedRoutinesScreenState extends State<SavedRoutinesScreen> {
                             .toggleFavoriteByRoutineId(ur.routineId);
                       },
                     ),
-                    onTap: () => _openRoutine(ur.routineId),
+                    onTap: () => _openRoutine(l10n, ur.routineId),
                   );
                 },
               ),

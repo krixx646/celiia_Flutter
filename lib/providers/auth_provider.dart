@@ -144,7 +144,7 @@ class AuthProvider extends ChangeNotifier {
         isLoading: false,
         authError: toUserFriendlyMessage(
           e,
-          fallback: 'Could not sign in. Please try again.',
+          fallbackOf: (l10n) => l10n.errorSignIn,
         ),
       );
     }
@@ -195,7 +195,7 @@ class AuthProvider extends ChangeNotifier {
         isLoading: false,
         authError: toUserFriendlyMessage(
           e,
-          fallback: 'Could not create your account. Please try again.',
+          fallbackOf: (l10n) => l10n.errorCreateAccount,
         ),
       );
     }
@@ -228,7 +228,7 @@ class AuthProvider extends ChangeNotifier {
         passwordResetEmailSent: false,
         authError: toUserFriendlyMessage(
           e,
-          fallback: 'Could not send reset email. Please try again.',
+          fallbackOf: (l10n) => l10n.errorSendResetEmail,
         ),
       );
     }
@@ -278,7 +278,7 @@ class AuthProvider extends ChangeNotifier {
         isLoading: false,
         authError: toUserFriendlyMessage(
           e,
-          fallback: 'Could not send verification email. Please try again.',
+          fallbackOf: (l10n) => l10n.errorSendVerificationEmail,
         ),
       );
     }
@@ -318,7 +318,7 @@ class AuthProvider extends ChangeNotifier {
         isLoading: false,
         authError: toUserFriendlyMessage(
           e,
-          fallback: 'Google sign-in failed. Please try again.',
+          fallbackOf: (l10n) => l10n.errorGoogleSignIn,
         ),
       );
     }
@@ -351,7 +351,7 @@ class AuthProvider extends ChangeNotifier {
         isLoading: false,
         authError: toUserFriendlyMessage(
           e,
-          fallback: 'Apple sign-in failed. Please try again.',
+          fallbackOf: (l10n) => l10n.errorAppleSignIn,
         ),
       );
     }

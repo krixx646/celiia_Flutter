@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
+import '../../l10n/app_localizations.dart';
 import '../../providers/theme_provider.dart';
 import 'package:provider/provider.dart';
 import '../../utils/user_facing_error.dart';
@@ -56,20 +57,21 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         allowPlaybackSpeedChanging: true,
         aspectRatio: _videoPlayerController!.value.aspectRatio,
         errorBuilder: (context, _) {
-          return const Center(
+          final l10n = AppLocalizations.of(context);
+          return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.error_outline, color: Colors.red, size: 48),
-                SizedBox(height: 16),
+                const Icon(Icons.error_outline, color: Colors.red, size: 48),
+                const SizedBox(height: 16),
                 Text(
-                  'Error loading video',
-                  style: TextStyle(color: Colors.white),
+                  l10n.playerErrorLoadingVideo,
+                  style: const TextStyle(color: Colors.white),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
-                  'This video is not available right now.',
-                  style: TextStyle(color: Colors.white70, fontSize: 12),
+                  l10n.playerVideoUnavailable,
+                  style: const TextStyle(color: Colors.white70, fontSize: 12),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -82,11 +84,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         _isInitializing = false;
       });
     } catch (e) {
+      if (!mounted) return;
+      final l10n = AppLocalizations.of(context);
       setState(() {
         _isInitializing = false;
         _error = toUserFriendlyMessage(
           e,
-          fallback: 'Unable to play this video right now. Please try again.',
+          l10n: l10n,
+          fallback: l10n.playerPlaybackFailed,
         );
       });
     }
@@ -101,6 +106,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
 
     return Scaffold(
@@ -129,9 +135,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     valueColor: AlwaysStoppedAnimation(theme.accentOrange),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Loading video...',
-                    style: TextStyle(color: Colors.white70),
+                  Text(
+                    l10n.playerLoadingVideo,
+                    style: const TextStyle(color: Colors.white70),
                   ),
                 ],
               ),
@@ -143,9 +149,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 children: [
                   const Icon(Icons.error_outline, color: Colors.red, size: 64),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Failed to load video',
-                    style: TextStyle(
+                  Text(
+                    l10n.playerFailedToLoadVideo,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -176,17 +182,17 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       backgroundColor: theme.accentOrange,
                       foregroundColor: Colors.white,
                     ),
-                    child: const Text('Retry'),
+                    child: Text(l10n.actionRetry),
                   ),
                 ],
               ),
             )
           : _chewieController != null
           ? Chewie(controller: _chewieController!)
-          : const Center(
+          : Center(
               child: Text(
-                'Video player not initialized',
-                style: TextStyle(color: Colors.white70),
+                l10n.playerNotInitialized,
+                style: const TextStyle(color: Colors.white70),
               ),
             ),
     );

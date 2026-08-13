@@ -9,7 +9,7 @@ const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
 const DEEPSEEK_VISION_ENDPOINT = process.env.DEEPSEEK_VISION_ENDPOINT;
 const DEEPSEEK_VISION_MODEL = process.env.DEEPSEEK_VISION_MODEL;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-const OPENAI_VISION_MODEL = process.env.OPENAI_VISION_MODEL || 'gpt-5.4-mini';
+const OPENAI_VISION_MODEL = process.env.OPENAI_VISION_MODEL || 'gpt-5.6-luna';
 
 const FIREBASE_JWKS = createRemoteJWKSet(
   new URL('https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com')
@@ -231,6 +231,7 @@ async function analyzeWithDeepSeek(dataUrl: string): Promise<MealAnalysis> {
 }
 
 function openAiVisionModels() {
+  // Luna first (cost). Keep a single older mini as last-resort fallback only.
   return Array.from(new Set([OPENAI_VISION_MODEL, 'gpt-5-mini'].filter(Boolean)));
 }
 

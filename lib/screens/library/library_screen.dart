@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../l10n/app_localizations.dart';
 import '../../models/routine.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/routine_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/routine_thumbnail_resolver.dart';
+import '../../utils/responsive.dart';
+import '../../utils/routine_text.dart';
 import '../routines/routine_detail_screen.dart';
 import 'dart:ui';
 
@@ -30,6 +33,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     final routineProvider = context.watch<RoutineProvider>();
 
@@ -45,6 +49,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
           children: [
             // TopAppBar
             _buildHeader(
+              l10n,
               theme,
               context.watch<AuthProvider>().uiState.currentUser?.photoURL,
             ),
@@ -61,9 +66,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     ),
                     child: Row(
                       children: [
-                        _buildTabItem('Curated', 0, theme),
+                        _buildTabItem(l10n.libraryTabCurated, 0, theme),
                         const SizedBox(width: 8),
-                        _buildTabItem('AI-Generated', 1, theme),
+                        _buildTabItem(l10n.libraryTabAiGenerated, 1, theme),
                       ],
                     ),
                   ),
@@ -79,22 +84,27 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             ),
                           )
                         : routineProvider.error != null
-                        ? _buildErrorState(theme, routineProvider.error!)
+                        ? _buildErrorState(l10n, theme, routineProvider.error!)
                         : routines.isEmpty
-                        ? _buildEmptyState(theme)
+                        ? _buildEmptyState(l10n, theme)
                         : GridView.builder(
-                            padding: const EdgeInsets.fromLTRB(24, 8, 24, 120),
+                            padding: EdgeInsets.fromLTRB(
+                              context.contentHorizontalPadding,
+                              8,
+                              context.contentHorizontalPadding,
+                              120,
+                            ),
                             gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount:
-                                      1, // Full width on mobile, could be 2 on tablet
-                                  mainAxisSpacing: 16,
-                                  childAspectRatio: 1.3,
-                                ),
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: context.libraryCrossAxisCount,
+                              mainAxisSpacing: 16,
+                              crossAxisSpacing: 16,
+                              childAspectRatio: context.isTablet ? 1.15 : 1.3,
+                            ),
                             itemCount: routines.length,
                             itemBuilder: (context, index) {
                               final routine = routines[index];
-                              return _buildRoutineCard(routine, theme);
+                              return _buildRoutineCard(l10n, routine, theme);
                             },
                           ),
                   ),
@@ -107,7 +117,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
     );
   }
 
-  Widget _buildHeader(ThemeProvider theme, String? photoUrl) {
+  Widget _buildHeader(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    String? photoUrl,
+  ) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
       child: Row(
@@ -134,7 +148,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
               ),
               const SizedBox(width: 12),
               Text(
-                'Routine Library',
+                l10n.libraryTitle,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w800,
@@ -178,7 +192,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
     );
   }
 
-  Widget _buildRoutineCard(Routine routine, ThemeProvider theme) {
+  Widget _buildRoutineCard(
+    AppLocalizations l10n,
+    Routine routine,
+    ThemeProvider theme,
+  ) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -284,7 +302,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
                           ),
                           color: Colors.black.withValues(alpha: 0.6),
                           child: Text(
-                            routine.durationLabel.toUpperCase(),
+                            localizedRoutineDuration(
+                              l10n,
+                              routine.durationMinutes,
+                            ).toUpperCase(),
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
@@ -317,10 +338,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      _buildDifficultyPill(theme, routine.difficulty),
+                      _buildDifficultyPill(l10n, theme, routine.difficulty),
                       const SizedBox(width: 8),
                       Text(
-                        '•  ${routine.steps.length} steps',
+                        '•  ${l10n.librarySteps(routine.steps.length)}',
                         style: TextStyle(
                           color: theme.textSecondary,
                           fontSize: 14,
@@ -338,6 +359,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   }
 
   Widget _buildDifficultyPill(
+    AppLocalizations l10n,
     ThemeProvider theme,
     RoutineDifficulty difficulty,
   ) {
@@ -366,8 +388,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
-        difficulty.name.substring(0, 1).toUpperCase() +
-            difficulty.name.substring(1),
+        localizedRoutineDifficulty(l10n, difficulty),
         style: TextStyle(
           color: textColor,
           fontSize: 14,
@@ -394,7 +415,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
     return _thumbnailResolver.resolve(routine);
   }
 
-  Widget _buildEmptyState(ThemeProvider theme) {
+  Widget _buildEmptyState(AppLocalizations l10n, ThemeProvider theme) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -408,7 +429,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
             ),
             const SizedBox(height: 14),
             Text(
-              'No routines yet',
+              l10n.libraryEmpty,
               style: TextStyle(
                 color: theme.textPrimary,
                 fontSize: 18,
@@ -417,7 +438,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
             ),
             const SizedBox(height: 6),
             Text(
-              'Create and publish routines in the admin dashboard.',
+              l10n.libraryEmptyBody,
               textAlign: TextAlign.center,
               style: TextStyle(color: theme.textSecondary),
             ),
@@ -427,7 +448,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
     );
   }
 
-  Widget _buildErrorState(ThemeProvider theme, String error) {
+  Widget _buildErrorState(
+    AppLocalizations l10n,
+    ThemeProvider theme,
+    String error,
+  ) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -437,7 +462,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
             const Icon(Icons.error_outline, color: Colors.red, size: 56),
             const SizedBox(height: 14),
             Text(
-              'Failed to load routines',
+              l10n.libraryLoadFailed,
               style: TextStyle(
                 color: theme.textPrimary,
                 fontSize: 18,
@@ -458,7 +483,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 backgroundColor: theme.accentOrange,
                 foregroundColor: Colors.white,
               ),
-              child: const Text('Retry'),
+              child: Text(l10n.actionRetry),
             ),
           ],
         ),

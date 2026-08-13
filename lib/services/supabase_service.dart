@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show visibleForTesting;
 import '../config/env.dart';
+import '../models/exercise_clip.dart';
 import '../models/exercise_media.dart';
 import '../models/meal_log.dart';
 import '../models/routine.dart';
@@ -424,6 +425,25 @@ class SupabaseService {
         .limit(5000);
     return (rows as List)
         .map((row) => ExerciseMedia.fromJson(row as Map<String, dynamic>))
+        .toList();
+  }
+
+  /// Fetch the filmed demo clip library used by the guided workout player.
+  ///
+  /// Small, public and rarely changing, so callers should cache it for the
+  /// session (see [ExerciseClipLibrary]) rather than hitting it per step.
+  Future<List<ExerciseClip>> getExerciseClips() async {
+    final rows = await client
+        .from('exercise_clips')
+        .select(
+          'slug, name_en, name_es, pattern, video_url, poster_url, step_type, '
+          'reps_per_loop, clip_seconds, equipment, default_reps, '
+          'default_hold_seconds, orientation',
+        )
+        .eq('is_active', true)
+        .limit(500);
+    return (rows as List)
+        .map((row) => ExerciseClip.fromJson(row as Map<String, dynamic>))
         .toList();
   }
 

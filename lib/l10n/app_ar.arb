@@ -1,0 +1,1017 @@
+{
+  "@@locale": "ar",
+  "appName": "Celia - المدرب الشامل",
+  "@appName": {
+    "description": "The app's name. Not translated."
+  },
+  "actionCancel": "إلغاء",
+  "actionSave": "حفظ",
+  "actionDelete": "حذف",
+  "actionEdit": "تعديل",
+  "actionRetry": "إعادة المحاولة",
+  "actionDone": "تم",
+  "actionClose": "إغلاق",
+  "actionContinue": "متابعة",
+  "actionSeeAll": "عرض الكل",
+  "actionYesDoIt": "نعم، نفّذ ذلك",
+  "actionNotNow": "ليس الآن",
+  "loadingPreparing": "جارٍ إعداد Celia...",
+  "loadingGeneric": "جارٍ التحميل...",
+  "errorGeneric": "حدث خطأ ما. يُرجى المحاولة مرة أخرى.",
+  "errorCanceled": "تم إلغاء الإجراء.",
+  "errorTooManyRequests": "محاولات كثيرة جدًا. يُرجى الانتظار دقيقة ثم المحاولة مرة أخرى.",
+  "errorNetwork": "يُرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.",
+  "errorBadCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+  "errorEmailInUse": "هذا البريد الإلكتروني مستخدم بالفعل. حاول تسجيل الدخول بدلًا من ذلك.",
+  "errorWeakPassword": "استخدم كلمة مرور أقوى وحاول مرة أخرى.",
+  "errorInvalidEmail": "يُرجى إدخال عنوان بريد إلكتروني صالح.",
+  "errorNoPermission": "ليس لديك إذن للقيام بذلك.",
+  "errorNotSignedIn": "يُرجى تسجيل الدخول والمحاولة مرة أخرى.",
+  "errorNoConversation": "ابدأ محادثة جديدة للمتابعة.",
+  "errorNoPlayableVideos": "لا تتوفر حاليًا أي فيديوهات قابلة للتشغيل لهذا التمرين.",
+  "errorLoadRoutines": "تعذّر تحميل التمارين حاليًا. يُرجى المحاولة مرة أخرى.",
+  "errorLoadSavedRoutines": "تعذّر تحميل التمارين المحفوظة حاليًا. يُرجى المحاولة مرة أخرى.",
+  "errorGenerateRoutine": "تعذّر إنشاء تمرين حاليًا. يُرجى المحاولة مرة أخرى.",
+  "errorLoadChats": "تعذّر تحميل المحادثات المحفوظة حاليًا.",
+  "errorCeliaUnavailable": "Celia غير متاحة حاليًا. يُرجى المحاولة مرة أخرى.",
+  "errorOpenConversation": "تعذّر فتح هذه المحادثة.",
+  "errorDeleteConversation": "تعذّر حذف هذه المحادثة. يُرجى المحاولة مرة أخرى.",
+  "errorSignIn": "تعذّر تسجيل الدخول. يُرجى المحاولة مرة أخرى.",
+  "errorCreateAccount": "تعذّر إنشاء حسابك. يُرجى المحاولة مرة أخرى.",
+  "errorSendResetEmail": "تعذّر إرسال رسالة إعادة تعيين كلمة المرور. يُرجى المحاولة مرة أخرى.",
+  "errorSendVerificationEmail": "تعذّر إرسال رسالة التحقق. يُرجى المحاولة مرة أخرى.",
+  "errorGoogleSignIn": "فشل تسجيل الدخول باستخدام Google. يُرجى المحاولة مرة أخرى.",
+  "errorAppleSignIn": "فشل تسجيل الدخول باستخدام Apple. يُرجى المحاولة مرة أخرى.",
+  "errorRefreshNutrition": "تعذّر تحديث بيانات التغذية.",
+  "errorLoadNutritionProfile": "تعذّر تحميل ملفك الغذائي.",
+  "startupErrorTitle": "تعذّر بدء التطبيق",
+  "startupErrorBody": "يُرجى إغلاق التطبيق وإعادة فتحه. إذا استمرت المشكلة، فتواصل مع الدعم.",
+  "authTagline": "رفيقك في اللياقة البدنية",
+  "authSignUp": "إنشاء حساب",
+  "authLogIn": "تسجيل الدخول",
+  "authVersion": "الإصدار {version}",
+  "@authVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "authForgotPassword": "هل نسيت كلمة المرور؟",
+  "authOr": "أو",
+  "authContinueWithGoogle": "المتابعة باستخدام Google",
+  "authContinueWithApple": "المتابعة باستخدام Apple",
+  "authAuthenticating": "جارٍ التحقق...",
+  "authEnterYourName": "يُرجى إدخال اسمك.",
+  "authNeedAccount": "هل تحتاج إلى حساب؟ إنشاء حساب",
+  "authHaveAccount": "لديك حساب بالفعل؟ تسجيل الدخول",
+  "authFieldName": "اسمك",
+  "authFieldEmail": "البريد الإلكتروني",
+  "authFieldPassword": "كلمة المرور",
+  "verifyEmailTitle": "تحقّق من بريدك الإلكتروني",
+  "verifyEmailHeading": "تحقّق من صندوق الوارد",
+  "verifyEmailBody": "تم إرسال رابط التحقق إلى بريدك الإلكتروني.",
+  "verifyEmailSent": "تم إرسال رسالة التحقق!",
+  "verifyEmailContinue": "تحققتُ، متابعة",
+  "verifyEmailSignOut": "تسجيل الخروج",
+  "verifyEmailSending": "جارٍ الإرسال...",
+  "verifyEmailResend": "إعادة إرسال رسالة التحقق",
+  "verifyEmailResendIn": "إعادة الإرسال خلال {seconds}ث",
+  "@verifyEmailResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "verifyEmailAddress": "البريد الإلكتروني: {email}",
+  "@verifyEmailAddress": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "forgotPasswordTitle": "نسيت كلمة المرور",
+  "forgotPasswordBody": "أدخل بريدك الإلكتروني لتلقي رابط إعادة تعيين كلمة المرور.",
+  "forgotPasswordEmptyEmail": "يرجى إدخال بريد إلكتروني",
+  "forgotPasswordSent": "تم إرسال رسالة إعادة تعيين كلمة المرور.",
+  "forgotPasswordSend": "إرسال رابط إعادة التعيين",
+  "forgotPasswordSending": "جارٍ الإرسال...",
+  "nameSetupTitle": "بماذا تناديك Celia؟",
+  "nameSetupBody": "نستخدم اسمك في جميع أنحاء التطبيق لتقديم تجربة تدريب شخصية.",
+  "nameSetupSaveFailed": "تعذر حفظ اسمك. يرجى المحاولة مرة أخرى.",
+  "homeGoodMorning": "صباح الخير،",
+  "homeCeliaActive": "CELIA نشطة",
+  "homeGenerateRoutine": "أنشئ روتينك\nالشخصي\nباستخدام الذكاء الاصطناعي",
+  "homeCreateRoutine": "إنشاء روتين",
+  "homeQuickActions": "إجراءات سريعة",
+  "homeUpNext": "التالي",
+  "homeNoUpcoming": "لا توجد روتينات قادمة بعد.\nأنشئ روتينًا أو تصفح المكتبة.",
+  "homeChatWithCelia": "تحدث مع Celia",
+  "homeChatSubtitle": "اسأل عن أسلوب أدائك أو نظامك الغذائي",
+  "homeScanMeal": "مسح وجبة",
+  "homeScanMealSubtitle": "تعرّف على الطعام والسعرات الحرارية",
+  "homeNutrition": "التغذية",
+  "homeNutritionSubtitle": "عرض السعرات والماكرو والوجبات",
+  "homeBrowseLibrary": "تصفح\nالمكتبة",
+  "homeTrackProgress": "تتبع\nالتقدم",
+  "chatTitle": "المدربة Celia",
+  "chatEmptyPrompt": "كيف يمكنني مساعدتك\nعلى تحقيق اللياقة اليوم؟",
+  "chatYourChats": "محادثاتك",
+  "chatNoSavedChats": "لا توجد محادثات محفوظة بعد.",
+  "chatHistory": "سجل المحادثات",
+  "chatNew": "محادثة جديدة",
+  "chatOpening": "جارٍ فتح المحادثة...",
+  "chatScanAMeal": "مسح وجبة",
+  "chatInputHint": "اسأل Celia عن أي شيء يتعلق بتدريبك...",
+  "chatCouldNotOpenRoutine": "تعذر فتح ذلك الروتين",
+  "chatThisRoutine": "هذا الروتين",
+  "chatThisMeal": "هذه الوجبة",
+  "chatYourRoutine": "روتينك",
+  "chatMoreExercises": "+ {count} إضافية",
+  "@chatMoreExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatEmptySubtitle": "اسأل عن تدريبك أو طعامك أو تقدمك.",
+  "chatLoggedToday": "سجلتَ {calories} kcal اليوم.",
+  "@chatLoggedToday": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "chatSuggestionHiit": "أنشئ لي روتين HIIT مدته 20 دقيقة",
+  "chatSuggestionDinner": "ماذا ينبغي أن آكل الليلة؟",
+  "chatSuggestionProgress": "كيف هو أدائي هذا الأسبوع؟",
+  "chatSuggestionIngredients": "لدي دجاج وأرز وسبانخ",
+  "chatJustNow": "الآن",
+  "chatMinutesAgo": "منذ {minutes}د",
+  "@chatMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "chatHoursAgo": "منذ {hours}س",
+  "@chatHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "chatDaysAgo": "منذ {days}ي",
+  "@chatDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "chatRoutineAlreadySaved": "موجود بالفعل في مكتبتك — اضغط لفتحه",
+  "chatRoutineTapToOpen": "اضغط للفتح",
+  "chatToolCancelled": "أُلغيت العملية",
+  "chatToolFailed": "{label} — تعذّر تنفيذ ذلك",
+  "@chatToolFailed": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "chatToolRoutineSaveFailed": "تعذّر حفظ الروتين",
+  "chatToolRoutineSaved": "تم الحفظ في مكتبتك",
+  "chatToolMealLogged": "تمت الإضافة إلى سجل اليوم",
+  "chatToolRoutineAdded": "تمت الإضافة إلى مكتبتك",
+  "activityCheckingProgress": "جارٍ التحقق من تقدمك",
+  "activityCheckingNutrition": "جارٍ التحقق مما تناولته اليوم",
+  "activityReviewingMeals": "جارٍ مراجعة وجباتك الأخيرة",
+  "activityLookingAtRoutines": "جارٍ الاطلاع على روتيناتك",
+  "activityReadingRoutine": "جارٍ قراءة هذا الروتين",
+  "activitySearchingLibrary": "جارٍ البحث في مكتبة التمارين",
+  "activityBuildingRoutine": "جارٍ إعداد روتينك",
+  "activityLoggingMeal": "جارٍ تسجيل وجبتك",
+  "activitySavingToLibrary": "جارٍ الحفظ في مكتبتك",
+  "activityWorking": "جارٍ العمل على ذلك",
+  "approvalSaveRoutineWithCount": "هل تريد حفظ \"{name}\" مع {count} من التمارين في مكتبتك؟",
+  "@approvalSaveRoutineWithCount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalSaveRoutine": "هل تريد حفظ \"{name}\" في مكتبتك؟",
+  "@approvalSaveRoutine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalLogMealWithCalories": "هل تريد تسجيل \"{name}\" بواقع {calories} kcal؟",
+  "@approvalLogMealWithCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalLogMeal": "هل تريد تسجيل \"{name}\"؟",
+  "@approvalLogMeal": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalAddRoutine": "هل تريد إضافة هذا الروتين إلى مكتبتك؟",
+  "approvalGeneric": "هل تسمح لـ Celia بتنفيذ هذا الإجراء؟",
+  "libraryTitle": "مكتبة الروتينات",
+  "librarySteps": "{count, plural, one{{count} خطوة} other{{count} خطوات}}",
+  "@librarySteps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryEmpty": "لا توجد روتينات بعد",
+  "libraryEmptyBody": "أنشئ روتينات وانشرها في لوحة تحكم الإدارة.",
+  "libraryLoadFailed": "تعذّر تحميل الروتينات",
+  "routineStartWorkout": "بدء التمرين",
+  "routineNoSteps": "لا تتوفر خطوات",
+  "routineNoVideoForStep": "لا يتوفر فيديو لهذه الخطوة",
+  "routineVideoProcessing": "لا يزال الفيديو قيد المعالجة. يُرجى المحاولة لاحقًا.",
+  "routineMissingPlaybackUrl": "عنوان تشغيل هذا الفيديو مفقود",
+  "routinePreviewBanner": "معاينة — سيتوفر الفيديو الكامل قريبًا",
+  "routinePreview": "معاينة",
+  "routineDetails": "التفاصيل",
+  "routineNotFound": "لم يتم العثور على الروتين",
+  "routineCompletedTimes": "تم الإكمال {count} مرات",
+  "@routineCompletedTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "playerVideoUnavailable": "هذا الفيديو غير متاح حاليًا.",
+  "playerSteps": "الخطوات",
+  "playerStepCounter": "{current}/{total}",
+  "@playerStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoPlayableVideos": "لا توجد فيديوهات قابلة للتشغيل",
+  "playerWorkoutComplete": "اكتمل التمرين!",
+  "playerSavingStreak": "جارٍ الحفظ في سلسلة إنجازاتك…",
+  "playerSavedStreak": "تم الحفظ في سلسلة إنجازاتك",
+  "playerRetrySave": "إعادة محاولة الحفظ",
+  "playerReplay": "إعادة التشغيل",
+  "playerNotReady": "المشغّل غير جاهز",
+  "playerPreviewUnavailable": "المعاينة غير متاحة حاليًا.",
+  "playerClipCounter": "المقطع {current} من {total} · {duration}",
+  "@playerClipCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerErrorLoadingVideo": "حدث خطأ أثناء تحميل الفيديو",
+  "playerLoadingVideo": "جارٍ تحميل الفيديو...",
+  "playerFailedToLoadVideo": "تعذّر تحميل الفيديو",
+  "playerNotInitialized": "لم تتم تهيئة مشغّل الفيديو",
+  "guidedExerciseCounter": "التمرين {current}/{total}",
+  "@guidedExerciseCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedGetReady": "استعد",
+  "guidedSetOf": "المجموعة {current} من {total}",
+  "@guidedSetOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedRest": "راحة",
+  "guidedSkipRest": "تخطّي الراحة",
+  "guidedPaused": "متوقف مؤقتًا",
+  "guidedResume": "استئناف",
+  "guidedWorkoutComplete": "اكتمل التمرين",
+  "guidedEndTitle": "إنهاء التمرين؟",
+  "guidedEndBody": "لن يتم حفظ تقدمك لهذه الجلسة.",
+  "guidedKeepGoing": "تابع",
+  "guidedEnd": "إنهاء",
+  "guidedReps": "{count, plural, one{{count} تكرار} other{{count} تكرارات}}",
+  "@guidedReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetTitle": "إنشاء روتين بالذكاء الاصطناعي",
+  "generateSheetPrompt": "ما نوع التمرين الذي تريده؟",
+  "generateSheetHint": "مثال: \"تمدد صباحي سريع للاستيقاظ\" أو \"تمارين قوة لكامل الجسم للمبتدئين\"",
+  "generateSheetDuration": "المدة",
+  "generateSheetMinutes": "{count} دقيقة",
+  "@generateSheetMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetDifficulty": "الصعوبة",
+  "generateSheetEquipment": "المعدات المتاحة",
+  "generateSheetGenerating": "جارٍ الإنشاء...",
+  "generateSheetSubmit": "إنشاء روتين",
+  "generateSheetDescribeFirst": "يرجى وصف التمرين الذي تريده",
+  "generateSheetAlreadyExists": "لديك هذا بالفعل: {title}",
+  "@generateSheetAlreadyExists": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetCreated": "تم الإنشاء: {title}",
+  "@generateSheetCreated": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetFailed": "تعذّر إنشاء الروتين",
+  "guidedNoExercises": "لا يحتوي هذا الروتين على تمارين بعد.",
+  "guidedStartFailed": "تعذّر بدء هذا التمرين الآن. يُرجى المحاولة مرة أخرى.",
+  "guidedSaveFailed": "تعذّر حفظ هذا التمرين. اضغط على إعادة المحاولة لتحديث سلسلة إنجازاتك.",
+  "guidedOfReps": "من {count} تكرارات",
+  "@guidedOfReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedHold": "ثبات",
+  "guidedNextSet": "المجموعة التالية",
+  "guidedUpNext": "التالي",
+  "guidedSetsHold": "{sets} × {seconds} ث ثبات",
+  "@guidedSetsHold": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachGetReady": "استعد. {exercise}",
+  "@coachGetReady": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachStartReps": "ابدأ. {count} تكرارات.",
+  "@coachStartReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachStartHold": "اثبت لمدة {seconds} ثانية.",
+  "@coachStartHold": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachRest": "استرح. التالي: {exercise}",
+  "@coachRest": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachRestShort": "استرح.",
+  "coachComplete": "أحسنت. اكتمل التمرين.",
+  "coachRep": "{count}",
+  "@coachRep": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachCountdown": "{seconds}",
+  "@coachCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoVideosInRoutine": "لم يتم العثور على فيديوهات قابلة للتشغيل في هذا الروتين.",
+  "playerLoadRoutineFailed": "تعذّر تحميل هذا الروتين الآن. يُرجى المحاولة مرة أخرى.",
+  "playerStepLoadFailedSkipping": "تعذّر تحميل \"{title}\". جارٍ التخطي…",
+  "@playerStepLoadFailedSkipping": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerStepLoadFailed": "تعذّر تحميل \"{title}\".",
+  "@playerStepLoadFailed": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerSaveCompletionFailed": "تعذّر حفظ الإكمال. اضغط على إعادة المحاولة لتحديث سلسلة إنجازاتك.",
+  "playerStepPreviewSubtitle": "{duration} • معاينة",
+  "@playerStepPreviewSubtitle": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerNoVideosReady": "لا يحتوي هذا الروتين على فيديوهات جاهزة للتشغيل بعد.",
+  "playerPlaybackFailed": "تعذّر تشغيل هذا الفيديو الآن. يُرجى المحاولة مرة أخرى.",
+  "libraryTabCurated": "منتقاة",
+  "libraryTabAiGenerated": "منشأة بالذكاء الاصطناعي",
+  "profileSavedRoutines": "الروتينات المحفوظة",
+  "savedRoutinesNoFavorites": "لا توجد روتينات مفضلة بعد.",
+  "savedRoutinesEmpty": "لا توجد روتينات محفوظة بعد.",
+  "actionFavorite": "إضافة إلى المفضلة",
+  "actionUnfavorite": "إزالة من المفضلة",
+  "routineDurationMinutes": "{minutes} دقيقة",
+  "@routineDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHoursMinutes": "{hours}س {minutes}د",
+  "@routineDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHours": "{hours}س",
+  "@routineDurationHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "difficultyEasy": "سهل",
+  "difficultyMedium": "متوسط",
+  "difficultyHard": "صعب",
+  "categoryStrength": "القوة",
+  "categoryCardio": "الكارديو",
+  "categoryFlexibility": "المرونة",
+  "categoryMindfulness": "اليقظة الذهنية",
+  "categoryDance": "الرقص",
+  "categoryHiit": "HIIT",
+  "categoryYoga": "يوغا",
+  "categoryCustom": "مخصص",
+  "navHome": "الرئيسية",
+  "navLibrary": "المكتبة",
+  "navChat": "الدردشة",
+  "navProfile": "الملف الشخصي",
+  "equipmentNone": "لا شيء",
+  "equipmentDumbbells": "دمبلز",
+  "equipmentResistanceBands": "أحزمة مقاومة",
+  "equipmentYogaMat": "حصيرة يوغا",
+  "equipmentKettlebell": "كرة kettlebell",
+  "equipmentPullUpBar": "عقلة",
+  "equipmentJumpRope": "حبل القفز",
+  "nutritionTitle": "التغذية",
+  "nutritionSubtitle": "السعرات والماكروز وسجل الوجبات",
+  "nutritionSetGoalsTitle": "حدّد أهدافك الغذائية اليومية",
+  "nutritionSetGoalsBody": "أضف وزنك وطولك وعمرك وجنسك حتى تتمكن Celia من حساب عدد السعرات والعناصر الغذائية التي ينبغي أن تستهلكها يوميًا.",
+  "nutritionSetUpGoals": "إعداد الأهداف",
+  "nutritionDailyTarget": "الهدف اليومي",
+  "nutritionDailyGoals": "الأهداف اليومية",
+  "nutritionKcal": "{calories} kcal",
+  "@nutritionKcal": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMacroSummary": "P {protein}غ · C {carbs}غ · F {fat}غ",
+  "@nutritionMacroSummary": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionToday": "اليوم",
+  "nutritionMealHistory": "سجل الوجبات",
+  "nutritionCeliaInsights": "رؤى Celia",
+  "nutritionWeeklyTrend": "الاتجاه الأسبوعي",
+  "nutritionTodayMeals": "kcal • {count, plural, one{{count} وجبة} other{{count} وجبات}}",
+  "@nutritionTodayMeals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionTodayOfTargetMeals": "من أصل {target} kcal • {count, plural, one{{count} وجبة} other{{count} وجبات}}",
+  "@nutritionTodayOfTargetMeals": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionWeekdayInitials": "ن,ث,ر,خ,ج,س,ح",
+  "@nutritionWeekdayInitials": {
+    "description": "Single-letter weekday labels for the weekly chart, Monday first, comma separated."
+  },
+  "nutritionFieldFoodName": "اسم الطعام",
+  "nutritionFieldGrams": "الجرامات",
+  "nutritionFieldCalories": "السعرات",
+  "scannerStatusAnalyzing": "جارٍ التحليل...",
+  "scannerStatusIdle": "ماسح CELIA",
+  "scannerFieldFoodName": "اسم الطعام",
+  "scannerFieldGrams": "الجرامات",
+  "scannerFieldCalories": "السعرات",
+  "scannerFieldPro": "Pro",
+  "scannerMacroPro": "PRO",
+  "scannerMacroCarb": "CARB",
+  "scannerMacroFat": "FAT",
+  "scannerRemainingAfterLogging": "تبقى {calories} kcal و{grams}غ من البروتين اليوم",
+  "@scannerRemainingAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerOverTargetAfterLogging": "تجاوزت هدفك اليومي بمقدار {calories} kcal",
+  "@scannerOverTargetAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerButtonAnalyzing": "جارٍ التحليل",
+  "scannerButtonQuotaNeeded": "يلزم توفر حصة",
+  "scannerButtonScanNow": "امسح الآن",
+  "scannerButtonLogging": "جارٍ التسجيل",
+  "scannerButtonLogMeal": "تسجيل الوجبة",
+  "scannerNoClearFood": "لم يتم اكتشاف طعام واضح بعد. جرّب إضاءة أفضل أو اقترب أكثر.",
+  "scannerErrorCameraPermission": "يلزم السماح باستخدام الكاميرا لمسح الوجبات.",
+  "scannerErrorBackendMissing": "لم تتم تهيئة خادم ماسح السعرات بعد.",
+  "scannerErrorApiKeyInvalid": "مفتاح OpenAI API المستخدم لمسح السعرات غير صالح. استبدله في بيئة الخادم، ثم أعد النشر وحاول مرة أخرى.",
+  "scannerErrorApiKeyMissing": "يلزم توفير مفتاح OpenAI API لمسح السعرات. أضفه في Vercel، ثم أعد النشر وحاول مرة أخرى.",
+  "scannerErrorQuotaExhausted": "نفدت أرصدة OpenAI لمسح السعرات. أضف أرصدة API أو ارفع حد الفوترة، ثم حاول مرة أخرى.",
+  "scannerErrorTimeout": "احتاجت Celia إلى مزيد من الوقت لتحليل هذه الوجبة. ثبّت الكاميرا وامسحها مرة أخرى.",
+  "scannerErrorNotSignedIn": "يرجى تسجيل الدخول قبل مسح الوجبات.",
+  "scannerErrorMealTableMissing": "جدول تسجيل الوجبات غير جاهز بعد. لا تزال نتيجة المسح متاحة.",
+  "scannerErrorGeneric": "تعذّر على Celia تحليل هذه الوجبة بعد. ثبّت الكاميرا، وأبقِ الطعام في المنتصف، ثم امسح مرة أخرى.",
+  "nutritionGrams": "{grams}غ",
+  "@nutritionGrams": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionMealSubtitle": "{time} · {count, plural, one{{count} عنصر} other{{count} عناصر}}",
+  "@nutritionMealSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMealDetails": "تفاصيل الوجبة",
+  "nutritionFoodItems": "الأطعمة",
+  "nutritionItemSubtitle": "{grams}غ · {calories} kcal",
+  "@nutritionItemSubtitle": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionNeedsOneItem": "يجب أن تحتوي الوجبة على طعام واحد على الأقل.",
+  "nutritionMealUpdated": "تم تحديث الوجبة",
+  "nutritionUpdateFailed": "تعذر تحديث الوجبة: {error}",
+  "@nutritionUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionDeleteMealTitle": "حذف الوجبة؟",
+  "nutritionDeleteMealBody": "سيؤدي هذا إلى إزالة الوجبة من سجل تغذيتك.",
+  "nutritionDeleteMeal": "حذف الوجبة",
+  "nutritionDeleteFailed": "تعذر حذف الوجبة: {error}",
+  "@nutritionDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionEditFood": "تعديل الطعام",
+  "nutritionSaveFood": "حفظ الطعام",
+  "nutritionLoadFailed": "تعذر تحميل الوجبات",
+  "nutritionLoadFailedBody": "اسحب للتحديث أو تحقق من اتصال الواجهة الخلفية.",
+  "nutritionNoMeals": "لم تُسجَّل أي وجبات بعد",
+  "nutritionNoMealsBody": "امسح وجبتك الأولى ضوئيًا، وستنشئ Celia سجل تغذيتك.",
+  "progressToday": "اليوم",
+  "progressSetGoals": "حدّد أهدافك الغذائية لفتح تتبع السعرات والعناصر الغذائية الكبرى.",
+  "progressOfTarget": "من أصل {target} kcal",
+  "@progressOfTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressMacroAmount": "{consumed} / {target}غ",
+  "@progressMacroAmount": {
+    "placeholders": {
+      "consumed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalOver": "تجاوزت {calories} kcal",
+  "@progressKcalOver": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalLeft": "متبقي {calories} kcal",
+  "@progressKcalLeft": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressProtein": "البروتين",
+  "progressCarbs": "الكربوهيدرات",
+  "progressFat": "الدهون",
+  "scannerEditItem": "تعديل عنصر الطعام",
+  "scannerSaveChanges": "حفظ التغييرات",
+  "scannerItemCalories": "{name} · {calories} kcal",
+  "@scannerItemCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerConfidence": "مستوى الثقة {percent}% · {provider}",
+  "@scannerConfidence": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerMoreItems": "+ {count} عناصر إضافية مضمنة في سجل هذه الوجبة",
+  "@scannerMoreItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerIfYouLog": "إذا سجّلت هذه الوجبة",
+  "scannerAfterLogging": "{after} / {target} kcal اليوم",
+  "@scannerAfterLogging": {
+    "placeholders": {
+      "after": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerGramsDecimal": "{grams}غ",
+  "@scannerGramsDecimal": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerItemServing": "{name} · {grams}غ",
+  "@scannerItemServing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerNoMealDetected": "لم يتم اكتشاف وجبة",
+  "onboardingWelcome": "مرحبًا، {name}",
+  "@onboardingWelcome": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingGender": "الجنس",
+  "onboardingCalculateGoals": "احسب أهدافي",
+  "onboardingScanFirstMeal": "امسح وجبتي الأولى",
+  "onboardingExploreRoutines": "استكشف التمارين",
+  "onboardingGoHome": "الانتقال إلى الرئيسية",
+  "onboardingDailyTargets": "أهدافك اليومية",
+  "onboardingProtein": "البروتين {grams}غ ·",
+  "@onboardingProtein": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingMacroTargets": "البروتين {protein}غ • الكربوهيدرات {carbs}غ • الدهون {fat}غ",
+  "@onboardingMacroTargets": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingTargetsReady": "أصبحت أهدافك الغذائية اليومية جاهزة. اختر الطريقة التي تريد أن تبدأ بها.",
+  "onboardingWeightKg": "الوزن (كغ)",
+  "onboardingHeightCm": "الطول (سم)",
+  "onboardingAge": "العمر",
+  "onboardingInvalidWeight": "أدخل وزنًا صالحًا بالكغ.",
+  "onboardingInvalidHeight": "أدخل طولًا صالحًا بالسم.",
+  "onboardingInvalidAge": "أدخل عمرًا صالحًا بين 13 و100.",
+  "onboardingSaveFailed": "تعذر حفظ ملفك الغذائي.",
+  "genderMale": "ذكر",
+  "genderFemale": "أنثى",
+  "genderOther": "آخر",
+  "nutritionSetupTitle": "أهداف التغذية اليومية",
+  "nutritionSetupBody": "أخبر Celia عن جسمك لتتمكن من حساب سعراتك والعناصر الغذائية الكبرى اليومية.",
+  "nutritionSetupGender": "الجنس",
+  "nutritionSetupFootnote": "تستخدم Celia وزنك وطولك وعمرك وجنسك لتقدير أهداف السعرات والعناصر الغذائية الكبرى اليومية بناءً على مستوى نشاط معتدل.",
+  "nutritionSetupSave": "حفظ الأهداف",
+  "profileTitle": "الملف الشخصي",
+  "profileCeliaAi": "Celia AI",
+  "profileEliteMember": "عضو مميز",
+  "profileAccount": "الحساب",
+  "profileSignedInAs": "تم تسجيل الدخول باسم:\n{email}",
+  "@profileSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "profileUnknownEmail": "غير معروف",
+  "profileDarkMode": "الوضع الداكن",
+  "profileLanguage": "اللغة",
+  "profileLogOutTitle": "تسجيل الخروج؟",
+  "profileLogOutBody": "هل أنت متأكد من رغبتك في تسجيل الخروج؟",
+  "profileLogOut": "تسجيل الخروج",
+  "profileLogOutButton": "تسجيل الخروج",
+  "profileFavoriteRoutines": "التمارين المفضلة",
+  "profileSubscription": "الاشتراك",
+  "profileNutrition": "التغذية",
+  "profileHelpSupport": "المساعدة والدعم",
+  "profileFriend": "صديق",
+  "profileStatSaved": "المحفوظة",
+  "profileStatStreak": "سلسلة الأيام",
+  "profileStatWorkouts": "التمارين",
+  "streakDayOneStarted": "بدأت اليوم الأول — عُد غدًا لبناء سلسلة أيامك.",
+  "streakRebuild": "كنت نشطًا أمس — سجّل وجبة أو أكمل تمرينًا اليوم لإعادة بناء سلسلتك.",
+  "streakStart": "سجّل وجبة أو أكمل تمرينًا لبدء سلسلة نشاطك.",
+  "streakLongRun": "سلسلة مستمرة لمدة {days} يومًا! واصل الالتزام — Celia تتابع انتظامك.",
+  "@streakLongRun": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakBothLogged": "سلسلة مستمرة لمدة {days} يومًا — تم تسجيل التمرين والتغذية اليوم.",
+  "@streakBothLogged": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedWorkout": "سلسلة مستمرة لمدة {days} يومًا. تمرين سريع سيكمل يومك.",
+  "@streakNeedWorkout": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedMeal": "سلسلة مستمرة لمدة {days} يومًا. سجّل وجبة لتتبع تغذيتك.",
+  "@streakNeedMeal": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakStayActive": "سلسلة مستمرة لمدة {days} يومًا — حافظ على نشاطك اليوم.",
+  "@streakStayActive": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "editProfileTitle": "تعديل الملف الشخصي",
+  "editProfileName": "الاسم",
+  "editProfileFootnote": "سيتم حفظ التغييرات في حسابك وستظهر في الصفحة الرئيسية/الملف الشخصي.",
+  "editProfileSaveFailed": "تعذر تحديث الملف الشخصي. يُرجى المحاولة مرة أخرى.",
+  "languageTitle": "اللغة",
+  "languageSystem": "لغة الجهاز",
+  "languageSystemSubtitle": "استخدام اللغة المحددة لهاتفك",
+  "languageEnglish": "الإنجليزية",
+  "languageSpanish": "الإسبانية",
+  "insightStartFuelingTitle": "ابدأ تغذيتك اليوم",
+  "insightStartFuelingBody": "لديك كامل ميزانية السعرات المتبقية. امسح وجبتك الأولى ضوئيًا أو سجّلها للحفاظ على مسارك.",
+  "insightAboveTargetTitle": "أعلى من الهدف اليوم",
+  "insightAboveTargetBody": "أنت تتجاوز هدفك اليومي بمقدار {calories} kcal. اجعل العشاء أخف أو أضف تمرينًا قصيرًا.",
+  "@insightAboveTargetBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightLowProteinTitle": "البروتين لا يزال منخفضًا",
+  "insightLowProteinBody": "ما زلت بحاجة إلى نحو {grams}غ من البروتين اليوم للوصول إلى هدفك.",
+  "@insightLowProteinBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightAlmostThereTitle": "اقتربت من هدفك",
+  "insightAlmostThereBody": "تبقى لك {calories} kcal اليوم. ستناسبك وجبة خفيفة متوازنة.",
+  "@insightAlmostThereBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightOnTrackTitle": "أنت على المسار الصحيح اليوم",
+  "insightOnTrackBody": "تبقى لك {calories} kcal و{grams}غ من البروتين للوصول إلى أهدافك اليومية.",
+  "@insightOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightWeeklyRhythmTitle": "ابنِ إيقاعك الأسبوعي",
+  "insightWeeklyRhythmBody": "سجّل وجباتك على مدار الأسبوع ليتمكن Celia من اكتشاف الأنماط وتقديم إرشادات أفضل لك.",
+  "insightWeeklyTrendTitle": "الاتجاه الأسبوعي",
+  "insightWeeklyTrendBody": "سجّلت وجباتك في {days} من آخر 7 أيام، بمتوسط {average} kcal — {direction}.",
+  "@insightWeeklyTrendBody": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "average": {
+        "type": "int"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "insightTrendOnTarget": "قريبًا جدًا من هدفك اليومي",
+  "insightTrendAbove": "أعلى من هدفك بمتوسط {delta} kcal",
+  "@insightTrendAbove": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightTrendBelow": "أقل من هدفك بمتوسط {delta} kcal",
+  "@insightTrendBelow": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsSectionTitle": "رؤى Celia"
+}

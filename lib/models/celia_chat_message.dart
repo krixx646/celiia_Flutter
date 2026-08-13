@@ -45,58 +45,9 @@ class ChatToolCall {
     );
   }
 
-  /// Present-tense status shown while the tool runs.
-  String get activityLabel {
-    switch (toolName) {
-      case 'get_my_progress':
-        return 'Checking your progress';
-      case 'get_today_nutrition':
-        return 'Checking what you ate today';
-      case 'list_my_meals':
-        return 'Reviewing your recent meals';
-      case 'list_my_routines':
-        return 'Looking at your routines';
-      case 'get_routine_details':
-        return 'Reading that routine';
-      case 'search_exercises':
-        return 'Searching the exercise library';
-      case 'create_routine':
-        return 'Building your routine';
-      case 'log_meal':
-        return 'Logging your meal';
-      case 'save_routine':
-        return 'Saving to your library';
-      default:
-        return 'Working on it';
-    }
-  }
-
-  /// The question to put to the user before a write runs.
-  String get approvalPrompt {
-    switch (toolName) {
-      case 'create_routine':
-        final title = input?['title'];
-        final steps = input?['steps'];
-        final count = steps is List ? steps.length : 0;
-        final name = title is String && title.isNotEmpty
-            ? title
-            : 'this routine';
-        return count > 0
-            ? 'Save "$name" with $count exercises to your library?'
-            : 'Save "$name" to your library?';
-      case 'log_meal':
-        final title = input?['title'];
-        final calories = input?['calories'];
-        final name = title is String && title.isNotEmpty ? title : 'this meal';
-        return calories is num
-            ? 'Log "$name" at ${calories.round()} kcal?'
-            : 'Log "$name"?';
-      case 'save_routine':
-        return 'Add this routine to your library?';
-      default:
-        return 'Allow Celia to do this?';
-    }
-  }
+  // The user-facing wording for this call lives in
+  // `lib/utils/chat_activity_text.dart`, so the model stays free of the
+  // localizations and the same call reads correctly in either language.
 
   /// The exercises in a pending `create_routine`, for previewing the plan.
   List<String> get proposedExercises {

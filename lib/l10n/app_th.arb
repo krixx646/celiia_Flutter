@@ -1,0 +1,1017 @@
+{
+  "@@locale": "th",
+  "appName": "Celia Integral Coach",
+  "@appName": {
+    "description": "The app's name. Not translated."
+  },
+  "actionCancel": "ยกเลิก",
+  "actionSave": "บันทึก",
+  "actionDelete": "ลบ",
+  "actionEdit": "แก้ไข",
+  "actionRetry": "ลองอีกครั้ง",
+  "actionDone": "เสร็จสิ้น",
+  "actionClose": "ปิด",
+  "actionContinue": "ดำเนินการต่อ",
+  "actionSeeAll": "ดูทั้งหมด",
+  "actionYesDoIt": "ใช่ ทำเลย",
+  "actionNotNow": "ยังไม่ใช่ตอนนี้",
+  "loadingPreparing": "กำลังเตรียม Celia...",
+  "loadingGeneric": "กำลังโหลด...",
+  "errorGeneric": "เกิดข้อผิดพลาด โปรดลองอีกครั้ง",
+  "errorCanceled": "ยกเลิกการดำเนินการแล้ว",
+  "errorTooManyRequests": "ดำเนินการบ่อยเกินไป โปรดรอสักครู่แล้วลองอีกครั้ง",
+  "errorNetwork": "โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ตแล้วลองอีกครั้ง",
+  "errorBadCredentials": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
+  "errorEmailInUse": "อีเมลนี้ถูกใช้งานแล้ว ลองเข้าสู่ระบบแทน",
+  "errorWeakPassword": "โปรดใช้รหัสผ่านที่รัดกุมกว่านี้แล้วลองอีกครั้ง",
+  "errorInvalidEmail": "โปรดป้อนอีเมลที่ถูกต้อง",
+  "errorNoPermission": "คุณไม่มีสิทธิ์ดำเนินการนี้",
+  "errorNotSignedIn": "โปรดเข้าสู่ระบบแล้วลองอีกครั้ง",
+  "errorNoConversation": "เริ่มแชตใหม่เพื่อดำเนินการต่อ",
+  "errorNoPlayableVideos": "ยังไม่มีวิดีโอที่เล่นได้สำหรับกิจวัตรนี้",
+  "errorLoadRoutines": "ไม่สามารถโหลดกิจวัตรได้ในขณะนี้ โปรดลองอีกครั้ง",
+  "errorLoadSavedRoutines": "ไม่สามารถโหลดกิจวัตรที่บันทึกไว้ได้ในขณะนี้ โปรดลองอีกครั้ง",
+  "errorGenerateRoutine": "ไม่สามารถสร้างกิจวัตรได้ในขณะนี้ โปรดลองอีกครั้ง",
+  "errorLoadChats": "ไม่สามารถโหลดแชตที่บันทึกไว้ได้ในขณะนี้",
+  "errorCeliaUnavailable": "Celia ไม่พร้อมใช้งานในขณะนี้ โปรดลองอีกครั้ง",
+  "errorOpenConversation": "ไม่สามารถเปิดบทสนทนานี้ได้",
+  "errorDeleteConversation": "ไม่สามารถลบบทสนทนานี้ได้ โปรดลองอีกครั้ง",
+  "errorSignIn": "ไม่สามารถเข้าสู่ระบบได้ โปรดลองอีกครั้ง",
+  "errorCreateAccount": "ไม่สามารถสร้างบัญชีได้ โปรดลองอีกครั้ง",
+  "errorSendResetEmail": "ไม่สามารถส่งอีเมลรีเซ็ตรหัสผ่านได้ โปรดลองอีกครั้ง",
+  "errorSendVerificationEmail": "ไม่สามารถส่งอีเมลยืนยันได้ โปรดลองอีกครั้ง",
+  "errorGoogleSignIn": "เข้าสู่ระบบด้วย Google ไม่สำเร็จ โปรดลองอีกครั้ง",
+  "errorAppleSignIn": "เข้าสู่ระบบด้วย Apple ไม่สำเร็จ โปรดลองอีกครั้ง",
+  "errorRefreshNutrition": "ไม่สามารถรีเฟรชข้อมูลโภชนาการได้",
+  "errorLoadNutritionProfile": "ไม่สามารถโหลดโปรไฟล์โภชนาการของคุณได้",
+  "startupErrorTitle": "ไม่สามารถเปิดแอปได้",
+  "startupErrorBody": "โปรดปิดแล้วเปิดแอปอีกครั้ง หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุน",
+  "authTagline": "เพื่อนคู่ใจด้านฟิตเนสของคุณ",
+  "authSignUp": "สมัครสมาชิก",
+  "authLogIn": "เข้าสู่ระบบ",
+  "authVersion": "เวอร์ชัน {version}",
+  "@authVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "authForgotPassword": "ลืมรหัสผ่านใช่ไหม",
+  "authOr": "หรือ",
+  "authContinueWithGoogle": "ดำเนินการต่อด้วย Google",
+  "authContinueWithApple": "ดำเนินการต่อด้วย Apple",
+  "authAuthenticating": "กำลังยืนยันตัวตน...",
+  "authEnterYourName": "โปรดป้อนชื่อของคุณ",
+  "authNeedAccount": "ยังไม่มีบัญชีใช่ไหม สมัครสมาชิก",
+  "authHaveAccount": "มีบัญชีอยู่แล้วใช่ไหม เข้าสู่ระบบ",
+  "authFieldName": "ชื่อของคุณ",
+  "authFieldEmail": "อีเมล",
+  "authFieldPassword": "รหัสผ่าน",
+  "verifyEmailTitle": "ยืนยันอีเมลของคุณ",
+  "verifyEmailHeading": "ตรวจสอบกล่องจดหมายของคุณ",
+  "verifyEmailBody": "ลิงก์ยืนยันถูกส่งไปยังอีเมลของคุณแล้ว",
+  "verifyEmailSent": "ส่งอีเมลยืนยันแล้ว!",
+  "verifyEmailContinue": "ฉันยืนยันแล้ว ดำเนินการต่อ",
+  "verifyEmailSignOut": "ออกจากระบบ",
+  "verifyEmailSending": "กำลังส่ง...",
+  "verifyEmailResend": "ส่งอีเมลยืนยันอีกครั้ง",
+  "verifyEmailResendIn": "ส่งอีกครั้งใน {seconds} วินาที",
+  "@verifyEmailResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "verifyEmailAddress": "อีเมล: {email}",
+  "@verifyEmailAddress": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "forgotPasswordTitle": "ลืมรหัสผ่าน",
+  "forgotPasswordBody": "กรอกอีเมลเพื่อรับลิงก์รีเซ็ตรหัสผ่าน",
+  "forgotPasswordEmptyEmail": "กรุณากรอกอีเมล",
+  "forgotPasswordSent": "ส่งอีเมลรีเซ็ตรหัสผ่านแล้ว",
+  "forgotPasswordSend": "ส่งลิงก์รีเซ็ต",
+  "forgotPasswordSending": "กำลังส่ง...",
+  "nameSetupTitle": "ให้ Celia เรียกคุณว่าอะไรดี?",
+  "nameSetupBody": "เราจะใช้ชื่อของคุณทั่วทั้งแอป เพื่อให้คำแนะนำเหมาะกับคุณมากยิ่งขึ้น",
+  "nameSetupSaveFailed": "บันทึกชื่อของคุณไม่ได้ โปรดลองอีกครั้ง",
+  "homeGoodMorning": "สวัสดีตอนเช้า,",
+  "homeCeliaActive": "CELIA กำลังทำงาน",
+  "homeGenerateRoutine": "สร้าง\nตารางฝึกเฉพาะคุณ\nด้วย AI",
+  "homeCreateRoutine": "สร้างตารางฝึก",
+  "homeQuickActions": "การดำเนินการด่วน",
+  "homeUpNext": "รายการถัดไป",
+  "homeNoUpcoming": "ยังไม่มีตารางฝึกที่กำลังจะมาถึง\nสร้างใหม่หรือเลือกดูจากคลัง",
+  "homeChatWithCelia": "แชทกับ Celia",
+  "homeChatSubtitle": "ถามเรื่องท่าฝึกหรือโภชนาการ",
+  "homeScanMeal": "สแกนมื้ออาหาร",
+  "homeScanMealSubtitle": "ระบุอาหารและแคลอรี",
+  "homeNutrition": "โภชนาการ",
+  "homeNutritionSubtitle": "ดูแคลอรี มาโคร และมื้ออาหาร",
+  "homeBrowseLibrary": "เลือกดู\nคลัง",
+  "homeTrackProgress": "ติดตาม\nความคืบหน้า",
+  "chatTitle": "โค้ช Celia",
+  "chatEmptyPrompt": "วันนี้ฉันช่วยคุณ\nฟิตขึ้นได้อย่างไรบ้าง?",
+  "chatYourChats": "แชทของคุณ",
+  "chatNoSavedChats": "ยังไม่มีแชทที่บันทึกไว้",
+  "chatHistory": "ประวัติแชท",
+  "chatNew": "แชทใหม่",
+  "chatOpening": "กำลังเปิดแชท...",
+  "chatScanAMeal": "สแกนมื้ออาหาร",
+  "chatInputHint": "ถาม Celia ได้ทุกเรื่องเกี่ยวกับการฝึกของคุณ...",
+  "chatCouldNotOpenRoutine": "เปิดตารางฝึกนั้นไม่ได้",
+  "chatThisRoutine": "ตารางฝึกนี้",
+  "chatThisMeal": "มื้อนี้",
+  "chatYourRoutine": "ตารางฝึกของคุณ",
+  "chatMoreExercises": "+ อีก {count} รายการ",
+  "@chatMoreExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatEmptySubtitle": "ถามเกี่ยวกับการฝึก อาหาร หรือความคืบหน้าของคุณ",
+  "chatLoggedToday": "วันนี้คุณบันทึกไปแล้ว {calories} kcal",
+  "@chatLoggedToday": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "chatSuggestionHiit": "สร้างตารางฝึก HIIT 20 นาทีให้ฉัน",
+  "chatSuggestionDinner": "คืนนี้ฉันควรกินอะไรดี?",
+  "chatSuggestionProgress": "สัปดาห์นี้ฉันทำได้ดีแค่ไหน?",
+  "chatSuggestionIngredients": "ฉันมีไก่ ข้าว และผักโขม",
+  "chatJustNow": "เมื่อสักครู่นี้",
+  "chatMinutesAgo": "เมื่อ {minutes} นาทีที่แล้ว",
+  "@chatMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "chatHoursAgo": "เมื่อ {hours} ชั่วโมงที่แล้ว",
+  "@chatHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "chatDaysAgo": "เมื่อ {days} วันที่แล้ว",
+  "@chatDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "chatRoutineAlreadySaved": "อยู่ในคลังของคุณแล้ว — แตะเพื่อเปิด",
+  "chatRoutineTapToOpen": "แตะเพื่อเปิด",
+  "chatToolCancelled": "ยกเลิกแล้ว",
+  "chatToolFailed": "{label} — ดำเนินการไม่สำเร็จ",
+  "@chatToolFailed": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "chatToolRoutineSaveFailed": "ไม่สามารถบันทึกโปรแกรมได้",
+  "chatToolRoutineSaved": "บันทึกไปยังคลังของคุณแล้ว",
+  "chatToolMealLogged": "เพิ่มลงในบันทึกวันนี้แล้ว",
+  "chatToolRoutineAdded": "เพิ่มไปยังคลังของคุณแล้ว",
+  "activityCheckingProgress": "กำลังตรวจสอบความคืบหน้าของคุณ",
+  "activityCheckingNutrition": "กำลังตรวจสอบสิ่งที่คุณรับประทานวันนี้",
+  "activityReviewingMeals": "กำลังทบทวนมื้ออาหารล่าสุดของคุณ",
+  "activityLookingAtRoutines": "กำลังดูโปรแกรมของคุณ",
+  "activityReadingRoutine": "กำลังอ่านโปรแกรมนั้น",
+  "activitySearchingLibrary": "กำลังค้นหาคลังท่าออกกำลังกาย",
+  "activityBuildingRoutine": "กำลังสร้างโปรแกรมของคุณ",
+  "activityLoggingMeal": "กำลังบันทึกมื้ออาหารของคุณ",
+  "activitySavingToLibrary": "กำลังบันทึกไปยังคลังของคุณ",
+  "activityWorking": "กำลังดำเนินการ",
+  "approvalSaveRoutineWithCount": "บันทึก \"{name}\" ซึ่งมีท่าออกกำลังกาย {count} ท่าลงในคลังของคุณไหม",
+  "@approvalSaveRoutineWithCount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalSaveRoutine": "บันทึก \"{name}\" ลงในคลังของคุณไหม",
+  "@approvalSaveRoutine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalLogMealWithCalories": "บันทึก \"{name}\" ที่ {calories} kcal ไหม",
+  "@approvalLogMealWithCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalLogMeal": "บันทึก \"{name}\" ไหม",
+  "@approvalLogMeal": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalAddRoutine": "เพิ่มโปรแกรมนี้ลงในคลังของคุณไหม",
+  "approvalGeneric": "อนุญาตให้ Celia ดำเนินการนี้ไหม",
+  "libraryTitle": "คลังโปรแกรม",
+  "librarySteps": "{count, plural, one{{count} ขั้นตอน} other{{count} ขั้นตอน}}",
+  "@librarySteps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryEmpty": "ยังไม่มีโปรแกรม",
+  "libraryEmptyBody": "สร้างและเผยแพร่โปรแกรมในแดชบอร์ดผู้ดูแลระบบ",
+  "libraryLoadFailed": "โหลดโปรแกรมไม่สำเร็จ",
+  "routineStartWorkout": "เริ่มออกกำลังกาย",
+  "routineNoSteps": "ไม่มีขั้นตอน",
+  "routineNoVideoForStep": "ไม่มีวิดีโอสำหรับขั้นตอนนี้",
+  "routineVideoProcessing": "วิดีโอยังอยู่ระหว่างการประมวลผล โปรดลองอีกครั้งภายหลัง",
+  "routineMissingPlaybackUrl": "ไม่มี URL สำหรับเล่นวิดีโอนี้",
+  "routinePreviewBanner": "ตัวอย่าง — วิดีโอฉบับเต็มเร็ว ๆ นี้",
+  "routinePreview": "ตัวอย่าง",
+  "routineDetails": "รายละเอียด",
+  "routineNotFound": "ไม่พบโปรแกรม",
+  "routineCompletedTimes": "ทำเสร็จแล้ว {count} ครั้ง",
+  "@routineCompletedTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "playerVideoUnavailable": "วิดีโอนี้ไม่พร้อมใช้งานในขณะนี้",
+  "playerSteps": "ขั้นตอน",
+  "playerStepCounter": "{current}/{total}",
+  "@playerStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoPlayableVideos": "ไม่มีวิดีโอที่เล่นได้",
+  "playerWorkoutComplete": "ออกกำลังกายเสร็จแล้ว!",
+  "playerSavingStreak": "กำลังบันทึกลงสถิติความต่อเนื่อง…",
+  "playerSavedStreak": "บันทึกลงสถิติความต่อเนื่องแล้ว",
+  "playerRetrySave": "ลองบันทึกอีกครั้ง",
+  "playerReplay": "เล่นซ้ำ",
+  "playerNotReady": "เครื่องเล่นยังไม่พร้อม",
+  "playerPreviewUnavailable": "ตัวอย่างไม่พร้อมใช้งานในขณะนี้",
+  "playerClipCounter": "คลิป {current} จาก {total} · {duration}",
+  "@playerClipCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerErrorLoadingVideo": "เกิดข้อผิดพลาดในการโหลดวิดีโอ",
+  "playerLoadingVideo": "กำลังโหลดวิดีโอ...",
+  "playerFailedToLoadVideo": "โหลดวิดีโอไม่สำเร็จ",
+  "playerNotInitialized": "ยังไม่ได้เริ่มต้นเครื่องเล่นวิดีโอ",
+  "guidedExerciseCounter": "ท่าออกกำลังกาย {current}/{total}",
+  "@guidedExerciseCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedGetReady": "เตรียมพร้อม",
+  "guidedSetOf": "เซต {current} จาก {total}",
+  "@guidedSetOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedRest": "พัก",
+  "guidedSkipRest": "ข้ามช่วงพัก",
+  "guidedPaused": "หยุดชั่วคราว",
+  "guidedResume": "ดำเนินการต่อ",
+  "guidedWorkoutComplete": "ออกกำลังกายเสร็จแล้ว",
+  "guidedEndTitle": "จบการออกกำลังกายไหม?",
+  "guidedEndBody": "ความคืบหน้าของเซสชันนี้จะไม่ถูกบันทึก",
+  "guidedKeepGoing": "ทำต่อไป",
+  "guidedEnd": "จบ",
+  "guidedReps": "{count, plural, one{{count} ครั้ง} other{{count} ครั้ง}}",
+  "@guidedReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetTitle": "สร้างโปรแกรมด้วย AI",
+  "generateSheetPrompt": "คุณต้องการออกกำลังกายแบบไหน",
+  "generateSheetHint": "เช่น \"ยืดเหยียดสั้น ๆ ตอนเช้าเพื่อปลุกร่างกาย\" หรือ \"ฝึกความแข็งแรงทั่วร่างกายสำหรับผู้เริ่มต้น\"",
+  "generateSheetDuration": "ระยะเวลา",
+  "generateSheetMinutes": "{count} นาที",
+  "@generateSheetMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetDifficulty": "ระดับความยาก",
+  "generateSheetEquipment": "อุปกรณ์ที่มี",
+  "generateSheetGenerating": "กำลังสร้าง...",
+  "generateSheetSubmit": "สร้างโปรแกรม",
+  "generateSheetDescribeFirst": "โปรดอธิบายการออกกำลังกายที่ต้องการ",
+  "generateSheetAlreadyExists": "คุณมีรายการนี้อยู่แล้ว: {title}",
+  "@generateSheetAlreadyExists": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetCreated": "สร้างแล้ว: {title}",
+  "@generateSheetCreated": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetFailed": "สร้างโปรแกรมไม่สำเร็จ",
+  "guidedNoExercises": "โปรแกรมนี้ยังไม่มีท่าออกกำลังกาย",
+  "guidedStartFailed": "ไม่สามารถเริ่มการออกกำลังกายนี้ได้ในขณะนี้ โปรดลองอีกครั้ง",
+  "guidedSaveFailed": "ไม่สามารถบันทึกการออกกำลังกายนี้ได้ แตะลองอีกครั้งเพื่ออัปเดตสตรีคของคุณ",
+  "guidedOfReps": "จากทั้งหมด {count} ครั้ง",
+  "@guidedOfReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedHold": "ค้าง",
+  "guidedNextSet": "เซ็ตถัดไป",
+  "guidedUpNext": "ถัดไป",
+  "guidedSetsHold": "ค้าง {sets} × {seconds} วินาที",
+  "@guidedSetsHold": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachGetReady": "เตรียมพร้อม {exercise}",
+  "@coachGetReady": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachStartReps": "เริ่มเลย {count} ครั้ง",
+  "@coachStartReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachStartHold": "ค้างไว้ {seconds} วินาที",
+  "@coachStartHold": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachRest": "พัก ท่าถัดไป: {exercise}",
+  "@coachRest": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachRestShort": "พัก",
+  "coachComplete": "เยี่ยมมาก ออกกำลังกายเสร็จแล้ว",
+  "coachRep": "{count}",
+  "@coachRep": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachCountdown": "{seconds}",
+  "@coachCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoVideosInRoutine": "ไม่พบวิดีโอที่เล่นได้ในโปรแกรมนี้",
+  "playerLoadRoutineFailed": "ไม่สามารถโหลดโปรแกรมนี้ได้ในขณะนี้ โปรดลองอีกครั้ง",
+  "playerStepLoadFailedSkipping": "โหลด \"{title}\" ไม่สำเร็จ กำลังข้าม…",
+  "@playerStepLoadFailedSkipping": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerStepLoadFailed": "โหลด \"{title}\" ไม่สำเร็จ",
+  "@playerStepLoadFailed": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerSaveCompletionFailed": "ไม่สามารถบันทึกการทำเสร็จได้ แตะลองอีกครั้งเพื่ออัปเดตสตรีคของคุณ",
+  "playerStepPreviewSubtitle": "{duration} • ดูตัวอย่าง",
+  "@playerStepPreviewSubtitle": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerNoVideosReady": "โปรแกรมนี้ยังไม่มีวิดีโอพร้อมเล่น",
+  "playerPlaybackFailed": "ไม่สามารถเล่นวิดีโอนี้ได้ในขณะนี้ โปรดลองอีกครั้ง",
+  "libraryTabCurated": "คัดสรร",
+  "libraryTabAiGenerated": "สร้างโดย AI",
+  "profileSavedRoutines": "โปรแกรมที่บันทึกไว้",
+  "savedRoutinesNoFavorites": "ยังไม่มีโปรแกรมโปรด",
+  "savedRoutinesEmpty": "ยังไม่มีโปรแกรมที่บันทึกไว้",
+  "actionFavorite": "เพิ่มในรายการโปรด",
+  "actionUnfavorite": "นำออกจากรายการโปรด",
+  "routineDurationMinutes": "{minutes} นาที",
+  "@routineDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHoursMinutes": "{hours} ชม. {minutes} นาที",
+  "@routineDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHours": "{hours} ชม.",
+  "@routineDurationHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "difficultyEasy": "ง่าย",
+  "difficultyMedium": "ปานกลาง",
+  "difficultyHard": "ยาก",
+  "categoryStrength": "ความแข็งแรง",
+  "categoryCardio": "คาร์ดิโอ",
+  "categoryFlexibility": "ความยืดหยุ่น",
+  "categoryMindfulness": "การเจริญสติ",
+  "categoryDance": "เต้น",
+  "categoryHiit": "HIIT",
+  "categoryYoga": "โยคะ",
+  "categoryCustom": "กำหนดเอง",
+  "navHome": "หน้าหลัก",
+  "navLibrary": "คลัง",
+  "navChat": "แชต",
+  "navProfile": "โปรไฟล์",
+  "equipmentNone": "ไม่มี",
+  "equipmentDumbbells": "ดัมเบล",
+  "equipmentResistanceBands": "ยางยืดแรงต้าน",
+  "equipmentYogaMat": "เสื่อโยคะ",
+  "equipmentKettlebell": "เคตเทิลเบล",
+  "equipmentPullUpBar": "บาร์โหน",
+  "equipmentJumpRope": "เชือกกระโดด",
+  "nutritionTitle": "โภชนาการ",
+  "nutritionSubtitle": "แคลอรี มาโคร และประวัติมื้ออาหาร",
+  "nutritionSetGoalsTitle": "ตั้งเป้าหมายโภชนาการรายวัน",
+  "nutritionSetGoalsBody": "เพิ่มน้ำหนัก ส่วนสูง อายุ และเพศของคุณ เพื่อให้ Celia คำนวณจำนวนแคลอรีและสารอาหารที่ควรบริโภคในแต่ละวัน",
+  "nutritionSetUpGoals": "ตั้งเป้าหมาย",
+  "nutritionDailyTarget": "เป้าหมายรายวัน",
+  "nutritionDailyGoals": "เป้าหมายรายวัน",
+  "nutritionKcal": "{calories} kcal",
+  "@nutritionKcal": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMacroSummary": "P {protein}g · C {carbs}g · F {fat}g",
+  "@nutritionMacroSummary": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionToday": "วันนี้",
+  "nutritionMealHistory": "ประวัติมื้ออาหาร",
+  "nutritionCeliaInsights": "ข้อมูลเชิงลึกจาก Celia",
+  "nutritionWeeklyTrend": "แนวโน้มรายสัปดาห์",
+  "nutritionTodayMeals": "kcal • {count, plural, one{{count} มื้อ} other{{count} มื้อ}}",
+  "@nutritionTodayMeals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionTodayOfTargetMeals": "จากเป้าหมาย {target} kcal • {count, plural, one{{count} มื้อ} other{{count} มื้อ}}",
+  "@nutritionTodayOfTargetMeals": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionWeekdayInitials": "จ,อ,พ,พฤ,ศ,ส,อา",
+  "@nutritionWeekdayInitials": {
+    "description": "Single-letter weekday labels for the weekly chart, Monday first, comma separated."
+  },
+  "nutritionFieldFoodName": "ชื่ออาหาร",
+  "nutritionFieldGrams": "กรัม",
+  "nutritionFieldCalories": "แคลอรี",
+  "scannerStatusAnalyzing": "กำลังวิเคราะห์...",
+  "scannerStatusIdle": "CELIA SCANNER",
+  "scannerFieldFoodName": "ชื่ออาหาร",
+  "scannerFieldGrams": "กรัม",
+  "scannerFieldCalories": "แคลอรี",
+  "scannerFieldPro": "Pro",
+  "scannerMacroPro": "PRO",
+  "scannerMacroCarb": "CARB",
+  "scannerMacroFat": "FAT",
+  "scannerRemainingAfterLogging": "เหลือ {calories} kcal และโปรตีน {grams}g สำหรับวันนี้",
+  "@scannerRemainingAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerOverTargetAfterLogging": "เกินเป้าหมายรายวันของคุณ {calories} kcal",
+  "@scannerOverTargetAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerButtonAnalyzing": "กำลังวิเคราะห์",
+  "scannerButtonQuotaNeeded": "ต้องมีโควตา",
+  "scannerButtonScanNow": "สแกนเลย",
+  "scannerButtonLogging": "กำลังบันทึก",
+  "scannerButtonLogMeal": "บันทึกมื้ออาหาร",
+  "scannerNoClearFood": "ยังตรวจไม่พบอาหารที่ชัดเจน ลองเพิ่มแสงหรือขยับเข้าใกล้อีกนิด",
+  "scannerErrorCameraPermission": "ต้องอนุญาตให้เข้าถึงกล้องเพื่อสแกนมื้ออาหาร",
+  "scannerErrorBackendMissing": "ยังไม่ได้ตั้งค่าระบบเบื้องหลังสำหรับสแกนแคลอรี",
+  "scannerErrorApiKeyInvalid": "คีย์ OpenAI API สำหรับสแกนแคลอรีไม่ถูกต้อง โปรดเปลี่ยนคีย์ในสภาพแวดล้อมของระบบเบื้องหลัง ปรับใช้ใหม่ แล้วลองอีกครั้ง",
+  "scannerErrorApiKeyMissing": "ต้องใช้คีย์ OpenAI API สำหรับสแกนแคลอรี โปรดเพิ่มคีย์ใน Vercel ปรับใช้ใหม่ แล้วลองอีกครั้ง",
+  "scannerErrorQuotaExhausted": "เครดิต OpenAI สำหรับสแกนแคลอรีหมดแล้ว โปรดเพิ่มเครดิต API หรือเพิ่มวงเงินเรียกเก็บเงิน แล้วลองอีกครั้ง",
+  "scannerErrorTimeout": "Celia ต้องใช้เวลาวิเคราะห์มื้ออาหารนี้มากขึ้น ถือกล้องให้นิ่งแล้วสแกนอีกครั้ง",
+  "scannerErrorNotSignedIn": "โปรดเข้าสู่ระบบก่อนสแกนมื้ออาหาร",
+  "scannerErrorMealTableMissing": "ตารางบันทึกมื้ออาหารยังไม่พร้อมใช้งาน แต่ผลการสแกนยังคงอยู่",
+  "scannerErrorGeneric": "Celia ยังวิเคราะห์มื้ออาหารนี้ไม่ได้ ถือกล้องให้นิ่ง จัดอาหารให้อยู่ตรงกลาง แล้วสแกนอีกครั้ง",
+  "nutritionGrams": "{grams}g",
+  "@nutritionGrams": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionMealSubtitle": "{time} · {count, plural, one{{count} รายการ} other{{count} รายการ}}",
+  "@nutritionMealSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMealDetails": "รายละเอียดมื้ออาหาร",
+  "nutritionFoodItems": "รายการอาหาร",
+  "nutritionItemSubtitle": "{grams}g · {calories} kcal",
+  "@nutritionItemSubtitle": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionNeedsOneItem": "มื้ออาหารต้องมีรายการอาหารอย่างน้อยหนึ่งรายการ",
+  "nutritionMealUpdated": "อัปเดตมื้ออาหารแล้ว",
+  "nutritionUpdateFailed": "ไม่สามารถอัปเดตมื้ออาหารได้: {error}",
+  "@nutritionUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionDeleteMealTitle": "ลบมื้ออาหารหรือไม่?",
+  "nutritionDeleteMealBody": "การดำเนินการนี้จะลบมื้ออาหารออกจากประวัติโภชนาการของคุณ",
+  "nutritionDeleteMeal": "ลบมื้ออาหาร",
+  "nutritionDeleteFailed": "ไม่สามารถลบมื้ออาหารได้: {error}",
+  "@nutritionDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionEditFood": "แก้ไขอาหาร",
+  "nutritionSaveFood": "บันทึกอาหาร",
+  "nutritionLoadFailed": "ไม่สามารถโหลดมื้ออาหารได้",
+  "nutritionLoadFailedBody": "ดึงเพื่อรีเฟรชหรือตรวจสอบการเชื่อมต่อแบ็กเอนด์",
+  "nutritionNoMeals": "ยังไม่มีการบันทึกมื้ออาหาร",
+  "nutritionNoMealsBody": "สแกนมื้ออาหารแรกของคุณ แล้ว Celia จะสร้างประวัติโภชนาการให้",
+  "progressToday": "วันนี้",
+  "progressSetGoals": "ตั้งเป้าหมายโภชนาการเพื่อปลดล็อกการติดตามแคลอรีและสารอาหารหลัก",
+  "progressOfTarget": "จาก {target} kcal",
+  "@progressOfTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressMacroAmount": "{consumed} / {target}g",
+  "@progressMacroAmount": {
+    "placeholders": {
+      "consumed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalOver": "เกิน {calories} kcal",
+  "@progressKcalOver": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalLeft": "เหลือ {calories} kcal",
+  "@progressKcalLeft": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressProtein": "โปรตีน",
+  "progressCarbs": "คาร์บ",
+  "progressFat": "ไขมัน",
+  "scannerEditItem": "แก้ไขรายการอาหาร",
+  "scannerSaveChanges": "บันทึกการเปลี่ยนแปลง",
+  "scannerItemCalories": "{name} · {calories} kcal",
+  "@scannerItemCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerConfidence": "ความมั่นใจ {percent}% · {provider}",
+  "@scannerConfidence": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerMoreItems": "+ อีก {count} รายการในบันทึกมื้อนี้",
+  "@scannerMoreItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerIfYouLog": "หากคุณบันทึกมื้อนี้",
+  "scannerAfterLogging": "{after} / {target} kcal วันนี้",
+  "@scannerAfterLogging": {
+    "placeholders": {
+      "after": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerGramsDecimal": "{grams}g",
+  "@scannerGramsDecimal": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerItemServing": "{name} · {grams}g",
+  "@scannerItemServing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerNoMealDetected": "ไม่พบมื้ออาหาร",
+  "onboardingWelcome": "ยินดีต้อนรับ {name}",
+  "@onboardingWelcome": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingGender": "เพศ",
+  "onboardingCalculateGoals": "คำนวณเป้าหมายของฉัน",
+  "onboardingScanFirstMeal": "สแกนมื้ออาหารแรกของฉัน",
+  "onboardingExploreRoutines": "สำรวจรูทีน",
+  "onboardingGoHome": "ไปที่หน้าหลัก",
+  "onboardingDailyTargets": "เป้าหมายประจำวันของคุณ",
+  "onboardingProtein": "โปรตีน {grams}g ·",
+  "@onboardingProtein": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingMacroTargets": "โปรตีน {protein}g • คาร์บ {carbs}g • ไขมัน {fat}g",
+  "@onboardingMacroTargets": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingTargetsReady": "เป้าหมายโภชนาการประจำวันของคุณพร้อมแล้ว เลือกวิธีเริ่มต้นที่ต้องการ",
+  "onboardingWeightKg": "น้ำหนัก (kg)",
+  "onboardingHeightCm": "ส่วนสูง (cm)",
+  "onboardingAge": "อายุ",
+  "onboardingInvalidWeight": "กรอกน้ำหนักเป็น kg ที่ถูกต้อง",
+  "onboardingInvalidHeight": "กรอกส่วนสูงเป็น cm ที่ถูกต้อง",
+  "onboardingInvalidAge": "กรอกอายุระหว่าง 13 ถึง 100 ปีที่ถูกต้อง",
+  "onboardingSaveFailed": "ไม่สามารถบันทึกโปรไฟล์โภชนาการของคุณได้",
+  "genderMale": "ชาย",
+  "genderFemale": "หญิง",
+  "genderOther": "อื่นๆ",
+  "nutritionSetupTitle": "เป้าหมายโภชนาการประจำวัน",
+  "nutritionSetupBody": "บอกข้อมูลร่างกายของคุณแก่ Celia เพื่อให้เธอคำนวณแคลอรีและสารอาหารหลักประจำวันให้",
+  "nutritionSetupGender": "เพศ",
+  "nutritionSetupFootnote": "Celia ใช้น้ำหนัก ส่วนสูง อายุ และเพศของคุณเพื่อประมาณเป้าหมายแคลอรีและสารอาหารหลักประจำวัน โดยอิงจากระดับกิจกรรมปานกลาง",
+  "nutritionSetupSave": "บันทึกเป้าหมาย",
+  "profileTitle": "โปรไฟล์",
+  "profileCeliaAi": "Celia AI",
+  "profileEliteMember": "สมาชิกระดับ Elite",
+  "profileAccount": "บัญชี",
+  "profileSignedInAs": "ลงชื่อเข้าใช้ในชื่อ:\n{email}",
+  "@profileSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "profileUnknownEmail": "ไม่ทราบ",
+  "profileDarkMode": "โหมดมืด",
+  "profileLanguage": "ภาษา",
+  "profileLogOutTitle": "ออกจากระบบใช่ไหม",
+  "profileLogOutBody": "คุณแน่ใจหรือไม่ว่าต้องการออกจากระบบ",
+  "profileLogOut": "ออกจากระบบ",
+  "profileLogOutButton": "ออกจากระบบ",
+  "profileFavoriteRoutines": "โปรแกรมโปรด",
+  "profileSubscription": "การสมัครสมาชิก",
+  "profileNutrition": "โภชนาการ",
+  "profileHelpSupport": "ความช่วยเหลือและการสนับสนุน",
+  "profileFriend": "เพื่อน",
+  "profileStatSaved": "บันทึกแล้ว",
+  "profileStatStreak": "สตรีค",
+  "profileStatWorkouts": "การออกกำลังกาย",
+  "streakDayOneStarted": "เริ่มวันที่ 1 แล้ว — กลับมาอีกครั้งพรุ่งนี้เพื่อสร้างสตรีคต่อ",
+  "streakRebuild": "เมื่อวานคุณยังแอ็กทีฟอยู่ — บันทึกมื้ออาหารหรือออกกำลังกายให้เสร็จวันนี้เพื่อสร้างสตรีคต่อ",
+  "streakStart": "บันทึกมื้ออาหารหรือออกกำลังกายให้เสร็จเพื่อเริ่มสตรีคแอ็กทีฟของคุณ",
+  "streakLongRun": "สตรีค {days} วัน! ทำต่อไป — Celia กำลังติดตามความสม่ำเสมอของคุณ",
+  "@streakLongRun": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakBothLogged": "สตรีค {days} วัน — วันนี้บันทึกทั้งการออกกำลังกายและโภชนาการแล้ว",
+  "@streakBothLogged": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedWorkout": "สตรีค {days} วัน การออกกำลังกายสั้น ๆ จะช่วยเติมเต็มวันนี้",
+  "@streakNeedWorkout": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedMeal": "สตรีค {days} วัน บันทึกมื้ออาหารเพื่อที่คุณจะได้ติดตามการเติมพลัง",
+  "@streakNeedMeal": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakStayActive": "สตรีค {days} วัน — วันนี้อย่าลืมแอ็กทีฟ",
+  "@streakStayActive": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "editProfileTitle": "แก้ไขโปรไฟล์",
+  "editProfileName": "ชื่อ",
+  "editProfileFootnote": "การเปลี่ยนแปลงจะบันทึกไว้ในบัญชีของคุณและแสดงบนหน้าหลัก/โปรไฟล์",
+  "editProfileSaveFailed": "อัปเดตโปรไฟล์ไม่ได้ โปรดลองอีกครั้ง",
+  "languageTitle": "ภาษา",
+  "languageSystem": "ภาษาของอุปกรณ์",
+  "languageSystemSubtitle": "ใช้ภาษาที่ตั้งค่าไว้ในโทรศัพท์ของคุณ",
+  "languageEnglish": "อังกฤษ",
+  "languageSpanish": "สเปน",
+  "insightStartFuelingTitle": "เริ่มเติมพลังวันนี้",
+  "insightStartFuelingBody": "คุณยังเหลืองบแคลอรีเต็มจำนวน สแกนหรือบันทึกมื้อแรกเพื่อให้เป็นไปตามเป้าหมาย",
+  "insightAboveTargetTitle": "เกินเป้าหมายวันนี้",
+  "insightAboveTargetBody": "คุณได้รับพลังงานเกินเป้าหมายรายวัน {calories} kcal ลองรับประทานมื้อเย็นให้น้อยลงหรือเพิ่มการออกกำลังกายสั้น ๆ",
+  "@insightAboveTargetBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightLowProteinTitle": "โปรตีนยังไม่เพียงพอ",
+  "insightLowProteinBody": "วันนี้คุณยังต้องการโปรตีนอีกประมาณ {grams}g เพื่อให้ถึงเป้าหมาย",
+  "@insightLowProteinBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightAlmostThereTitle": "เกือบถึงเป้าหมายแล้ว",
+  "insightAlmostThereBody": "วันนี้คุณเหลืออีก {calories} kcal ของว่างที่สมดุลน่าจะพอดี",
+  "@insightAlmostThereBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightOnTrackTitle": "วันนี้เป็นไปตามเป้าหมาย",
+  "insightOnTrackBody": "เหลืออีก {calories} kcal และโปรตีน {grams}g เพื่อให้ถึงเป้าหมายรายวัน",
+  "@insightOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightWeeklyRhythmTitle": "สร้างจังหวะประจำสัปดาห์",
+  "insightWeeklyRhythmBody": "บันทึกมื้ออาหารตลอดสัปดาห์ เพื่อให้ Celia มองเห็นรูปแบบและแนะนำคุณได้ดียิ่งขึ้น",
+  "insightWeeklyTrendTitle": "แนวโน้มรายสัปดาห์",
+  "insightWeeklyTrendBody": "คุณบันทึกมื้ออาหาร {days} จาก 7 วันที่ผ่านมา โดยเฉลี่ย {average} kcal — {direction}",
+  "@insightWeeklyTrendBody": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "average": {
+        "type": "int"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "insightTrendOnTarget": "ใกล้เคียงกับเป้าหมายรายวันของคุณ",
+  "insightTrendAbove": "สูงกว่าเป้าหมายโดยเฉลี่ย {delta} kcal",
+  "@insightTrendAbove": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightTrendBelow": "ต่ำกว่าเป้าหมายโดยเฉลี่ย {delta} kcal",
+  "@insightTrendBelow": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsSectionTitle": "ข้อมูลเชิงลึกจาก Celia"
+}

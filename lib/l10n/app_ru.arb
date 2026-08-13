@@ -1,0 +1,1017 @@
+{
+  "@@locale": "ru",
+  "appName": "Celia — ваш фитнес-тренер",
+  "@appName": {
+    "description": "The app's name. Not translated."
+  },
+  "actionCancel": "Отмена",
+  "actionSave": "Сохранить",
+  "actionDelete": "Удалить",
+  "actionEdit": "Изменить",
+  "actionRetry": "Повторить",
+  "actionDone": "Готово",
+  "actionClose": "Закрыть",
+  "actionContinue": "Продолжить",
+  "actionSeeAll": "Посмотреть все",
+  "actionYesDoIt": "Да, сделать",
+  "actionNotNow": "Не сейчас",
+  "loadingPreparing": "Celia готовится...",
+  "loadingGeneric": "Загрузка...",
+  "errorGeneric": "Что-то пошло не так. Попробуйте ещё раз.",
+  "errorCanceled": "Действие отменено.",
+  "errorTooManyRequests": "Слишком много попыток. Подождите минуту и попробуйте ещё раз.",
+  "errorNetwork": "Проверьте подключение к интернету и попробуйте ещё раз.",
+  "errorBadCredentials": "Неверный адрес электронной почты или пароль.",
+  "errorEmailInUse": "Этот адрес электронной почты уже используется. Попробуйте войти.",
+  "errorWeakPassword": "Используйте более надёжный пароль и попробуйте ещё раз.",
+  "errorInvalidEmail": "Введите действительный адрес электронной почты.",
+  "errorNoPermission": "У вас нет разрешения на это действие.",
+  "errorNotSignedIn": "Войдите в аккаунт и попробуйте ещё раз.",
+  "errorNoConversation": "Начните новый чат, чтобы продолжить.",
+  "errorNoPlayableVideos": "Для этой тренировки пока нет доступных видео для воспроизведения.",
+  "errorLoadRoutines": "Не удалось загрузить тренировки. Попробуйте ещё раз.",
+  "errorLoadSavedRoutines": "Не удалось загрузить сохранённые тренировки. Попробуйте ещё раз.",
+  "errorGenerateRoutine": "Не удалось создать тренировку. Попробуйте ещё раз.",
+  "errorLoadChats": "Не удалось загрузить сохранённые чаты.",
+  "errorCeliaUnavailable": "Celia сейчас недоступна. Попробуйте ещё раз.",
+  "errorOpenConversation": "Не удалось открыть этот разговор.",
+  "errorDeleteConversation": "Не удалось удалить этот разговор. Попробуйте ещё раз.",
+  "errorSignIn": "Не удалось войти. Попробуйте ещё раз.",
+  "errorCreateAccount": "Не удалось создать аккаунт. Попробуйте ещё раз.",
+  "errorSendResetEmail": "Не удалось отправить письмо для сброса пароля. Попробуйте ещё раз.",
+  "errorSendVerificationEmail": "Не удалось отправить письмо с подтверждением. Попробуйте ещё раз.",
+  "errorGoogleSignIn": "Не удалось войти через Google. Попробуйте ещё раз.",
+  "errorAppleSignIn": "Не удалось войти через Apple. Попробуйте ещё раз.",
+  "errorRefreshNutrition": "Не удалось обновить данные о питании.",
+  "errorLoadNutritionProfile": "Не удалось загрузить ваш профиль питания.",
+  "startupErrorTitle": "Не удалось запустить приложение",
+  "startupErrorBody": "Закройте и снова откройте приложение. Если проблема не исчезнет, обратитесь в службу поддержки.",
+  "authTagline": "Ваш фитнес-помощник",
+  "authSignUp": "Зарегистрироваться",
+  "authLogIn": "Войти",
+  "authVersion": "Версия {version}",
+  "@authVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "authForgotPassword": "Забыли пароль?",
+  "authOr": "ИЛИ",
+  "authContinueWithGoogle": "Продолжить через Google",
+  "authContinueWithApple": "Продолжить через Apple",
+  "authAuthenticating": "Выполняется вход...",
+  "authEnterYourName": "Введите своё имя.",
+  "authNeedAccount": "Нет аккаунта? Зарегистрироваться",
+  "authHaveAccount": "Уже есть аккаунт? Войти",
+  "authFieldName": "Ваше имя",
+  "authFieldEmail": "Электронная почта",
+  "authFieldPassword": "Пароль",
+  "verifyEmailTitle": "Подтвердите адрес электронной почты",
+  "verifyEmailHeading": "Проверьте входящие сообщения",
+  "verifyEmailBody": "Ссылка для подтверждения отправлена на вашу электронную почту.",
+  "verifyEmailSent": "Письмо с подтверждением отправлено!",
+  "verifyEmailContinue": "Я подтвердил(а), продолжить",
+  "verifyEmailSignOut": "Выйти",
+  "verifyEmailSending": "Отправка...",
+  "verifyEmailResend": "Отправить письмо с подтверждением повторно",
+  "verifyEmailResendIn": "Повторная отправка через {seconds} с",
+  "@verifyEmailResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "verifyEmailAddress": "Электронная почта: {email}",
+  "@verifyEmailAddress": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "forgotPasswordTitle": "Забыли пароль",
+  "forgotPasswordBody": "Введите электронную почту, чтобы получить ссылку для сброса пароля.",
+  "forgotPasswordEmptyEmail": "Введите электронную почту",
+  "forgotPasswordSent": "Письмо для сброса пароля отправлено.",
+  "forgotPasswordSend": "Отправить ссылку для сброса",
+  "forgotPasswordSending": "Отправка...",
+  "nameSetupTitle": "Как Celia должна к вам обращаться?",
+  "nameSetupBody": "Мы используем ваше имя в приложении, чтобы тренировки были более персональными.",
+  "nameSetupSaveFailed": "Не удалось сохранить имя. Попробуйте ещё раз.",
+  "homeGoodMorning": "Доброе утро,",
+  "homeCeliaActive": "CELIA АКТИВНА",
+  "homeGenerateRoutine": "Создайте свою\nперсональную\nпрограмму с ИИ",
+  "homeCreateRoutine": "Создать программу",
+  "homeQuickActions": "Быстрые действия",
+  "homeUpNext": "Далее",
+  "homeNoUpcoming": "Предстоящих программ пока нет.\nСоздайте программу или откройте библиотеку.",
+  "homeChatWithCelia": "Чат с Celia",
+  "homeChatSubtitle": "Спросите о технике или питании",
+  "homeScanMeal": "Сканировать блюдо",
+  "homeScanMealSubtitle": "Определить продукты и калории",
+  "homeNutrition": "Питание",
+  "homeNutritionSubtitle": "Просмотр калорий, макронутриентов и блюд",
+  "homeBrowseLibrary": "Открыть\nбиблиотеку",
+  "homeTrackProgress": "Отслеживать\nпрогресс",
+  "chatTitle": "Тренер Celia",
+  "chatEmptyPrompt": "Как я могу помочь вам\nсегодня прийти в форму?",
+  "chatYourChats": "Ваши чаты",
+  "chatNoSavedChats": "Сохранённых чатов пока нет.",
+  "chatHistory": "История чатов",
+  "chatNew": "Новый чат",
+  "chatOpening": "Открытие чата...",
+  "chatScanAMeal": "Сканировать блюдо",
+  "chatInputHint": "Спросите Celia о своих тренировках...",
+  "chatCouldNotOpenRoutine": "Не удалось открыть эту программу",
+  "chatThisRoutine": "эту программу",
+  "chatThisMeal": "это блюдо",
+  "chatYourRoutine": "Ваша программа",
+  "chatMoreExercises": "+ {count} ещё",
+  "@chatMoreExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatEmptySubtitle": "Спросите о тренировках, питании или прогрессе.",
+  "chatLoggedToday": "Сегодня вы записали {calories} kcal.",
+  "@chatLoggedToday": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "chatSuggestionHiit": "Составь для меня 20-минутную HIIT-тренировку",
+  "chatSuggestionDinner": "Что мне съесть сегодня вечером?",
+  "chatSuggestionProgress": "Каковы мои результаты на этой неделе?",
+  "chatSuggestionIngredients": "У меня есть курица, рис и шпинат",
+  "chatJustNow": "Только что",
+  "chatMinutesAgo": "{minutes} мин назад",
+  "@chatMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "chatHoursAgo": "{hours} ч назад",
+  "@chatHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "chatDaysAgo": "{days} д назад",
+  "@chatDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "chatRoutineAlreadySaved": "Уже в вашей библиотеке — нажмите, чтобы открыть",
+  "chatRoutineTapToOpen": "Нажмите, чтобы открыть",
+  "chatToolCancelled": "Отменено",
+  "chatToolFailed": "{label} — не удалось выполнить",
+  "@chatToolFailed": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "chatToolRoutineSaveFailed": "Не удалось сохранить программу",
+  "chatToolRoutineSaved": "Сохранено в вашей библиотеке",
+  "chatToolMealLogged": "Добавлено в сегодняшний журнал",
+  "chatToolRoutineAdded": "Добавлено в вашу библиотеку",
+  "activityCheckingProgress": "Проверяем ваш прогресс",
+  "activityCheckingNutrition": "Проверяем, что вы сегодня съели",
+  "activityReviewingMeals": "Просматриваем ваши недавние приёмы пищи",
+  "activityLookingAtRoutines": "Просматриваем ваши программы",
+  "activityReadingRoutine": "Изучаем эту программу",
+  "activitySearchingLibrary": "Ищем в библиотеке упражнений",
+  "activityBuildingRoutine": "Составляем вашу программу",
+  "activityLoggingMeal": "Добавляем приём пищи в журнал",
+  "activitySavingToLibrary": "Сохраняем в библиотеку",
+  "activityWorking": "Работаем над этим",
+  "approvalSaveRoutineWithCount": "Сохранить «{name}» с {count} упражнениями в библиотеку?",
+  "@approvalSaveRoutineWithCount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalSaveRoutine": "Сохранить «{name}» в библиотеку?",
+  "@approvalSaveRoutine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalLogMealWithCalories": "Добавить «{name}» — {calories} kcal?",
+  "@approvalLogMealWithCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "approvalLogMeal": "Добавить «{name}»?",
+  "@approvalLogMeal": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalAddRoutine": "Добавить эту программу в библиотеку?",
+  "approvalGeneric": "Разрешить Celia это сделать?",
+  "libraryTitle": "Библиотека программ",
+  "librarySteps": "{count, plural, one{{count} шаг} other{{count} шагов}}",
+  "@librarySteps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryEmpty": "Программ пока нет",
+  "libraryEmptyBody": "Создавайте и публикуйте программы в панели администратора.",
+  "libraryLoadFailed": "Не удалось загрузить программы",
+  "routineStartWorkout": "Начать тренировку",
+  "routineNoSteps": "Нет доступных шагов",
+  "routineNoVideoForStep": "Для этого шага нет видео",
+  "routineVideoProcessing": "Видео ещё обрабатывается. Повторите попытку позже.",
+  "routineMissingPlaybackUrl": "Для этого видео отсутствует URL воспроизведения",
+  "routinePreviewBanner": "ПРЕДПРОСМОТР — полное видео скоро будет доступно",
+  "routinePreview": "ПРЕДПРОСМОТР",
+  "routineDetails": "Подробнее",
+  "routineNotFound": "Программа не найдена",
+  "routineCompletedTimes": "Выполнено: {count} раз",
+  "@routineCompletedTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "playerVideoUnavailable": "Это видео сейчас недоступно.",
+  "playerSteps": "Шаги",
+  "playerStepCounter": "{current}/{total}",
+  "@playerStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoPlayableVideos": "Нет доступных для воспроизведения видео",
+  "playerWorkoutComplete": "Тренировка завершена!",
+  "playerSavingStreak": "Сохраняем в вашу серию…",
+  "playerSavedStreak": "Сохранено в вашу серию",
+  "playerRetrySave": "Повторить сохранение",
+  "playerReplay": "Воспроизвести снова",
+  "playerNotReady": "Плеер не готов",
+  "playerPreviewUnavailable": "Предпросмотр сейчас недоступен.",
+  "playerClipCounter": "Клип {current} из {total} · {duration}",
+  "@playerClipCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerErrorLoadingVideo": "Ошибка загрузки видео",
+  "playerLoadingVideo": "Загрузка видео...",
+  "playerFailedToLoadVideo": "Не удалось загрузить видео",
+  "playerNotInitialized": "Видеоплеер не инициализирован",
+  "guidedExerciseCounter": "Упражнение {current}/{total}",
+  "@guidedExerciseCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedGetReady": "ПРИГОТОВЬТЕСЬ",
+  "guidedSetOf": "Подход {current} из {total}",
+  "@guidedSetOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedRest": "ОТДЫХ",
+  "guidedSkipRest": "Пропустить отдых",
+  "guidedPaused": "Пауза",
+  "guidedResume": "Продолжить",
+  "guidedWorkoutComplete": "Тренировка завершена",
+  "guidedEndTitle": "Завершить тренировку?",
+  "guidedEndBody": "Ваш прогресс за эту тренировку не будет сохранён.",
+  "guidedKeepGoing": "Продолжить",
+  "guidedEnd": "Завершить",
+  "guidedReps": "{count, plural, one{{count} повтор} other{{count} повторов}}",
+  "@guidedReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetTitle": "Создать план с помощью ИИ",
+  "generateSheetPrompt": "Какую тренировку вы хотите?",
+  "generateSheetHint": "например, «Короткая утренняя растяжка, чтобы проснуться» или «Силовая тренировка для всего тела для начинающих»",
+  "generateSheetDuration": "Продолжительность",
+  "generateSheetMinutes": "{count} мин",
+  "@generateSheetMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "generateSheetDifficulty": "Сложность",
+  "generateSheetEquipment": "Доступное оборудование",
+  "generateSheetGenerating": "Создание…",
+  "generateSheetSubmit": "Создать план",
+  "generateSheetDescribeFirst": "Опишите желаемую тренировку",
+  "generateSheetAlreadyExists": "У вас уже есть такая: {title}",
+  "@generateSheetAlreadyExists": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetCreated": "Создано: {title}",
+  "@generateSheetCreated": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "generateSheetFailed": "Не удалось создать план",
+  "guidedNoExercises": "В этом плане пока нет упражнений.",
+  "guidedStartFailed": "Не удалось начать тренировку. Попробуйте ещё раз.",
+  "guidedSaveFailed": "Не удалось сохранить тренировку. Нажмите «Повторить», чтобы обновить серию.",
+  "guidedOfReps": "из {count} повторов",
+  "@guidedOfReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "guidedHold": "удержание",
+  "guidedNextSet": "Следующий подход",
+  "guidedUpNext": "Далее",
+  "guidedSetsHold": "{sets} × {seconds} с удержания",
+  "@guidedSetsHold": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachGetReady": "Приготовьтесь. {exercise}",
+  "@coachGetReady": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachStartReps": "Начали. {count} повторов.",
+  "@coachStartReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachStartHold": "Удерживайте {seconds} секунд.",
+  "@coachStartHold": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "coachRest": "Отдых. Далее: {exercise}",
+  "@coachRest": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
+  "coachRestShort": "Отдых.",
+  "coachComplete": "Отличная работа. Тренировка завершена.",
+  "coachRep": "{count}",
+  "@coachRep": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coachCountdown": "{seconds}",
+  "@coachCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "playerNoVideosInRoutine": "В этом плане нет доступных для воспроизведения видео.",
+  "playerLoadRoutineFailed": "Не удалось загрузить план. Попробуйте ещё раз.",
+  "playerStepLoadFailedSkipping": "Не удалось загрузить «{title}». Пропускаем…",
+  "@playerStepLoadFailedSkipping": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerStepLoadFailed": "Не удалось загрузить «{title}».",
+  "@playerStepLoadFailed": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "playerSaveCompletionFailed": "Не удалось сохранить завершение тренировки. Нажмите «Повторить», чтобы обновить серию.",
+  "playerStepPreviewSubtitle": "{duration} • Предпросмотр",
+  "@playerStepPreviewSubtitle": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "playerNoVideosReady": "В этом плане пока нет готовых к воспроизведению видео.",
+  "playerPlaybackFailed": "Не удалось воспроизвести видео. Попробуйте ещё раз.",
+  "libraryTabCurated": "Подборки",
+  "libraryTabAiGenerated": "Создано ИИ",
+  "profileSavedRoutines": "Сохранённые планы",
+  "savedRoutinesNoFavorites": "Избранных планов пока нет.",
+  "savedRoutinesEmpty": "Сохранённых планов пока нет.",
+  "actionFavorite": "В избранное",
+  "actionUnfavorite": "Убрать из избранного",
+  "routineDurationMinutes": "{minutes} мин",
+  "@routineDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHoursMinutes": "{hours} ч {minutes} мин",
+  "@routineDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "routineDurationHours": "{hours} ч",
+  "@routineDurationHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "difficultyEasy": "Лёгкая",
+  "difficultyMedium": "Средняя",
+  "difficultyHard": "Сложная",
+  "categoryStrength": "Сила",
+  "categoryCardio": "Кардио",
+  "categoryFlexibility": "Гибкость",
+  "categoryMindfulness": "Осознанность",
+  "categoryDance": "Танцы",
+  "categoryHiit": "HIIT",
+  "categoryYoga": "Йога",
+  "categoryCustom": "Пользовательская",
+  "navHome": "Главная",
+  "navLibrary": "Библиотека",
+  "navChat": "Чат",
+  "navProfile": "Профиль",
+  "equipmentNone": "Нет",
+  "equipmentDumbbells": "Гантели",
+  "equipmentResistanceBands": "Эспандеры",
+  "equipmentYogaMat": "Коврик для йоги",
+  "equipmentKettlebell": "Гиря",
+  "equipmentPullUpBar": "Турник",
+  "equipmentJumpRope": "Скакалка",
+  "nutritionTitle": "Питание",
+  "nutritionSubtitle": "Калории, макронутриенты и история приёмов пищи",
+  "nutritionSetGoalsTitle": "Установите ежедневные цели питания",
+  "nutritionSetGoalsBody": "Укажите вес, рост, возраст и пол, чтобы Celia могла рассчитать, сколько калорий и питательных веществ вам нужно потреблять каждый день.",
+  "nutritionSetUpGoals": "Настроить цели",
+  "nutritionDailyTarget": "Дневная норма",
+  "nutritionDailyGoals": "Дневные цели",
+  "nutritionKcal": "{calories} kcal",
+  "@nutritionKcal": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMacroSummary": "Б {protein} г · У {carbs} г · Ж {fat} г",
+  "@nutritionMacroSummary": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionToday": "Сегодня",
+  "nutritionMealHistory": "История приёмов пищи",
+  "nutritionCeliaInsights": "Аналитика Celia",
+  "nutritionWeeklyTrend": "Недельная динамика",
+  "nutritionTodayMeals": "kcal • {count, plural, one{{count} приём пищи} other{{count} приёма пищи}}",
+  "@nutritionTodayMeals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionTodayOfTargetMeals": "из {target} kcal • {count, plural, one{{count} приём пищи} other{{count} приёма пищи}}",
+  "@nutritionTodayOfTargetMeals": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionWeekdayInitials": "П,В,С,Ч,П,С,В",
+  "@nutritionWeekdayInitials": {
+    "description": "Single-letter weekday labels for the weekly chart, Monday first, comma separated."
+  },
+  "nutritionFieldFoodName": "Название продукта",
+  "nutritionFieldGrams": "Граммы",
+  "nutritionFieldCalories": "Калории",
+  "scannerStatusAnalyzing": "АНАЛИЗ...",
+  "scannerStatusIdle": "СКАНЕР CELIA",
+  "scannerFieldFoodName": "Название продукта",
+  "scannerFieldGrams": "Граммы",
+  "scannerFieldCalories": "Калории",
+  "scannerFieldPro": "Pro",
+  "scannerMacroPro": "PRO",
+  "scannerMacroCarb": "CARB",
+  "scannerMacroFat": "FAT",
+  "scannerRemainingAfterLogging": "Сегодня осталось {calories} kcal и {grams} г белка",
+  "@scannerRemainingAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerOverTargetAfterLogging": "Превышение дневной нормы на {calories} kcal",
+  "@scannerOverTargetAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerButtonAnalyzing": "Анализ",
+  "scannerButtonQuotaNeeded": "Нужна квота",
+  "scannerButtonScanNow": "Сканировать",
+  "scannerButtonLogging": "Запись",
+  "scannerButtonLogMeal": "Записать приём пищи",
+  "scannerNoClearFood": "Продукт пока не распознан. Попробуйте улучшить освещение или поднесите камеру ближе.",
+  "scannerErrorCameraPermission": "Для сканирования приёмов пищи нужен доступ к камере.",
+  "scannerErrorBackendMissing": "Серверная часть сканера калорий ещё не настроена.",
+  "scannerErrorApiKeyInvalid": "Ключ OpenAI API для сканирования калорий недействителен. Замените его в окружении серверной части, разверните приложение заново и повторите попытку.",
+  "scannerErrorApiKeyMissing": "Для сканирования калорий требуется ключ OpenAI API. Добавьте его в Vercel, разверните приложение заново и повторите попытку.",
+  "scannerErrorQuotaExhausted": "Кредиты OpenAI для сканирования калорий исчерпаны. Пополните кредиты API или увеличьте лимит оплаты, затем повторите попытку.",
+  "scannerErrorTimeout": "Celia потребовалось больше времени для анализа этого блюда. Держите камеру неподвижно и отсканируйте его снова.",
+  "scannerErrorNotSignedIn": "Перед сканированием приёмов пищи войдите в аккаунт.",
+  "scannerErrorMealTableMissing": "Таблица для записи приёмов пищи ещё не готова. Результат сканирования всё ещё доступен.",
+  "scannerErrorGeneric": "Celia пока не смогла проанализировать это блюдо. Держите камеру неподвижно, расположите еду по центру и отсканируйте снова.",
+  "nutritionGrams": "{grams} г",
+  "@nutritionGrams": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionMealSubtitle": "{time} · {count, plural, one{{count} продукт} other{{count} продукта}}",
+  "@nutritionMealSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionMealDetails": "Детали приёма пищи",
+  "nutritionFoodItems": "Продукты",
+  "nutritionItemSubtitle": "{grams}g · {calories} kcal",
+  "@nutritionItemSubtitle": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "nutritionNeedsOneItem": "Приём пищи должен содержать хотя бы один продукт.",
+  "nutritionMealUpdated": "Приём пищи обновлён",
+  "nutritionUpdateFailed": "Не удалось обновить приём пищи: {error}",
+  "@nutritionUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionDeleteMealTitle": "Удалить приём пищи?",
+  "nutritionDeleteMealBody": "Приём пищи будет удалён из истории питания.",
+  "nutritionDeleteMeal": "Удалить приём пищи",
+  "nutritionDeleteFailed": "Не удалось удалить приём пищи: {error}",
+  "@nutritionDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "nutritionEditFood": "Редактировать продукт",
+  "nutritionSaveFood": "Сохранить продукт",
+  "nutritionLoadFailed": "Не удалось загрузить приёмы пищи",
+  "nutritionLoadFailedBody": "Потяните вниз, чтобы обновить, или проверьте подключение к серверу.",
+  "nutritionNoMeals": "Приёмы пищи ещё не добавлены",
+  "nutritionNoMealsBody": "Отсканируйте свой первый приём пищи, и Celia начнёт вести историю питания.",
+  "progressToday": "Сегодня",
+  "progressSetGoals": "Установите цели питания, чтобы отслеживать калории и макронутриенты.",
+  "progressOfTarget": "из {target} kcal",
+  "@progressOfTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressMacroAmount": "{consumed} / {target}g",
+  "@progressMacroAmount": {
+    "placeholders": {
+      "consumed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalOver": "Превышение на {calories} kcal",
+  "@progressKcalOver": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressKcalLeft": "Осталось {calories} kcal",
+  "@progressKcalLeft": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "progressProtein": "Белки",
+  "progressCarbs": "Углеводы",
+  "progressFat": "Жиры",
+  "scannerEditItem": "Редактировать продукт",
+  "scannerSaveChanges": "Сохранить изменения",
+  "scannerItemCalories": "{name} · {calories} kcal",
+  "@scannerItemCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerConfidence": "Уверенность {percent}% · {provider}",
+  "@scannerConfidence": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerMoreItems": "+ {count} дополнительных продуктов включено в этот приём пищи",
+  "@scannerMoreItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerIfYouLog": "Если добавить этот приём пищи",
+  "scannerAfterLogging": "Сегодня: {after} / {target} kcal",
+  "@scannerAfterLogging": {
+    "placeholders": {
+      "after": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerGramsDecimal": "{grams}g",
+  "@scannerGramsDecimal": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "scannerItemServing": "{name} · {grams}g",
+  "@scannerItemServing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "scannerNoMealDetected": "Приём пищи не обнаружен",
+  "onboardingWelcome": "Добро пожаловать, {name}",
+  "@onboardingWelcome": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingGender": "Пол",
+  "onboardingCalculateGoals": "Рассчитать мои цели",
+  "onboardingScanFirstMeal": "Отсканировать первый приём пищи",
+  "onboardingExploreRoutines": "Посмотреть тренировки",
+  "onboardingGoHome": "На главную",
+  "onboardingDailyTargets": "Ваши ежедневные цели",
+  "onboardingProtein": "Белки {grams}g ·",
+  "@onboardingProtein": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingMacroTargets": "Белки {protein}g • Углеводы {carbs}g • Жиры {fat}g",
+  "@onboardingMacroTargets": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
+  "onboardingTargetsReady": "Ваши ежедневные цели по питанию готовы. Выберите, с чего хотите начать.",
+  "onboardingWeightKg": "Вес (кг)",
+  "onboardingHeightCm": "Рост (см)",
+  "onboardingAge": "Возраст",
+  "onboardingInvalidWeight": "Введите корректный вес в кг.",
+  "onboardingInvalidHeight": "Введите корректный рост в см.",
+  "onboardingInvalidAge": "Введите корректный возраст от 13 до 100 лет.",
+  "onboardingSaveFailed": "Не удалось сохранить профиль питания.",
+  "genderMale": "Мужской",
+  "genderFemale": "Женский",
+  "genderOther": "Другой",
+  "nutritionSetupTitle": "Ежедневные цели питания",
+  "nutritionSetupBody": "Расскажите Celia о своём теле, чтобы она могла рассчитать вашу ежедневную норму калорий и макронутриентов.",
+  "nutritionSetupGender": "Пол",
+  "nutritionSetupFootnote": "Celia использует ваш вес, рост, возраст и пол, чтобы оценить ежедневные цели по калориям и макронутриентам при умеренном уровне активности.",
+  "nutritionSetupSave": "Сохранить цели",
+  "profileTitle": "Профиль",
+  "profileCeliaAi": "Celia AI",
+  "profileEliteMember": "Элитный участник",
+  "profileAccount": "Аккаунт",
+  "profileSignedInAs": "Выполнен вход как:\n{email}",
+  "@profileSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "profileUnknownEmail": "Неизвестно",
+  "profileDarkMode": "Тёмная тема",
+  "profileLanguage": "Язык",
+  "profileLogOutTitle": "Выйти?",
+  "profileLogOutBody": "Вы уверены, что хотите выйти?",
+  "profileLogOut": "Выйти",
+  "profileLogOutButton": "Выйти",
+  "profileFavoriteRoutines": "Избранные тренировки",
+  "profileSubscription": "Подписка",
+  "profileNutrition": "Питание",
+  "profileHelpSupport": "Помощь и поддержка",
+  "profileFriend": "Друг",
+  "profileStatSaved": "Сохранено",
+  "profileStatStreak": "Серия",
+  "profileStatWorkouts": "Тренировки",
+  "streakDayOneStarted": "День 1 начался — возвращайтесь завтра, чтобы продолжить серию.",
+  "streakRebuild": "Вчера вы были активны — сегодня запишите приём пищи или завершите тренировку, чтобы восстановить серию.",
+  "streakStart": "Запишите приём пищи или завершите тренировку, чтобы начать серию активности.",
+  "streakLongRun": "Серия из {days} дней! Продолжайте в том же духе — Celia отслеживает вашу регулярность.",
+  "@streakLongRun": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakBothLogged": "Серия из {days} дней — сегодня отмечены и тренировка, и питание.",
+  "@streakBothLogged": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedWorkout": "Серия из {days} дней. Короткая тренировка поможет завершить сегодняшний день.",
+  "@streakNeedWorkout": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakNeedMeal": "Серия из {days} дней. Запишите приём пищи, чтобы отслеживать питание.",
+  "@streakNeedMeal": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "streakStayActive": "Серия из {days} дней — оставайтесь активными сегодня.",
+  "@streakStayActive": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "editProfileTitle": "Редактировать профиль",
+  "editProfileName": "Имя",
+  "editProfileFootnote": "Изменения сохраняются в вашем аккаунте и отображаются на главном экране и в профиле.",
+  "editProfileSaveFailed": "Не удалось обновить профиль. Попробуйте ещё раз.",
+  "languageTitle": "Язык",
+  "languageSystem": "Язык устройства",
+  "languageSystemSubtitle": "Использовать язык, установленный на телефоне",
+  "languageEnglish": "Английский",
+  "languageSpanish": "Испанский",
+  "insightStartFuelingTitle": "Начните питаться уже сегодня",
+  "insightStartFuelingBody": "Ваш дневной лимит калорий ещё полностью доступен. Отсканируйте или запишите первый приём пищи, чтобы не сбиться с цели.",
+  "insightAboveTargetTitle": "Сегодня вы превысили цель",
+  "insightAboveTargetBody": "Сегодня вы превысили дневную цель на {calories} kcal. Сделайте ужин легче или добавьте короткую тренировку.",
+  "@insightAboveTargetBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightLowProteinTitle": "Белка пока недостаточно",
+  "insightLowProteinBody": "Сегодня вам нужно ещё около {grams} г белка, чтобы достичь цели.",
+  "@insightLowProteinBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightAlmostThereTitle": "Вы почти у цели",
+  "insightAlmostThereBody": "Сегодня осталось {calories} kcal. Сбалансированный перекус отлично впишется в ваш план.",
+  "@insightAlmostThereBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "insightOnTrackTitle": "Сегодня всё по плану",
+  "insightOnTrackBody": "До дневных целей осталось {calories} kcal и {grams} г белка.",
+  "@insightOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "insightWeeklyRhythmTitle": "Выработайте ритм на неделю",
+  "insightWeeklyRhythmBody": "Записывайте приёмы пищи в течение недели, чтобы Celia могла выявлять закономерности и лучше вас консультировать.",
+  "insightWeeklyTrendTitle": "Тенденция за неделю",
+  "insightWeeklyTrendBody": "Вы записывали приёмы пищи {days} из последних 7 дней, в среднем по {average} kcal — {direction}.",
+  "@insightWeeklyTrendBody": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "average": {
+        "type": "int"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "insightTrendOnTarget": "примерно соответствует вашей дневной цели",
+  "insightTrendAbove": "в среднем на {delta} kcal выше вашей цели",
+  "@insightTrendAbove": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightTrendBelow": "в среднем на {delta} kcal ниже вашей цели",
+  "@insightTrendBelow": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
+  "insightsSectionTitle": "Советы Celia"
+}

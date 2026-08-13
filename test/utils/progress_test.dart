@@ -1,6 +1,8 @@
+import 'package:celia_flutter/l10n/app_localizations.dart';
 import 'package:celia_flutter/models/meal_log.dart';
 import 'package:celia_flutter/models/routine.dart';
 import 'package:celia_flutter/utils/progress.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 UserRoutine ur({
@@ -163,8 +165,10 @@ void main() {
   });
 
   group('buildStreakNudge', () {
-    test('prompts user to start when streak is zero', () {
+    test('prompts user to start when streak is zero', () async {
+      final l10n = await AppLocalizations.delegate.load(const Locale('en'));
       final message = buildStreakNudge(
+        l10n,
         computeActiveStreakStats(
           routines: const [],
           meals: const [],
@@ -173,6 +177,20 @@ void main() {
       );
 
       expect(message, contains('start your active streak'));
+    });
+
+    test('reads in Spanish when the app is set to Spanish', () async {
+      final l10n = await AppLocalizations.delegate.load(const Locale('es'));
+      final message = buildStreakNudge(
+        l10n,
+        computeActiveStreakStats(
+          routines: const [],
+          meals: const [],
+          now: DateTime(2026, 1, 10),
+        ),
+      );
+
+      expect(message, contains('Registra una comida'));
     });
   });
 

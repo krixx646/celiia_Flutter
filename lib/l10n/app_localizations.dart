@@ -2305,7 +2305,7 @@ abstract class AppLocalizations {
   /// No description provided for @profileEliteMember.
   ///
   /// In en, this message translates to:
-  /// **'Elite Member'**
+  /// **'Member'**
   String get profileEliteMember;
 
   /// No description provided for @profileAccount.

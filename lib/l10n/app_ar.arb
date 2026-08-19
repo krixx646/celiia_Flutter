@@ -861,7 +861,7 @@
   "nutritionSetupSave": "حفظ الأهداف",
   "profileTitle": "الملف الشخصي",
   "profileCeliaAi": "Celia AI",
-  "profileEliteMember": "عضو مميز",
+  "profileEliteMember": "عضو",
   "profileAccount": "الحساب",
   "profileSignedInAs": "تم تسجيل الدخول باسم:\n{email}",
   "@profileSignedInAs": {

@@ -401,7 +401,7 @@
 
   "profileTitle": "Perfil",
   "profileCeliaAi": "Celia IA",
-  "profileEliteMember": "Miembro Élite",
+  "profileEliteMember": "Miembro",
   "profileAccount": "Cuenta",
   "profileSignedInAs": "Sesión iniciada como:\n{email}",
   "profileUnknownEmail": "Desconocido",

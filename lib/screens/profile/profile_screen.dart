@@ -406,13 +406,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(height: 8),
         _buildMenuItem(
           theme: theme,
-          icon: Icons.workspace_premium,
-          title: l10n.profileSubscription,
-          onTap: () {},
-        ),
-        const SizedBox(height: 8),
-        _buildMenuItem(
-          theme: theme,
           icon: Icons.restaurant_menu,
           title: l10n.profileNutrition,
           onTap: () {

@@ -861,7 +861,7 @@
   "nutritionSetupSave": "Doelen opslaan",
   "profileTitle": "Profiel",
   "profileCeliaAi": "Celia AI",
-  "profileEliteMember": "Elite-lid",
+  "profileEliteMember": "Lid",
   "profileAccount": "Account",
   "profileSignedInAs": "Ingelogd als:\n{email}",
   "@profileSignedInAs": {

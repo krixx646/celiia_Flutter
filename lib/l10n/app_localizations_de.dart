@@ -1322,7 +1322,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get profileCeliaAi => 'Celia AI';
 
   @override
-  String get profileEliteMember => 'Elite-Mitglied';
+  String get profileEliteMember => 'Mitglied';
 
   @override
   String get profileAccount => 'Konto';

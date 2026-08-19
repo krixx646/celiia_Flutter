@@ -464,7 +464,7 @@
 
   "profileTitle": "Profile",
   "profileCeliaAi": "Celia AI",
-  "profileEliteMember": "Elite Member",
+  "profileEliteMember": "Member",
   "profileAccount": "Account",
   "profileSignedInAs": "Signed in as:\n{email}",
   "@profileSignedInAs": {"placeholders": {"email": {"type": "String"}}},

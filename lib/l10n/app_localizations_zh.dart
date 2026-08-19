@@ -1253,7 +1253,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get profileCeliaAi => 'Celia AI';
 
   @override
-  String get profileEliteMember => '精英会员';
+  String get profileEliteMember => '会员';
 
   @override
   String get profileAccount => '账户';

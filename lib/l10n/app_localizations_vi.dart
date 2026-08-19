@@ -1297,7 +1297,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get profileCeliaAi => 'Celia AI';
 
   @override
-  String get profileEliteMember => 'Hội viên Elite';
+  String get profileEliteMember => 'Thành viên';
 
   @override
   String get profileAccount => 'Tài khoản';

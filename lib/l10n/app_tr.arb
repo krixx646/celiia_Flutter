@@ -861,7 +861,7 @@
   "nutritionSetupSave": "Hedefleri Kaydet",
   "profileTitle": "Profil",
   "profileCeliaAi": "Celia AI",
-  "profileEliteMember": "Elit Üye",
+  "profileEliteMember": "Üye",
   "profileAccount": "Hesap",
   "profileSignedInAs": "Şu hesapla giriş yapıldı:\n{email}",
   "@profileSignedInAs": {

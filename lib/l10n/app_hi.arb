@@ -861,7 +861,7 @@
   "nutritionSetupSave": "लक्ष्य सेव करें",
   "profileTitle": "प्रोफ़ाइल",
   "profileCeliaAi": "Celia AI",
-  "profileEliteMember": "एलीट सदस्य",
+  "profileEliteMember": "सदस्य",
   "profileAccount": "खाता",
   "profileSignedInAs": "इस रूप में साइन इन हैं:\n{email}",
   "@profileSignedInAs": {

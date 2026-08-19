@@ -861,7 +861,7 @@
   "nutritionSetupSave": "Simpan Sasaran",
   "profileTitle": "Profil",
   "profileCeliaAi": "Celia AI",
-  "profileEliteMember": "Anggota Elite",
+  "profileEliteMember": "Anggota",
   "profileAccount": "Akun",
   "profileSignedInAs": "Masuk sebagai:\n{email}",
   "@profileSignedInAs": {

@@ -16,15 +16,17 @@ android {
     // happens to build the release. A machine on an older Flutter previously
     // shipped an API 35 build that Play flagged. Keep both at 36 or higher.
     compileSdk = 36
-    ndkVersion = "27.0.12077973"
+    // Plugins request 28.2+; use the highest complete NDK installed locally
+    // (29.x). Incomplete 28.2 installs fail configure with CXX1101.
+    ndkVersion = "29.0.13599879"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     defaultConfig {
@@ -62,6 +64,11 @@ android {
             } else {
                 signingConfigs.getByName("debug")
             }
+            // Flutter release enables R8; keep rules must exist on disk.
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
 }

@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.1.42+42
+version: 1.1.43+43
 
 environment:
   sdk: '>=3.9.0 <4.0.0'
@@ -44,7 +44,6 @@ dependencies:
   google_sign_in: ^7.1.1
   firebase_storage: ^13.0.0
   firebase_app_check: ^0.4.0+1
-  file_picker: ^8.0.3
   shared_preferences: ^2.2.2
   image_picker: ^1.0.7
   sign_in_with_apple: 7.0.1
@@ -57,14 +56,12 @@ dependencies:
   supabase_flutter: ^2.8.0
   
   # Video player + coaching audio.
-  # Workout counting uses flutter_tts (on-device). just_audio stays pinned for
-  # future OpenAI/avatar speech clips; 0.10+ pulls audio_session 0.2.4 which
-  # requires Kotlin 2.3.20 + AGP 9 — incompatible with this app's toolchain.
+  # Workout counting uses flutter_tts (on-device). just_audio is kept for
+  # future OpenAI/avatar speech clips.
   video_player: ^2.9.2
   chewie: ^1.8.5
   flutter_tts: ^4.2.5
-  just_audio: 0.9.46
-  audio_session: 0.1.25
+  just_audio: ^0.10.5
   wakelock_plus: ^1.4.0
   path_provider: ^2.1.5
   path: ^1.9.0

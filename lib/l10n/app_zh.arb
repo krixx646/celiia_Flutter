@@ -861,7 +861,7 @@
   "nutritionSetupSave": "保存目标",
   "profileTitle": "个人资料",
   "profileCeliaAi": "Celia AI",
-  "profileEliteMember": "精英会员",
+  "profileEliteMember": "会员",
   "profileAccount": "账户",
   "profileSignedInAs": "登录账户：\n{email}",
   "@profileSignedInAs": {

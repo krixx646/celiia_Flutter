@@ -861,7 +861,7 @@
   "nutritionSetupSave": "Ziele speichern",
   "profileTitle": "Profil",
   "profileCeliaAi": "Celia AI",
-  "profileEliteMember": "Elite-Mitglied",
+  "profileEliteMember": "Mitglied",
   "profileAccount": "Konto",
   "profileSignedInAs": "Angemeldet als:\n{email}",
   "@profileSignedInAs": {

@@ -1313,7 +1313,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get profileCeliaAi => 'Celia AI';
 
   @override
-  String get profileEliteMember => 'Элитный участник';
+  String get profileEliteMember => 'Участник';
 
   @override
   String get profileAccount => 'Аккаунт';

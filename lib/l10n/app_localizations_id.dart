@@ -1308,7 +1308,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get profileCeliaAi => 'Celia AI';
 
   @override
-  String get profileEliteMember => 'Anggota Elite';
+  String get profileEliteMember => 'Anggota';
 
   @override
   String get profileAccount => 'Akun';

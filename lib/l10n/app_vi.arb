@@ -861,7 +861,7 @@
   "nutritionSetupSave": "Lưu mục tiêu",
   "profileTitle": "Hồ sơ",
   "profileCeliaAi": "Celia AI",
-  "profileEliteMember": "Hội viên Elite",
+  "profileEliteMember": "Thành viên",
   "profileAccount": "Tài khoản",
   "profileSignedInAs": "Đã đăng nhập bằng:\n{email}",
   "@profileSignedInAs": {

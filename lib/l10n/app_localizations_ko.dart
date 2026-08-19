@@ -1260,7 +1260,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get profileCeliaAi => 'Celia AI';
 
   @override
-  String get profileEliteMember => '엘리트 멤버';
+  String get profileEliteMember => '멤버';
 
   @override
   String get profileAccount => '계정';

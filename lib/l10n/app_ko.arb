@@ -861,7 +861,7 @@
   "nutritionSetupSave": "목표 저장",
   "profileTitle": "프로필",
   "profileCeliaAi": "Celia AI",
-  "profileEliteMember": "엘리트 멤버",
+  "profileEliteMember": "멤버",
   "profileAccount": "계정",
   "profileSignedInAs": "로그인한 계정:\n{email}",
   "@profileSignedInAs": {

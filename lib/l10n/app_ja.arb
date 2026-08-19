@@ -861,7 +861,7 @@
   "nutritionSetupSave": "目標を保存",
   "profileTitle": "プロフィール",
   "profileCeliaAi": "Celia AI",
-  "profileEliteMember": "エリートメンバー",
+  "profileEliteMember": "メンバー",
   "profileAccount": "アカウント",
   "profileSignedInAs": "ログイン中のアカウント：\n{email}",
   "@profileSignedInAs": {

@@ -1298,7 +1298,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileCeliaAi => 'Celia AI';
 
   @override
-  String get profileEliteMember => 'Elite Member';
+  String get profileEliteMember => 'Member';
 
   @override
   String get profileAccount => 'Account';

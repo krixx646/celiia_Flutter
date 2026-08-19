@@ -81,6 +81,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get errorNotSignedIn => '로그인한 후 다시 시도해 주세요.';
 
   @override
+  String get errorDeleteAccount =>
+      'We couldn\'t delete your account. Please try again.';
+
+  @override
   String get errorNoConversation => '계속하려면 새 채팅을 시작하세요.';
 
   @override
@@ -1290,6 +1294,26 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get profileLogOutButton => '로그아웃';
+
+  @override
+  String get profileDeleteAccount => 'Delete Account';
+
+  @override
+  String get profileDeleteAccountConfirmTitle => 'Delete your account?';
+
+  @override
+  String get profileDeleteAccountConfirmBody =>
+      'This permanently deletes your account and all of your data, including saved routines, meal logs, and chat history. This can\'t be undone.';
+
+  @override
+  String get profileDeleteAccountPasswordPrompt =>
+      'Enter your password to confirm.';
+
+  @override
+  String get profileDeleteAccountPasswordLabel => 'Password';
+
+  @override
+  String get profileDeleteAccountButton => 'Delete My Account';
 
   @override
   String get profileFavoriteRoutines => '즐겨찾는 루틴';

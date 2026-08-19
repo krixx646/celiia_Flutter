@@ -85,6 +85,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get errorNotSignedIn => 'يُرجى تسجيل الدخول والمحاولة مرة أخرى.';
 
   @override
+  String get errorDeleteAccount =>
+      'We couldn\'t delete your account. Please try again.';
+
+  @override
   String get errorNoConversation => 'ابدأ محادثة جديدة للمتابعة.';
 
   @override
@@ -1324,6 +1328,26 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profileLogOutButton => 'تسجيل الخروج';
+
+  @override
+  String get profileDeleteAccount => 'Delete Account';
+
+  @override
+  String get profileDeleteAccountConfirmTitle => 'Delete your account?';
+
+  @override
+  String get profileDeleteAccountConfirmBody =>
+      'This permanently deletes your account and all of your data, including saved routines, meal logs, and chat history. This can\'t be undone.';
+
+  @override
+  String get profileDeleteAccountPasswordPrompt =>
+      'Enter your password to confirm.';
+
+  @override
+  String get profileDeleteAccountPasswordLabel => 'Password';
+
+  @override
+  String get profileDeleteAccountButton => 'Delete My Account';
 
   @override
   String get profileFavoriteRoutines => 'التمارين المفضلة';

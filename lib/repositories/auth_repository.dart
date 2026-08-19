@@ -200,6 +200,59 @@ class AuthRepository {
     await _googleSignIn.signOut();
   }
 
+  /// Whether the signed-in user needs a password to re-authenticate (Firebase
+  /// requires a recent sign-in for sensitive actions like account deletion).
+  bool get needsPasswordForReauth =>
+      currentUser?.providerData.any((p) => p.providerId == 'password') ??
+      false;
+
+  /// Re-establishes a "recent" sign-in so a subsequent sensitive action
+  /// (like [deleteAccount]) is allowed. Mirrors the same sign-in method the
+  /// account originally used.
+  Future<void> reauthenticate({String? password}) async {
+    final user = _auth.currentUser;
+    if (user == null) throw Exception('No user logged in');
+
+    final providers = user.providerData.map((p) => p.providerId).toSet();
+    try {
+      if (providers.contains('password')) {
+        final email = user.email;
+        if (email == null || password == null || password.isEmpty) {
+          throw Exception('Password required to confirm this change');
+        }
+        final credential = EmailAuthProvider.credential(
+          email: email,
+          password: password,
+        );
+        await user.reauthenticateWithCredential(credential);
+      } else if (providers.contains('google.com')) {
+        final account = await _googleSignIn.authenticate();
+        final googleAuth = account.authentication;
+        final credential = GoogleAuthProvider.credential(
+          idToken: googleAuth.idToken,
+        );
+        await user.reauthenticateWithCredential(credential);
+      } else if (providers.contains('apple.com') && !_platform.isAndroid) {
+        final provider = AppleAuthProvider();
+        provider.addScope('email');
+        await user.reauthenticateWithProvider(provider);
+      } else {
+        throw Exception('Please sign out and sign back in, then try again.');
+      }
+    } catch (e) {
+      throw Exception('Re-authentication failed: ${e.toString()}');
+    }
+  }
+
+  /// Permanently deletes the Firebase Auth identity. Callers must delete any
+  /// server-side data (Supabase, Firestore) first, since that data is keyed
+  /// by this uid and can no longer be attributed to the user afterwards.
+  Future<void> deleteAccount() async {
+    final user = _auth.currentUser;
+    if (user == null) throw Exception('No user logged in');
+    await user.delete();
+  }
+
   Future<void> updateProfile({String? displayName, String? photoUrl}) async {
     final user = _auth.currentUser;
     if (user == null) throw Exception('No user logged in');

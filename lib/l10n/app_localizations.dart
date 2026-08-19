@@ -274,6 +274,12 @@ abstract class AppLocalizations {
   /// **'Please sign in and try again.'**
   String get errorNotSignedIn;
 
+  /// No description provided for @errorDeleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t delete your account. Please try again.'**
+  String get errorDeleteAccount;
+
   /// No description provided for @errorNoConversation.
   ///
   /// In en, this message translates to:
@@ -2361,6 +2367,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log Out'**
   String get profileLogOutButton;
+
+  /// No description provided for @profileDeleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get profileDeleteAccount;
+
+  /// No description provided for @profileDeleteAccountConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete your account?'**
+  String get profileDeleteAccountConfirmTitle;
+
+  /// No description provided for @profileDeleteAccountConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This permanently deletes your account and all of your data, including saved routines, meal logs, and chat history. This can\'t be undone.'**
+  String get profileDeleteAccountConfirmBody;
+
+  /// No description provided for @profileDeleteAccountPasswordPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password to confirm.'**
+  String get profileDeleteAccountPasswordPrompt;
+
+  /// No description provided for @profileDeleteAccountPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get profileDeleteAccountPasswordLabel;
+
+  /// No description provided for @profileDeleteAccountButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete My Account'**
+  String get profileDeleteAccountButton;
 
   /// No description provided for @profileFavoriteRoutines.
   ///

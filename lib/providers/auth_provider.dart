@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../repositories/auth_repository.dart';
+import '../repositories/nutrition_profile_repository.dart';
+import '../services/account_service.dart';
 import '../utils/user_facing_error.dart';
 
 class AuthUiState {
@@ -65,7 +67,17 @@ class AuthProvider extends ChangeNotifier {
   static AuthRepository Function() defaultAuthRepository = () =>
       AuthRepository();
 
+  @visibleForTesting
+  static AccountService Function() defaultAccountService = () =>
+      AccountService();
+
+  @visibleForTesting
+  static NutritionProfileRepository Function()
+  defaultNutritionProfileRepository = () => NutritionProfileRepository();
+
   final AuthRepository _authRepository;
+  final AccountService _accountService;
+  final NutritionProfileRepository _nutritionProfileRepository;
   final DateTime Function() _now;
 
   AuthUiState _uiState = AuthUiState();
@@ -75,10 +87,18 @@ class AuthProvider extends ChangeNotifier {
 
   bool get isUserAuthenticated => _authRepository.isUserAuthenticated;
   bool get isEmailVerified => _authRepository.isEmailVerified;
+  bool get needsPasswordForReauth => _authRepository.needsPasswordForReauth;
 
-  AuthProvider({AuthRepository? authRepository, DateTime Function()? now})
-    : _authRepository = authRepository ?? defaultAuthRepository(),
-      _now = now ?? DateTime.now {
+  AuthProvider({
+    AuthRepository? authRepository,
+    AccountService? accountService,
+    NutritionProfileRepository? nutritionProfileRepository,
+    DateTime Function()? now,
+  }) : _authRepository = authRepository ?? defaultAuthRepository(),
+       _accountService = accountService ?? defaultAccountService(),
+       _nutritionProfileRepository =
+           nutritionProfileRepository ?? defaultNutritionProfileRepository(),
+       _now = now ?? DateTime.now {
     _initialize();
   }
 
@@ -329,6 +349,45 @@ class AuthProvider extends ChangeNotifier {
     await _authRepository.signOut();
     _uiState = AuthUiState();
     notifyListeners();
+  }
+
+  /// Permanently deletes the account: server-side data (Supabase, Firestore)
+  /// first, then the Firebase Auth identity itself. Firebase requires a
+  /// "recent" sign-in for this; if [password] isn't enough (or wasn't
+  /// needed), [reauthRequired] is thrown so the UI can prompt and retry.
+  Future<bool> deleteAccount({String? password}) async {
+    _uiState = _uiState.copyWith(isLoading: true, authError: null);
+    notifyListeners();
+
+    try {
+      await _accountService.deleteAccountData();
+      await _nutritionProfileRepository.deleteProfile();
+
+      try {
+        await _authRepository.deleteAccount();
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'requires-recent-login') {
+          await _authRepository.reauthenticate(password: password);
+          await _authRepository.deleteAccount();
+        } else {
+          rethrow;
+        }
+      }
+
+      _uiState = AuthUiState();
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _uiState = _uiState.copyWith(
+        isLoading: false,
+        authError: toUserFriendlyMessage(
+          e,
+          fallbackOf: (l10n) => l10n.errorDeleteAccount,
+        ),
+      );
+      notifyListeners();
+      return false;
+    }
   }
 
   Future<void> signInWithApple() async {

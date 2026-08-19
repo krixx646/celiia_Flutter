@@ -46,4 +46,13 @@ class NutritionProfileRepository {
 
     return profile;
   }
+
+  /// Removes the user's Firestore document entirely. Part of account
+  /// deletion (Apple Guideline 5.1.1(v)) — must run before the Firebase Auth
+  /// identity is deleted, since it relies on the caller's own auth session.
+  Future<void> deleteProfile() async {
+    final userId = _auth.currentUser?.uid;
+    if (userId == null) return;
+    await _firestore.collection('users').doc(userId).delete();
+  }
 }

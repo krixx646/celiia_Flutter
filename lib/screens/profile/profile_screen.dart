@@ -439,7 +439,101 @@ class _ProfileScreenState extends State<ProfileScreen> {
             await launchUrl(uri, mode: LaunchMode.externalApplication);
           },
         ),
+        const SizedBox(height: 8),
+        _buildMenuItem(
+          theme: theme,
+          icon: Icons.delete_outline,
+          title: l10n.profileDeleteAccount,
+          iconColor: Colors.red,
+          iconBg: Colors.red.withValues(alpha: 0.1),
+          onTap: () => _confirmDeleteAccount(l10n),
+        ),
       ],
+    );
+  }
+
+  Future<void> _confirmDeleteAccount(AppLocalizations l10n) async {
+    final auth = context.read<AuthProvider>();
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(l10n.profileDeleteAccountConfirmTitle),
+        content: Text(l10n.profileDeleteAccountConfirmBody),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(l10n.actionCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: Text(l10n.profileDeleteAccountButton),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+
+    String? password;
+    if (auth.needsPasswordForReauth) {
+      password = await _promptPassword(l10n);
+      if (password == null || !mounted) return;
+    }
+
+    final navigator = Navigator.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final nutritionProfile = context.read<NutritionProfileProvider>();
+    final nutritionTracker = context.read<NutritionTrackerProvider>();
+
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const Center(child: CircularProgressIndicator()),
+    );
+
+    final success = await auth.deleteAccount(password: password);
+
+    if (!mounted) return;
+    navigator.pop(); // dismiss the progress dialog
+
+    if (success) {
+      nutritionProfile.clear();
+      nutritionTracker.clear();
+    } else {
+      messenger.showSnackBar(
+        SnackBar(content: Text(auth.uiState.authError ?? l10n.errorGeneric)),
+      );
+    }
+  }
+
+  Future<String?> _promptPassword(AppLocalizations l10n) {
+    final controller = TextEditingController();
+    return showDialog<String>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.profileDeleteAccountConfirmTitle),
+        content: TextField(
+          controller: controller,
+          obscureText: true,
+          autofocus: true,
+          decoration: InputDecoration(
+            labelText: l10n.profileDeleteAccountPasswordLabel,
+            hintText: l10n.profileDeleteAccountPasswordPrompt,
+          ),
+          onSubmitted: (value) => Navigator.of(dialogContext).pop(value),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(l10n.actionCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(controller.text),
+            child: Text(l10n.profileDeleteAccountButton),
+          ),
+        ],
+      ),
     );
   }
 

@@ -77,7 +77,9 @@
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>Celia may save processed images (e.g., analysis snapshots) back to your library when you choose to download them.</string>
     <key>NSMicrophoneUsageDescription</key>
-    <string>Celia uses the microphone only when you record video with sound for upload; audio is not recorded otherwise.</string>
+    <string>Celia uses the microphone so you can talk to your coach with push-to-talk in chat.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>Celia converts what you say into text so she can answer you in chat.</string>
     <!-- Required by ITMS-90683: a linked SDK references Core Location even though
          Celia never requests or uses the user's location. -->
     <key>NSLocationWhenInUseUsageDescription</key>

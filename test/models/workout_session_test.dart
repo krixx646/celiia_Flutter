@@ -77,20 +77,38 @@ void main() {
     });
 
     test('times a counted set from the clip tempo, not a guess', () {
-      // Two reps across five seconds of footage is 2.5 seconds a rep, so ten
-      // reps should run for 25 seconds.
+      // Two reps across eight seconds of footage is 4 seconds a rep, so ten
+      // reps should run for 40 seconds.
       final plan = WorkoutPlan.from([
         PreparedExercise(
           step: _step(sets: 1, reps: 10),
-          clip: _clip(repsPerLoop: 2, clipSeconds: 5.0),
+          clip: _clip(repsPerLoop: 2, clipSeconds: 8.0),
         ),
       ]);
 
       final work = plan.phases.firstWhere(
         (phase) => phase.kind == WorkoutPhaseKind.work,
       );
-      expect(work.secondsPerRep, 2.5);
-      expect(work.duration, const Duration(seconds: 25));
+      expect(work.secondsPerRep, 4.0);
+      expect(work.duration, const Duration(seconds: 40));
+    });
+
+    test('slows a too-fast clip to a followable spoken tempo', () {
+      // Natural tempo is 2.0s/rep; the plan stretches that to the fallback so
+      // the guided player can drop playback speed and keep count locked on.
+      final exercise = PreparedExercise(
+        step: _step(sets: 1, reps: 10),
+        clip: _clip(repsPerLoop: 1, clipSeconds: 2.0),
+      );
+      expect(exercise.demoPlaybackSpeed, closeTo(2.0 / 3.0, 0.001));
+      expect(exercise.secondsPerRep, kFallbackSecondsPerRep);
+
+      final plan = WorkoutPlan.from([exercise]);
+      final work = plan.phases.firstWhere(
+        (phase) => phase.kind == WorkoutPhaseKind.work,
+      );
+      expect(work.secondsPerRep, kFallbackSecondsPerRep);
+      expect(work.duration, const Duration(seconds: 30));
     });
 
     test('falls back to a controlled tempo when there is no clip', () {
@@ -162,7 +180,7 @@ void main() {
       final plan = WorkoutPlan.from([
         PreparedExercise(
           step: _step(sets: 1, reps: 3),
-          clip: _clip(repsPerLoop: 1, clipSeconds: 2.0),
+          clip: _clip(repsPerLoop: 1, clipSeconds: 3.0),
         ),
       ]);
 
@@ -170,9 +188,9 @@ void main() {
         (phase) => phase.kind == WorkoutPhaseKind.work,
       );
       expect(work.repAt(Duration.zero), 1);
-      expect(work.repAt(const Duration(milliseconds: 1999)), 1);
-      expect(work.repAt(const Duration(seconds: 2)), 2);
-      expect(work.repAt(const Duration(seconds: 5)), 3);
+      expect(work.repAt(const Duration(milliseconds: 2999)), 1);
+      expect(work.repAt(const Duration(seconds: 3)), 2);
+      expect(work.repAt(const Duration(seconds: 7)), 3);
       expect(work.repAt(const Duration(seconds: 30)), 3);
     });
 

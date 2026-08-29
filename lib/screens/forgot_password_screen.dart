@@ -18,6 +18,18 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController _emailController = TextEditingController();
+  bool _prefilledEmail = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_prefilledEmail) return;
+    _prefilledEmail = true;
+    final lastEmail = context.read<AuthProvider>().uiState.lastUsedEmail.trim();
+    if (lastEmail.isNotEmpty && _emailController.text.isEmpty) {
+      _emailController.text = lastEmail;
+    }
+  }
 
   @override
   void dispose() {

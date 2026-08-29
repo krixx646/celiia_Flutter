@@ -135,7 +135,19 @@ class AuthRepository {
 
   Future<void> resetPassword(String email) async {
     try {
-      await _auth.sendPasswordResetEmail(email: email);
+      // Same ActionCodeSettings as email verification: bare sendPasswordResetEmail
+      // was producing reset links that failed on this Firebase project's defaults.
+      final ActionCodeSettings actionCodeSettings = ActionCodeSettings(
+        url: 'https://the-fit-87c3d.web.app',
+        handleCodeInApp: false,
+        androidPackageName: 'eu.thefit.celia',
+        androidInstallApp: false,
+        iOSBundleId: 'eu.thefit.celia',
+      );
+      await _auth.sendPasswordResetEmail(
+        email: email,
+        actionCodeSettings: actionCodeSettings,
+      );
     } catch (e) {
       throw Exception('Password reset failed: ${e.toString()}');
     }

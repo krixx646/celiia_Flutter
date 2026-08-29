@@ -208,7 +208,10 @@ void main() {
   test('resetPassword success + failure', () async {
     final auth = MockFirebaseAuth();
     when(
-      () => auth.sendPasswordResetEmail(email: any(named: 'email')),
+      () => auth.sendPasswordResetEmail(
+        email: any(named: 'email'),
+        actionCodeSettings: any(named: 'actionCodeSettings'),
+      ),
     ).thenAnswer((_) async {});
     final repo = AuthRepository(
       auth: auth,
@@ -217,9 +220,18 @@ void main() {
       apple: MockAppleSignInClient(),
     );
     await repo.resetPassword('e');
+    verify(
+      () => auth.sendPasswordResetEmail(
+        email: 'e',
+        actionCodeSettings: any(named: 'actionCodeSettings'),
+      ),
+    ).called(1);
 
     when(
-      () => auth.sendPasswordResetEmail(email: 'bad'),
+      () => auth.sendPasswordResetEmail(
+        email: 'bad',
+        actionCodeSettings: any(named: 'actionCodeSettings'),
+      ),
     ).thenThrow(Exception('nope'));
     expect(() => repo.resetPassword('bad'), throwsException);
   });

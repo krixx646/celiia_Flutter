@@ -103,7 +103,22 @@ class PreparedExercise {
     return clip?.defaultHoldSeconds ?? kDefaultHoldSeconds;
   }
 
-  double get secondsPerRep => clip?.secondsPerRep ?? kFallbackSecondsPerRep;
+  double get secondsPerRep {
+    final natural = clip?.secondsPerRep ?? kFallbackSecondsPerRep;
+    // Too-short loop cuts (e.g. some push variants) are slowed in the player;
+    // the spoken count uses this effective tempo so it stays locked to the demo.
+    return natural < kFallbackSecondsPerRep ? kFallbackSecondsPerRep : natural;
+  }
+
+  /// Playback rate applied to the demo so a fast clip still lands at
+  /// [secondsPerRep]. 1.0 when the filmed tempo is already followable.
+  double get demoPlaybackSpeed {
+    final natural = clip?.secondsPerRep;
+    if (natural == null || natural <= 0 || natural >= kFallbackSecondsPerRep) {
+      return 1.0;
+    }
+    return natural / kFallbackSecondsPerRep;
+  }
 
   String get title => step.title;
 }

@@ -238,6 +238,7 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
 
     if (phase.kind != WorkoutPhaseKind.work) {
       await video.setLooping(false);
+      await video.setPlaybackSpeed(1.0);
       await video.pause();
       await video.seekTo(Duration.zero);
       return;
@@ -246,12 +247,14 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
     if (phase.isCounted) {
       _holdClipPinned = false;
       await video.setLooping(true);
+      await video.setPlaybackSpeed(_demoPlaybackSpeedFor(phase));
       if (fromStart) await video.seekTo(Duration.zero);
       await video.play();
       return;
     }
 
     // Hold: one clean play-through, then stay on the last frame.
+    await video.setPlaybackSpeed(1.0);
     await video.setLooping(false);
     if (_holdClipPinned) {
       await video.pause();
@@ -317,6 +320,20 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
       await video.seekTo(duration);
       await video.pause();
     }
+  }
+
+  /// Slow a too-short loop cut so each spoken rep still lands with the demo.
+  double _demoPlaybackSpeedFor(WorkoutPhase phase) {
+    final natural = phase.clip?.secondsPerRep;
+    final effective = phase.secondsPerRep;
+    if (natural == null ||
+        effective == null ||
+        natural <= 0 ||
+        effective <= 0 ||
+        natural >= effective) {
+      return 1.0;
+    }
+    return natural / effective;
   }
 
   Future<void> _loadClipFor(WorkoutPhase phase) async {

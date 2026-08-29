@@ -345,6 +345,19 @@ class AppLocalizationsIt extends AppLocalizations {
       'Chiedi a Celia qualsiasi cosa sul tuo allenamento...';
 
   @override
+  String get chatMicTooltip => 'Hold to talk';
+
+  @override
+  String get chatListening => 'Listening…';
+
+  @override
+  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+
+  @override
+  String get chatSpeechUnavailable =>
+      'Speech recognition isn\'t available on this device.';
+
+  @override
   String get chatCouldNotOpenRoutine => 'Impossibile aprire questa routine';
 
   @override
@@ -1304,6 +1317,17 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get nutritionSetupFootnote =>
       'Celia usa il tuo peso, la tua altezza, la tua età e il tuo genere per stimare gli obiettivi giornalieri di calorie e macronutrienti, utilizzando un livello di attività moderato.';
+
+  @override
+  String get nutritionSourcesTitle => 'How these targets are calculated';
+
+  @override
+  String get nutritionSourcesBody =>
+      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+
+  @override
+  String get nutritionSourcesDisclaimer =>
+      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
 
   @override
   String get nutritionSetupSave => 'Salva obiettivi';

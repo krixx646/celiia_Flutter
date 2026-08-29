@@ -11,6 +11,7 @@ import '../../providers/theme_provider.dart';
 import '../../services/nutrition_insights_service.dart';
 import '../../services/calorie_scanner_service.dart';
 import '../../utils/insight_text.dart';
+import '../../widgets/nutrition_sources_citation.dart';
 import 'nutrition_profile_setup_screen.dart';
 
 class NutritionScreen extends StatefulWidget {
@@ -102,8 +103,11 @@ class _NutritionScreenState extends State<NutritionScreen> {
                   const SizedBox(height: 20),
                   if (!profileProvider.hasProfile)
                     _buildProfilePrompt(l10n, theme)
-                  else
+                  else ...[
                     _buildGoalsSummary(l10n, theme, profile!),
+                    const SizedBox(height: 12),
+                    NutritionSourcesCitation(theme: theme, compact: true),
+                  ],
                   const SizedBox(height: 18),
                   _buildTodayCard(
                     l10n,

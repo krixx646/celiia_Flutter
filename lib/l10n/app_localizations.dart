@@ -742,6 +742,30 @@ abstract class AppLocalizations {
   /// **'Ask Celia anything about your training...'**
   String get chatInputHint;
 
+  /// No description provided for @chatMicTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold to talk'**
+  String get chatMicTooltip;
+
+  /// No description provided for @chatListening.
+  ///
+  /// In en, this message translates to:
+  /// **'Listening…'**
+  String get chatListening;
+
+  /// No description provided for @chatMicDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone access is needed to talk to Celia.'**
+  String get chatMicDenied;
+
+  /// No description provided for @chatSpeechUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Speech recognition isn\'t available on this device.'**
+  String get chatSpeechUnavailable;
+
   /// No description provided for @chatCouldNotOpenRoutine.
   ///
   /// In en, this message translates to:
@@ -2287,8 +2311,26 @@ abstract class AppLocalizations {
   /// No description provided for @nutritionSetupFootnote.
   ///
   /// In en, this message translates to:
-  /// **'Celia uses your weight, height, age, and gender to estimate daily calorie and macro targets using a moderate activity level.'**
+  /// **'Celia estimates daily calorie and macro targets from your weight, height, age, and gender using a moderate activity level. These are wellness estimates, not medical advice.'**
   String get nutritionSetupFootnote;
+
+  /// No description provided for @nutritionSourcesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How these targets are calculated'**
+  String get nutritionSourcesTitle;
+
+  /// No description provided for @nutritionSourcesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.'**
+  String get nutritionSourcesBody;
+
+  /// No description provided for @nutritionSourcesDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.'**
+  String get nutritionSourcesDisclaimer;
 
   /// No description provided for @nutritionSetupSave.
   ///

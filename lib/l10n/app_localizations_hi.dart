@@ -345,6 +345,19 @@ class AppLocalizationsHi extends AppLocalizations {
       'अपनी ट्रेनिंग के बारे में Celia से कुछ भी पूछें...';
 
   @override
+  String get chatMicTooltip => 'Hold to talk';
+
+  @override
+  String get chatListening => 'Listening…';
+
+  @override
+  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+
+  @override
+  String get chatSpeechUnavailable =>
+      'Speech recognition isn\'t available on this device.';
+
+  @override
   String get chatCouldNotOpenRoutine => 'वह रूटीन खोली नहीं जा सकी';
 
   @override
@@ -1300,6 +1313,17 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get nutritionSetupFootnote =>
       'Celia मध्यम गतिविधि स्तर के आधार पर दैनिक कैलोरी और मैक्रो लक्ष्यों का अनुमान लगाने के लिए आपके वज़न, लंबाई, उम्र और लिंग का उपयोग करती है।';
+
+  @override
+  String get nutritionSourcesTitle => 'How these targets are calculated';
+
+  @override
+  String get nutritionSourcesBody =>
+      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+
+  @override
+  String get nutritionSourcesDisclaimer =>
+      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
 
   @override
   String get nutritionSetupSave => 'लक्ष्य सेव करें';

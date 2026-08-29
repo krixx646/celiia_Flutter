@@ -323,6 +323,19 @@ class AppLocalizationsKo extends AppLocalizations {
   String get chatInputHint => '운동에 대해 Celia에게 무엇이든 물어보세요...';
 
   @override
+  String get chatMicTooltip => 'Hold to talk';
+
+  @override
+  String get chatListening => 'Listening…';
+
+  @override
+  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+
+  @override
+  String get chatSpeechUnavailable =>
+      'Speech recognition isn\'t available on this device.';
+
+  @override
   String get chatCouldNotOpenRoutine => '해당 루틴을 열 수 없습니다';
 
   @override
@@ -1253,6 +1266,17 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get nutritionSetupFootnote =>
       'Celia는 체중, 키, 나이, 성별을 사용하고 보통 활동 수준을 기준으로 일일 칼로리와 매크로 목표를 추정합니다.';
+
+  @override
+  String get nutritionSourcesTitle => 'How these targets are calculated';
+
+  @override
+  String get nutritionSourcesBody =>
+      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+
+  @override
+  String get nutritionSourcesDisclaimer =>
+      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
 
   @override
   String get nutritionSetupSave => '목표 저장';

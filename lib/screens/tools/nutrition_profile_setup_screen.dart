@@ -5,6 +5,7 @@ import '../../l10n/app_localizations.dart';
 import '../../models/nutrition_profile.dart';
 import '../../providers/nutrition_profile_provider.dart';
 import '../../providers/theme_provider.dart';
+import '../../widgets/nutrition_sources_citation.dart';
 
 class NutritionProfileSetupScreen extends StatefulWidget {
   const NutritionProfileSetupScreen({
@@ -180,6 +181,8 @@ class _NutritionProfileSetupScreenState
                   style: TextStyle(color: theme.textSecondary, height: 1.4),
                 ),
               ),
+              const SizedBox(height: 12),
+              NutritionSourcesCitation(theme: theme),
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: _saving ? null : _save,

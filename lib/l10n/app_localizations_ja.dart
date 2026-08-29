@@ -323,6 +323,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get chatInputHint => 'トレーニングについてCeliaに何でも聞いてください…';
 
   @override
+  String get chatMicTooltip => 'Hold to talk';
+
+  @override
+  String get chatListening => 'Listening…';
+
+  @override
+  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+
+  @override
+  String get chatSpeechUnavailable =>
+      'Speech recognition isn\'t available on this device.';
+
+  @override
   String get chatCouldNotOpenRoutine => 'そのルーティンを開けませんでした';
 
   @override
@@ -1251,6 +1264,17 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get nutritionSetupFootnote =>
       'Celiaは体重、身長、年齢、性別をもとに、適度な活動レベルで1日のカロリーとマクロの目標を推定します。';
+
+  @override
+  String get nutritionSourcesTitle => 'How these targets are calculated';
+
+  @override
+  String get nutritionSourcesBody =>
+      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+
+  @override
+  String get nutritionSourcesDisclaimer =>
+      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
 
   @override
   String get nutritionSetupSave => '目標を保存';

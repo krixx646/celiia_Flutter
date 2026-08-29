@@ -342,6 +342,19 @@ class AppLocalizationsVi extends AppLocalizations {
       'Hỏi Celia bất cứ điều gì về việc tập luyện của bạn...';
 
   @override
+  String get chatMicTooltip => 'Hold to talk';
+
+  @override
+  String get chatListening => 'Listening…';
+
+  @override
+  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+
+  @override
+  String get chatSpeechUnavailable =>
+      'Speech recognition isn\'t available on this device.';
+
+  @override
   String get chatCouldNotOpenRoutine => 'Không thể mở lịch tập đó';
 
   @override
@@ -1290,6 +1303,17 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get nutritionSetupFootnote =>
       'Celia sử dụng cân nặng, chiều cao, tuổi và giới tính của bạn để ước tính mục tiêu calo và các chất dinh dưỡng đa lượng hằng ngày dựa trên mức độ vận động vừa phải.';
+
+  @override
+  String get nutritionSourcesTitle => 'How these targets are calculated';
+
+  @override
+  String get nutritionSourcesBody =>
+      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+
+  @override
+  String get nutritionSourcesDisclaimer =>
+      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
 
   @override
   String get nutritionSetupSave => 'Lưu mục tiêu';

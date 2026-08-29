@@ -9,6 +9,7 @@ import '../../providers/nutrition_profile_provider.dart';
 import '../../providers/nutrition_tracker_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/onboarding_service.dart';
+import '../../widgets/nutrition_sources_citation.dart';
 import '../tools/calorie_scanner_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -287,6 +288,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
             style: TextStyle(color: Colors.white.withValues(alpha: 0.78)),
           ),
+          const SizedBox(height: 16),
+          NutritionSourcesCitation(theme: theme, compact: true, onDark: true),
         ],
       ),
     );

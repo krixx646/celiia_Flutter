@@ -86,7 +86,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get errorDeleteAccount =>
-      'We couldn\'t delete your account. Please try again.';
+      'हम आपका खाता नहीं हटा सके। कृपया फिर से कोशिश करें।';
 
   @override
   String get errorNoConversation => 'जारी रखने के लिए नई चैट शुरू करें।';
@@ -345,17 +345,31 @@ class AppLocalizationsHi extends AppLocalizations {
       'अपनी ट्रेनिंग के बारे में Celia से कुछ भी पूछें...';
 
   @override
-  String get chatMicTooltip => 'Hold to talk';
+  String get chatMicTooltip => 'बोलने के लिए दबाए रखें';
 
   @override
-  String get chatListening => 'Listening…';
+  String get chatAvatarReady => 'तैयार';
 
   @override
-  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+  String get chatAvatarThinking => 'सोच रही है…';
 
   @override
-  String get chatSpeechUnavailable =>
-      'Speech recognition isn\'t available on this device.';
+  String get chatAvatarSpeaking => 'बोल रही है…';
+
+  @override
+  String chatAvatarSemantics(String status) {
+    return 'सीलिया अवतार, $status';
+  }
+
+  @override
+  String get chatListening => 'सुन रही है…';
+
+  @override
+  String get chatMicDenied =>
+      'सीलिया से बात करने के लिए माइक्रोफ़ोन की अनुमति चाहिए।';
+
+  @override
+  String get chatSpeechUnavailable => 'इस डिवाइस पर वाक् पहचान उपलब्ध नहीं है।';
 
   @override
   String get chatCouldNotOpenRoutine => 'वह रूटीन खोली नहीं जा सकी';
@@ -1315,15 +1329,15 @@ class AppLocalizationsHi extends AppLocalizations {
       'Celia मध्यम गतिविधि स्तर के आधार पर दैनिक कैलोरी और मैक्रो लक्ष्यों का अनुमान लगाने के लिए आपके वज़न, लंबाई, उम्र और लिंग का उपयोग करती है।';
 
   @override
-  String get nutritionSourcesTitle => 'How these targets are calculated';
+  String get nutritionSourcesTitle => 'ये लक्ष्य कैसे गणना किए जाते हैं';
 
   @override
   String get nutritionSourcesBody =>
-      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+      'दैनिक कैलोरी मध्यम शारीरिक गतिविधि कारक (लगभग 1.55) के साथ Mifflin–St Jeor विश्राम ऊर्जा समीकरण का उपयोग करती हैं। सक्रिय वयस्कों के लिए प्रोटीन शरीर के वजन के प्रति किग्रा लगभग 1.8 ग्रा अनुमानित है। वसा कैलोरी का लगभग 25% निर्धारित है, और बाकी कार्ब्स भरते हैं — सामान्य आहार मार्गदर्शन सीमाओं के भीतर।';
 
   @override
   String get nutritionSourcesDisclaimer =>
-      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
+      'ये आँकड़े केवल सामान्य वेलनेस अनुमान हैं। ये निदान, नुस्खा, या किसी योग्य चिकित्सक या पंजीकृत आहार विशेषज्ञ की सलाह का विकल्प नहीं हैं।';
 
   @override
   String get nutritionSetupSave => 'लक्ष्य सेव करें';
@@ -1367,24 +1381,24 @@ class AppLocalizationsHi extends AppLocalizations {
   String get profileLogOutButton => 'लॉग आउट';
 
   @override
-  String get profileDeleteAccount => 'Delete Account';
+  String get profileDeleteAccount => 'खाता हटाएँ';
 
   @override
-  String get profileDeleteAccountConfirmTitle => 'Delete your account?';
+  String get profileDeleteAccountConfirmTitle => 'अपना खाता हटाएँ?';
 
   @override
   String get profileDeleteAccountConfirmBody =>
-      'This permanently deletes your account and all of your data, including saved routines, meal logs, and chat history. This can\'t be undone.';
+      'यह आपके खाते और आपके सभी डेटा को स्थायी रूप से हटा देता है, जिसमें सहेजी गई दिनचर्या, भोजन लॉग और चैट इतिहास शामिल हैं। इसे पूर्ववत नहीं किया जा सकता।';
 
   @override
   String get profileDeleteAccountPasswordPrompt =>
-      'Enter your password to confirm.';
+      'पुष्टि के लिए अपना पासवर्ड दर्ज करें।';
 
   @override
-  String get profileDeleteAccountPasswordLabel => 'Password';
+  String get profileDeleteAccountPasswordLabel => 'पासवर्ड';
 
   @override
-  String get profileDeleteAccountButton => 'Delete My Account';
+  String get profileDeleteAccountButton => 'मेरा खाता हटाएँ';
 
   @override
   String get profileFavoriteRoutines => 'पसंदीदा रूटीन';

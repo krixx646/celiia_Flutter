@@ -54,3 +54,8 @@ key.properties
 
 # Ad-hoc debug screenshots pulled off test devices
 /celia_test.png
+
+# Avatar authoring source (14 MB VRoid model). The derived .glb that actually
+# ships is committed per platform: android/app/src/main/assets/avatars/ and
+# ios/Runner/Celia_filament.glb.
+/assets/avatars/

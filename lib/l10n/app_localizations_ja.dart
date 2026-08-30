@@ -81,8 +81,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get errorNotSignedIn => 'サインインしてから、もう一度お試しください。';
 
   @override
-  String get errorDeleteAccount =>
-      'We couldn\'t delete your account. Please try again.';
+  String get errorDeleteAccount => 'アカウントを削除できませんでした。もう一度お試しください。';
 
   @override
   String get errorNoConversation => '続けるには新しいチャットを開始してください。';
@@ -323,17 +322,30 @@ class AppLocalizationsJa extends AppLocalizations {
   String get chatInputHint => 'トレーニングについてCeliaに何でも聞いてください…';
 
   @override
-  String get chatMicTooltip => 'Hold to talk';
+  String get chatMicTooltip => '長押しで話す';
 
   @override
-  String get chatListening => 'Listening…';
+  String get chatAvatarReady => '待機中';
 
   @override
-  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+  String get chatAvatarThinking => '考え中…';
 
   @override
-  String get chatSpeechUnavailable =>
-      'Speech recognition isn\'t available on this device.';
+  String get chatAvatarSpeaking => '話しています…';
+
+  @override
+  String chatAvatarSemantics(String status) {
+    return 'Celiaのアバター、$status';
+  }
+
+  @override
+  String get chatListening => '聞いています…';
+
+  @override
+  String get chatMicDenied => 'Celia と話すにはマイクへのアクセスが必要です。';
+
+  @override
+  String get chatSpeechUnavailable => 'この端末では音声認識を利用できません。';
 
   @override
   String get chatCouldNotOpenRoutine => 'そのルーティンを開けませんでした';
@@ -1266,15 +1278,15 @@ class AppLocalizationsJa extends AppLocalizations {
       'Celiaは体重、身長、年齢、性別をもとに、適度な活動レベルで1日のカロリーとマクロの目標を推定します。';
 
   @override
-  String get nutritionSourcesTitle => 'How these targets are calculated';
+  String get nutritionSourcesTitle => 'これらの目標の計算方法';
 
   @override
   String get nutritionSourcesBody =>
-      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+      '1日のカロリーは、Mifflin–St Jeorの安静時エネルギー式に中程度の身体活動係数（約1.55）を用いて算出します。タンパク質は活動的な成人向けに体重1kgあたり約1.8gで推定します。脂質はカロリーの約25%とし、残りを炭水化物が埋めます——一般的な食事指導の範囲内です。';
 
   @override
   String get nutritionSourcesDisclaimer =>
-      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
+      'これらの数値は一般的なウェルネスの目安にすぎません。診断や処方がなく、資格を持つ臨床医や管理栄養士の助言の代わりにもなりません。';
 
   @override
   String get nutritionSetupSave => '目標を保存';
@@ -1318,24 +1330,23 @@ class AppLocalizationsJa extends AppLocalizations {
   String get profileLogOutButton => 'ログアウト';
 
   @override
-  String get profileDeleteAccount => 'Delete Account';
+  String get profileDeleteAccount => 'アカウントを削除';
 
   @override
-  String get profileDeleteAccountConfirmTitle => 'Delete your account?';
+  String get profileDeleteAccountConfirmTitle => 'アカウントを削除しますか？';
 
   @override
   String get profileDeleteAccountConfirmBody =>
-      'This permanently deletes your account and all of your data, including saved routines, meal logs, and chat history. This can\'t be undone.';
+      'これにより、アカウントと保存済みルーティン、食事ログ、チャット履歴を含むすべてのデータが完全に削除されます。元に戻すことはできません。';
 
   @override
-  String get profileDeleteAccountPasswordPrompt =>
-      'Enter your password to confirm.';
+  String get profileDeleteAccountPasswordPrompt => '確認のためパスワードを入力してください。';
 
   @override
-  String get profileDeleteAccountPasswordLabel => 'Password';
+  String get profileDeleteAccountPasswordLabel => 'パスワード';
 
   @override
-  String get profileDeleteAccountButton => 'Delete My Account';
+  String get profileDeleteAccountButton => 'アカウントを削除する';
 
   @override
   String get profileFavoriteRoutines => 'お気に入りのルーティン';

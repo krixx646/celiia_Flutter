@@ -85,7 +85,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get errorDeleteAccount =>
-      'We couldn\'t delete your account. Please try again.';
+      'Nie udało się usunąć Twojego konta. Spróbuj ponownie.';
 
   @override
   String get errorNoConversation => 'Rozpocznij nowy czat, aby kontynuować.';
@@ -348,17 +348,32 @@ class AppLocalizationsPl extends AppLocalizations {
       'Zapytaj Celia o cokolwiek związanego z treningiem...';
 
   @override
-  String get chatMicTooltip => 'Hold to talk';
+  String get chatMicTooltip => 'Przytrzymaj, aby mówić';
 
   @override
-  String get chatListening => 'Listening…';
+  String get chatAvatarReady => 'Gotowa';
 
   @override
-  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+  String get chatAvatarThinking => 'Myśli…';
+
+  @override
+  String get chatAvatarSpeaking => 'Mówi…';
+
+  @override
+  String chatAvatarSemantics(String status) {
+    return 'Awatar Celii, $status';
+  }
+
+  @override
+  String get chatListening => 'Słucham…';
+
+  @override
+  String get chatMicDenied =>
+      'Dostęp do mikrofonu jest potrzebny, aby rozmawiać z Celią.';
 
   @override
   String get chatSpeechUnavailable =>
-      'Speech recognition isn\'t available on this device.';
+      'Rozpoznawanie mowy nie jest dostępne na tym urządzeniu.';
 
   @override
   String get chatCouldNotOpenRoutine => 'Nie udało się otworzyć tego planu';
@@ -1318,15 +1333,15 @@ class AppLocalizationsPl extends AppLocalizations {
       'Celia wykorzystuje Twoją wagę, wzrost, wiek i płeć do oszacowania dziennego zapotrzebowania na kalorie i makroskładniki przy umiarkowanym poziomie aktywności.';
 
   @override
-  String get nutritionSourcesTitle => 'How these targets are calculated';
+  String get nutritionSourcesTitle => 'Jak obliczane są te cele';
 
   @override
   String get nutritionSourcesBody =>
-      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+      'Dzienne kalorie opierają się na równaniu Mifflin–St Jeor dla energii spoczynkowej z umiarkowanym współczynnikiem aktywności fizycznej (ok. 1,55). Białko szacuje się na ok. 1,8 g na kg masy ciała u aktywnych dorosłych. Tłuszcz ustawia się na ok. 25% kalorii, a węglowodany uzupełniają resztę — w typowych zakresach zaleceń żywieniowych.';
 
   @override
   String get nutritionSourcesDisclaimer =>
-      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
+      'Te wartości to tylko ogólne szacunki wellness. Nie stanowią diagnozy, recepty ani zamiennika porady wykwalifikowanego klinicysty lub dietetyka.';
 
   @override
   String get nutritionSetupSave => 'Zapisz cele';
@@ -1370,24 +1385,24 @@ class AppLocalizationsPl extends AppLocalizations {
   String get profileLogOutButton => 'Wyloguj';
 
   @override
-  String get profileDeleteAccount => 'Delete Account';
+  String get profileDeleteAccount => 'Usuń konto';
 
   @override
-  String get profileDeleteAccountConfirmTitle => 'Delete your account?';
+  String get profileDeleteAccountConfirmTitle => 'Usunąć Twoje konto?';
 
   @override
   String get profileDeleteAccountConfirmBody =>
-      'This permanently deletes your account and all of your data, including saved routines, meal logs, and chat history. This can\'t be undone.';
+      'To trwale usuwa Twoje konto i wszystkie dane, w tym zapisane rutyny, dzienniki posiłków i historię czatu. Tej operacji nie można cofnąć.';
 
   @override
   String get profileDeleteAccountPasswordPrompt =>
-      'Enter your password to confirm.';
+      'Wpisz hasło, aby potwierdzić.';
 
   @override
-  String get profileDeleteAccountPasswordLabel => 'Password';
+  String get profileDeleteAccountPasswordLabel => 'Hasło';
 
   @override
-  String get profileDeleteAccountButton => 'Delete My Account';
+  String get profileDeleteAccountButton => 'Usuń moje konto';
 
   @override
   String get profileFavoriteRoutines => 'Ulubione treningi';

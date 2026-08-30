@@ -108,7 +108,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    - assets/avatars/
+    # assets/avatars/ is deliberately NOT bundled. Celia.vrm is a build input
+    # (source model), and each renderer reads the derived .glb from its own
+    # native bundle: android/app/src/main/assets/avatars/ and ios/Runner/.
+    # Declaring it here shipped the 14 MB model twice.
 
 flutter_launcher_icons:
   android: true

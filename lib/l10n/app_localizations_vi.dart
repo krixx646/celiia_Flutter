@@ -83,7 +83,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get errorDeleteAccount =>
-      'We couldn\'t delete your account. Please try again.';
+      'Chúng tôi không thể xóa tài khoản của bạn. Vui lòng thử lại.';
 
   @override
   String get errorNoConversation => 'Bắt đầu cuộc trò chuyện mới để tiếp tục.';
@@ -342,17 +342,32 @@ class AppLocalizationsVi extends AppLocalizations {
       'Hỏi Celia bất cứ điều gì về việc tập luyện của bạn...';
 
   @override
-  String get chatMicTooltip => 'Hold to talk';
+  String get chatMicTooltip => 'Giữ để nói';
 
   @override
-  String get chatListening => 'Listening…';
+  String get chatAvatarReady => 'Sẵn sàng';
 
   @override
-  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+  String get chatAvatarThinking => 'Đang nghĩ…';
+
+  @override
+  String get chatAvatarSpeaking => 'Đang nói…';
+
+  @override
+  String chatAvatarSemantics(String status) {
+    return 'Hình đại diện Celia, $status';
+  }
+
+  @override
+  String get chatListening => 'Đang nghe…';
+
+  @override
+  String get chatMicDenied =>
+      'Cần quyền truy cập micrô để trò chuyện với Celia.';
 
   @override
   String get chatSpeechUnavailable =>
-      'Speech recognition isn\'t available on this device.';
+      'Thiết bị này không hỗ trợ nhận dạng giọng nói.';
 
   @override
   String get chatCouldNotOpenRoutine => 'Không thể mở lịch tập đó';
@@ -1305,15 +1320,15 @@ class AppLocalizationsVi extends AppLocalizations {
       'Celia sử dụng cân nặng, chiều cao, tuổi và giới tính của bạn để ước tính mục tiêu calo và các chất dinh dưỡng đa lượng hằng ngày dựa trên mức độ vận động vừa phải.';
 
   @override
-  String get nutritionSourcesTitle => 'How these targets are calculated';
+  String get nutritionSourcesTitle => 'Các mục tiêu này được tính như thế nào';
 
   @override
   String get nutritionSourcesBody =>
-      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+      'Calo hàng ngày dùng phương trình năng lượng nghỉ Mifflin–St Jeor với hệ số hoạt động thể chất vừa phải (khoảng 1,55). Protein ước tính gần 1,8 g mỗi kg cân nặng cho người trưởng thành năng động. Chất béo đặt gần 25% calo, phần còn lại là carbohydrate — trong các khoảng hướng dẫn dinh dưỡng phổ biến.';
 
   @override
   String get nutritionSourcesDisclaimer =>
-      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
+      'Các con số này chỉ là ước tính sức khỏe tổng quát. Không phải chẩn đoán, đơn thuốc hay thay thế lời khuyên của bác sĩ hoặc chuyên gia dinh dưỡng đủ điều kiện.';
 
   @override
   String get nutritionSetupSave => 'Lưu mục tiêu';
@@ -1357,24 +1372,23 @@ class AppLocalizationsVi extends AppLocalizations {
   String get profileLogOutButton => 'Đăng xuất';
 
   @override
-  String get profileDeleteAccount => 'Delete Account';
+  String get profileDeleteAccount => 'Xóa tài khoản';
 
   @override
-  String get profileDeleteAccountConfirmTitle => 'Delete your account?';
+  String get profileDeleteAccountConfirmTitle => 'Xóa tài khoản của bạn?';
 
   @override
   String get profileDeleteAccountConfirmBody =>
-      'This permanently deletes your account and all of your data, including saved routines, meal logs, and chat history. This can\'t be undone.';
+      'Thao tác này xóa vĩnh viễn tài khoản và toàn bộ dữ liệu của bạn, bao gồm các lịch tập đã lưu, nhật ký bữa ăn và lịch sử chat. Không thể hoàn tác.';
 
   @override
-  String get profileDeleteAccountPasswordPrompt =>
-      'Enter your password to confirm.';
+  String get profileDeleteAccountPasswordPrompt => 'Nhập mật khẩu để xác nhận.';
 
   @override
-  String get profileDeleteAccountPasswordLabel => 'Password';
+  String get profileDeleteAccountPasswordLabel => 'Mật khẩu';
 
   @override
-  String get profileDeleteAccountButton => 'Delete My Account';
+  String get profileDeleteAccountButton => 'Xóa tài khoản của tôi';
 
   @override
   String get profileFavoriteRoutines => 'Bài tập yêu thích';

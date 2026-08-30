@@ -33,13 +33,14 @@
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
 
-    <!-- The camera plugin asks for microphone access so it can record video with
-         sound. Celia only takes still photos (the controller is created with
-         enableAudio: false) and plays video back, so the permission would appear
-         on the store listing as a capability the app never uses. -->
-    <uses-permission
-        android:name="android.permission.RECORD_AUDIO"
-        tools:node="remove" />
+    <!-- Push-to-talk chat (speech_to_text) needs the mic. Camera stills still
+         use enableAudio: false; this permission is for voice chat only. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- RECORD_AUDIO otherwise makes Play treat a mic as required hardware, the
+         same filtering that dropped devices for the camera and fingerprint. -->
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
 
     <!-- androidx.biometric arrives through Firebase Auth and asks for these, but
          nothing in Celia authenticates with a fingerprint: sign-in is email and
@@ -112,6 +113,11 @@
         <!-- Android 11+: allow discovering the system TTS engine -->
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+        <!-- Android 11+: without this, speech_to_text cannot see the system
+             recognizer and initialize() fails. -->
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
         </intent>
     </queries>
 </manifest>

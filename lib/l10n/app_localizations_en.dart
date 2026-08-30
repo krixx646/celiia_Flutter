@@ -345,6 +345,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatMicTooltip => 'Hold to talk';
 
   @override
+  String get chatAvatarReady => 'Ready';
+
+  @override
+  String get chatAvatarThinking => 'Thinking…';
+
+  @override
+  String get chatAvatarSpeaking => 'Speaking…';
+
+  @override
+  String chatAvatarSemantics(String status) {
+    return 'Celia avatar, $status';
+  }
+
+  @override
   String get chatListening => 'Listening…';
 
   @override

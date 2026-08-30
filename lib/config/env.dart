@@ -81,4 +81,22 @@ class Env {
     'ENABLE_VOICE_COACH',
     defaultValue: true,
   );
+
+  /// Push-to-talk input and spoken chat replies in the coach chat screen.
+  ///
+  /// Uses on-device speech recognition and TTS (no new paid APIs).
+  static const bool enableChatVoice = bool.fromEnvironment(
+    'ENABLE_CHAT_VOICE',
+    defaultValue: true,
+  );
+
+  /// Native VRoid avatar (Filament on Android; SceneKit on iOS).
+  ///
+  /// On by default, same as [enableChatVoice]. Pass
+  /// `--dart-define=ENABLE_VRM_AVATAR=false` to hide it without a rebuild of
+  /// the native viewers.
+  static const bool enableVrmAvatar = bool.fromEnvironment(
+    'ENABLE_VRM_AVATAR',
+    defaultValue: true,
+  );
 }

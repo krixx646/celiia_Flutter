@@ -85,8 +85,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get errorNotSignedIn => 'يُرجى تسجيل الدخول والمحاولة مرة أخرى.';
 
   @override
-  String get errorDeleteAccount =>
-      'We couldn\'t delete your account. Please try again.';
+  String get errorDeleteAccount => 'تعذّر حذف حسابك. يُرجى المحاولة مرة أخرى.';
 
   @override
   String get errorNoConversation => 'ابدأ محادثة جديدة للمتابعة.';
@@ -342,17 +341,31 @@ class AppLocalizationsAr extends AppLocalizations {
   String get chatInputHint => 'اسأل Celia عن أي شيء يتعلق بتدريبك...';
 
   @override
-  String get chatMicTooltip => 'Hold to talk';
+  String get chatMicTooltip => 'اضغط مع الاستمرار للتحدث';
 
   @override
-  String get chatListening => 'Listening…';
+  String get chatAvatarReady => 'جاهزة';
 
   @override
-  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+  String get chatAvatarThinking => 'تفكّر…';
+
+  @override
+  String get chatAvatarSpeaking => 'تتحدث…';
+
+  @override
+  String chatAvatarSemantics(String status) {
+    return 'صورة سيليا الرمزية، $status';
+  }
+
+  @override
+  String get chatListening => 'تستمع…';
+
+  @override
+  String get chatMicDenied => 'يلزم الوصول إلى الميكروفون للتحدث مع سيليا.';
 
   @override
   String get chatSpeechUnavailable =>
-      'Speech recognition isn\'t available on this device.';
+      'التعرف على الكلام غير متاح على هذا الجهاز.';
 
   @override
   String get chatCouldNotOpenRoutine => 'تعذر فتح ذلك الروتين';
@@ -1302,15 +1315,15 @@ class AppLocalizationsAr extends AppLocalizations {
       'تستخدم Celia وزنك وطولك وعمرك وجنسك لتقدير أهداف السعرات والعناصر الغذائية الكبرى اليومية بناءً على مستوى نشاط معتدل.';
 
   @override
-  String get nutritionSourcesTitle => 'How these targets are calculated';
+  String get nutritionSourcesTitle => 'كيف تُحسب هذه الأهداف';
 
   @override
   String get nutritionSourcesBody =>
-      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+      'تعتمد السعرات اليومية على معادلة ميفلين–سانت جيور لطاقة الراحة مع عامل نشاط بدني متوسط (حوالي 1.55). تُقدَّر البروتينات بنحو 1.8 غ لكل كغ من وزن الجسم للبالغين النشطين. وتُضبط الدهون قرب 25٪ من السعرات، مع ملء الكربوهيدرات للباقي — ضمن نطاقات التوجيه الغذائي الشائعة.';
 
   @override
   String get nutritionSourcesDisclaimer =>
-      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
+      'هذه الأرقام تقديرات عامة للعافية فقط. وهي ليست تشخيصًا أو وصفة طبية أو بديلاً عن مشورة طبيب أو أخصائي تغذية مؤهل.';
 
   @override
   String get nutritionSetupSave => 'حفظ الأهداف';
@@ -1354,24 +1367,23 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileLogOutButton => 'تسجيل الخروج';
 
   @override
-  String get profileDeleteAccount => 'Delete Account';
+  String get profileDeleteAccount => 'حذف الحساب';
 
   @override
-  String get profileDeleteAccountConfirmTitle => 'Delete your account?';
+  String get profileDeleteAccountConfirmTitle => 'هل تريد حذف حسابك؟';
 
   @override
   String get profileDeleteAccountConfirmBody =>
-      'This permanently deletes your account and all of your data, including saved routines, meal logs, and chat history. This can\'t be undone.';
+      'يؤدي هذا إلى حذف حسابك وجميع بياناتك نهائيًا، بما في ذلك الروتينات المحفوظة وسجلات الوجبات وسجل الدردشة. لا يمكن التراجع عن ذلك.';
 
   @override
-  String get profileDeleteAccountPasswordPrompt =>
-      'Enter your password to confirm.';
+  String get profileDeleteAccountPasswordPrompt => 'أدخل كلمة المرور للتأكيد.';
 
   @override
-  String get profileDeleteAccountPasswordLabel => 'Password';
+  String get profileDeleteAccountPasswordLabel => 'كلمة المرور';
 
   @override
-  String get profileDeleteAccountButton => 'Delete My Account';
+  String get profileDeleteAccountButton => 'احذف حسابي';
 
   @override
   String get profileFavoriteRoutines => 'التمارين المفضلة';

@@ -12,6 +12,15 @@ import UIKit
       FirebaseApp.configure()
     }
     GeneratedPluginRegistrant.register(with: self)
+
+    let registrar = self.registrar(forPlugin: "CeliaAvatarPlugin")
+    if let messenger = registrar?.messenger() {
+      registrar?.register(
+        CeliaAvatarViewFactory(messenger: messenger),
+        withId: "eu.thefit.celia/vrm_avatar_view"
+      )
+    }
+
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

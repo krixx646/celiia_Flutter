@@ -85,7 +85,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get errorDeleteAccount =>
-      'We couldn\'t delete your account. Please try again.';
+      'เราไม่สามารถลบบัญชีของคุณได้ โปรดลองอีกครั้ง';
 
   @override
   String get errorNoConversation => 'เริ่มแชตใหม่เพื่อดำเนินการต่อ';
@@ -339,17 +339,31 @@ class AppLocalizationsTh extends AppLocalizations {
   String get chatInputHint => 'ถาม Celia ได้ทุกเรื่องเกี่ยวกับการฝึกของคุณ...';
 
   @override
-  String get chatMicTooltip => 'Hold to talk';
+  String get chatMicTooltip => 'กดค้างเพื่อพูด';
 
   @override
-  String get chatListening => 'Listening…';
+  String get chatAvatarReady => 'พร้อม';
 
   @override
-  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+  String get chatAvatarThinking => 'กำลังคิด…';
 
   @override
-  String get chatSpeechUnavailable =>
-      'Speech recognition isn\'t available on this device.';
+  String get chatAvatarSpeaking => 'กำลังพูด…';
+
+  @override
+  String chatAvatarSemantics(String status) {
+    return 'อวาตาร์ของ Celia, $status';
+  }
+
+  @override
+  String get chatListening => 'กำลังฟัง…';
+
+  @override
+  String get chatMicDenied =>
+      'ต้องอนุญาตให้เข้าถึงไมโครโฟนเพื่อพูดคุยกับ Celia';
+
+  @override
+  String get chatSpeechUnavailable => 'อุปกรณ์นี้ไม่รองรับการรู้จำเสียงพูด';
 
   @override
   String get chatCouldNotOpenRoutine => 'เปิดตารางฝึกนั้นไม่ได้';
@@ -1299,15 +1313,15 @@ class AppLocalizationsTh extends AppLocalizations {
       'Celia ใช้น้ำหนัก ส่วนสูง อายุ และเพศของคุณเพื่อประมาณเป้าหมายแคลอรีและสารอาหารหลักประจำวัน โดยอิงจากระดับกิจกรรมปานกลาง';
 
   @override
-  String get nutritionSourcesTitle => 'How these targets are calculated';
+  String get nutritionSourcesTitle => 'เป้าหมายเหล่านี้คำนวณอย่างไร';
 
   @override
   String get nutritionSourcesBody =>
-      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+      'แคลอรี่รายวันใช้สมการพลังงานขณะพัก Mifflin–St Jeor พร้อมปัจจัยกิจกรรมทางกายระดับปานกลาง (ประมาณ 1.55) โปรตีนประมาณใกล้ 1.8 กรัมต่อกก. น้ำหนักตัวสำหรับผู้ใหญ่ที่ออกกำลังกาย ไขมันตั้งไว้ใกล้ 25% ของแคลอรี่ และคาร์โบไฮเดรตเติมส่วนที่เหลือ — อยู่ในช่วงคำแนะนำด้านโภชนาการทั่วไป';
 
   @override
   String get nutritionSourcesDisclaimer =>
-      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
+      'ตัวเลขเหล่านี้เป็นเพียงการประมาณเพื่อสุขภาพทั่วไป ไม่ใช่การวินิจฉัย การสั่งยา หรือทดแทนคำแนะนำจากแพทย์หรือนักโภชนาการที่ผ่านการรับรอง';
 
   @override
   String get nutritionSetupSave => 'บันทึกเป้าหมาย';
@@ -1351,24 +1365,23 @@ class AppLocalizationsTh extends AppLocalizations {
   String get profileLogOutButton => 'ออกจากระบบ';
 
   @override
-  String get profileDeleteAccount => 'Delete Account';
+  String get profileDeleteAccount => 'ลบบัญชี';
 
   @override
-  String get profileDeleteAccountConfirmTitle => 'Delete your account?';
+  String get profileDeleteAccountConfirmTitle => 'ลบบัญชีของคุณหรือไม่?';
 
   @override
   String get profileDeleteAccountConfirmBody =>
-      'This permanently deletes your account and all of your data, including saved routines, meal logs, and chat history. This can\'t be undone.';
+      'การดำเนินการนี้จะลบบัญชีและข้อมูลทั้งหมดของคุณอย่างถาวร รวมถึงรูทีนที่บันทึกไว้ บันทึกมื้ออาหาร และประวัติแชท ไม่สามารถยกเลิกได้';
 
   @override
-  String get profileDeleteAccountPasswordPrompt =>
-      'Enter your password to confirm.';
+  String get profileDeleteAccountPasswordPrompt => 'ใส่รหัสผ่านเพื่อยืนยัน';
 
   @override
-  String get profileDeleteAccountPasswordLabel => 'Password';
+  String get profileDeleteAccountPasswordLabel => 'รหัสผ่าน';
 
   @override
-  String get profileDeleteAccountButton => 'Delete My Account';
+  String get profileDeleteAccountButton => 'ลบบัญชีของฉัน';
 
   @override
   String get profileFavoriteRoutines => 'โปรแกรมโปรด';

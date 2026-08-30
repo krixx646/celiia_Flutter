@@ -87,7 +87,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get errorDeleteAccount =>
-      'We couldn\'t delete your account. Please try again.';
+      'Nous n\'avons pas pu supprimer votre compte. Veuillez réessayer.';
 
   @override
   String get errorNoConversation =>
@@ -354,17 +354,32 @@ class AppLocalizationsFr extends AppLocalizations {
       'Posez une question à Celia sur votre entraînement...';
 
   @override
-  String get chatMicTooltip => 'Hold to talk';
+  String get chatMicTooltip => 'Maintenez pour parler';
 
   @override
-  String get chatListening => 'Listening…';
+  String get chatAvatarReady => 'Prête';
 
   @override
-  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+  String get chatAvatarThinking => 'Réflexion…';
+
+  @override
+  String get chatAvatarSpeaking => 'Elle parle…';
+
+  @override
+  String chatAvatarSemantics(String status) {
+    return 'Avatar de Celia, $status';
+  }
+
+  @override
+  String get chatListening => 'Écoute…';
+
+  @override
+  String get chatMicDenied =>
+      'L\'accès au micro est nécessaire pour parler à Celia.';
 
   @override
   String get chatSpeechUnavailable =>
-      'Speech recognition isn\'t available on this device.';
+      'La reconnaissance vocale n\'est pas disponible sur cet appareil.';
 
   @override
   String get chatCouldNotOpenRoutine => 'Impossible d’ouvrir ce programme';
@@ -1336,15 +1351,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Celia utilise votre poids, votre taille, votre âge et votre genre pour estimer vos objectifs quotidiens de calories et de macros selon un niveau d’activité modéré.';
 
   @override
-  String get nutritionSourcesTitle => 'How these targets are calculated';
+  String get nutritionSourcesTitle => 'Comment ces objectifs sont calculés';
 
   @override
   String get nutritionSourcesBody =>
-      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+      'Les calories quotidiennes utilisent l\'équation de dépense énergétique au repos de Mifflin–St Jeor avec un facteur d\'activité physique modérée (environ 1,55). Les protéines sont estimées près de 1,8 g par kg de poids corporel pour les adultes actifs. Les lipides sont fixés près de 25 % des calories, les glucides comblant le reste — dans des fourchettes courantes de recommandations alimentaires.';
 
   @override
   String get nutritionSourcesDisclaimer =>
-      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
+      'Ces chiffres sont uniquement des estimations générales de bien-être. Ils ne constituent ni un diagnostic, ni une prescription, ni un substitut aux conseils d\'un clinicien ou d\'un diététicien qualifié.';
 
   @override
   String get nutritionSetupSave => 'Enregistrer les objectifs';
@@ -1388,24 +1403,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileLogOutButton => 'Se déconnecter';
 
   @override
-  String get profileDeleteAccount => 'Delete Account';
+  String get profileDeleteAccount => 'Supprimer le compte';
 
   @override
-  String get profileDeleteAccountConfirmTitle => 'Delete your account?';
+  String get profileDeleteAccountConfirmTitle => 'Supprimer votre compte ?';
 
   @override
   String get profileDeleteAccountConfirmBody =>
-      'This permanently deletes your account and all of your data, including saved routines, meal logs, and chat history. This can\'t be undone.';
+      'Cela supprime définitivement votre compte et toutes vos données, y compris les routines enregistrées, les journaux de repas et l\'historique de chat. Cette action est irréversible.';
 
   @override
   String get profileDeleteAccountPasswordPrompt =>
-      'Enter your password to confirm.';
+      'Saisissez votre mot de passe pour confirmer.';
 
   @override
-  String get profileDeleteAccountPasswordLabel => 'Password';
+  String get profileDeleteAccountPasswordLabel => 'Mot de passe';
 
   @override
-  String get profileDeleteAccountButton => 'Delete My Account';
+  String get profileDeleteAccountButton => 'Supprimer mon compte';
 
   @override
   String get profileFavoriteRoutines => 'Routines favorites';

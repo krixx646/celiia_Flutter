@@ -86,7 +86,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get errorDeleteAccount =>
-      'We couldn\'t delete your account. Please try again.';
+      'Kami tidak dapat menghapus akun Anda. Silakan coba lagi.';
 
   @override
   String get errorNoConversation => 'Mulai chat baru untuk melanjutkan.';
@@ -346,17 +346,32 @@ class AppLocalizationsId extends AppLocalizations {
       'Tanyakan apa saja kepada Celia tentang latihan Anda...';
 
   @override
-  String get chatMicTooltip => 'Hold to talk';
+  String get chatMicTooltip => 'Tahan untuk berbicara';
 
   @override
-  String get chatListening => 'Listening…';
+  String get chatAvatarReady => 'Siap';
 
   @override
-  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+  String get chatAvatarThinking => 'Berpikir…';
+
+  @override
+  String get chatAvatarSpeaking => 'Berbicara…';
+
+  @override
+  String chatAvatarSemantics(String status) {
+    return 'Avatar Celia, $status';
+  }
+
+  @override
+  String get chatListening => 'Mendengarkan…';
+
+  @override
+  String get chatMicDenied =>
+      'Akses mikrofon diperlukan untuk berbicara dengan Celia.';
 
   @override
   String get chatSpeechUnavailable =>
-      'Speech recognition isn\'t available on this device.';
+      'Pengenalan suara tidak tersedia di perangkat ini.';
 
   @override
   String get chatCouldNotOpenRoutine => 'Rutinitas tersebut tidak dapat dibuka';
@@ -1316,15 +1331,15 @@ class AppLocalizationsId extends AppLocalizations {
       'Celia menggunakan berat, tinggi, usia, dan jenis kelamin Anda untuk memperkirakan target kalori dan makro harian dengan tingkat aktivitas sedang.';
 
   @override
-  String get nutritionSourcesTitle => 'How these targets are calculated';
+  String get nutritionSourcesTitle => 'Bagaimana target ini dihitung';
 
   @override
   String get nutritionSourcesBody =>
-      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+      'Kalori harian menggunakan persamaan energi istirahat Mifflin–St Jeor dengan faktor aktivitas fisik sedang (sekitar 1,55). Protein diperkirakan mendekati 1,8 g per kg berat badan untuk orang dewasa aktif. Lemak ditetapkan mendekati 25% kalori, dengan karbohidrat mengisi sisanya — dalam rentang panduan diet yang umum.';
 
   @override
   String get nutritionSourcesDisclaimer =>
-      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
+      'Angka-angka ini hanya perkiraan kesejahteraan umum. Bukan diagnosis, resep, atau pengganti saran dari dokter atau ahli gizi yang berkualifikasi.';
 
   @override
   String get nutritionSetupSave => 'Simpan Sasaran';
@@ -1368,24 +1383,24 @@ class AppLocalizationsId extends AppLocalizations {
   String get profileLogOutButton => 'Keluar';
 
   @override
-  String get profileDeleteAccount => 'Delete Account';
+  String get profileDeleteAccount => 'Hapus akun';
 
   @override
-  String get profileDeleteAccountConfirmTitle => 'Delete your account?';
+  String get profileDeleteAccountConfirmTitle => 'Hapus akun Anda?';
 
   @override
   String get profileDeleteAccountConfirmBody =>
-      'This permanently deletes your account and all of your data, including saved routines, meal logs, and chat history. This can\'t be undone.';
+      'Ini menghapus secara permanen akun dan semua data Anda, termasuk rutinitas tersimpan, catatan makanan, dan riwayat chat. Tindakan ini tidak dapat dibatalkan.';
 
   @override
   String get profileDeleteAccountPasswordPrompt =>
-      'Enter your password to confirm.';
+      'Masukkan kata sandi Anda untuk mengonfirmasi.';
 
   @override
-  String get profileDeleteAccountPasswordLabel => 'Password';
+  String get profileDeleteAccountPasswordLabel => 'Kata sandi';
 
   @override
-  String get profileDeleteAccountButton => 'Delete My Account';
+  String get profileDeleteAccountButton => 'Hapus akun saya';
 
   @override
   String get profileFavoriteRoutines => 'Rutinitas Favorit';

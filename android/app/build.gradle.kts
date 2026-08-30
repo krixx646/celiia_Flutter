@@ -25,6 +25,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    androidResources {
+        // Store the 14MB avatar uncompressed so it streams straight out of the
+        // APK instead of being inflated into the heap on every chat open.
+        noCompress += "glb"
+    }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
@@ -75,4 +81,12 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    // Native VRoid spike: Google Filament + glTF loader + ModelViewer helpers.
+    val filament = "1.71.6"
+    implementation("com.google.android.filament:filament-android:$filament")
+    implementation("com.google.android.filament:gltfio-android:$filament")
+    implementation("com.google.android.filament:filament-utils-android:$filament")
 }

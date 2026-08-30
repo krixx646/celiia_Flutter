@@ -86,7 +86,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get errorDeleteAccount =>
-      'We couldn\'t delete your account. Please try again.';
+      'Hesabınız silinemedi. Lütfen tekrar deneyin.';
 
   @override
   String get errorNoConversation =>
@@ -347,17 +347,32 @@ class AppLocalizationsTr extends AppLocalizations {
   String get chatInputHint => 'Antrenmanın hakkında Celia\'ya her şeyi sor...';
 
   @override
-  String get chatMicTooltip => 'Hold to talk';
+  String get chatMicTooltip => 'Konuşmak için basılı tutun';
 
   @override
-  String get chatListening => 'Listening…';
+  String get chatAvatarReady => 'Hazır';
 
   @override
-  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+  String get chatAvatarThinking => 'Düşünüyor…';
+
+  @override
+  String get chatAvatarSpeaking => 'Konuşuyor…';
+
+  @override
+  String chatAvatarSemantics(String status) {
+    return 'Celia avatarı, $status';
+  }
+
+  @override
+  String get chatListening => 'Dinliyor…';
+
+  @override
+  String get chatMicDenied =>
+      'Celia ile konuşmak için mikrofon erişimi gerekir.';
 
   @override
   String get chatSpeechUnavailable =>
-      'Speech recognition isn\'t available on this device.';
+      'Bu cihazda konuşma tanıma kullanılamıyor.';
 
   @override
   String get chatCouldNotOpenRoutine => 'Bu rutin açılamadı';
@@ -1313,15 +1328,15 @@ class AppLocalizationsTr extends AppLocalizations {
       'Celia, orta düzeyde aktivite seviyesine göre günlük kalori ve makro hedeflerinizi tahmin etmek için kilonuzu, boyunuzu, yaşınızı ve cinsiyetinizi kullanır.';
 
   @override
-  String get nutritionSourcesTitle => 'How these targets are calculated';
+  String get nutritionSourcesTitle => 'Bu hedefler nasıl hesaplanır';
 
   @override
   String get nutritionSourcesBody =>
-      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+      'Günlük kaloriler, orta düzey fiziksel aktivite faktörü (yaklaşık 1,55) ile Mifflin–St Jeor dinlenme enerjisi denklemini kullanır. Protein, aktif yetişkinler için vücut ağırlığının kg\'ı başına yaklaşık 1,8 g olarak tahmin edilir. Yağ kalorilerin yaklaşık %25\'ine ayarlanır, kalanını karbonhidratlar doldurur — yaygın beslenme rehberliği aralıkları içinde.';
 
   @override
   String get nutritionSourcesDisclaimer =>
-      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
+      'Bu rakamlar yalnızca genel sağlıklı yaşam tahminleridir. Teşhis, reçete veya nitelikli bir klinisyen ya da diyetisyenin tavsiyesinin yerine geçmez.';
 
   @override
   String get nutritionSetupSave => 'Hedefleri Kaydet';
@@ -1365,24 +1380,24 @@ class AppLocalizationsTr extends AppLocalizations {
   String get profileLogOutButton => 'Çıkış Yap';
 
   @override
-  String get profileDeleteAccount => 'Delete Account';
+  String get profileDeleteAccount => 'Hesabı sil';
 
   @override
-  String get profileDeleteAccountConfirmTitle => 'Delete your account?';
+  String get profileDeleteAccountConfirmTitle => 'Hesabınız silinsin mi?';
 
   @override
   String get profileDeleteAccountConfirmBody =>
-      'This permanently deletes your account and all of your data, including saved routines, meal logs, and chat history. This can\'t be undone.';
+      'Bu işlem hesabınızı ve kayıtlı rutinler, öğün kayıtları ve sohbet geçmişi dahil tüm verilerinizi kalıcı olarak siler. Geri alınamaz.';
 
   @override
   String get profileDeleteAccountPasswordPrompt =>
-      'Enter your password to confirm.';
+      'Onaylamak için şifrenizi girin.';
 
   @override
-  String get profileDeleteAccountPasswordLabel => 'Password';
+  String get profileDeleteAccountPasswordLabel => 'Şifre';
 
   @override
-  String get profileDeleteAccountButton => 'Delete My Account';
+  String get profileDeleteAccountButton => 'Hesabımı sil';
 
   @override
   String get profileFavoriteRoutines => 'Favori Rutinler';

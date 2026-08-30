@@ -1,15 +1,24 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../avatar/celia_avatar_controller.dart';
+import '../avatar/celia_avatar_state.dart';
+import '../avatar/celia_chat_avatar_panel.dart';
+import '../avatar/celia_lip_sync.dart';
+import '../config/env.dart';
 import '../l10n/app_localizations.dart';
+import '../models/celia_chat_message.dart';
 import '../providers/auth_provider.dart';
 import '../providers/chat_provider.dart';
 import '../providers/nutrition_profile_provider.dart';
 import '../providers/nutrition_tracker_provider.dart';
 import '../providers/routine_provider.dart';
 import '../providers/theme_provider.dart';
+import '../services/chat_stt_service.dart';
+import '../services/chat_tts_service.dart';
 import '../services/supabase_service.dart';
 import '../widgets/animated_gradient_border.dart';
 import '../widgets/chat_message_bubble.dart';
@@ -37,11 +46,31 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
+  final ChatSttService _stt = ChatSttService();
+  final ChatTtsService _tts = ChatTtsService();
+  CeliaAvatarController? _avatar;
+  CeliaLipSync? _lipSync;
+  Timer? _blinkTimer;
+  bool _listening = false;
+  bool _speaking = false;
+  CeliaAvatarState _avatarState = CeliaAvatarState.idle;
 
   @override
   void initState() {
     super.initState();
     _focusNode.addListener(() => setState(() {}));
+    if (Env.enableVrmAvatar) {
+      _avatar = CeliaAvatarController();
+      _lipSync = CeliaLipSync(onMorphs: (morphs) {
+        unawaited(_avatar?.setMorphs(morphs) ?? Future<void>.value());
+      });
+      _tts.onWord = (word) => _lipSync?.speakWord(word);
+      _tts.onSpeechEnd = _onSpeechEnd;
+      _blinkTimer = Timer.periodic(const Duration(seconds: 5), (_) {
+        if (_avatarState == CeliaAvatarState.speaking) return;
+        unawaited(_avatar?.blinkOnce() ?? Future<void>.value());
+      });
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       _publishUserState();
@@ -50,15 +79,51 @@ class _ChatScreenState extends State<ChatScreen> {
       if (userId != null) {
         context.read<RoutineProvider>().loadUserRoutines(userId);
       }
+      if (Env.enableChatVoice) {
+        final locale = Localizations.localeOf(context).toLanguageTag();
+        unawaited(_tts.warmUp(localeName: locale));
+      }
     });
   }
 
   @override
   void dispose() {
+    _blinkTimer?.cancel();
+    _lipSync?.dispose();
+    _tts.onWord = null;
+    _tts.onSpeechEnd = null;
+    _stt.dispose();
+    unawaited(_tts.dispose());
+    unawaited(_avatar?.dispose() ?? Future<void>.value());
     _controller.dispose();
     _focusNode.dispose();
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _onSpeechEnd() {
+    if (!mounted) return;
+    _lipSync?.close();
+    setState(() => _speaking = false);
+    _syncAvatarState(streaming: context.read<ChatProvider>().isStreaming);
+  }
+
+  Future<void> _setAvatarState(CeliaAvatarState state) async {
+    if (_avatarState == state) return;
+    if (mounted) setState(() => _avatarState = state);
+    await _avatar?.setState(state);
+  }
+
+  void _syncAvatarState({required bool streaming}) {
+    if (!Env.enableVrmAvatar) return;
+    final next = _listening
+        ? CeliaAvatarState.listening
+        : _speaking
+            ? CeliaAvatarState.speaking
+            : streaming
+                ? CeliaAvatarState.thinking
+                : CeliaAvatarState.idle;
+    unawaited(_setAvatarState(next));
   }
 
   /// Hands Celia the profile numbers she cannot read from the backend.
@@ -75,18 +140,106 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Future<void> _send(String text) async {
+  Future<void> _send(String text, {bool speakReply = false}) async {
     if (text.trim().isEmpty) return;
+    await _tts.stop();
+    if (!mounted) return;
+    setState(() => _speaking = false);
+    final chat = context.read<ChatProvider>();
+    final auth = context.read<AuthProvider>();
+    final routines = context.read<RoutineProvider>();
     _publishUserState();
     _controller.clear();
     _scrollToEnd();
-    await context.read<ChatProvider>().sendMessage(text);
+    _syncAvatarState(streaming: true);
+    await chat.sendMessage(text);
     if (!mounted) return;
     // A routine Celia just saved should show up in the library straight away.
-    final userId = context.read<AuthProvider>().uiState.currentUser?.uid;
+    final userId = auth.uiState.currentUser?.uid;
     if (userId != null) {
-      context.read<RoutineProvider>().loadUserRoutines(userId);
+      routines.loadUserRoutines(userId);
     }
+    if (speakReply) {
+      await _speakLastAssistantReply(chat);
+    } else {
+      _syncAvatarState(streaming: chat.isStreaming);
+    }
+  }
+
+  Future<void> _speakLastAssistantReply(ChatProvider chat) async {
+    if (!Env.enableChatVoice || !mounted) return;
+    if (chat.error != null) {
+      _syncAvatarState(streaming: false);
+      return;
+    }
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    for (var i = chat.messages.length - 1; i >= 0; i--) {
+      final message = chat.messages[i];
+      if (message.role != ChatRole.assistant) continue;
+      final text = message.text.trim();
+      if (text.isEmpty) {
+        _syncAvatarState(streaming: false);
+        return;
+      }
+      setState(() => _speaking = true);
+      _syncAvatarState(streaming: false);
+      await _tts.speak(text, localeName: locale);
+      return;
+    }
+    _syncAvatarState(streaming: false);
+  }
+
+  Future<void> _startListening() async {
+    if (!Env.enableChatVoice || _listening) return;
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    await _tts.stop();
+    if (mounted) setState(() => _speaking = false);
+
+    final ready = await _stt.ensureReady();
+    if (!mounted) return;
+    if (!ready) {
+      messenger.showSnackBar(
+        SnackBar(content: Text(l10n.chatSpeechUnavailable)),
+      );
+      return;
+    }
+
+    final locale = Localizations.localeOf(context);
+    final localeId = locale.countryCode == null || locale.countryCode!.isEmpty
+        ? locale.languageCode
+        : '${locale.languageCode}_${locale.countryCode}';
+
+    final started = await _stt.start(
+      localeId: localeId,
+      onPartial: (text) {
+        if (!mounted) return;
+        _controller.text = text;
+        _controller.selection = TextSelection.collapsed(offset: text.length);
+      },
+    );
+    if (!mounted) return;
+    if (!started) {
+      messenger.showSnackBar(SnackBar(content: Text(l10n.chatMicDenied)));
+      return;
+    }
+    setState(() => _listening = true);
+    _syncAvatarState(streaming: false);
+  }
+
+  Future<void> _stopListeningAndSend() async {
+    if (!_listening) return;
+    final transcript = await _stt.stop();
+    if (!mounted) return;
+    setState(() => _listening = false);
+    _syncAvatarState(streaming: false);
+    final text = transcript.trim().isNotEmpty
+        ? transcript.trim()
+        : _controller.text.trim();
+    if (text.isEmpty) return;
+    // Only a spoken question gets a spoken answer; typing stays silent so the
+    // phone never talks out loud unprompted.
+    await _send(text, speakReply: true);
   }
 
   void _scrollToEnd() {
@@ -215,8 +368,21 @@ class _ChatScreenState extends State<ChatScreen> {
             );
           }
 
+          if (Env.enableVrmAvatar) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (!mounted) return;
+              _syncAvatarState(streaming: chat.isStreaming);
+            });
+          }
+
           return Column(
             children: [
+              if (Env.enableVrmAvatar && _avatar != null)
+                CeliaChatAvatarPanel(
+                  controller: _avatar!,
+                  state: _avatarState,
+                  theme: theme,
+                ),
               Expanded(
                 child: chat.hasMessages
                     ? ListView.builder(
@@ -238,7 +404,10 @@ class _ChatScreenState extends State<ChatScreen> {
                           onOpenRoutine: _openRoutine,
                         ),
                       )
-                    : _EmptyState(onSuggestion: _send),
+                    : _EmptyState(
+                        onSuggestion: _send,
+                        hideStaticFace: Env.enableVrmAvatar,
+                      ),
               ),
               if (chat.error != null)
                 _ErrorBanner(
@@ -249,7 +418,11 @@ class _ChatScreenState extends State<ChatScreen> {
                 controller: _controller,
                 focusNode: _focusNode,
                 isBusy: chat.isStreaming,
+                isListening: _listening,
+                voiceEnabled: Env.enableChatVoice,
                 onSend: () => _send(_controller.text),
+                onListenStart: _startListening,
+                onListenEnd: _stopListeningAndSend,
                 onScanMeal: () => Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const CalorieScannerScreen()),
                 ),
@@ -263,9 +436,13 @@ class _ChatScreenState extends State<ChatScreen> {
 }
 
 class _EmptyState extends StatelessWidget {
-  const _EmptyState({required this.onSuggestion});
+  const _EmptyState({
+    required this.onSuggestion,
+    this.hideStaticFace = false,
+  });
 
   final Future<void> Function(String prompt) onSuggestion;
+  final bool hideStaticFace;
 
   @override
   Widget build(BuildContext context) {
@@ -281,21 +458,23 @@ class _EmptyState extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: 96,
-            height: 96,
-            decoration: BoxDecoration(
-              color: theme.accentOrange.withValues(alpha: 0.1),
-              shape: BoxShape.circle,
-            ),
-            child: ClipOval(
-              child: Image.asset(
-                'assets/images/app_icon_foreground.png',
-                fit: BoxFit.cover,
+          if (!hideStaticFace) ...[
+            Container(
+              width: 96,
+              height: 96,
+              decoration: BoxDecoration(
+                color: theme.accentOrange.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/images/app_icon_foreground.png',
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 24),
+            const SizedBox(height: 24),
+          ],
           Text(
             l10n.chatEmptyPrompt,
             style: TextStyle(
@@ -376,14 +555,22 @@ class _Composer extends StatelessWidget {
     required this.controller,
     required this.focusNode,
     required this.isBusy,
+    required this.isListening,
+    required this.voiceEnabled,
     required this.onSend,
+    required this.onListenStart,
+    required this.onListenEnd,
     required this.onScanMeal,
   });
 
   final TextEditingController controller;
   final FocusNode focusNode;
   final bool isBusy;
+  final bool isListening;
+  final bool voiceEnabled;
   final VoidCallback onSend;
+  final Future<void> Function() onListenStart;
+  final Future<void> Function() onListenEnd;
   final VoidCallback onScanMeal;
 
   @override
@@ -400,7 +587,7 @@ class _Composer extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: AnimatedGradientBorder(
-          isFocused: focusNode.hasFocus,
+          isFocused: focusNode.hasFocus || isListening,
           glowColor: theme.accentOrange,
           idleBorderColor: theme.isDarkMode
               ? Colors.white.withValues(alpha: 0.1)
@@ -423,7 +610,7 @@ class _Composer extends StatelessWidget {
                   size: 24,
                   color: theme.isDarkMode ? Colors.white54 : Colors.black54,
                 ),
-                onPressed: onScanMeal,
+                onPressed: isBusy || isListening ? null : onScanMeal,
               ),
               Expanded(
                 child: TextField(
@@ -431,11 +618,14 @@ class _Composer extends StatelessWidget {
                   focusNode: focusNode,
                   minLines: 1,
                   maxLines: 4,
+                  enabled: !isListening,
                   textInputAction: TextInputAction.send,
-                  onSubmitted: (_) => isBusy ? null : onSend(),
+                  onSubmitted: (_) => isBusy || isListening ? null : onSend(),
                   style: TextStyle(color: theme.textPrimary, fontSize: 16),
                   decoration: InputDecoration(
-                    hintText: l10n.chatInputHint,
+                    hintText: isListening
+                        ? l10n.chatListening
+                        : l10n.chatInputHint,
                     border: InputBorder.none,
                     isDense: true,
                     contentPadding: const EdgeInsets.symmetric(vertical: 16),
@@ -443,6 +633,36 @@ class _Composer extends StatelessWidget {
                   ),
                 ),
               ),
+              if (voiceEnabled && !isBusy)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Semantics(
+                    button: true,
+                    label: l10n.chatMicTooltip,
+                    child: Tooltip(
+                      message: l10n.chatMicTooltip,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        // Hold to talk, or tap to start and tap again to send.
+                        onTap: isListening ? onListenEnd : onListenStart,
+                        onLongPressStart: (_) => onListenStart(),
+                        onLongPressEnd: (_) => onListenEnd(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Icon(
+                            isListening ? Icons.mic : Icons.mic_none,
+                            color: isListening
+                                ? theme.accentOrange
+                                : (theme.isDarkMode
+                                      ? Colors.white54
+                                      : Colors.black54),
+                            size: 24,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 4, right: 4),
                 child: isBusy
@@ -463,7 +683,7 @@ class _Composer extends StatelessWidget {
                           color: theme.accentOrange,
                           size: 24,
                         ),
-                        onPressed: onSend,
+                        onPressed: isListening ? null : onSend,
                       ),
               ),
             ],

@@ -81,8 +81,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get errorNotSignedIn => '请登录后重试。';
 
   @override
-  String get errorDeleteAccount =>
-      'We couldn\'t delete your account. Please try again.';
+  String get errorDeleteAccount => '无法删除您的账户，请重试。';
 
   @override
   String get errorNoConversation => '开始新聊天以继续。';
@@ -322,17 +321,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get chatInputHint => '向 Celia 咨询任何训练问题...';
 
   @override
-  String get chatMicTooltip => 'Hold to talk';
+  String get chatMicTooltip => '按住说话';
 
   @override
-  String get chatListening => 'Listening…';
+  String get chatAvatarReady => '准备就绪';
 
   @override
-  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+  String get chatAvatarThinking => '思考中…';
 
   @override
-  String get chatSpeechUnavailable =>
-      'Speech recognition isn\'t available on this device.';
+  String get chatAvatarSpeaking => '说话中…';
+
+  @override
+  String chatAvatarSemantics(String status) {
+    return 'Celia 虚拟形象，$status';
+  }
+
+  @override
+  String get chatListening => '正在聆听…';
+
+  @override
+  String get chatMicDenied => '需要麦克风权限才能与 Celia 对话。';
+
+  @override
+  String get chatSpeechUnavailable => '此设备不支持语音识别。';
 
   @override
   String get chatCouldNotOpenRoutine => '无法打开该训练计划';
@@ -1261,15 +1273,15 @@ class AppLocalizationsZh extends AppLocalizations {
       'Celia 会根据你的体重、身高、年龄和性别，按中等活动水平估算每日卡路里和宏量营养素目标。';
 
   @override
-  String get nutritionSourcesTitle => 'How these targets are calculated';
+  String get nutritionSourcesTitle => '这些目标如何计算';
 
   @override
   String get nutritionSourcesBody =>
-      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+      '每日热量采用 Mifflin–St Jeor 静息能量公式，并乘以中等体力活动系数（约 1.55）。活跃成人的蛋白质估算约为每公斤体重 1.8 克。脂肪约占热量的 25%，其余由碳水化合物补足——均在常见膳食指导范围内。';
 
   @override
   String get nutritionSourcesDisclaimer =>
-      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
+      '这些数字仅为一般健康估算，并非诊断、处方，也不能替代合格临床医生或注册营养师的建议。';
 
   @override
   String get nutritionSetupSave => '保存目标';
@@ -1313,24 +1325,23 @@ class AppLocalizationsZh extends AppLocalizations {
   String get profileLogOutButton => '退出登录';
 
   @override
-  String get profileDeleteAccount => 'Delete Account';
+  String get profileDeleteAccount => '删除账户';
 
   @override
-  String get profileDeleteAccountConfirmTitle => 'Delete your account?';
+  String get profileDeleteAccountConfirmTitle => '删除您的账户？';
 
   @override
   String get profileDeleteAccountConfirmBody =>
-      'This permanently deletes your account and all of your data, including saved routines, meal logs, and chat history. This can\'t be undone.';
+      '这将永久删除您的账户及所有数据，包括已保存的训练计划、饮食记录和聊天记录。此操作无法撤销。';
 
   @override
-  String get profileDeleteAccountPasswordPrompt =>
-      'Enter your password to confirm.';
+  String get profileDeleteAccountPasswordPrompt => '请输入密码以确认。';
 
   @override
-  String get profileDeleteAccountPasswordLabel => 'Password';
+  String get profileDeleteAccountPasswordLabel => '密码';
 
   @override
-  String get profileDeleteAccountButton => 'Delete My Account';
+  String get profileDeleteAccountButton => '删除我的账户';
 
   @override
   String get profileFavoriteRoutines => '收藏的训练计划';

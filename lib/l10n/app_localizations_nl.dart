@@ -86,7 +86,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get errorDeleteAccount =>
-      'We couldn\'t delete your account. Please try again.';
+      'We konden je account niet verwijderen. Probeer het opnieuw.';
 
   @override
   String get errorNoConversation => 'Start een nieuwe chat om door te gaan.';
@@ -349,17 +349,32 @@ class AppLocalizationsNl extends AppLocalizations {
   String get chatInputHint => 'Vraag Celia alles over je training...';
 
   @override
-  String get chatMicTooltip => 'Hold to talk';
+  String get chatMicTooltip => 'Houd ingedrukt om te praten';
 
   @override
-  String get chatListening => 'Listening…';
+  String get chatAvatarReady => 'Klaar';
 
   @override
-  String get chatMicDenied => 'Microphone access is needed to talk to Celia.';
+  String get chatAvatarThinking => 'Denkt na…';
+
+  @override
+  String get chatAvatarSpeaking => 'Spreekt…';
+
+  @override
+  String chatAvatarSemantics(String status) {
+    return 'Celia-avatar, $status';
+  }
+
+  @override
+  String get chatListening => 'Luistert…';
+
+  @override
+  String get chatMicDenied =>
+      'Toegang tot de microfoon is nodig om met Celia te praten.';
 
   @override
   String get chatSpeechUnavailable =>
-      'Speech recognition isn\'t available on this device.';
+      'Spraakherkenning is niet beschikbaar op dit apparaat.';
 
   @override
   String get chatCouldNotOpenRoutine => 'Die routine kon niet worden geopend';
@@ -1323,15 +1338,15 @@ class AppLocalizationsNl extends AppLocalizations {
       'Celia gebruikt je gewicht, lengte, leeftijd en geslacht om je dagelijkse calorie- en macronutriëntendoelen te schatten op basis van een gemiddeld activiteitsniveau.';
 
   @override
-  String get nutritionSourcesTitle => 'How these targets are calculated';
+  String get nutritionSourcesTitle => 'Hoe deze doelen worden berekend';
 
   @override
   String get nutritionSourcesBody =>
-      'Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.';
+      'Dagelijkse calorieën gebruiken de Mifflin–St Jeor-vergelijking voor rustenergie met een matige activiteitsfactor (ongeveer 1,55). Eiwit wordt geschat op ongeveer 1,8 g per kg lichaamsgewicht voor actieve volwassenen. Vet wordt op ongeveer 25% van de calorieën gezet, met koolhydraten voor de rest — binnen gangbare voedingsrichtlijnen.';
 
   @override
   String get nutritionSourcesDisclaimer =>
-      'These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.';
+      'Deze cijfers zijn alleen algemene welzijnsschattingen. Ze zijn geen diagnose, voorschrift of vervanging van advies van een gekwalificeerde clinicus of diëtist.';
 
   @override
   String get nutritionSetupSave => 'Doelen opslaan';
@@ -1375,24 +1390,24 @@ class AppLocalizationsNl extends AppLocalizations {
   String get profileLogOutButton => 'Uitloggen';
 
   @override
-  String get profileDeleteAccount => 'Delete Account';
+  String get profileDeleteAccount => 'Account verwijderen';
 
   @override
-  String get profileDeleteAccountConfirmTitle => 'Delete your account?';
+  String get profileDeleteAccountConfirmTitle => 'Je account verwijderen?';
 
   @override
   String get profileDeleteAccountConfirmBody =>
-      'This permanently deletes your account and all of your data, including saved routines, meal logs, and chat history. This can\'t be undone.';
+      'Dit verwijdert permanent je account en al je gegevens, inclusief opgeslagen routines, maaltijdlogs en chatgeschiedenis. Dit kan niet ongedaan worden gemaakt.';
 
   @override
   String get profileDeleteAccountPasswordPrompt =>
-      'Enter your password to confirm.';
+      'Voer je wachtwoord in om te bevestigen.';
 
   @override
-  String get profileDeleteAccountPasswordLabel => 'Password';
+  String get profileDeleteAccountPasswordLabel => 'Wachtwoord';
 
   @override
-  String get profileDeleteAccountButton => 'Delete My Account';
+  String get profileDeleteAccountButton => 'Mijn account verwijderen';
 
   @override
   String get profileFavoriteRoutines => 'Favoriete routines';

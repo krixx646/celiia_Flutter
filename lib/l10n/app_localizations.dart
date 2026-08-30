@@ -748,6 +748,30 @@ abstract class AppLocalizations {
   /// **'Hold to talk'**
   String get chatMicTooltip;
 
+  /// No description provided for @chatAvatarReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get chatAvatarReady;
+
+  /// No description provided for @chatAvatarThinking.
+  ///
+  /// In en, this message translates to:
+  /// **'Thinking…'**
+  String get chatAvatarThinking;
+
+  /// No description provided for @chatAvatarSpeaking.
+  ///
+  /// In en, this message translates to:
+  /// **'Speaking…'**
+  String get chatAvatarSpeaking;
+
+  /// No description provided for @chatAvatarSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Celia avatar, {status}'**
+  String chatAvatarSemantics(String status);
+
   /// No description provided for @chatListening.
   ///
   /// In en, this message translates to:

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -6,8 +7,10 @@ import '../../providers/auth_provider.dart';
 import '../../providers/nutrition_profile_provider.dart';
 import '../../providers/nutrition_tracker_provider.dart';
 import '../../providers/routine_provider.dart';
+import '../../config/env.dart';
 import '../../providers/theme_provider.dart';
 import '../../utils/progress.dart';
+import '../debug/vrm_avatar_test_screen.dart';
 import '../tools/nutrition_screen.dart';
 import 'edit_profile_screen.dart';
 import 'language_screen.dart';
@@ -425,6 +428,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ).push(MaterialPageRoute(builder: (_) => const LanguageScreen()));
           },
         ),
+        // Debug-only: the label is untranslated and the screen is a test rig,
+        // so it must never reach a release build even when the avatar ships.
+        if (kDebugMode && Env.enableVrmAvatar) ...[
+          const SizedBox(height: 8),
+          _buildMenuItem(
+            theme: theme,
+            icon: Icons.face_retouching_natural,
+            title: 'VRM Avatar (dev)',
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const VrmAvatarTestScreen()),
+              );
+            },
+          ),
+        ],
         const SizedBox(height: 8),
         _buildDarkModeToggle(l10n, theme),
         const SizedBox(height: 16), // Extra space before Help

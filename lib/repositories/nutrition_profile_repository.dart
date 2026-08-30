@@ -12,12 +12,23 @@ class NutritionProfileRepository {
   @visibleForTesting
   static FirebaseAuth Function() defaultAuth = () => FirebaseAuth.instance;
 
-  final FirebaseFirestore _firestore;
-  final FirebaseAuth _auth;
+  final FirebaseFirestore? _injectedFirestore;
+  final FirebaseAuth? _injectedAuth;
 
   NutritionProfileRepository({FirebaseFirestore? firestore, FirebaseAuth? auth})
-    : _firestore = firestore ?? defaultFirestore(),
-      _auth = auth ?? defaultAuth();
+    : _injectedFirestore = firestore,
+      _injectedAuth = auth;
+
+  // Resolved on first use and then cached, rather than in the constructor:
+  // AuthProvider builds this repository eagerly, so constructing it must not
+  // require Firebase to be initialised (widget tests hit `[core/no-app]`).
+  FirebaseFirestore? _firestoreCache;
+  FirebaseAuth? _authCache;
+
+  FirebaseFirestore get _firestore =>
+      _firestoreCache ??= _injectedFirestore ?? defaultFirestore();
+
+  FirebaseAuth get _auth => _authCache ??= _injectedAuth ?? defaultAuth();
 
   Future<NutritionProfile?> getProfile() async {
     final userId = _auth.currentUser?.uid;

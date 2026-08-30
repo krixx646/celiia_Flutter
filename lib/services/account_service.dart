@@ -11,11 +11,16 @@ import '../config/env.dart';
 /// Firebase Auth identity itself is deleted client-side.
 class AccountService {
   AccountService({FirebaseAuth? firebaseAuth, http.Client? httpClient})
-    : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+    : _injectedAuth = firebaseAuth,
       _httpClient = httpClient ?? http.Client();
 
-  final FirebaseAuth _firebaseAuth;
+  final FirebaseAuth? _injectedAuth;
   final http.Client _httpClient;
+
+  /// Resolved on use, not in the constructor: screens build this service while
+  /// Firebase may not be initialised (widget tests), and merely holding a
+  /// reference must not throw `[core/no-app]`.
+  FirebaseAuth get _firebaseAuth => _injectedAuth ?? FirebaseAuth.instance;
 
   @visibleForTesting
   static String Function() backendBaseUrl = () => Env.celiaBackendBaseUrl;

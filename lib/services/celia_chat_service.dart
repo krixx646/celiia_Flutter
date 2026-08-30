@@ -43,10 +43,14 @@ class CeliaStreamError extends CeliaStreamEvent {
 /// by token and tool activity can be shown as it happens.
 class CeliaChatService {
   CeliaChatService({FirebaseAuth? firebaseAuth, http.Client? httpClient})
-    : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+    : _injectedAuth = firebaseAuth,
       _httpClient = httpClient ?? http.Client();
 
-  final FirebaseAuth _firebaseAuth;
+  final FirebaseAuth? _injectedAuth;
+
+  /// Resolved on use so constructing the service does not require Firebase to
+  /// be initialised.
+  FirebaseAuth get _firebaseAuth => _injectedAuth ?? FirebaseAuth.instance;
   final http.Client _httpClient;
 
   @visibleForTesting

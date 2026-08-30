@@ -22,12 +22,16 @@ class WorkoutTtsService {
     FirebaseAuth? auth,
     String? baseUrl,
   }) : _client = client ?? http.Client(),
-       _auth = auth ?? FirebaseAuth.instance,
+       _injectedAuth = auth,
        _baseUrl = baseUrl ?? Env.celiaBackendBaseUrl;
 
   final http.Client _client;
-  final FirebaseAuth _auth;
+  final FirebaseAuth? _injectedAuth;
   final String _baseUrl;
+
+  /// Resolved on use so constructing the service does not require Firebase to
+  /// be initialised.
+  FirebaseAuth get _auth => _injectedAuth ?? FirebaseAuth.instance;
 
   Directory? _cacheDir;
 

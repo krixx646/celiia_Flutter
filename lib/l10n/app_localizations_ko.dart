@@ -1521,4 +1521,272 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get insightsSectionTitle => 'Celia 인사이트';
+
+  @override
+  String get bodyScanTitle => '신체 스캔';
+
+  @override
+  String get bodyScanContinue => '계속';
+
+  @override
+  String get bodyScanDone => '완료';
+
+  @override
+  String get bodyScanConsentTitle => '스캔 전에 확인하세요';
+
+  @override
+  String get bodyScanConsentBody =>
+      '신체 스캔은 두 장의 사진으로 체성분을 추정합니다. 사진이 어떻게 처리되는지 정확히 알려드립니다.';
+
+  @override
+  String get bodyScanConsentPhotosTitle => '직접 촬영하는 두 장의 사진';
+
+  @override
+  String get bodyScanConsentPhotosBody =>
+      '한 장은 카메라를 정면으로 바라보고, 다른 한 장은 오른쪽 측면에서 촬영합니다. 몸의 윤곽이 잘 보이도록 몸에 붙는 옷을 입으세요.';
+
+  @override
+  String get bodyScanConsentProcessingTitle => 'Bodygram에서 분석';
+
+  @override
+  String get bodyScanConsentProcessingBody =>
+      '사진은 측정값을 추정하기 위해 스캔 서비스 제공업체인 Bodygram으로 전송됩니다. 다른 용도로는 사용되지 않습니다.';
+
+  @override
+  String get bodyScanConsentStorageTitle => '사진은 절대 저장되지 않습니다';
+
+  @override
+  String get bodyScanConsentStorageBody =>
+      'Celia는 사진을 보관하지 않습니다. 결과로 나온 수치와 3D 모델만 계정에 저장되며, 계정을 삭제하면 이것들도 삭제됩니다.';
+
+  @override
+  String get bodyScanConsentAgeTitle => '만 18세 이상이어야 합니다';
+
+  @override
+  String get bodyScanConsentAgeBody => '신체 스캔은 만 18세 미만에게 제공되지 않습니다.';
+
+  @override
+  String get bodyScanConsentAgree => '사진이 분석되는 것을 이해하며 동의합니다';
+
+  @override
+  String get bodyScanStatsTitle => '정보를 확인하세요';
+
+  @override
+  String get bodyScanStatsBody =>
+      '이 정보는 추정 결과에 직접 반영되므로, 최신 정보가 아닌 체중을 입력하면 결과가 부정확해질 수 있습니다.';
+
+  @override
+  String get bodyScanStatsHeight => '키';
+
+  @override
+  String get bodyScanStatsWeight => '체중';
+
+  @override
+  String get bodyScanStatsAge => '나이';
+
+  @override
+  String get bodyScanStatsSex => '성별';
+
+  @override
+  String get bodyScanStatsSexNote =>
+      '스캔 모델은 두 가지 기준 그룹만을 바탕으로 만들어졌습니다. 자신의 신체에 더 가까운 항목을 선택하세요. 이는 추정 결과에 영향을 주지만, Celia가 회원님을 대하는 방식에는 영향을 주지 않습니다.';
+
+  @override
+  String get bodyScanStatsFemale => '여성';
+
+  @override
+  String get bodyScanStatsMale => '남성';
+
+  @override
+  String get bodyScanStatsInvalid =>
+      '유효한 키, 체중, 나이를 입력하세요. 스캔하려면 만 18세 이상이어야 합니다.';
+
+  @override
+  String get bodyScanCaptureFrontTitle => '카메라를 정면으로 바라보세요';
+
+  @override
+  String get bodyScanCaptureRightTitle => '오른쪽으로 돌아서세요';
+
+  @override
+  String get bodyScanCaptureHowTo =>
+      '휴대전화를 약 3m 떨어진 곳에 세워두고, 몸 전체가 윤곽선 안에 들어올 때까지 뒤로 물러난 다음 타이머를 시작하세요.';
+
+  @override
+  String get bodyScanCaptureTips =>
+      '몸에 붙는 옷, 단색 배경, 고르고 밝은 조명, 팔은 몸에서 살짝 떨어뜨리세요.';
+
+  @override
+  String get bodyScanPoseFront => '정면';
+
+  @override
+  String get bodyScanPoseRight => '오른쪽 측면';
+
+  @override
+  String get bodyScanStartTimer => '타이머 시작';
+
+  @override
+  String get bodyScanCancelTimer => '타이머 취소';
+
+  @override
+  String get bodyScanRetake => '다시 촬영';
+
+  @override
+  String get bodyScanNextPose => '다음 사진';
+
+  @override
+  String get bodyScanGetResults => '결과 보기';
+
+  @override
+  String get bodyScanProcessingTitle => '스캔 분석 중';
+
+  @override
+  String get bodyScanProcessingBody =>
+      '3D 모델을 만들고 측정값을 추정하고 있습니다. 최대 1분 정도 걸립니다.';
+
+  @override
+  String get bodyScanResultTitle => '내 신체 스캔';
+
+  @override
+  String get bodyScanResultSubtitle =>
+      '사진으로 추정한 결과입니다. 시간에 따른 추세를 확인하는 데 가장 유용합니다.';
+
+  @override
+  String get bodyScanBodyFat => '체지방률';
+
+  @override
+  String get bodyScanLeanMass => '제지방량';
+
+  @override
+  String get bodyScanFatMass => '체지방량';
+
+  @override
+  String get bodyScanWaist => '허리';
+
+  @override
+  String get bodyScanHip => '엉덩이';
+
+  @override
+  String get bodyScanChest => '가슴';
+
+  @override
+  String get bodyScanWaistToHip => '허리-엉덩이';
+
+  @override
+  String bodyScanQuotaRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count회 스캔 남음',
+      one: '이번 기간에 스캔 1회 남음',
+      zero: '이번 기간에 남은 스캔 없음',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bodyScanEmptyTitle => '내 몸의 변화를 확인해 보세요';
+
+  @override
+  String get bodyScanEmptyBody =>
+      '사진 두 장으로 체지방, 제지방량 및 주요 신체 치수를 추정하고, 시간에 따른 비교가 가능한 3D 모델을 확인할 수 있습니다.';
+
+  @override
+  String get bodyScanLatestTitle => '최근 스캔';
+
+  @override
+  String get bodyScanHistoryTitle => '이전 스캔';
+
+  @override
+  String get bodyScanStartCta => '신체 스캔 시작';
+
+  @override
+  String get bodyScanRescanCta => '다시 스캔';
+
+  @override
+  String get bodyScanRescanHint =>
+      '체성분은 천천히 변합니다. 약 한 달에 한 번 스캔하면 의미 있는 비교를 할 수 있습니다.';
+
+  @override
+  String bodyScanDeltaSinceLast(String value) {
+    return '지난 스캔 이후 $value% 변화';
+  }
+
+  @override
+  String get bodyScanNoComposition => '추정값 없음';
+
+  @override
+  String get bodyScanSourcesTitle => '이렇게 산출됩니다';
+
+  @override
+  String get bodyScanSourcesBody =>
+      '사진을 바탕으로 신체의 3D 윤곽을 만들고, 해당 윤곽과 키, 체중, 나이 및 성별을 함께 고려해 체지방과 제지방량을 추정합니다. 제지방량에는 근육, 수분, 뼈 및 장기가 모두 포함되며 단백질만을 의미하지는 않습니다.';
+
+  @override
+  String get bodyScanDisclaimer =>
+      '이는 의료 측정값이 아닌 추정값입니다. 이 방법을 연구한 결과에 따르면 임상 DXA 스캔 대비 체지방률의 평균 오차는 약 3.5%이며, 한 번의 결과보다 변화를 추적할 때 일치도가 더 낮습니다. 진단 목적으로 사용할 수 없습니다. 건강과 관련된 결정은 의료 전문가와 상담하세요.';
+
+  @override
+  String get bodyScanErrorCameraPermission =>
+      'Celia가 신체를 스캔하려면 카메라 접근 권한이 필요합니다.';
+
+  @override
+  String get bodyScanErrorNoCamera => '이 기기에서 사용할 수 있는 카메라가 없습니다.';
+
+  @override
+  String get bodyScanErrorFraming =>
+      '몸 전체가 화면에 들어와야 합니다. 휴대폰을 더 멀리 이동하고 머리와 발이 모두 보이는지 확인하세요.';
+
+  @override
+  String get bodyScanErrorQuality =>
+      '사진이 너무 어둡거나 흐렸습니다. 더 밝고 고른 조명을 찾고 타이머가 작동하는 동안 움직이지 마세요.';
+
+  @override
+  String get bodyScanErrorPose =>
+      '자세가 정확하지 않습니다. 카메라를 향해 똑바로 서서 팔을 몸에서 약간 벌린 다음, 두 번째 사진을 위해 오른쪽으로 완전히 돌아서세요.';
+
+  @override
+  String get bodyScanErrorClothing =>
+      '헐렁한 옷은 신체 윤곽을 가립니다. 몸에 밀착되는 옷을 입으면 스캔에 사용할 수 있습니다.';
+
+  @override
+  String get bodyScanErrorPhotoUnknown =>
+      '이 사진은 사용할 수 없습니다. 밝은 곳에서 단색 배경을 두고 다시 시도하세요.';
+
+  @override
+  String get bodyScanErrorPhotosTooLarge => '사진을 업로드하기에 파일이 너무 큽니다. 다시 시도하세요.';
+
+  @override
+  String get bodyScanErrorQuota =>
+      '이번 기간에 사용할 수 있는 스캔을 모두 사용했습니다. 기간이 초기화되면 다시 스캔할 수 있습니다.';
+
+  @override
+  String get bodyScanErrorAge => '신체 스캔은 만 18세 이상 사용자만 이용할 수 있습니다.';
+
+  @override
+  String get bodyScanErrorStats => '키, 체중, 나이 및 성별을 확인한 후 다시 시도하세요.';
+
+  @override
+  String get bodyScanErrorSignedIn => '스캔하려면 다시 로그인하세요.';
+
+  @override
+  String get bodyScanErrorUnavailable => '현재 신체 스캔을 사용할 수 없습니다.';
+
+  @override
+  String get bodyScanErrorNetwork =>
+      'Celia에 연결할 수 없습니다. 연결 상태를 확인한 후 다시 시도하세요.';
+
+  @override
+  String get bodyScanErrorServer => '스캔 중 문제가 발생했습니다. 다시 시도하세요.';
+
+  @override
+  String get bodyScanErrorLoadHistory => '이전 스캔을 불러올 수 없습니다.';
+
+  @override
+  String get profileBodyScan => '신체 스캔';
+
+  @override
+  String get homeBodyScan => '신체 스캔';
+
+  @override
+  String get homeBodyScanSubtitle => '사진 두 장으로 체지방 추정';
 }

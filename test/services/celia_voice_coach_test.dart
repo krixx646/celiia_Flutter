@@ -51,14 +51,14 @@ void main() {
       sets: 1,
       reps: 8,
     );
-    final phase = WorkoutPhase(
+    const phase = WorkoutPhase(
       kind: WorkoutPhaseKind.work,
       step: step,
       stepIndex: 0,
       totalSteps: 1,
       setNumber: 1,
       totalSets: 1,
-      duration: const Duration(seconds: 24),
+      duration: Duration(seconds: 24),
       reps: 8,
       secondsPerRep: 3,
     );

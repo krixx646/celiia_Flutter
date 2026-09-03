@@ -1559,4 +1559,278 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get insightsSectionTitle => 'رؤى Celia';
+
+  @override
+  String get bodyScanTitle => 'فحص الجسم';
+
+  @override
+  String get bodyScanContinue => 'متابعة';
+
+  @override
+  String get bodyScanDone => 'تم';
+
+  @override
+  String get bodyScanConsentTitle => 'قبل الفحص';
+
+  @override
+  String get bodyScanConsentBody =>
+      'يقدّر فحص الجسم تكوين جسمك من صورتين. إليك بالضبط ما يحدث لهما.';
+
+  @override
+  String get bodyScanConsentPhotosTitle => 'صورتان تلتقطهما بنفسك';
+
+  @override
+  String get bodyScanConsentPhotosBody =>
+      'إحداهما وأنت مواجه للكاميرا، والأخرى من جانبك الأيمن. ارتدِ ملابس ضيقة نسبيًا حتى يكون محيط جسمك واضحًا.';
+
+  @override
+  String get bodyScanConsentProcessingTitle => 'يحلّلها Bodygram';
+
+  @override
+  String get bodyScanConsentProcessingBody =>
+      'تُرسل صورك إلى مزوّد خدمة الفحص لدينا، Bodygram، لتقدير قياساتك. ولا تُستخدم لأي غرض آخر.';
+
+  @override
+  String get bodyScanConsentStorageTitle => 'لا تُخزّن صورك أبدًا';
+
+  @override
+  String get bodyScanConsentStorageBody =>
+      'لا تحتفظ بها Celia. تُحفظ في حسابك الأرقام الناتجة ونموذجك ثلاثي الأبعاد فقط، ويؤدي حذف حسابك إلى حذفها.';
+
+  @override
+  String get bodyScanConsentAgeTitle => 'يجب أن يكون عمرك 18 عامًا أو أكثر';
+
+  @override
+  String get bodyScanConsentAgeBody =>
+      'فحص الجسم غير متاح لمن هم دون 18 عامًا.';
+
+  @override
+  String get bodyScanConsentAgree => 'أفهم وأوافق على تحليل صوري';
+
+  @override
+  String get bodyScanStatsTitle => 'أكّد بياناتك';
+
+  @override
+  String get bodyScanStatsBody =>
+      'تدخل هذه البيانات مباشرةً في التقدير، لذا سيؤثر الوزن غير المحدّث سلبًا في نتائجك.';
+
+  @override
+  String get bodyScanStatsHeight => 'الطول';
+
+  @override
+  String get bodyScanStatsWeight => 'الوزن';
+
+  @override
+  String get bodyScanStatsAge => 'العمر';
+
+  @override
+  String get bodyScanStatsSex => 'الجنس';
+
+  @override
+  String get bodyScanStatsSexNote =>
+      'نموذج الفحص مبني على مجموعتين مرجعيتين فقط. اختر المجموعة الأقرب إلى جسمك؛ فهذا يؤثر في التقدير، وليس في طريقة تعامل Celia معك.';
+
+  @override
+  String get bodyScanStatsFemale => 'أنثى';
+
+  @override
+  String get bodyScanStatsMale => 'ذكر';
+
+  @override
+  String get bodyScanStatsInvalid =>
+      'أدخل طولًا ووزنًا وعمرًا صالحين. يجب أن يكون عمرك 18 عامًا أو أكثر لإجراء الفحص.';
+
+  @override
+  String get bodyScanCaptureFrontTitle => 'واجه الكاميرا';
+
+  @override
+  String get bodyScanCaptureRightTitle => 'استدر إلى يمينك';
+
+  @override
+  String get bodyScanCaptureHowTo =>
+      'ثبّت هاتفك على بُعد نحو 3 أمتار، وتراجع حتى يظهر جسمك بالكامل داخل الإطار، ثم ابدأ المؤقت.';
+
+  @override
+  String get bodyScanCaptureTips =>
+      'ملابس ضيقة نسبيًا، خلفية بسيطة، إضاءة جيدة ومتساوية، والذراعان مبتعدان قليلًا عن الجانبين.';
+
+  @override
+  String get bodyScanPoseFront => 'الأمام';
+
+  @override
+  String get bodyScanPoseRight => 'الجانب الأيمن';
+
+  @override
+  String get bodyScanStartTimer => 'بدء المؤقت';
+
+  @override
+  String get bodyScanCancelTimer => 'إلغاء المؤقت';
+
+  @override
+  String get bodyScanRetake => 'إعادة الالتقاط';
+
+  @override
+  String get bodyScanNextPose => 'الصورة التالية';
+
+  @override
+  String get bodyScanGetResults => 'عرض نتائجي';
+
+  @override
+  String get bodyScanProcessingTitle => 'جارٍ تحليل الفحص';
+
+  @override
+  String get bodyScanProcessingBody =>
+      'جارٍ إنشاء نموذجك ثلاثي الأبعاد وتقدير قياساتك. قد يستغرق ذلك دقيقة واحدة كحد أقصى.';
+
+  @override
+  String get bodyScanResultTitle => 'فحص جسمك';
+
+  @override
+  String get bodyScanResultSubtitle =>
+      'تقدير مستند إلى صورك. يُفضّل استخدامه لمتابعة التغيّر بمرور الوقت.';
+
+  @override
+  String get bodyScanBodyFat => 'دهون الجسم';
+
+  @override
+  String get bodyScanLeanMass => 'الكتلة الخالية من الدهون';
+
+  @override
+  String get bodyScanFatMass => 'كتلة الدهون';
+
+  @override
+  String get bodyScanWaist => 'الخصر';
+
+  @override
+  String get bodyScanHip => 'الوركان';
+
+  @override
+  String get bodyScanChest => 'الصدر';
+
+  @override
+  String get bodyScanWaistToHip => 'نسبة الخصر إلى الورك';
+
+  @override
+  String bodyScanQuotaRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count فحوصات متبقية لهذه الفترة',
+      one: 'فحص واحد متبقٍ لهذه الفترة',
+      zero: 'لا توجد فحوصات متبقية لهذه الفترة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bodyScanEmptyTitle => 'تعرّف على كيفية تغيّر جسمك';
+
+  @override
+  String get bodyScanEmptyBody =>
+      'تمنحك صورتان تقديرًا لنسبة الدهون في جسمك والكتلة الخالية من الدهون والقياسات الأساسية، بالإضافة إلى نموذج ثلاثي الأبعاد يمكنك مقارنته بمرور الوقت.';
+
+  @override
+  String get bodyScanLatestTitle => 'أحدث فحص';
+
+  @override
+  String get bodyScanHistoryTitle => 'الفحوصات السابقة';
+
+  @override
+  String get bodyScanStartCta => 'بدء فحص الجسم';
+
+  @override
+  String get bodyScanRescanCta => 'إجراء الفحص مرة أخرى';
+
+  @override
+  String get bodyScanRescanHint =>
+      'تتغير مكونات الجسم ببطء. إجراء الفحص مرة واحدة تقريبًا كل شهر يتيح المقارنة الأكثر فائدة.';
+
+  @override
+  String bodyScanDeltaSinceLast(String value) {
+    return 'تغيّر بنسبة $value% منذ آخر فحص';
+  }
+
+  @override
+  String get bodyScanNoComposition => 'لا يوجد تقدير';
+
+  @override
+  String get bodyScanSourcesTitle => 'كيفية احتساب هذه النتائج';
+
+  @override
+  String get bodyScanSourcesBody =>
+      'تُحوَّل صورك إلى مخطط ثلاثي الأبعاد لجسمك، ويتم تقدير دهون الجسم والكتلة الخالية من الدهون من هذا الشكل إلى جانب طولك ووزنك وعمرك وجنسك. تشمل الكتلة الخالية من الدهون العضلات والماء والعظام والأعضاء معًا، وليس البروتين وحده.';
+
+  @override
+  String get bodyScanDisclaimer =>
+      'هذه تقديرات وليست قياسات طبية. تشير الدراسات حول هذه الطريقة إلى خطأ متوسط يبلغ حوالي 3.5% في نسبة دهون الجسم مقارنةً بفحص DXA السريري، كما أن التوافق يكون أضعف عند تتبع التغيّر منه عند إجراء قراءة واحدة. لا يُستخدم للتشخيص. تحدث مع أخصائي رعاية صحية بشأن القرارات المتعلقة بصحتك.';
+
+  @override
+  String get bodyScanErrorCameraPermission =>
+      'تحتاج Celia إلى الوصول إلى الكاميرا لفحص جسمك.';
+
+  @override
+  String get bodyScanErrorNoCamera => 'لا توجد كاميرا متاحة على هذا الجهاز.';
+
+  @override
+  String get bodyScanErrorFraming =>
+      'يجب أن يظهر جسمك بالكامل في الإطار. أبعد الهاتف أكثر وتأكد من ظهور رأسك وقدميك معًا.';
+
+  @override
+  String get bodyScanErrorQuality =>
+      'كانت الصور مظلمة جدًا أو ضبابية جدًا. ابحث عن إضاءة أكثر سطوعًا ومتساوية، واثبت أثناء تشغيل المؤقت.';
+
+  @override
+  String get bodyScanErrorPose =>
+      'لم تكن وضعيتك مناسبة تمامًا. قف مستقيمًا مواجهًا للكاميرا، وأبعد ذراعيك قليلًا عن جانبيك، ثم استدر بالكامل إلى يمينك لالتقاط الصورة الثانية.';
+
+  @override
+  String get bodyScanErrorClothing =>
+      'تخفي الملابس الفضفاضة حدود جسمك. تتيح الملابس الضيقة نسبيًا إجراء فحص صالح.';
+
+  @override
+  String get bodyScanErrorPhotoUnknown =>
+      'تعذّر استخدام هاتين الصورتين. حاول مرة أخرى أمام خلفية بسيطة وفي إضاءة جيدة.';
+
+  @override
+  String get bodyScanErrorPhotosTooLarge =>
+      'كانت هاتان الصورتان كبيرتين جدًا لرفعهما. حاول مرة أخرى.';
+
+  @override
+  String get bodyScanErrorQuota =>
+      'لقد استنفدت فحوصاتك لهذه الفترة. يمكنك إجراء الفحص مرة أخرى بعد إعادة ضبط الحد.';
+
+  @override
+  String get bodyScanErrorAge =>
+      'فحص الجسم متاح فقط للمستخدمين الذين تبلغ أعمارهم 18 عامًا أو أكثر.';
+
+  @override
+  String get bodyScanErrorStats =>
+      'تحقق من طولك ووزنك وعمرك وجنسك، ثم حاول مرة أخرى.';
+
+  @override
+  String get bodyScanErrorSignedIn =>
+      'يرجى تسجيل الدخول مرة أخرى لإجراء الفحص.';
+
+  @override
+  String get bodyScanErrorUnavailable => 'فحص الجسم غير متاح حاليًا.';
+
+  @override
+  String get bodyScanErrorNetwork =>
+      'تعذّر الوصول إلى Celia. تحقق من اتصالك وحاول مرة أخرى.';
+
+  @override
+  String get bodyScanErrorServer =>
+      'حدث خطأ ما أثناء فحصك. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get bodyScanErrorLoadHistory => 'تعذّر تحميل فحوصاتك السابقة.';
+
+  @override
+  String get profileBodyScan => 'فحص الجسم';
+
+  @override
+  String get homeBodyScan => 'فحص الجسم';
+
+  @override
+  String get homeBodyScanSubtitle => 'تقدير نسبة دهون الجسم من صورتين';
 }

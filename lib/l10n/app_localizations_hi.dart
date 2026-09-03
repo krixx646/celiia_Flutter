@@ -1576,4 +1576,282 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get insightsSectionTitle => 'Celia की जानकारियाँ';
+
+  @override
+  String get bodyScanTitle => 'बॉडी स्कैन';
+
+  @override
+  String get bodyScanContinue => 'जारी रखें';
+
+  @override
+  String get bodyScanDone => 'हो गया';
+
+  @override
+  String get bodyScanConsentTitle => 'स्कैन करने से पहले';
+
+  @override
+  String get bodyScanConsentBody =>
+      'बॉडी स्कैन दो फ़ोटो से आपके शरीर की संरचना का अनुमान लगाता है। फ़ोटो के साथ वास्तव में क्या होता है, यह यहाँ बताया गया है।';
+
+  @override
+  String get bodyScanConsentPhotosTitle => 'दो फ़ोटो, आपके द्वारा ली गई';
+
+  @override
+  String get bodyScanConsentPhotosBody =>
+      'एक कैमरे की ओर देखते हुए और दूसरी आपके दाईं ओर से। ऐसे कपड़े पहनें जो शरीर से चिपके हों, ताकि आपकी रूपरेखा स्पष्ट दिखे।';
+
+  @override
+  String get bodyScanConsentProcessingTitle => 'Bodygram द्वारा विश्लेषण';
+
+  @override
+  String get bodyScanConsentProcessingBody =>
+      'आपकी फ़ोटो आपके माप का अनुमान लगाने के लिए हमारे स्कैनिंग प्रदाता, Bodygram, को भेजी जाती हैं। इनका उपयोग किसी अन्य काम के लिए नहीं किया जाता।';
+
+  @override
+  String get bodyScanConsentStorageTitle =>
+      'आपकी फ़ोटो कभी संग्रहीत नहीं की जातीं';
+
+  @override
+  String get bodyScanConsentStorageBody =>
+      'Celia इन्हें अपने पास नहीं रखता। केवल प्राप्त संख्याएँ और आपका 3D मॉडल आपके अकाउंट में सहेजे जाते हैं, और आपका अकाउंट हटाने पर ये भी हट जाते हैं।';
+
+  @override
+  String get bodyScanConsentAgeTitle =>
+      'आपकी उम्र 18 वर्ष या उससे अधिक होनी चाहिए';
+
+  @override
+  String get bodyScanConsentAgeBody =>
+      '18 वर्ष से कम उम्र के लोगों के लिए बॉडी स्कैन उपलब्ध नहीं है।';
+
+  @override
+  String get bodyScanConsentAgree =>
+      'मैं समझता/समझती हूँ और अपनी फ़ोटो का विश्लेषण किए जाने से सहमत हूँ';
+
+  @override
+  String get bodyScanStatsTitle => 'अपनी जानकारी की पुष्टि करें';
+
+  @override
+  String get bodyScanStatsBody =>
+      'इनका उपयोग सीधे अनुमान में होता है, इसलिए पुराना वज़न आपके नतीजों को प्रभावित कर सकता है।';
+
+  @override
+  String get bodyScanStatsHeight => 'लंबाई';
+
+  @override
+  String get bodyScanStatsWeight => 'वज़न';
+
+  @override
+  String get bodyScanStatsAge => 'उम्र';
+
+  @override
+  String get bodyScanStatsSex => 'लिंग';
+
+  @override
+  String get bodyScanStatsSexNote =>
+      'स्कैनिंग मॉडल केवल दो संदर्भ समूहों पर आधारित है। अपने शरीर के अधिक करीब वाला विकल्प चुनें; इसका असर अनुमान पर पड़ता है, इस बात पर नहीं कि Celia आपके साथ कैसा व्यवहार करता है।';
+
+  @override
+  String get bodyScanStatsFemale => 'महिला';
+
+  @override
+  String get bodyScanStatsMale => 'पुरुष';
+
+  @override
+  String get bodyScanStatsInvalid =>
+      'मान्य लंबाई, वज़न और उम्र दर्ज करें। स्कैन करने के लिए आपकी उम्र 18 वर्ष या उससे अधिक होनी चाहिए।';
+
+  @override
+  String get bodyScanCaptureFrontTitle => 'कैमरे की ओर देखें';
+
+  @override
+  String get bodyScanCaptureRightTitle => 'दाईं ओर मुड़ें';
+
+  @override
+  String get bodyScanCaptureHowTo =>
+      'अपने फ़ोन को लगभग 3 मीटर दूर टिकाकर रखें, फिर पीछे हटें जब तक आपका पूरा शरीर रूपरेखा में न आ जाए। इसके बाद टाइमर शुरू करें।';
+
+  @override
+  String get bodyScanCaptureTips =>
+      'शरीर से चिपके कपड़े, सादा बैकग्राउंड, अच्छी और समान रोशनी, हाथ शरीर से थोड़ा दूर।';
+
+  @override
+  String get bodyScanPoseFront => 'सामने';
+
+  @override
+  String get bodyScanPoseRight => 'दाईं ओर';
+
+  @override
+  String get bodyScanStartTimer => 'टाइमर शुरू करें';
+
+  @override
+  String get bodyScanCancelTimer => 'टाइमर रद्द करें';
+
+  @override
+  String get bodyScanRetake => 'दोबारा लें';
+
+  @override
+  String get bodyScanNextPose => 'अगली फ़ोटो';
+
+  @override
+  String get bodyScanGetResults => 'मेरे नतीजे देखें';
+
+  @override
+  String get bodyScanProcessingTitle => 'आपके स्कैन का विश्लेषण हो रहा है';
+
+  @override
+  String get bodyScanProcessingBody =>
+      'आपका 3D मॉडल बनाया जा रहा है और आपके माप का अनुमान लगाया जा रहा है। इसमें लगभग एक मिनट तक लग सकता है।';
+
+  @override
+  String get bodyScanResultTitle => 'आपका बॉडी स्कैन';
+
+  @override
+  String get bodyScanResultSubtitle =>
+      'आपकी फ़ोटो से अनुमानित। समय के साथ रुझान देखने के लिए इसका सबसे अच्छा उपयोग होता है।';
+
+  @override
+  String get bodyScanBodyFat => 'शरीर में वसा';
+
+  @override
+  String get bodyScanLeanMass => 'लीन द्रव्यमान';
+
+  @override
+  String get bodyScanFatMass => 'वसा द्रव्यमान';
+
+  @override
+  String get bodyScanWaist => 'कमर';
+
+  @override
+  String get bodyScanHip => 'कूल्हे';
+
+  @override
+  String get bodyScanChest => 'छाती';
+
+  @override
+  String get bodyScanWaistToHip => 'कमर से कूल्हे तक';
+
+  @override
+  String bodyScanQuotaRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count स्कैन इस अवधि में बाकी',
+      one: 'इस अवधि में 1 स्कैन बाकी',
+      zero: 'इस अवधि में कोई स्कैन बाकी नहीं',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bodyScanEmptyTitle => 'देखें कि आपका शरीर कैसे बदल रहा है';
+
+  @override
+  String get bodyScanEmptyBody =>
+      'दो फ़ोटो आपके शरीर में वसा, लीन द्रव्यमान और प्रमुख मापों का अनुमान देती हैं, साथ ही एक 3D मॉडल भी देती हैं, जिसकी समय के साथ तुलना की जा सकती है।';
+
+  @override
+  String get bodyScanLatestTitle => 'नवीनतम स्कैन';
+
+  @override
+  String get bodyScanHistoryTitle => 'पिछले स्कैन';
+
+  @override
+  String get bodyScanStartCta => 'बॉडी स्कैन शुरू करें';
+
+  @override
+  String get bodyScanRescanCta => 'फिर से स्कैन करें';
+
+  @override
+  String get bodyScanRescanHint =>
+      'शरीर की संरचना धीरे-धीरे बदलती है। लगभग महीने में एक बार स्कैन करने से सबसे उपयोगी तुलना मिलती है।';
+
+  @override
+  String bodyScanDeltaSinceLast(String value) {
+    return 'आपके पिछले स्कैन के बाद $value% बदलाव';
+  }
+
+  @override
+  String get bodyScanNoComposition => 'कोई अनुमान नहीं';
+
+  @override
+  String get bodyScanSourcesTitle => 'यह कैसे निर्धारित किया जाता है';
+
+  @override
+  String get bodyScanSourcesBody =>
+      'आपकी फ़ोटो को आपके शरीर की 3D रूपरेखा में बदला जाता है, और उस आकार के साथ आपकी लंबाई, वज़न, उम्र और लिंग के आधार पर शरीर में वसा और लीन द्रव्यमान का अनुमान लगाया जाता है। लीन द्रव्यमान में मांसपेशियाँ, पानी, हड्डियाँ और अंग सभी शामिल होते हैं, केवल प्रोटीन नहीं।';
+
+  @override
+  String get bodyScanDisclaimer =>
+      'ये अनुमान हैं, चिकित्सीय माप नहीं। इस विधि के अध्ययनों में क्लिनिकल DXA स्कैन की तुलना में शरीर में वसा के लिए लगभग 3.5% की औसत त्रुटि बताई गई है, और एक बार की रीडिंग की तुलना में बदलाव को ट्रैक करने पर समानता कमज़ोर होती है। निदान के लिए नहीं। स्वास्थ्य संबंधी निर्णयों के बारे में किसी स्वास्थ्य पेशेवर से बात करें।';
+
+  @override
+  String get bodyScanErrorCameraPermission =>
+      'आपके शरीर को स्कैन करने के लिए Celia को कैमरा एक्सेस की ज़रूरत है।';
+
+  @override
+  String get bodyScanErrorNoCamera => 'इस डिवाइस पर कोई कैमरा उपलब्ध नहीं है।';
+
+  @override
+  String get bodyScanErrorFraming =>
+      'आपका पूरा शरीर फ़्रेम में होना चाहिए। फ़ोन को और दूर करें और सुनिश्चित करें कि आपका सिर और पैर दोनों दिखाई दे रहे हों।';
+
+  @override
+  String get bodyScanErrorQuality =>
+      'फ़ोटो बहुत धुंधली या बहुत अंधेरी थीं। अधिक उजली, समान रोशनी वाली जगह चुनें और टाइमर चलने के दौरान स्थिर रहें।';
+
+  @override
+  String get bodyScanErrorPose =>
+      'आपकी मुद्रा बिल्कुल सही नहीं थी। कैमरे की ओर सीधे देखकर खड़े हों, बाहों को शरीर से थोड़ा दूर रखें, फिर दूसरी फ़ोटो के लिए पूरी तरह अपनी दाईं ओर मुड़ें।';
+
+  @override
+  String get bodyScanErrorClothing =>
+      'ढीले कपड़े आपकी रूपरेखा छिपा देते हैं। शरीर से सटे कपड़े उपयोगी स्कैन देते हैं।';
+
+  @override
+  String get bodyScanErrorPhotoUnknown =>
+      'इन फ़ोटो का उपयोग नहीं किया जा सका। अच्छी रोशनी में सादे बैकग्राउंड के सामने फिर से कोशिश करें।';
+
+  @override
+  String get bodyScanErrorPhotosTooLarge =>
+      'इन फ़ोटो को अपलोड करने के लिए उनका आकार बहुत बड़ा था। फिर से कोशिश करें।';
+
+  @override
+  String get bodyScanErrorQuota =>
+      'आपने इस अवधि के अपने सभी स्कैन इस्तेमाल कर लिए हैं। इसके रीसेट होने के बाद आप फिर से स्कैन कर सकते हैं।';
+
+  @override
+  String get bodyScanErrorAge =>
+      'बॉडी स्कैन केवल 18 वर्ष और उससे अधिक उम्र के उपयोगकर्ताओं के लिए उपलब्ध है।';
+
+  @override
+  String get bodyScanErrorStats =>
+      'अपनी लंबाई, वज़न, उम्र और लिंग जाँचें, फिर दोबारा कोशिश करें।';
+
+  @override
+  String get bodyScanErrorSignedIn =>
+      'स्कैन करने के लिए कृपया फिर से साइन इन करें।';
+
+  @override
+  String get bodyScanErrorUnavailable => 'बॉडी स्कैन अभी उपलब्ध नहीं है।';
+
+  @override
+  String get bodyScanErrorNetwork =>
+      'Celia से संपर्क नहीं हो सका। अपना कनेक्शन जाँचें और फिर से कोशिश करें।';
+
+  @override
+  String get bodyScanErrorServer =>
+      'आपके स्कैन में कुछ गड़बड़ हो गई। कृपया फिर से कोशिश करें।';
+
+  @override
+  String get bodyScanErrorLoadHistory =>
+      'आपके पिछले स्कैन लोड नहीं किए जा सके।';
+
+  @override
+  String get profileBodyScan => 'बॉडी स्कैन';
+
+  @override
+  String get homeBodyScan => 'बॉडी स्कैन';
+
+  @override
+  String get homeBodyScanSubtitle => 'दो फ़ोटो से शरीर में वसा का अनुमान लगाएँ';
 }

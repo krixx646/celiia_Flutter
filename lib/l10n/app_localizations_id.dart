@@ -1578,4 +1578,282 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get insightsSectionTitle => 'Wawasan Celia';
+
+  @override
+  String get bodyScanTitle => 'Pemindaian tubuh';
+
+  @override
+  String get bodyScanContinue => 'Lanjutkan';
+
+  @override
+  String get bodyScanDone => 'Selesai';
+
+  @override
+  String get bodyScanConsentTitle => 'Sebelum memindai';
+
+  @override
+  String get bodyScanConsentBody =>
+      'Pemindaian tubuh memperkirakan komposisi tubuh Anda dari dua foto. Berikut yang terjadi pada foto tersebut.';
+
+  @override
+  String get bodyScanConsentPhotosTitle => 'Dua foto, diambil oleh Anda';
+
+  @override
+  String get bodyScanConsentPhotosBody =>
+      'Satu menghadap kamera, satu lagi dari sisi kanan Anda. Kenakan pakaian yang pas di badan agar garis tubuh Anda terlihat jelas.';
+
+  @override
+  String get bodyScanConsentProcessingTitle => 'Dianalisis oleh Bodygram';
+
+  @override
+  String get bodyScanConsentProcessingBody =>
+      'Foto Anda dikirim ke penyedia layanan pemindaian kami, Bodygram, untuk memperkirakan ukuran tubuh Anda. Foto tersebut tidak digunakan untuk hal lain.';
+
+  @override
+  String get bodyScanConsentStorageTitle => 'Foto Anda tidak pernah disimpan';
+
+  @override
+  String get bodyScanConsentStorageBody =>
+      'Celia tidak menyimpannya. Hanya angka hasil dan model 3D Anda yang disimpan ke akun, dan menghapus akun akan menghapusnya.';
+
+  @override
+  String get bodyScanConsentAgeTitle =>
+      'Anda harus berusia 18 tahun atau lebih';
+
+  @override
+  String get bodyScanConsentAgeBody =>
+      'Pemindaian tubuh tidak tersedia bagi yang berusia di bawah 18 tahun.';
+
+  @override
+  String get bodyScanConsentAgree =>
+      'Saya memahami dan menyetujui foto saya dianalisis';
+
+  @override
+  String get bodyScanStatsTitle => 'Konfirmasi detail Anda';
+
+  @override
+  String get bodyScanStatsBody =>
+      'Data ini langsung digunakan dalam perkiraan, jadi berat badan yang sudah tidak terbaru akan memengaruhi hasil Anda.';
+
+  @override
+  String get bodyScanStatsHeight => 'Tinggi badan';
+
+  @override
+  String get bodyScanStatsWeight => 'Berat badan';
+
+  @override
+  String get bodyScanStatsAge => 'Usia';
+
+  @override
+  String get bodyScanStatsSex => 'Jenis kelamin';
+
+  @override
+  String get bodyScanStatsSexNote =>
+      'Model pemindaian ini hanya dibuat berdasarkan dua kelompok referensi. Pilih yang paling mendekati tubuh Anda; pilihan ini memengaruhi perkiraan, bukan cara Celia memperlakukan Anda.';
+
+  @override
+  String get bodyScanStatsFemale => 'Perempuan';
+
+  @override
+  String get bodyScanStatsMale => 'Laki-laki';
+
+  @override
+  String get bodyScanStatsInvalid =>
+      'Masukkan tinggi badan, berat badan, dan usia yang valid. Anda harus berusia 18 tahun atau lebih untuk melakukan pemindaian.';
+
+  @override
+  String get bodyScanCaptureFrontTitle => 'Menghadap kamera';
+
+  @override
+  String get bodyScanCaptureRightTitle => 'Berputar ke kanan';
+
+  @override
+  String get bodyScanCaptureHowTo =>
+      'Letakkan ponsel Anda sekitar 3 m dari posisi Anda, mundur hingga seluruh tubuh masuk dalam garis panduan, lalu mulai timer.';
+
+  @override
+  String get bodyScanCaptureTips =>
+      'Kenakan pakaian yang pas di badan, gunakan latar belakang polos dan pencahayaan yang baik serta merata, lalu jauhkan lengan sedikit dari sisi tubuh.';
+
+  @override
+  String get bodyScanPoseFront => 'Depan';
+
+  @override
+  String get bodyScanPoseRight => 'Sisi kanan';
+
+  @override
+  String get bodyScanStartTimer => 'Mulai timer';
+
+  @override
+  String get bodyScanCancelTimer => 'Batalkan timer';
+
+  @override
+  String get bodyScanRetake => 'Ambil ulang';
+
+  @override
+  String get bodyScanNextPose => 'Foto berikutnya';
+
+  @override
+  String get bodyScanGetResults => 'Lihat hasil saya';
+
+  @override
+  String get bodyScanProcessingTitle => 'Menganalisis pemindaian Anda';
+
+  @override
+  String get bodyScanProcessingBody =>
+      'Membuat model 3D dan memperkirakan ukuran tubuh Anda. Proses ini membutuhkan waktu hingga satu menit.';
+
+  @override
+  String get bodyScanResultTitle => 'Pemindaian tubuh Anda';
+
+  @override
+  String get bodyScanResultSubtitle =>
+      'Diperkirakan dari foto Anda. Sebaiknya gunakan untuk mengikuti tren dari waktu ke waktu.';
+
+  @override
+  String get bodyScanBodyFat => 'Lemak tubuh';
+
+  @override
+  String get bodyScanLeanMass => 'Massa tanpa lemak';
+
+  @override
+  String get bodyScanFatMass => 'Massa lemak';
+
+  @override
+  String get bodyScanWaist => 'Pinggang';
+
+  @override
+  String get bodyScanHip => 'Pinggul';
+
+  @override
+  String get bodyScanChest => 'Dada';
+
+  @override
+  String get bodyScanWaistToHip => 'Pinggang ke pinggul';
+
+  @override
+  String bodyScanQuotaRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pemindaian tersisa untuk periode ini',
+      one: 'Tersisa 1 pemindaian untuk periode ini',
+      zero: 'Tidak ada pemindaian tersisa untuk periode ini',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bodyScanEmptyTitle => 'Lihat perubahan tubuh Anda';
+
+  @override
+  String get bodyScanEmptyBody =>
+      'Dua foto memberikan perkiraan lemak tubuh, massa tanpa lemak, dan pengukuran utama tubuh Anda, serta model 3D yang dapat dibandingkan dari waktu ke waktu.';
+
+  @override
+  String get bodyScanLatestTitle => 'Pemindaian terbaru';
+
+  @override
+  String get bodyScanHistoryTitle => 'Pemindaian sebelumnya';
+
+  @override
+  String get bodyScanStartCta => 'Mulai pemindaian tubuh';
+
+  @override
+  String get bodyScanRescanCta => 'Pindai lagi';
+
+  @override
+  String get bodyScanRescanHint =>
+      'Komposisi tubuh berubah secara perlahan. Pemindaian sekitar sebulan sekali memberikan perbandingan yang paling bermakna.';
+
+  @override
+  String bodyScanDeltaSinceLast(String value) {
+    return 'Perubahan $value% sejak pemindaian terakhir';
+  }
+
+  @override
+  String get bodyScanNoComposition => 'Tidak ada perkiraan';
+
+  @override
+  String get bodyScanSourcesTitle => 'Cara penghitungan ini dilakukan';
+
+  @override
+  String get bodyScanSourcesBody =>
+      'Foto Anda diubah menjadi bentuk 3D tubuh, lalu lemak tubuh dan massa tanpa lemak diperkirakan berdasarkan bentuk tersebut serta tinggi, berat, usia, dan jenis kelamin Anda. Massa tanpa lemak mencakup otot, air, tulang, dan organ secara keseluruhan, bukan protein saja.';
+
+  @override
+  String get bodyScanDisclaimer =>
+      'Ini adalah perkiraan, bukan pengukuran medis. Studi tentang metode ini melaporkan kesalahan rata-rata sekitar 3,5% lemak tubuh dibandingkan pemindaian DXA klinis, dan kesesuaiannya lebih rendah untuk melacak perubahan daripada satu hasil pengukuran. Bukan untuk diagnosis. Bicarakan keputusan terkait kesehatan dengan tenaga kesehatan profesional.';
+
+  @override
+  String get bodyScanErrorCameraPermission =>
+      'Celia memerlukan akses kamera untuk memindai tubuh Anda.';
+
+  @override
+  String get bodyScanErrorNoCamera =>
+      'Tidak ada kamera yang tersedia di perangkat ini.';
+
+  @override
+  String get bodyScanErrorFraming =>
+      'Seluruh tubuh Anda harus terlihat dalam bingkai. Jauhkan ponsel dan pastikan kepala serta kaki Anda terlihat.';
+
+  @override
+  String get bodyScanErrorQuality =>
+      'Foto terlalu gelap atau buram. Cari pencahayaan yang lebih terang dan merata, lalu tetap diam saat penghitung waktu berjalan.';
+
+  @override
+  String get bodyScanErrorPose =>
+      'Posisi Anda kurang tepat. Berdirilah tegak menghadap kamera dengan lengan sedikit menjauh dari sisi tubuh, lalu berputar sepenuhnya ke kanan untuk foto kedua.';
+
+  @override
+  String get bodyScanErrorClothing =>
+      'Pakaian longgar menyamarkan bentuk tubuh Anda. Pakaian yang pas memberikan hasil pemindaian yang dapat digunakan.';
+
+  @override
+  String get bodyScanErrorPhotoUnknown =>
+      'Foto tersebut tidak dapat digunakan. Coba lagi dengan latar belakang polos dan pencahayaan yang baik.';
+
+  @override
+  String get bodyScanErrorPhotosTooLarge =>
+      'Foto tersebut terlalu besar untuk diunggah. Coba lagi.';
+
+  @override
+  String get bodyScanErrorQuota =>
+      'Kuota pemindaian Anda untuk periode ini telah habis. Anda dapat memindai lagi setelah kuota diatur ulang.';
+
+  @override
+  String get bodyScanErrorAge =>
+      'Pemindaian tubuh hanya tersedia bagi pengguna berusia 18 tahun ke atas.';
+
+  @override
+  String get bodyScanErrorStats =>
+      'Periksa tinggi, berat, usia, dan jenis kelamin Anda, lalu coba lagi.';
+
+  @override
+  String get bodyScanErrorSignedIn => 'Silakan masuk lagi untuk memindai.';
+
+  @override
+  String get bodyScanErrorUnavailable =>
+      'Pemindaian tubuh sedang tidak tersedia.';
+
+  @override
+  String get bodyScanErrorNetwork =>
+      'Tidak dapat terhubung ke Celia. Periksa koneksi Anda dan coba lagi.';
+
+  @override
+  String get bodyScanErrorServer =>
+      'Terjadi masalah dengan pemindaian Anda. Silakan coba lagi.';
+
+  @override
+  String get bodyScanErrorLoadHistory =>
+      'Tidak dapat memuat pemindaian sebelumnya.';
+
+  @override
+  String get profileBodyScan => 'Pemindaian tubuh';
+
+  @override
+  String get homeBodyScan => 'Pemindaian tubuh';
+
+  @override
+  String get homeBodyScanSubtitle => 'Perkirakan lemak tubuh dari dua foto';
 }

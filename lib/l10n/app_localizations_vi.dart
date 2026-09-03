@@ -1566,4 +1566,281 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get insightsSectionTitle => 'Thông tin chuyên sâu từ Celia';
+
+  @override
+  String get bodyScanTitle => 'Quét cơ thể';
+
+  @override
+  String get bodyScanContinue => 'Tiếp tục';
+
+  @override
+  String get bodyScanDone => 'Xong';
+
+  @override
+  String get bodyScanConsentTitle => 'Trước khi quét';
+
+  @override
+  String get bodyScanConsentBody =>
+      'Quét cơ thể ước tính thành phần cơ thể của bạn từ hai bức ảnh. Đây là chính xác những gì sẽ xảy ra với chúng.';
+
+  @override
+  String get bodyScanConsentPhotosTitle => 'Hai bức ảnh do bạn chụp';
+
+  @override
+  String get bodyScanConsentPhotosBody =>
+      'Một ảnh chính diện với máy ảnh, một ảnh từ bên phải của bạn. Mặc quần áo ôm vừa người để đường nét cơ thể rõ ràng.';
+
+  @override
+  String get bodyScanConsentProcessingTitle => 'Được Bodygram phân tích';
+
+  @override
+  String get bodyScanConsentProcessingBody =>
+      'Ảnh của bạn được gửi đến nhà cung cấp dịch vụ quét Bodygram để ước tính số đo. Chúng không được sử dụng cho mục đích nào khác.';
+
+  @override
+  String get bodyScanConsentStorageTitle =>
+      'Ảnh của bạn không bao giờ được lưu trữ';
+
+  @override
+  String get bodyScanConsentStorageBody =>
+      'Celia không lưu giữ ảnh. Chỉ các con số kết quả và mô hình 3D của bạn được lưu vào tài khoản; khi bạn xóa tài khoản, chúng cũng bị xóa.';
+
+  @override
+  String get bodyScanConsentAgeTitle => 'Bạn phải từ 18 tuổi trở lên';
+
+  @override
+  String get bodyScanConsentAgeBody =>
+      'Tính năng quét cơ thể không dành cho người dưới 18 tuổi.';
+
+  @override
+  String get bodyScanConsentAgree =>
+      'Tôi hiểu và đồng ý cho ảnh của mình được phân tích';
+
+  @override
+  String get bodyScanStatsTitle => 'Xác nhận thông tin của bạn';
+
+  @override
+  String get bodyScanStatsBody =>
+      'Thông tin này được đưa trực tiếp vào kết quả ước tính, vì vậy cân nặng không còn cập nhật sẽ làm sai lệch kết quả.';
+
+  @override
+  String get bodyScanStatsHeight => 'Chiều cao';
+
+  @override
+  String get bodyScanStatsWeight => 'Cân nặng';
+
+  @override
+  String get bodyScanStatsAge => 'Tuổi';
+
+  @override
+  String get bodyScanStatsSex => 'Giới tính';
+
+  @override
+  String get bodyScanStatsSexNote =>
+      'Mô hình quét chỉ được xây dựng dựa trên hai nhóm tham chiếu. Hãy chọn nhóm gần với cơ thể bạn hơn; lựa chọn này ảnh hưởng đến kết quả ước tính, không ảnh hưởng đến cách Celia đối xử với bạn.';
+
+  @override
+  String get bodyScanStatsFemale => 'Nữ';
+
+  @override
+  String get bodyScanStatsMale => 'Nam';
+
+  @override
+  String get bodyScanStatsInvalid =>
+      'Nhập chiều cao, cân nặng và tuổi hợp lệ. Bạn phải từ 18 tuổi trở lên để quét.';
+
+  @override
+  String get bodyScanCaptureFrontTitle => 'Đứng đối diện máy ảnh';
+
+  @override
+  String get bodyScanCaptureRightTitle => 'Xoay sang phải';
+
+  @override
+  String get bodyScanCaptureHowTo =>
+      'Đặt điện thoại cách bạn khoảng 3 m, lùi lại cho đến khi toàn thân nằm vừa trong đường viền, rồi bắt đầu hẹn giờ.';
+
+  @override
+  String get bodyScanCaptureTips =>
+      'Mặc quần áo ôm vừa người, chọn phông nền đơn giản, ánh sáng tốt và đồng đều, hai tay hơi cách cơ thể.';
+
+  @override
+  String get bodyScanPoseFront => 'Chính diện';
+
+  @override
+  String get bodyScanPoseRight => 'Bên phải';
+
+  @override
+  String get bodyScanStartTimer => 'Bắt đầu hẹn giờ';
+
+  @override
+  String get bodyScanCancelTimer => 'Hủy hẹn giờ';
+
+  @override
+  String get bodyScanRetake => 'Chụp lại';
+
+  @override
+  String get bodyScanNextPose => 'Ảnh tiếp theo';
+
+  @override
+  String get bodyScanGetResults => 'Xem kết quả';
+
+  @override
+  String get bodyScanProcessingTitle => 'Đang phân tích kết quả quét';
+
+  @override
+  String get bodyScanProcessingBody =>
+      'Đang tạo mô hình 3D và ước tính số đo của bạn. Quá trình này mất tối đa một phút.';
+
+  @override
+  String get bodyScanResultTitle => 'Kết quả quét cơ thể';
+
+  @override
+  String get bodyScanResultSubtitle =>
+      'Được ước tính từ ảnh của bạn. Tốt nhất nên dùng để theo dõi xu hướng theo thời gian.';
+
+  @override
+  String get bodyScanBodyFat => 'Mỡ cơ thể';
+
+  @override
+  String get bodyScanLeanMass => 'Khối lượng nạc';
+
+  @override
+  String get bodyScanFatMass => 'Khối lượng mỡ';
+
+  @override
+  String get bodyScanWaist => 'Vòng eo';
+
+  @override
+  String get bodyScanHip => 'Vòng hông';
+
+  @override
+  String get bodyScanChest => 'Vòng ngực';
+
+  @override
+  String get bodyScanWaistToHip => 'Eo so với hông';
+
+  @override
+  String bodyScanQuotaRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Còn $count lượt quét trong kỳ này',
+      one: 'Còn 1 lượt quét trong kỳ này',
+      zero: 'Không còn lượt quét nào trong kỳ này',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bodyScanEmptyTitle => 'Xem cơ thể bạn đang thay đổi như thế nào';
+
+  @override
+  String get bodyScanEmptyBody =>
+      'Hai bức ảnh giúp ước tính lượng mỡ cơ thể, khối lượng nạc và các số đo chính, cùng với một mô hình 3D để bạn so sánh theo thời gian.';
+
+  @override
+  String get bodyScanLatestTitle => 'Lần quét mới nhất';
+
+  @override
+  String get bodyScanHistoryTitle => 'Các lần quét trước';
+
+  @override
+  String get bodyScanStartCta => 'Bắt đầu quét cơ thể';
+
+  @override
+  String get bodyScanRescanCta => 'Quét lại';
+
+  @override
+  String get bodyScanRescanHint =>
+      'Thành phần cơ thể thay đổi chậm. Quét khoảng mỗi tháng một lần sẽ cho kết quả so sánh có ý nghĩa nhất.';
+
+  @override
+  String bodyScanDeltaSinceLast(String value) {
+    return 'Thay đổi $value% kể từ lần quét trước';
+  }
+
+  @override
+  String get bodyScanNoComposition => 'Chưa có ước tính';
+
+  @override
+  String get bodyScanSourcesTitle => 'Cách tính kết quả';
+
+  @override
+  String get bodyScanSourcesBody =>
+      'Ảnh của bạn được chuyển thành đường viền 3D của cơ thể, sau đó lượng mỡ cơ thể và khối lượng nạc được ước tính từ hình dạng đó cùng với chiều cao, cân nặng, tuổi và giới tính của bạn. Khối lượng nạc bao gồm tổng thể cơ bắp, nước, xương và các cơ quan, không chỉ riêng protein.';
+
+  @override
+  String get bodyScanDisclaimer =>
+      'Đây là các ước tính, không phải số đo y tế. Các nghiên cứu về phương pháp này cho thấy sai số trung bình khoảng 3,5% lượng mỡ cơ thể so với lần quét DXA lâm sàng, và mức độ tương đồng khi theo dõi thay đổi thấp hơn so với một lần đo riêng lẻ. Không dùng để chẩn đoán. Hãy trao đổi với chuyên gia y tế về các quyết định liên quan đến sức khỏe.';
+
+  @override
+  String get bodyScanErrorCameraPermission =>
+      'Celia cần quyền truy cập camera để quét cơ thể bạn.';
+
+  @override
+  String get bodyScanErrorNoCamera => 'Thiết bị này không có camera.';
+
+  @override
+  String get bodyScanErrorFraming =>
+      'Toàn bộ cơ thể bạn cần nằm trong khung hình. Đưa điện thoại ra xa hơn và đảm bảo cả đầu lẫn bàn chân đều hiện rõ.';
+
+  @override
+  String get bodyScanErrorQuality =>
+      'Ảnh quá tối hoặc quá mờ. Hãy tìm nơi có ánh sáng sáng và đồng đều hơn, đồng thời giữ yên người trong khi bộ hẹn giờ chạy.';
+
+  @override
+  String get bodyScanErrorPose =>
+      'Tư thế của bạn chưa hoàn toàn đúng. Đứng thẳng, hướng mặt về phía camera, hơi dang tay khỏi thân người, sau đó xoay hẳn sang phải để chụp ảnh thứ hai.';
+
+  @override
+  String get bodyScanErrorClothing =>
+      'Quần áo rộng che khuất đường viền cơ thể. Quần áo vừa vặn sẽ cho phép quét được.';
+
+  @override
+  String get bodyScanErrorPhotoUnknown =>
+      'Không thể sử dụng những ảnh đó. Hãy thử lại trước phông nền đơn giản với ánh sáng tốt.';
+
+  @override
+  String get bodyScanErrorPhotosTooLarge =>
+      'Những ảnh đó quá lớn để tải lên. Hãy thử lại.';
+
+  @override
+  String get bodyScanErrorQuota =>
+      'Bạn đã sử dụng hết lượt quét trong kỳ này. Bạn có thể quét lại sau khi hạn mức được đặt lại.';
+
+  @override
+  String get bodyScanErrorAge =>
+      'Tính năng quét cơ thể chỉ dành cho người dùng từ 18 tuổi trở lên.';
+
+  @override
+  String get bodyScanErrorStats =>
+      'Kiểm tra chiều cao, cân nặng, tuổi và giới tính của bạn, rồi thử lại.';
+
+  @override
+  String get bodyScanErrorSignedIn => 'Vui lòng đăng nhập lại để quét.';
+
+  @override
+  String get bodyScanErrorUnavailable =>
+      'Tính năng quét cơ thể hiện không khả dụng.';
+
+  @override
+  String get bodyScanErrorNetwork =>
+      'Không thể kết nối với Celia. Hãy kiểm tra kết nối và thử lại.';
+
+  @override
+  String get bodyScanErrorServer =>
+      'Đã xảy ra lỗi với lần quét của bạn. Vui lòng thử lại.';
+
+  @override
+  String get bodyScanErrorLoadHistory =>
+      'Không thể tải các lần quét trước của bạn.';
+
+  @override
+  String get profileBodyScan => 'Quét cơ thể';
+
+  @override
+  String get homeBodyScan => 'Quét cơ thể';
+
+  @override
+  String get homeBodyScanSubtitle => 'Ước tính lượng mỡ cơ thể từ hai bức ảnh';
 }

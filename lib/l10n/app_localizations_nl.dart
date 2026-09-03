@@ -1585,4 +1585,283 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get insightsSectionTitle => 'Inzichten van Celia';
+
+  @override
+  String get bodyScanTitle => 'Lichaamsscan';
+
+  @override
+  String get bodyScanContinue => 'Doorgaan';
+
+  @override
+  String get bodyScanDone => 'Gereed';
+
+  @override
+  String get bodyScanConsentTitle => 'Voordat je scant';
+
+  @override
+  String get bodyScanConsentBody =>
+      'Een lichaamsscan schat je lichaamssamenstelling op basis van twee foto\'s. Dit is precies wat ermee gebeurt.';
+
+  @override
+  String get bodyScanConsentPhotosTitle => 'Twee foto\'s, door jou gemaakt';
+
+  @override
+  String get bodyScanConsentPhotosBody =>
+      'Eén van voren en één vanaf je rechterzijde. Draag nauwsluitende kleding, zodat je lichaamscontour duidelijk zichtbaar is.';
+
+  @override
+  String get bodyScanConsentProcessingTitle => 'Geanalyseerd door Bodygram';
+
+  @override
+  String get bodyScanConsentProcessingBody =>
+      'Je foto\'s worden naar onze scanprovider, Bodygram, gestuurd om je lichaamsmaten te schatten. Ze worden nergens anders voor gebruikt.';
+
+  @override
+  String get bodyScanConsentStorageTitle =>
+      'Je foto\'s worden nooit opgeslagen';
+
+  @override
+  String get bodyScanConsentStorageBody =>
+      'Celia bewaart ze niet. Alleen de resulterende cijfers en je 3D-model worden in je account opgeslagen. Als je je account verwijdert, worden deze ook verwijderd.';
+
+  @override
+  String get bodyScanConsentAgeTitle => 'Je moet 18 jaar of ouder zijn';
+
+  @override
+  String get bodyScanConsentAgeBody =>
+      'Lichaamsscans zijn niet beschikbaar voor personen jonger dan 18 jaar.';
+
+  @override
+  String get bodyScanConsentAgree =>
+      'Ik begrijp het en ga ermee akkoord dat mijn foto\'s worden geanalyseerd';
+
+  @override
+  String get bodyScanStatsTitle => 'Bevestig je gegevens';
+
+  @override
+  String get bodyScanStatsBody =>
+      'Deze gegevens worden rechtstreeks gebruikt voor de schatting. Een verouderd gewicht maakt je resultaten daarom minder nauwkeurig.';
+
+  @override
+  String get bodyScanStatsHeight => 'Lengte';
+
+  @override
+  String get bodyScanStatsWeight => 'Gewicht';
+
+  @override
+  String get bodyScanStatsAge => 'Leeftijd';
+
+  @override
+  String get bodyScanStatsSex => 'Geslacht';
+
+  @override
+  String get bodyScanStatsSexNote =>
+      'Het scanmodel is gebaseerd op slechts twee referentiegroepen. Kies de groep die het meest overeenkomt met jouw lichaam. Dit heeft invloed op de schatting, niet op de manier waarop Celia met je omgaat.';
+
+  @override
+  String get bodyScanStatsFemale => 'Vrouw';
+
+  @override
+  String get bodyScanStatsMale => 'Man';
+
+  @override
+  String get bodyScanStatsInvalid =>
+      'Voer een geldige lengte, een geldig gewicht en een geldige leeftijd in. Je moet 18 jaar of ouder zijn om te scannen.';
+
+  @override
+  String get bodyScanCaptureFrontTitle => 'Kijk naar de camera';
+
+  @override
+  String get bodyScanCaptureRightTitle => 'Draai naar rechts';
+
+  @override
+  String get bodyScanCaptureHowTo =>
+      'Zet je telefoon op ongeveer 3 m afstand, doe een stap achteruit totdat je hele lichaam binnen de contour past en start daarna de timer.';
+
+  @override
+  String get bodyScanCaptureTips =>
+      'Nauwsluitende kleding, een rustige achtergrond, gelijkmatig goed licht en je armen iets van je lichaam af.';
+
+  @override
+  String get bodyScanPoseFront => 'Voorkant';
+
+  @override
+  String get bodyScanPoseRight => 'Rechterzijde';
+
+  @override
+  String get bodyScanStartTimer => 'Timer starten';
+
+  @override
+  String get bodyScanCancelTimer => 'Timer annuleren';
+
+  @override
+  String get bodyScanRetake => 'Opnieuw maken';
+
+  @override
+  String get bodyScanNextPose => 'Volgende foto';
+
+  @override
+  String get bodyScanGetResults => 'Mijn resultaten bekijken';
+
+  @override
+  String get bodyScanProcessingTitle => 'Je scan analyseren';
+
+  @override
+  String get bodyScanProcessingBody =>
+      'We bouwen je 3D-model en schatten je lichaamsmaten. Dit duurt maximaal een minuut.';
+
+  @override
+  String get bodyScanResultTitle => 'Je lichaamsscan';
+
+  @override
+  String get bodyScanResultSubtitle =>
+      'Geschat op basis van je foto\'s. Het resultaat is vooral geschikt om een trend over tijd te volgen.';
+
+  @override
+  String get bodyScanBodyFat => 'Lichaamsvet';
+
+  @override
+  String get bodyScanLeanMass => 'Vetvrije massa';
+
+  @override
+  String get bodyScanFatMass => 'Vetmassa';
+
+  @override
+  String get bodyScanWaist => 'Taille';
+
+  @override
+  String get bodyScanHip => 'Heupen';
+
+  @override
+  String get bodyScanChest => 'Borstkas';
+
+  @override
+  String get bodyScanWaistToHip => 'Taille-heupverhouding';
+
+  @override
+  String bodyScanQuotaRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Nog $count scans in deze periode',
+      one: 'Nog 1 scan in deze periode',
+      zero: 'Geen scans meer in deze periode',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bodyScanEmptyTitle => 'Zie hoe je lichaam verandert';
+
+  @override
+  String get bodyScanEmptyBody =>
+      'Met twee foto\'s krijg je een schatting van je lichaamsvet, vetvrije massa en belangrijke afmetingen, plus een 3D-model dat je in de loop van de tijd kunt vergelijken.';
+
+  @override
+  String get bodyScanLatestTitle => 'Laatste scan';
+
+  @override
+  String get bodyScanHistoryTitle => 'Vorige scans';
+
+  @override
+  String get bodyScanStartCta => 'Start een bodyscan';
+
+  @override
+  String get bodyScanRescanCta => 'Opnieuw scannen';
+
+  @override
+  String get bodyScanRescanHint =>
+      'Je lichaamssamenstelling verandert langzaam. Ongeveer één keer per maand scannen geeft de meest betekenisvolle vergelijking.';
+
+  @override
+  String bodyScanDeltaSinceLast(String value) {
+    return '$value% verandering sinds je laatste scan';
+  }
+
+  @override
+  String get bodyScanNoComposition => 'Geen schatting';
+
+  @override
+  String get bodyScanSourcesTitle => 'Zo wordt dit berekend';
+
+  @override
+  String get bodyScanSourcesBody =>
+      'Je foto\'s worden omgezet in een 3D-omtrek van je lichaam. Op basis van die vorm, samen met je lengte, gewicht, leeftijd en geslacht, wordt je lichaamsvet en vetvrije massa geschat. Vetvrije massa omvat spieren, water, botten en organen samen, niet alleen eiwitten.';
+
+  @override
+  String get bodyScanDisclaimer =>
+      'Dit zijn schattingen, geen medische metingen. Onderzoeken naar deze methode melden een gemiddelde fout van ongeveer 3,5% lichaamsvet ten opzichte van een klinische DXA-scan. De overeenstemming is minder sterk voor het volgen van veranderingen dan voor één meting. Niet bedoeld voor diagnose. Praat met een zorgprofessional over beslissingen rondom je gezondheid.';
+
+  @override
+  String get bodyScanErrorCameraPermission =>
+      'Celia heeft toegang tot de camera nodig om je lichaam te scannen.';
+
+  @override
+  String get bodyScanErrorNoCamera =>
+      'Er is geen camera beschikbaar op dit apparaat.';
+
+  @override
+  String get bodyScanErrorFraming =>
+      'Je hele lichaam moet in beeld zijn. Houd de telefoon verder weg en zorg dat zowel je hoofd als je voeten zichtbaar zijn.';
+
+  @override
+  String get bodyScanErrorQuality =>
+      'De foto\'s waren te donker of te wazig. Zoek helderder, gelijkmatig licht en blijf stil terwijl de timer loopt.';
+
+  @override
+  String get bodyScanErrorPose =>
+      'Je houding was niet helemaal goed. Ga rechtop met je gezicht naar de camera staan, houd je armen iets van je lichaam en draai daarna volledig naar rechts voor de tweede foto.';
+
+  @override
+  String get bodyScanErrorClothing =>
+      'Losse kleding verbergt je omtrek. Nauwsluitende kleding zorgt voor een bruikbare scan.';
+
+  @override
+  String get bodyScanErrorPhotoUnknown =>
+      'Deze foto\'s konden niet worden gebruikt. Probeer het opnieuw tegen een rustige achtergrond bij goed licht.';
+
+  @override
+  String get bodyScanErrorPhotosTooLarge =>
+      'Deze foto\'s waren te groot om te uploaden. Probeer het opnieuw.';
+
+  @override
+  String get bodyScanErrorQuota =>
+      'Je hebt al je scans voor deze periode gebruikt. Je kunt opnieuw scannen zodra de periode wordt vernieuwd.';
+
+  @override
+  String get bodyScanErrorAge =>
+      'Bodyscans zijn alleen beschikbaar voor gebruikers van 18 jaar en ouder.';
+
+  @override
+  String get bodyScanErrorStats =>
+      'Controleer je lengte, gewicht, leeftijd en geslacht en probeer het opnieuw.';
+
+  @override
+  String get bodyScanErrorSignedIn => 'Log opnieuw in om te scannen.';
+
+  @override
+  String get bodyScanErrorUnavailable =>
+      'Bodyscans zijn momenteel niet beschikbaar.';
+
+  @override
+  String get bodyScanErrorNetwork =>
+      'Celia kon niet worden bereikt. Controleer je verbinding en probeer het opnieuw.';
+
+  @override
+  String get bodyScanErrorServer =>
+      'Er is iets misgegaan met je scan. Probeer het opnieuw.';
+
+  @override
+  String get bodyScanErrorLoadHistory =>
+      'Je vorige scans konden niet worden geladen.';
+
+  @override
+  String get profileBodyScan => 'Bodyscan';
+
+  @override
+  String get homeBodyScan => 'Bodyscan';
+
+  @override
+  String get homeBodyScanSubtitle =>
+      'Schat je lichaamsvet op basis van twee foto\'s';
 }

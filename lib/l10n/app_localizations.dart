@@ -2763,6 +2763,474 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Celia Insights'**
   String get insightsSectionTitle;
+
+  /// No description provided for @bodyScanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Body scan'**
+  String get bodyScanTitle;
+
+  /// No description provided for @bodyScanContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get bodyScanContinue;
+
+  /// No description provided for @bodyScanDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get bodyScanDone;
+
+  /// No description provided for @bodyScanConsentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Before you scan'**
+  String get bodyScanConsentTitle;
+
+  /// No description provided for @bodyScanConsentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A body scan estimates your body composition from two photos. Here is exactly what happens to them.'**
+  String get bodyScanConsentBody;
+
+  /// No description provided for @bodyScanConsentPhotosTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Two photos, taken by you'**
+  String get bodyScanConsentPhotosTitle;
+
+  /// No description provided for @bodyScanConsentPhotosBody.
+  ///
+  /// In en, this message translates to:
+  /// **'One facing the camera, one from your right side. Wear close-fitting clothing so your outline is clear.'**
+  String get bodyScanConsentPhotosBody;
+
+  /// No description provided for @bodyScanConsentProcessingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysed by Bodygram'**
+  String get bodyScanConsentProcessingTitle;
+
+  /// No description provided for @bodyScanConsentProcessingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your photos are sent to our scanning provider, Bodygram, to estimate your measurements. They are used for nothing else.'**
+  String get bodyScanConsentProcessingBody;
+
+  /// No description provided for @bodyScanConsentStorageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your photos are never stored'**
+  String get bodyScanConsentStorageTitle;
+
+  /// No description provided for @bodyScanConsentStorageBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Celia does not keep them. Only the resulting numbers and your 3D model are saved to your account, and deleting your account deletes them.'**
+  String get bodyScanConsentStorageBody;
+
+  /// No description provided for @bodyScanConsentAgeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You must be 18 or over'**
+  String get bodyScanConsentAgeTitle;
+
+  /// No description provided for @bodyScanConsentAgeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Body scanning is not available to under-18s.'**
+  String get bodyScanConsentAgeBody;
+
+  /// No description provided for @bodyScanConsentAgree.
+  ///
+  /// In en, this message translates to:
+  /// **'I understand and agree to my photos being analysed'**
+  String get bodyScanConsentAgree;
+
+  /// No description provided for @bodyScanStatsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your details'**
+  String get bodyScanStatsTitle;
+
+  /// No description provided for @bodyScanStatsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'These feed directly into the estimate, so an out-of-date weight will skew your results.'**
+  String get bodyScanStatsBody;
+
+  /// No description provided for @bodyScanStatsHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get bodyScanStatsHeight;
+
+  /// No description provided for @bodyScanStatsWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get bodyScanStatsWeight;
+
+  /// No description provided for @bodyScanStatsAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get bodyScanStatsAge;
+
+  /// No description provided for @bodyScanStatsSex.
+  ///
+  /// In en, this message translates to:
+  /// **'Sex'**
+  String get bodyScanStatsSex;
+
+  /// No description provided for @bodyScanStatsSexNote.
+  ///
+  /// In en, this message translates to:
+  /// **'The scanning model is built on two reference groups only. Choose the one closer to your body; it affects the estimate, not how Celia treats you.'**
+  String get bodyScanStatsSexNote;
+
+  /// No description provided for @bodyScanStatsFemale.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get bodyScanStatsFemale;
+
+  /// No description provided for @bodyScanStatsMale.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get bodyScanStatsMale;
+
+  /// No description provided for @bodyScanStatsInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid height, weight and age. You must be 18 or over to scan.'**
+  String get bodyScanStatsInvalid;
+
+  /// No description provided for @bodyScanCaptureFrontTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Face the camera'**
+  String get bodyScanCaptureFrontTitle;
+
+  /// No description provided for @bodyScanCaptureRightTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn to your right'**
+  String get bodyScanCaptureRightTitle;
+
+  /// No description provided for @bodyScanCaptureHowTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Prop your phone up about 3 m away, step back until your whole body fits the outline, then start the timer.'**
+  String get bodyScanCaptureHowTo;
+
+  /// No description provided for @bodyScanCaptureTips.
+  ///
+  /// In en, this message translates to:
+  /// **'Close-fitting clothes, plain background, good even light, arms slightly away from your sides.'**
+  String get bodyScanCaptureTips;
+
+  /// No description provided for @bodyScanPoseFront.
+  ///
+  /// In en, this message translates to:
+  /// **'Front'**
+  String get bodyScanPoseFront;
+
+  /// No description provided for @bodyScanPoseRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Right side'**
+  String get bodyScanPoseRight;
+
+  /// No description provided for @bodyScanStartTimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Start timer'**
+  String get bodyScanStartTimer;
+
+  /// No description provided for @bodyScanCancelTimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel timer'**
+  String get bodyScanCancelTimer;
+
+  /// No description provided for @bodyScanRetake.
+  ///
+  /// In en, this message translates to:
+  /// **'Retake'**
+  String get bodyScanRetake;
+
+  /// No description provided for @bodyScanNextPose.
+  ///
+  /// In en, this message translates to:
+  /// **'Next photo'**
+  String get bodyScanNextPose;
+
+  /// No description provided for @bodyScanGetResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Get my results'**
+  String get bodyScanGetResults;
+
+  /// No description provided for @bodyScanProcessingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysing your scan'**
+  String get bodyScanProcessingTitle;
+
+  /// No description provided for @bodyScanProcessingBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Building your 3D model and estimating your measurements. This takes up to a minute.'**
+  String get bodyScanProcessingBody;
+
+  /// No description provided for @bodyScanResultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your body scan'**
+  String get bodyScanResultTitle;
+
+  /// No description provided for @bodyScanResultSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated from your photos. Best used to follow a trend over time.'**
+  String get bodyScanResultSubtitle;
+
+  /// No description provided for @bodyScanBodyFat.
+  ///
+  /// In en, this message translates to:
+  /// **'Body fat'**
+  String get bodyScanBodyFat;
+
+  /// No description provided for @bodyScanLeanMass.
+  ///
+  /// In en, this message translates to:
+  /// **'Lean mass'**
+  String get bodyScanLeanMass;
+
+  /// No description provided for @bodyScanFatMass.
+  ///
+  /// In en, this message translates to:
+  /// **'Fat mass'**
+  String get bodyScanFatMass;
+
+  /// No description provided for @bodyScanWaist.
+  ///
+  /// In en, this message translates to:
+  /// **'Waist'**
+  String get bodyScanWaist;
+
+  /// No description provided for @bodyScanHip.
+  ///
+  /// In en, this message translates to:
+  /// **'Hips'**
+  String get bodyScanHip;
+
+  /// No description provided for @bodyScanChest.
+  ///
+  /// In en, this message translates to:
+  /// **'Chest'**
+  String get bodyScanChest;
+
+  /// No description provided for @bodyScanWaistToHip.
+  ///
+  /// In en, this message translates to:
+  /// **'Waist to hip'**
+  String get bodyScanWaistToHip;
+
+  /// No description provided for @bodyScanQuotaRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No scans left this period} =1{1 scan left this period} other{{count} scans left this period}}'**
+  String bodyScanQuotaRemaining(int count);
+
+  /// No description provided for @bodyScanEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'See how your body is changing'**
+  String get bodyScanEmptyTitle;
+
+  /// No description provided for @bodyScanEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Two photos give you an estimate of your body fat, lean mass and key measurements, plus a 3D model you can compare over time.'**
+  String get bodyScanEmptyBody;
+
+  /// No description provided for @bodyScanLatestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest scan'**
+  String get bodyScanLatestTitle;
+
+  /// No description provided for @bodyScanHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous scans'**
+  String get bodyScanHistoryTitle;
+
+  /// No description provided for @bodyScanStartCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Start a body scan'**
+  String get bodyScanStartCta;
+
+  /// No description provided for @bodyScanRescanCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan again'**
+  String get bodyScanRescanCta;
+
+  /// No description provided for @bodyScanRescanHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Body composition changes slowly. Scanning about once a month gives the most meaningful comparison.'**
+  String get bodyScanRescanHint;
+
+  /// No description provided for @bodyScanDeltaSinceLast.
+  ///
+  /// In en, this message translates to:
+  /// **'{value}% change since your last scan'**
+  String bodyScanDeltaSinceLast(String value);
+
+  /// No description provided for @bodyScanNoComposition.
+  ///
+  /// In en, this message translates to:
+  /// **'No estimate'**
+  String get bodyScanNoComposition;
+
+  /// No description provided for @bodyScanSourcesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How this is worked out'**
+  String get bodyScanSourcesTitle;
+
+  /// No description provided for @bodyScanSourcesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your photos are turned into a 3D outline of your body, and body fat and lean mass are estimated from that shape together with your height, weight, age and sex. Lean mass covers muscle, water, bone and organs together, not protein on its own.'**
+  String get bodyScanSourcesBody;
+
+  /// No description provided for @bodyScanDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'These are estimates, not medical measurements. Studies of this method report an average error of about 3.5% body fat against a clinical DXA scan, and agreement is weaker for tracking change than for a single reading. Not for diagnosis. Talk to a healthcare professional about health decisions.'**
+  String get bodyScanDisclaimer;
+
+  /// No description provided for @bodyScanErrorCameraPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Celia needs camera access to scan your body.'**
+  String get bodyScanErrorCameraPermission;
+
+  /// No description provided for @bodyScanErrorNoCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'No camera is available on this device.'**
+  String get bodyScanErrorNoCamera;
+
+  /// No description provided for @bodyScanErrorFraming.
+  ///
+  /// In en, this message translates to:
+  /// **'Your whole body needs to be in the frame. Move the phone further away and make sure your head and feet are both visible.'**
+  String get bodyScanErrorFraming;
+
+  /// No description provided for @bodyScanErrorQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'The photos were too dark or too blurry. Find brighter, even lighting and keep still while the timer runs.'**
+  String get bodyScanErrorQuality;
+
+  /// No description provided for @bodyScanErrorPose.
+  ///
+  /// In en, this message translates to:
+  /// **'Your pose was not quite right. Stand upright facing the camera, arms slightly away from your sides, then turn fully to your right for the second photo.'**
+  String get bodyScanErrorPose;
+
+  /// No description provided for @bodyScanErrorClothing.
+  ///
+  /// In en, this message translates to:
+  /// **'Loose clothing hides your outline. Close-fitting clothes give a usable scan.'**
+  String get bodyScanErrorClothing;
+
+  /// No description provided for @bodyScanErrorPhotoUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Those photos could not be used. Try again against a plain background in good light.'**
+  String get bodyScanErrorPhotoUnknown;
+
+  /// No description provided for @bodyScanErrorPhotosTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Those photos were too large to upload. Try again.'**
+  String get bodyScanErrorPhotosTooLarge;
+
+  /// No description provided for @bodyScanErrorQuota.
+  ///
+  /// In en, this message translates to:
+  /// **'You have used your scans for this period. You can scan again once it resets.'**
+  String get bodyScanErrorQuota;
+
+  /// No description provided for @bodyScanErrorAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Body scanning is only available to users aged 18 and over.'**
+  String get bodyScanErrorAge;
+
+  /// No description provided for @bodyScanErrorStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your height, weight, age and sex, then try again.'**
+  String get bodyScanErrorStats;
+
+  /// No description provided for @bodyScanErrorSignedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Please sign in again to scan.'**
+  String get bodyScanErrorSignedIn;
+
+  /// No description provided for @bodyScanErrorUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Body scanning is not available right now.'**
+  String get bodyScanErrorUnavailable;
+
+  /// No description provided for @bodyScanErrorNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach Celia. Check your connection and try again.'**
+  String get bodyScanErrorNetwork;
+
+  /// No description provided for @bodyScanErrorServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong with your scan. Please try again.'**
+  String get bodyScanErrorServer;
+
+  /// No description provided for @bodyScanErrorLoadHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load your previous scans.'**
+  String get bodyScanErrorLoadHistory;
+
+  /// No description provided for @profileBodyScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Body scan'**
+  String get profileBodyScan;
+
+  /// No description provided for @homeBodyScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Body scan'**
+  String get homeBodyScan;
+
+  /// No description provided for @homeBodyScanSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimate body fat from two photos'**
+  String get homeBodyScanSubtitle;
 }
 
 class _AppLocalizationsDelegate

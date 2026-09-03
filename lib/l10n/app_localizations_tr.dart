@@ -1576,4 +1576,282 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get insightsSectionTitle => 'Celia İçgörüleri';
+
+  @override
+  String get bodyScanTitle => 'Vücut taraması';
+
+  @override
+  String get bodyScanContinue => 'Devam';
+
+  @override
+  String get bodyScanDone => 'Bitti';
+
+  @override
+  String get bodyScanConsentTitle => 'Taramadan önce';
+
+  @override
+  String get bodyScanConsentBody =>
+      'Vücut taraması, iki fotoğraftan vücut kompozisyonunuzu tahmin eder. Fotoğraflara tam olarak ne olduğunu burada görebilirsiniz.';
+
+  @override
+  String get bodyScanConsentPhotosTitle => 'Sizin çektiğiniz iki fotoğraf';
+
+  @override
+  String get bodyScanConsentPhotosBody =>
+      'Biri kameraya dönük, diğeri sağ tarafınızdan. Vücut hatlarınızın net görünmesi için üzerinize oturan kıyafetler giyin.';
+
+  @override
+  String get bodyScanConsentProcessingTitle =>
+      'Bodygram tarafından analiz edilir';
+
+  @override
+  String get bodyScanConsentProcessingBody =>
+      'Fotoğraflarınız, ölçümlerinizi tahmin etmesi için tarama sağlayıcımız Bodygram\'a gönderilir. Başka hiçbir amaçla kullanılmaz.';
+
+  @override
+  String get bodyScanConsentStorageTitle => 'Fotoğraflarınız asla saklanmaz';
+
+  @override
+  String get bodyScanConsentStorageBody =>
+      'Celia fotoğraflarınızı saklamaz. Yalnızca elde edilen sayılar ve 3D modeliniz hesabınıza kaydedilir; hesabınızı silmeniz bunları da siler.';
+
+  @override
+  String get bodyScanConsentAgeTitle =>
+      '18 yaşında veya daha büyük olmalısınız';
+
+  @override
+  String get bodyScanConsentAgeBody =>
+      'Vücut taraması 18 yaşından küçüklere sunulmaz.';
+
+  @override
+  String get bodyScanConsentAgree =>
+      'Fotoğraflarımın analiz edilmesini anlıyor ve kabul ediyorum';
+
+  @override
+  String get bodyScanStatsTitle => 'Bilgilerinizi doğrulayın';
+
+  @override
+  String get bodyScanStatsBody =>
+      'Bunlar doğrudan tahminin bir parçası olarak kullanılır; bu nedenle güncel olmayan bir kilo sonuçlarınızı çarpıtır.';
+
+  @override
+  String get bodyScanStatsHeight => 'Boy';
+
+  @override
+  String get bodyScanStatsWeight => 'Kilo';
+
+  @override
+  String get bodyScanStatsAge => 'Yaş';
+
+  @override
+  String get bodyScanStatsSex => 'Cinsiyet';
+
+  @override
+  String get bodyScanStatsSexNote =>
+      'Tarama modeli yalnızca iki referans grubuna dayanır. Vücudunuza daha yakın olanı seçin; bu, tahmini etkiler, Celia\'nın size yaklaşımını değil.';
+
+  @override
+  String get bodyScanStatsFemale => 'Kadın';
+
+  @override
+  String get bodyScanStatsMale => 'Erkek';
+
+  @override
+  String get bodyScanStatsInvalid =>
+      'Geçerli bir boy, kilo ve yaş girin. Taramayı kullanmak için 18 yaşında veya daha büyük olmalısınız.';
+
+  @override
+  String get bodyScanCaptureFrontTitle => 'Kameraya dönün';
+
+  @override
+  String get bodyScanCaptureRightTitle => 'Sağınıza dönün';
+
+  @override
+  String get bodyScanCaptureHowTo =>
+      'Telefonunuzu yaklaşık 3 m uzağa yerleştirin, tüm vücudunuz hatlara sığana kadar geriye çekilin ve ardından zamanlayıcıyı başlatın.';
+
+  @override
+  String get bodyScanCaptureTips =>
+      'Üzerinize oturan kıyafetler, sade bir arka plan, iyi ve eşit aydınlatma, kollar yanlardan hafifçe açık.';
+
+  @override
+  String get bodyScanPoseFront => 'Ön';
+
+  @override
+  String get bodyScanPoseRight => 'Sağ taraf';
+
+  @override
+  String get bodyScanStartTimer => 'Zamanlayıcıyı başlat';
+
+  @override
+  String get bodyScanCancelTimer => 'Zamanlayıcıyı iptal et';
+
+  @override
+  String get bodyScanRetake => 'Yeniden çek';
+
+  @override
+  String get bodyScanNextPose => 'Sonraki fotoğraf';
+
+  @override
+  String get bodyScanGetResults => 'Sonuçlarımı al';
+
+  @override
+  String get bodyScanProcessingTitle => 'Taramınız analiz ediliyor';
+
+  @override
+  String get bodyScanProcessingBody =>
+      '3D modeliniz oluşturuluyor ve ölçümleriniz tahmin ediliyor. Bu işlem bir dakikaya kadar sürebilir.';
+
+  @override
+  String get bodyScanResultTitle => 'Vücut taramanız';
+
+  @override
+  String get bodyScanResultSubtitle =>
+      'Fotoğraflarınızdan tahmin edilmiştir. Zaman içindeki değişimi takip etmek için en iyi şekilde kullanılır.';
+
+  @override
+  String get bodyScanBodyFat => 'Vücut yağı';
+
+  @override
+  String get bodyScanLeanMass => 'Yağsız kütle';
+
+  @override
+  String get bodyScanFatMass => 'Yağ kütlesi';
+
+  @override
+  String get bodyScanWaist => 'Bel';
+
+  @override
+  String get bodyScanHip => 'Kalça';
+
+  @override
+  String get bodyScanChest => 'Göğüs';
+
+  @override
+  String get bodyScanWaistToHip => 'Bel-kalça';
+
+  @override
+  String bodyScanQuotaRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tarama hakkınız kaldı',
+      one: 'Bu dönem için 1 tarama hakkınız kaldı',
+      zero: 'Bu dönem için tarama hakkınız kalmadı',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bodyScanEmptyTitle => 'Vücudunuzun nasıl değiştiğini görün';
+
+  @override
+  String get bodyScanEmptyBody =>
+      'İki fotoğraf, vücut yağınız, yağsız kütleniz ve temel ölçümleriniz için bir tahmin ile zaman içinde karşılaştırabileceğiniz bir 3D model sağlar.';
+
+  @override
+  String get bodyScanLatestTitle => 'Son tarama';
+
+  @override
+  String get bodyScanHistoryTitle => 'Önceki taramalar';
+
+  @override
+  String get bodyScanStartCta => 'Vücut taraması başlat';
+
+  @override
+  String get bodyScanRescanCta => 'Tekrar tara';
+
+  @override
+  String get bodyScanRescanHint =>
+      'Vücut kompozisyonu yavaş değişir. Ayda yaklaşık bir kez tarama yapmak en anlamlı karşılaştırmayı sağlar.';
+
+  @override
+  String bodyScanDeltaSinceLast(String value) {
+    return 'Son taramanızdan bu yana %$value değişim';
+  }
+
+  @override
+  String get bodyScanNoComposition => 'Tahmin yok';
+
+  @override
+  String get bodyScanSourcesTitle => 'Bu nasıl hesaplanıyor';
+
+  @override
+  String get bodyScanSourcesBody =>
+      'Fotoğraflarınız vücudunuzun 3D hatlarına dönüştürülür ve vücut yağı ile yağsız kütle; bu şekil, boyunuz, kilonuz, yaşınız ve cinsiyetiniz birlikte değerlendirilerek tahmin edilir. Yağsız kütle; kas, su, kemik ve organları birlikte kapsar, yalnızca proteini değil.';
+
+  @override
+  String get bodyScanDisclaimer =>
+      'Bunlar tıbbi ölçümler değil, tahminlerdir. Bu yöntemle ilgili çalışmalar, klinik bir DXA taramasına kıyasla vücut yağında yaklaşık %3,5\'lik ortalama hata bildirmektedir; değişimi takip etmedeki uyum, tek bir ölçümdeki uyumdan daha zayıftır. Tanı amacıyla kullanılmamalıdır. Sağlıkla ilgili kararlarınız için bir sağlık uzmanına danışın.';
+
+  @override
+  String get bodyScanErrorCameraPermission =>
+      'Celia\'nın vücudunuzu taramak için kamera erişimine ihtiyacı var.';
+
+  @override
+  String get bodyScanErrorNoCamera => 'Bu cihazda kullanılabilir kamera yok.';
+
+  @override
+  String get bodyScanErrorFraming =>
+      'Vücudunuzun tamamı kadrajda olmalı. Telefonu biraz daha uzaklaştırın ve başınızla ayaklarınızın ikisinin de göründüğünden emin olun.';
+
+  @override
+  String get bodyScanErrorQuality =>
+      'Fotoğraflar çok karanlık veya bulanıktı. Daha aydınlık ve dengeli bir ışık bulun; zamanlayıcı çalışırken hareketsiz durun.';
+
+  @override
+  String get bodyScanErrorPose =>
+      'Pozunuz tam olarak doğru değildi. Kameraya dönük, dik durun ve kollarınızı yanlarınızdan biraz uzaklaştırın; ardından ikinci fotoğraf için tamamen sağınıza dönün.';
+
+  @override
+  String get bodyScanErrorClothing =>
+      'Bol kıyafetler vücut hatlarınızı gizler. Vücuda oturan kıyafetler kullanılabilir bir tarama sağlar.';
+
+  @override
+  String get bodyScanErrorPhotoUnknown =>
+      'Bu fotoğraflar kullanılamadı. İyi aydınlatılmış, sade bir arka planın önünde tekrar deneyin.';
+
+  @override
+  String get bodyScanErrorPhotosTooLarge =>
+      'Bu fotoğraflar yüklenemeyecek kadar büyüktü. Tekrar deneyin.';
+
+  @override
+  String get bodyScanErrorQuota =>
+      'Bu dönem için tarama haklarınızı kullandınız. Sıfırlandığında tekrar tarama yapabilirsiniz.';
+
+  @override
+  String get bodyScanErrorAge =>
+      'Vücut taraması yalnızca 18 yaş ve üzeri kullanıcılar tarafından kullanılabilir.';
+
+  @override
+  String get bodyScanErrorStats =>
+      'Boyunuzu, kilonuzu, yaşınızı ve cinsiyetinizi kontrol edip tekrar deneyin.';
+
+  @override
+  String get bodyScanErrorSignedIn =>
+      'Tarama yapmak için lütfen tekrar giriş yapın.';
+
+  @override
+  String get bodyScanErrorUnavailable =>
+      'Vücut taraması şu anda kullanılamıyor.';
+
+  @override
+  String get bodyScanErrorNetwork =>
+      'Celia\'ya ulaşılamadı. Bağlantınızı kontrol edip tekrar deneyin.';
+
+  @override
+  String get bodyScanErrorServer =>
+      'Taramanız sırasında bir sorun oluştu. Lütfen tekrar deneyin.';
+
+  @override
+  String get bodyScanErrorLoadHistory => 'Önceki taramalarınız yüklenemedi.';
+
+  @override
+  String get profileBodyScan => 'Vücut taraması';
+
+  @override
+  String get homeBodyScan => 'Vücut taraması';
+
+  @override
+  String get homeBodyScanSubtitle => 'İki fotoğraftan vücut yağını tahmin edin';
 }

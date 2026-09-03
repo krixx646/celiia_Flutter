@@ -1584,4 +1584,283 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get insightsSectionTitle => 'Советы Celia';
+
+  @override
+  String get bodyScanTitle => 'Сканирование тела';
+
+  @override
+  String get bodyScanContinue => 'Продолжить';
+
+  @override
+  String get bodyScanDone => 'Готово';
+
+  @override
+  String get bodyScanConsentTitle => 'Перед сканированием';
+
+  @override
+  String get bodyScanConsentBody =>
+      'Сканирование тела оценивает состав вашего тела по двум фотографиям. Вот что именно с ними происходит.';
+
+  @override
+  String get bodyScanConsentPhotosTitle => 'Две фотографии, сделанные вами';
+
+  @override
+  String get bodyScanConsentPhotosBody =>
+      'На одной вы стоите лицом к камере, на другой — правым боком. Наденьте облегающую одежду, чтобы контуры тела были хорошо видны.';
+
+  @override
+  String get bodyScanConsentProcessingTitle => 'Анализ выполняет Bodygram';
+
+  @override
+  String get bodyScanConsentProcessingBody =>
+      'Ваши фотографии отправляются нашему провайдеру сканирования Bodygram для оценки параметров тела. Они не используются ни для чего другого.';
+
+  @override
+  String get bodyScanConsentStorageTitle =>
+      'Ваши фотографии никогда не сохраняются';
+
+  @override
+  String get bodyScanConsentStorageBody =>
+      'Celia не хранит их. В вашем аккаунте сохраняются только полученные числовые показатели и 3D-модель, а при удалении аккаунта они удаляются.';
+
+  @override
+  String get bodyScanConsentAgeTitle => 'Вам должно быть не менее 18 лет';
+
+  @override
+  String get bodyScanConsentAgeBody =>
+      'Сканирование тела недоступно лицам младше 18 лет.';
+
+  @override
+  String get bodyScanConsentAgree =>
+      'Я понимаю и соглашаюсь на анализ моих фотографий';
+
+  @override
+  String get bodyScanStatsTitle => 'Подтвердите свои данные';
+
+  @override
+  String get bodyScanStatsBody =>
+      'Эти данные напрямую влияют на оценку, поэтому неактуальный вес исказит результаты.';
+
+  @override
+  String get bodyScanStatsHeight => 'Рост';
+
+  @override
+  String get bodyScanStatsWeight => 'Вес';
+
+  @override
+  String get bodyScanStatsAge => 'Возраст';
+
+  @override
+  String get bodyScanStatsSex => 'Пол';
+
+  @override
+  String get bodyScanStatsSexNote =>
+      'Модель сканирования создана только на основе двух референсных групп. Выберите ту, которая ближе к вашему телосложению; это влияет на оценку, но не на отношение Celia к вам.';
+
+  @override
+  String get bodyScanStatsFemale => 'Женский';
+
+  @override
+  String get bodyScanStatsMale => 'Мужской';
+
+  @override
+  String get bodyScanStatsInvalid =>
+      'Введите корректные рост, вес и возраст. Для сканирования вам должно быть не менее 18 лет.';
+
+  @override
+  String get bodyScanCaptureFrontTitle => 'Встаньте лицом к камере';
+
+  @override
+  String get bodyScanCaptureRightTitle => 'Повернитесь правым боком';
+
+  @override
+  String get bodyScanCaptureHowTo =>
+      'Установите телефон примерно в 3 м от себя, отойдите так, чтобы всё тело поместилось в контур, затем запустите таймер.';
+
+  @override
+  String get bodyScanCaptureTips =>
+      'Облегающая одежда, однотонный фон, хорошее равномерное освещение, руки слегка отведены от тела.';
+
+  @override
+  String get bodyScanPoseFront => 'Спереди';
+
+  @override
+  String get bodyScanPoseRight => 'Правый бок';
+
+  @override
+  String get bodyScanStartTimer => 'Запустить таймер';
+
+  @override
+  String get bodyScanCancelTimer => 'Отменить таймер';
+
+  @override
+  String get bodyScanRetake => 'Сделать заново';
+
+  @override
+  String get bodyScanNextPose => 'Следующая фотография';
+
+  @override
+  String get bodyScanGetResults => 'Получить результаты';
+
+  @override
+  String get bodyScanProcessingTitle => 'Анализируем ваше сканирование';
+
+  @override
+  String get bodyScanProcessingBody =>
+      'Создаём 3D-модель и оцениваем параметры вашего тела. Это займёт до минуты.';
+
+  @override
+  String get bodyScanResultTitle => 'Сканирование вашего тела';
+
+  @override
+  String get bodyScanResultSubtitle =>
+      'Оценка по вашим фотографиям. Лучше всего использовать для отслеживания динамики во времени.';
+
+  @override
+  String get bodyScanBodyFat => 'Жировая масса';
+
+  @override
+  String get bodyScanLeanMass => 'Безжировая масса';
+
+  @override
+  String get bodyScanFatMass => 'Жировая масса';
+
+  @override
+  String get bodyScanWaist => 'Талия';
+
+  @override
+  String get bodyScanHip => 'Бёдра';
+
+  @override
+  String get bodyScanChest => 'Грудь';
+
+  @override
+  String get bodyScanWaistToHip => 'Соотношение талии и бёдер';
+
+  @override
+  String bodyScanQuotaRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count сканирований осталось на этот период',
+      one: 'Осталось 1 сканирование на этот период',
+      zero: 'Не осталось сканирований на этот период',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bodyScanEmptyTitle => 'Следите за изменениями тела';
+
+  @override
+  String get bodyScanEmptyBody =>
+      'Две фотографии дают оценку жировой и безжировой массы тела, а также основных измерений и 3D-модель, которую можно сравнивать с течением времени.';
+
+  @override
+  String get bodyScanLatestTitle => 'Последнее сканирование';
+
+  @override
+  String get bodyScanHistoryTitle => 'Предыдущие сканирования';
+
+  @override
+  String get bodyScanStartCta => 'Начать сканирование тела';
+
+  @override
+  String get bodyScanRescanCta => 'Сканировать снова';
+
+  @override
+  String get bodyScanRescanHint =>
+      'Состав тела меняется медленно. Сканирование примерно раз в месяц позволяет получить наиболее информативное сравнение.';
+
+  @override
+  String bodyScanDeltaSinceLast(String value) {
+    return 'Изменение на $value% с момента последнего сканирования';
+  }
+
+  @override
+  String get bodyScanNoComposition => 'Нет оценки';
+
+  @override
+  String get bodyScanSourcesTitle => 'Как это рассчитывается';
+
+  @override
+  String get bodyScanSourcesBody =>
+      'Ваши фотографии превращаются в 3D-контур тела, а жировая и безжировая масса оцениваются по этой форме с учётом роста, веса, возраста и пола. Безжировая масса включает мышцы, воду, кости и органы вместе, а не только белок.';
+
+  @override
+  String get bodyScanDisclaimer =>
+      'Это оценки, а не медицинские измерения. Согласно исследованиям этого метода, средняя погрешность по сравнению с клиническим сканированием DXA составляет около 3,5% жировой массы тела, а согласованность при отслеживании изменений ниже, чем при одном измерении. Не предназначено для диагностики. Обсуждайте решения, связанные со здоровьем, с медицинским специалистом.';
+
+  @override
+  String get bodyScanErrorCameraPermission =>
+      'Celia нужен доступ к камере, чтобы сканировать ваше тело.';
+
+  @override
+  String get bodyScanErrorNoCamera =>
+      'На этом устройстве нет доступной камеры.';
+
+  @override
+  String get bodyScanErrorFraming =>
+      'В кадре должно быть видно всё тело. Отодвиньте телефон подальше и убедитесь, что видны голова и ступни.';
+
+  @override
+  String get bodyScanErrorQuality =>
+      'Фотографии получились слишком тёмными или размытыми. Найдите более яркое равномерное освещение и не двигайтесь, пока идёт отсчёт таймера.';
+
+  @override
+  String get bodyScanErrorPose =>
+      'Поза была выбрана не совсем правильно. Встаньте прямо лицом к камере, слегка отведите руки от тела, затем полностью повернитесь направо для второго фото.';
+
+  @override
+  String get bodyScanErrorClothing =>
+      'Свободная одежда скрывает контуры тела. Обтягивающая одежда позволяет получить пригодное для использования сканирование.';
+
+  @override
+  String get bodyScanErrorPhotoUnknown =>
+      'Эти фотографии не удалось использовать. Попробуйте снова на однотонном фоне при хорошем освещении.';
+
+  @override
+  String get bodyScanErrorPhotosTooLarge =>
+      'Эти фотографии слишком велики для загрузки. Попробуйте снова.';
+
+  @override
+  String get bodyScanErrorQuota =>
+      'Вы использовали все сканирования на этот период. Вы сможете сканировать снова после сброса лимита.';
+
+  @override
+  String get bodyScanErrorAge =>
+      'Сканирование тела доступно только пользователям от 18 лет.';
+
+  @override
+  String get bodyScanErrorStats =>
+      'Проверьте рост, вес, возраст и пол, затем попробуйте снова.';
+
+  @override
+  String get bodyScanErrorSignedIn =>
+      'Войдите снова, чтобы выполнить сканирование.';
+
+  @override
+  String get bodyScanErrorUnavailable => 'Сканирование тела сейчас недоступно.';
+
+  @override
+  String get bodyScanErrorNetwork =>
+      'Не удалось связаться с Celia. Проверьте подключение и попробуйте снова.';
+
+  @override
+  String get bodyScanErrorServer =>
+      'При сканировании что-то пошло не так. Попробуйте снова.';
+
+  @override
+  String get bodyScanErrorLoadHistory =>
+      'Не удалось загрузить предыдущие сканирования.';
+
+  @override
+  String get profileBodyScan => 'Сканирование тела';
+
+  @override
+  String get homeBodyScan => 'Сканирование тела';
+
+  @override
+  String get homeBodyScanSubtitle =>
+      'Оценка жировой массы тела по двум фотографиям';
 }

@@ -71,7 +71,7 @@
     </array>
     <!-- iOS privacy usage descriptions required by App Store -->
     <key>NSCameraUsageDescription</key>
-    <string>Celia uses the camera so you can take a food photo to analyze calories and upload it in chat.</string>
+    <string>Celia uses the camera so you can photograph a meal to analyze its calories, take body scan photos to estimate your body composition, and share photos in chat. Body scan photos are analyzed and never stored.</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Celia needs photo library access so you can choose an existing meal image to upload for calorie analysis.</string>
     <key>NSPhotoLibraryAddUsageDescription</key>

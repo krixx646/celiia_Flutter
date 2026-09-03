@@ -11,6 +11,7 @@ import '../../config/env.dart';
 import '../../providers/avatar_mode_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../utils/progress.dart';
+import '../body_scan/body_scan_screen.dart';
 import '../debug/vrm_avatar_test_screen.dart';
 import '../tools/nutrition_screen.dart';
 import 'edit_profile_screen.dart';
@@ -416,6 +417,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Navigator.of(
               context,
             ).push(MaterialPageRoute(builder: (_) => const NutritionScreen()));
+          },
+        ),
+        const SizedBox(height: 8),
+        _buildMenuItem(
+          theme: theme,
+          icon: Icons.accessibility_new,
+          title: l10n.profileBodyScan,
+          onTap: () {
+            Navigator.of(
+              context,
+            ).push(MaterialPageRoute(builder: (_) => const BodyScanScreen()));
           },
         ),
         const SizedBox(height: 8),

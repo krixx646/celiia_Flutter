@@ -14,6 +14,7 @@ import '../../utils/responsive.dart';
 import '../../utils/routine_text.dart';
 import '../../widgets/daily_progress_card.dart';
 import '../../widgets/generate_routine_sheet.dart';
+import '../body_scan/body_scan_screen.dart';
 import '../routines/routine_detail_screen.dart';
 import '../routines/workout_launcher.dart';
 import '../tools/calorie_scanner_screen.dart';
@@ -793,6 +794,18 @@ class _HomeScreenState extends State<HomeScreen> {
           subtitle: l10n.homeScanMealSubtitle,
           onTap: () => Navigator.of(context, rootNavigator: true).push(
             MaterialPageRoute(builder: (_) => const CalorieScannerScreen()),
+          ),
+        ),
+        const SizedBox(height: 16),
+        _buildBentoItem(
+          theme: theme,
+          icon: Icons.accessibility_new,
+          iconColor: const Color(0xFFB794FF),
+          iconBg: const Color(0xFFB794FF).withValues(alpha: 0.14),
+          title: l10n.homeBodyScan,
+          subtitle: l10n.homeBodyScanSubtitle,
+          onTap: () => Navigator.of(context, rootNavigator: true).push(
+            MaterialPageRoute(builder: (_) => const BodyScanScreen()),
           ),
         ),
         const SizedBox(height: 16),

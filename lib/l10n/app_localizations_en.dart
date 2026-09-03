@@ -1569,4 +1569,279 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get insightsSectionTitle => 'Celia Insights';
+
+  @override
+  String get bodyScanTitle => 'Body scan';
+
+  @override
+  String get bodyScanContinue => 'Continue';
+
+  @override
+  String get bodyScanDone => 'Done';
+
+  @override
+  String get bodyScanConsentTitle => 'Before you scan';
+
+  @override
+  String get bodyScanConsentBody =>
+      'A body scan estimates your body composition from two photos. Here is exactly what happens to them.';
+
+  @override
+  String get bodyScanConsentPhotosTitle => 'Two photos, taken by you';
+
+  @override
+  String get bodyScanConsentPhotosBody =>
+      'One facing the camera, one from your right side. Wear close-fitting clothing so your outline is clear.';
+
+  @override
+  String get bodyScanConsentProcessingTitle => 'Analysed by Bodygram';
+
+  @override
+  String get bodyScanConsentProcessingBody =>
+      'Your photos are sent to our scanning provider, Bodygram, to estimate your measurements. They are used for nothing else.';
+
+  @override
+  String get bodyScanConsentStorageTitle => 'Your photos are never stored';
+
+  @override
+  String get bodyScanConsentStorageBody =>
+      'Celia does not keep them. Only the resulting numbers and your 3D model are saved to your account, and deleting your account deletes them.';
+
+  @override
+  String get bodyScanConsentAgeTitle => 'You must be 18 or over';
+
+  @override
+  String get bodyScanConsentAgeBody =>
+      'Body scanning is not available to under-18s.';
+
+  @override
+  String get bodyScanConsentAgree =>
+      'I understand and agree to my photos being analysed';
+
+  @override
+  String get bodyScanStatsTitle => 'Confirm your details';
+
+  @override
+  String get bodyScanStatsBody =>
+      'These feed directly into the estimate, so an out-of-date weight will skew your results.';
+
+  @override
+  String get bodyScanStatsHeight => 'Height';
+
+  @override
+  String get bodyScanStatsWeight => 'Weight';
+
+  @override
+  String get bodyScanStatsAge => 'Age';
+
+  @override
+  String get bodyScanStatsSex => 'Sex';
+
+  @override
+  String get bodyScanStatsSexNote =>
+      'The scanning model is built on two reference groups only. Choose the one closer to your body; it affects the estimate, not how Celia treats you.';
+
+  @override
+  String get bodyScanStatsFemale => 'Female';
+
+  @override
+  String get bodyScanStatsMale => 'Male';
+
+  @override
+  String get bodyScanStatsInvalid =>
+      'Enter a valid height, weight and age. You must be 18 or over to scan.';
+
+  @override
+  String get bodyScanCaptureFrontTitle => 'Face the camera';
+
+  @override
+  String get bodyScanCaptureRightTitle => 'Turn to your right';
+
+  @override
+  String get bodyScanCaptureHowTo =>
+      'Prop your phone up about 3 m away, step back until your whole body fits the outline, then start the timer.';
+
+  @override
+  String get bodyScanCaptureTips =>
+      'Close-fitting clothes, plain background, good even light, arms slightly away from your sides.';
+
+  @override
+  String get bodyScanPoseFront => 'Front';
+
+  @override
+  String get bodyScanPoseRight => 'Right side';
+
+  @override
+  String get bodyScanStartTimer => 'Start timer';
+
+  @override
+  String get bodyScanCancelTimer => 'Cancel timer';
+
+  @override
+  String get bodyScanRetake => 'Retake';
+
+  @override
+  String get bodyScanNextPose => 'Next photo';
+
+  @override
+  String get bodyScanGetResults => 'Get my results';
+
+  @override
+  String get bodyScanProcessingTitle => 'Analysing your scan';
+
+  @override
+  String get bodyScanProcessingBody =>
+      'Building your 3D model and estimating your measurements. This takes up to a minute.';
+
+  @override
+  String get bodyScanResultTitle => 'Your body scan';
+
+  @override
+  String get bodyScanResultSubtitle =>
+      'Estimated from your photos. Best used to follow a trend over time.';
+
+  @override
+  String get bodyScanBodyFat => 'Body fat';
+
+  @override
+  String get bodyScanLeanMass => 'Lean mass';
+
+  @override
+  String get bodyScanFatMass => 'Fat mass';
+
+  @override
+  String get bodyScanWaist => 'Waist';
+
+  @override
+  String get bodyScanHip => 'Hips';
+
+  @override
+  String get bodyScanChest => 'Chest';
+
+  @override
+  String get bodyScanWaistToHip => 'Waist to hip';
+
+  @override
+  String bodyScanQuotaRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count scans left this period',
+      one: '1 scan left this period',
+      zero: 'No scans left this period',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bodyScanEmptyTitle => 'See how your body is changing';
+
+  @override
+  String get bodyScanEmptyBody =>
+      'Two photos give you an estimate of your body fat, lean mass and key measurements, plus a 3D model you can compare over time.';
+
+  @override
+  String get bodyScanLatestTitle => 'Latest scan';
+
+  @override
+  String get bodyScanHistoryTitle => 'Previous scans';
+
+  @override
+  String get bodyScanStartCta => 'Start a body scan';
+
+  @override
+  String get bodyScanRescanCta => 'Scan again';
+
+  @override
+  String get bodyScanRescanHint =>
+      'Body composition changes slowly. Scanning about once a month gives the most meaningful comparison.';
+
+  @override
+  String bodyScanDeltaSinceLast(String value) {
+    return '$value% change since your last scan';
+  }
+
+  @override
+  String get bodyScanNoComposition => 'No estimate';
+
+  @override
+  String get bodyScanSourcesTitle => 'How this is worked out';
+
+  @override
+  String get bodyScanSourcesBody =>
+      'Your photos are turned into a 3D outline of your body, and body fat and lean mass are estimated from that shape together with your height, weight, age and sex. Lean mass covers muscle, water, bone and organs together, not protein on its own.';
+
+  @override
+  String get bodyScanDisclaimer =>
+      'These are estimates, not medical measurements. Studies of this method report an average error of about 3.5% body fat against a clinical DXA scan, and agreement is weaker for tracking change than for a single reading. Not for diagnosis. Talk to a healthcare professional about health decisions.';
+
+  @override
+  String get bodyScanErrorCameraPermission =>
+      'Celia needs camera access to scan your body.';
+
+  @override
+  String get bodyScanErrorNoCamera => 'No camera is available on this device.';
+
+  @override
+  String get bodyScanErrorFraming =>
+      'Your whole body needs to be in the frame. Move the phone further away and make sure your head and feet are both visible.';
+
+  @override
+  String get bodyScanErrorQuality =>
+      'The photos were too dark or too blurry. Find brighter, even lighting and keep still while the timer runs.';
+
+  @override
+  String get bodyScanErrorPose =>
+      'Your pose was not quite right. Stand upright facing the camera, arms slightly away from your sides, then turn fully to your right for the second photo.';
+
+  @override
+  String get bodyScanErrorClothing =>
+      'Loose clothing hides your outline. Close-fitting clothes give a usable scan.';
+
+  @override
+  String get bodyScanErrorPhotoUnknown =>
+      'Those photos could not be used. Try again against a plain background in good light.';
+
+  @override
+  String get bodyScanErrorPhotosTooLarge =>
+      'Those photos were too large to upload. Try again.';
+
+  @override
+  String get bodyScanErrorQuota =>
+      'You have used your scans for this period. You can scan again once it resets.';
+
+  @override
+  String get bodyScanErrorAge =>
+      'Body scanning is only available to users aged 18 and over.';
+
+  @override
+  String get bodyScanErrorStats =>
+      'Check your height, weight, age and sex, then try again.';
+
+  @override
+  String get bodyScanErrorSignedIn => 'Please sign in again to scan.';
+
+  @override
+  String get bodyScanErrorUnavailable =>
+      'Body scanning is not available right now.';
+
+  @override
+  String get bodyScanErrorNetwork =>
+      'Could not reach Celia. Check your connection and try again.';
+
+  @override
+  String get bodyScanErrorServer =>
+      'Something went wrong with your scan. Please try again.';
+
+  @override
+  String get bodyScanErrorLoadHistory => 'Could not load your previous scans.';
+
+  @override
+  String get profileBodyScan => 'Body scan';
+
+  @override
+  String get homeBodyScan => 'Body scan';
+
+  @override
+  String get homeBodyScanSubtitle => 'Estimate body fat from two photos';
 }

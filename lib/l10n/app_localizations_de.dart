@@ -1594,4 +1594,284 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get insightsSectionTitle => 'Celia-Einblicke';
+
+  @override
+  String get bodyScanTitle => 'Körperscan';
+
+  @override
+  String get bodyScanContinue => 'Weiter';
+
+  @override
+  String get bodyScanDone => 'Fertig';
+
+  @override
+  String get bodyScanConsentTitle => 'Bevor du scannst';
+
+  @override
+  String get bodyScanConsentBody =>
+      'Ein Körperscan schätzt deine Körperzusammensetzung anhand von zwei Fotos. Hier erfährst du genau, was damit passiert.';
+
+  @override
+  String get bodyScanConsentPhotosTitle => 'Zwei Fotos, von dir aufgenommen';
+
+  @override
+  String get bodyScanConsentPhotosBody =>
+      'Eines mit Blick zur Kamera, eines von deiner rechten Seite. Trage eng anliegende Kleidung, damit deine Körperkontur deutlich erkennbar ist.';
+
+  @override
+  String get bodyScanConsentProcessingTitle => 'Von Bodygram analysiert';
+
+  @override
+  String get bodyScanConsentProcessingBody =>
+      'Deine Fotos werden an unseren Scan-Anbieter Bodygram gesendet, um deine Körpermaße zu schätzen. Sie werden für nichts anderes verwendet.';
+
+  @override
+  String get bodyScanConsentStorageTitle =>
+      'Deine Fotos werden niemals gespeichert';
+
+  @override
+  String get bodyScanConsentStorageBody =>
+      'Celia bewahrt sie nicht auf. Nur die daraus resultierenden Zahlen und dein 3D-Modell werden in deinem Konto gespeichert. Wenn du dein Konto löschst, werden auch diese gelöscht.';
+
+  @override
+  String get bodyScanConsentAgeTitle => 'Du musst mindestens 18 Jahre alt sein';
+
+  @override
+  String get bodyScanConsentAgeBody =>
+      'Körperscans sind für unter 18-Jährige nicht verfügbar.';
+
+  @override
+  String get bodyScanConsentAgree =>
+      'Ich verstehe und stimme zu, dass meine Fotos analysiert werden';
+
+  @override
+  String get bodyScanStatsTitle => 'Bestätige deine Angaben';
+
+  @override
+  String get bodyScanStatsBody =>
+      'Diese fließen direkt in die Schätzung ein. Ein veraltetes Gewicht verfälscht daher deine Ergebnisse.';
+
+  @override
+  String get bodyScanStatsHeight => 'Größe';
+
+  @override
+  String get bodyScanStatsWeight => 'Gewicht';
+
+  @override
+  String get bodyScanStatsAge => 'Alter';
+
+  @override
+  String get bodyScanStatsSex => 'Geschlecht';
+
+  @override
+  String get bodyScanStatsSexNote =>
+      'Das Scanmodell basiert ausschließlich auf zwei Referenzgruppen. Wähle die Gruppe, die deinem Körper näherkommt. Dies beeinflusst die Schätzung, nicht die Art, wie Celia dich behandelt.';
+
+  @override
+  String get bodyScanStatsFemale => 'Weiblich';
+
+  @override
+  String get bodyScanStatsMale => 'Männlich';
+
+  @override
+  String get bodyScanStatsInvalid =>
+      'Gib eine gültige Größe, ein gültiges Gewicht und Alter ein. Du musst mindestens 18 Jahre alt sein, um einen Scan durchzuführen.';
+
+  @override
+  String get bodyScanCaptureFrontTitle => 'Blicke zur Kamera';
+
+  @override
+  String get bodyScanCaptureRightTitle => 'Drehe dich nach rechts';
+
+  @override
+  String get bodyScanCaptureHowTo =>
+      'Stelle dein Handy etwa 3 m entfernt auf. Gehe zurück, bis dein ganzer Körper in die Umrisslinie passt, und starte dann den Timer.';
+
+  @override
+  String get bodyScanCaptureTips =>
+      'Eng anliegende Kleidung, ein schlichter Hintergrund, gutes gleichmäßiges Licht, Arme leicht vom Körper abgewinkelt.';
+
+  @override
+  String get bodyScanPoseFront => 'Vorderseite';
+
+  @override
+  String get bodyScanPoseRight => 'Rechte Seite';
+
+  @override
+  String get bodyScanStartTimer => 'Timer starten';
+
+  @override
+  String get bodyScanCancelTimer => 'Timer abbrechen';
+
+  @override
+  String get bodyScanRetake => 'Erneut aufnehmen';
+
+  @override
+  String get bodyScanNextPose => 'Nächstes Foto';
+
+  @override
+  String get bodyScanGetResults => 'Meine Ergebnisse anzeigen';
+
+  @override
+  String get bodyScanProcessingTitle => 'Dein Scan wird analysiert';
+
+  @override
+  String get bodyScanProcessingBody =>
+      'Dein 3D-Modell wird erstellt und deine Körpermaße werden geschätzt. Das dauert bis zu einer Minute.';
+
+  @override
+  String get bodyScanResultTitle => 'Dein Körperscan';
+
+  @override
+  String get bodyScanResultSubtitle =>
+      'Anhand deiner Fotos geschätzt. Am besten geeignet, um eine Entwicklung über die Zeit zu verfolgen.';
+
+  @override
+  String get bodyScanBodyFat => 'Körperfett';
+
+  @override
+  String get bodyScanLeanMass => 'Magermasse';
+
+  @override
+  String get bodyScanFatMass => 'Fettmasse';
+
+  @override
+  String get bodyScanWaist => 'Taille';
+
+  @override
+  String get bodyScanHip => 'Hüfte';
+
+  @override
+  String get bodyScanChest => 'Brust';
+
+  @override
+  String get bodyScanWaistToHip => 'Taille-zu-Hüfte';
+
+  @override
+  String bodyScanQuotaRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Scans in diesem Zeitraum übrig',
+      one: 'Noch 1 Scan in diesem Zeitraum übrig',
+      zero: 'Keine Scans in diesem Zeitraum übrig',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bodyScanEmptyTitle => 'Sieh, wie sich dein Körper verändert';
+
+  @override
+  String get bodyScanEmptyBody =>
+      'Zwei Fotos liefern eine Schätzung deines Körperfettanteils, deiner Magermasse und wichtiger Maße sowie ein 3D-Modell, das du im Laufe der Zeit vergleichen kannst.';
+
+  @override
+  String get bodyScanLatestTitle => 'Letzter Scan';
+
+  @override
+  String get bodyScanHistoryTitle => 'Frühere Scans';
+
+  @override
+  String get bodyScanStartCta => 'Körperscan starten';
+
+  @override
+  String get bodyScanRescanCta => 'Erneut scannen';
+
+  @override
+  String get bodyScanRescanHint =>
+      'Die Körperzusammensetzung verändert sich langsam. Ein Scan etwa einmal im Monat ermöglicht den aussagekräftigsten Vergleich.';
+
+  @override
+  String bodyScanDeltaSinceLast(String value) {
+    return '$value% Veränderung seit deinem letzten Scan';
+  }
+
+  @override
+  String get bodyScanNoComposition => 'Keine Schätzung';
+
+  @override
+  String get bodyScanSourcesTitle => 'So wird dies berechnet';
+
+  @override
+  String get bodyScanSourcesBody =>
+      'Deine Fotos werden in eine 3D-Darstellung deines Körpers umgewandelt. Körperfett und Magermasse werden anhand dieser Form zusammen mit deiner Größe, deinem Gewicht, deinem Alter und deinem Geschlecht geschätzt. Die Magermasse umfasst zusammen Muskeln, Wasser, Knochen und Organe – nicht nur Protein.';
+
+  @override
+  String get bodyScanDisclaimer =>
+      'Dies sind Schätzungen, keine medizinischen Messungen. Studien zu dieser Methode berichten im Vergleich zu einem klinischen DXA-Scan über einen durchschnittlichen Fehler von etwa 3,5 % beim Körperfettanteil. Die Übereinstimmung ist bei der Verfolgung von Veränderungen schwächer als bei einer einzelnen Messung. Nicht zur Diagnose geeignet. Sprich mit einer medizinischen Fachkraft über gesundheitliche Entscheidungen.';
+
+  @override
+  String get bodyScanErrorCameraPermission =>
+      'Celia benötigt Kamerazugriff, um deinen Körper zu scannen.';
+
+  @override
+  String get bodyScanErrorNoCamera =>
+      'Auf diesem Gerät ist keine Kamera verfügbar.';
+
+  @override
+  String get bodyScanErrorFraming =>
+      'Dein ganzer Körper muss im Bild sein. Halte das Handy weiter weg und achte darauf, dass dein Kopf und deine Füße sichtbar sind.';
+
+  @override
+  String get bodyScanErrorQuality =>
+      'Die Fotos waren zu dunkel oder zu unscharf. Suche eine hellere, gleichmäßige Beleuchtung und halte still, während der Timer läuft.';
+
+  @override
+  String get bodyScanErrorPose =>
+      'Deine Haltung war nicht ganz richtig. Stelle dich aufrecht mit Blick zur Kamera hin, halte die Arme leicht vom Körper ab und drehe dich dann für das zweite Foto vollständig nach rechts.';
+
+  @override
+  String get bodyScanErrorClothing =>
+      'Weite Kleidung verdeckt deine Körperkonturen. Eng anliegende Kleidung ermöglicht einen verwendbaren Scan.';
+
+  @override
+  String get bodyScanErrorPhotoUnknown =>
+      'Diese Fotos konnten nicht verwendet werden. Versuche es vor einem einfarbigen Hintergrund bei gutem Licht erneut.';
+
+  @override
+  String get bodyScanErrorPhotosTooLarge =>
+      'Diese Fotos waren zum Hochladen zu groß. Versuche es erneut.';
+
+  @override
+  String get bodyScanErrorQuota =>
+      'Du hast deine Scans für diesen Zeitraum aufgebraucht. Du kannst erneut scannen, sobald der Zeitraum zurückgesetzt wird.';
+
+  @override
+  String get bodyScanErrorAge =>
+      'Körperscans sind nur für Nutzer ab 18 Jahren verfügbar.';
+
+  @override
+  String get bodyScanErrorStats =>
+      'Überprüfe deine Größe, dein Gewicht, dein Alter und dein Geschlecht und versuche es dann erneut.';
+
+  @override
+  String get bodyScanErrorSignedIn =>
+      'Bitte melde dich erneut an, um zu scannen.';
+
+  @override
+  String get bodyScanErrorUnavailable =>
+      'Körperscans sind derzeit nicht verfügbar.';
+
+  @override
+  String get bodyScanErrorNetwork =>
+      'Celia konnte nicht erreicht werden. Überprüfe deine Verbindung und versuche es erneut.';
+
+  @override
+  String get bodyScanErrorServer =>
+      'Mit deinem Scan ist etwas schiefgelaufen. Bitte versuche es erneut.';
+
+  @override
+  String get bodyScanErrorLoadHistory =>
+      'Deine früheren Scans konnten nicht geladen werden.';
+
+  @override
+  String get profileBodyScan => 'Körperscan';
+
+  @override
+  String get homeBodyScan => 'Körperscan';
+
+  @override
+  String get homeBodyScanSubtitle =>
+      'Körperfett anhand von zwei Fotos schätzen';
 }

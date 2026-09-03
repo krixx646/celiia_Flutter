@@ -1511,4 +1511,256 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get insightsSectionTitle => 'Celia 洞察';
+
+  @override
+  String get bodyScanTitle => '身体扫描';
+
+  @override
+  String get bodyScanContinue => '继续';
+
+  @override
+  String get bodyScanDone => '完成';
+
+  @override
+  String get bodyScanConsentTitle => '扫描前须知';
+
+  @override
+  String get bodyScanConsentBody => '身体扫描会根据两张照片估算你的身体成分。以下是照片的具体处理方式。';
+
+  @override
+  String get bodyScanConsentPhotosTitle => '由你拍摄的两张照片';
+
+  @override
+  String get bodyScanConsentPhotosBody => '一张正面照和一张右侧面照。请穿合身的衣服，以便清晰显示身体轮廓。';
+
+  @override
+  String get bodyScanConsentProcessingTitle => '由 Bodygram 分析';
+
+  @override
+  String get bodyScanConsentProcessingBody =>
+      '你的照片会发送给扫描服务提供商 Bodygram，用于估算你的身体指标。照片不会用于其他用途。';
+
+  @override
+  String get bodyScanConsentStorageTitle => '你的照片绝不会被存储';
+
+  @override
+  String get bodyScanConsentStorageBody =>
+      'Celia 不会保留你的照片。只有生成的数值和 3D 模型会保存到你的账户中；删除账户后，这些内容也会被删除。';
+
+  @override
+  String get bodyScanConsentAgeTitle => '你必须年满 18 岁';
+
+  @override
+  String get bodyScanConsentAgeBody => '未满 18 岁无法使用身体扫描。';
+
+  @override
+  String get bodyScanConsentAgree => '我已了解并同意分析我的照片';
+
+  @override
+  String get bodyScanStatsTitle => '确认你的信息';
+
+  @override
+  String get bodyScanStatsBody => '这些信息会直接用于估算，因此过时的体重会影响结果。';
+
+  @override
+  String get bodyScanStatsHeight => '身高';
+
+  @override
+  String get bodyScanStatsWeight => '体重';
+
+  @override
+  String get bodyScanStatsAge => '年龄';
+
+  @override
+  String get bodyScanStatsSex => '生理性别';
+
+  @override
+  String get bodyScanStatsSexNote =>
+      '扫描模型仅基于两组参考人群建立。请选择与你的身体更接近的一组；这会影响估算结果，不会影响 Celia 对待你的方式。';
+
+  @override
+  String get bodyScanStatsFemale => '女性';
+
+  @override
+  String get bodyScanStatsMale => '男性';
+
+  @override
+  String get bodyScanStatsInvalid => '请输入有效的身高、体重和年龄。你必须年满 18 岁才能进行扫描。';
+
+  @override
+  String get bodyScanCaptureFrontTitle => '面向摄像头';
+
+  @override
+  String get bodyScanCaptureRightTitle => '向右转身';
+
+  @override
+  String get bodyScanCaptureHowTo => '将手机支撑在大约 3 米外，后退到全身都能放入轮廓线内，然后开始计时。';
+
+  @override
+  String get bodyScanCaptureTips => '穿合身的衣服，选择简洁的背景，确保光线均匀充足，双臂稍微离开身体。';
+
+  @override
+  String get bodyScanPoseFront => '正面';
+
+  @override
+  String get bodyScanPoseRight => '右侧面';
+
+  @override
+  String get bodyScanStartTimer => '开始计时';
+
+  @override
+  String get bodyScanCancelTimer => '取消计时';
+
+  @override
+  String get bodyScanRetake => '重新拍摄';
+
+  @override
+  String get bodyScanNextPose => '下一张照片';
+
+  @override
+  String get bodyScanGetResults => '获取我的结果';
+
+  @override
+  String get bodyScanProcessingTitle => '正在分析你的扫描结果';
+
+  @override
+  String get bodyScanProcessingBody => '正在构建你的 3D 模型并估算你的身体指标。最多需要一分钟。';
+
+  @override
+  String get bodyScanResultTitle => '你的身体扫描结果';
+
+  @override
+  String get bodyScanResultSubtitle => '根据你的照片估算得出。最适合用于长期追踪趋势。';
+
+  @override
+  String get bodyScanBodyFat => '体脂率';
+
+  @override
+  String get bodyScanLeanMass => '瘦体重';
+
+  @override
+  String get bodyScanFatMass => '脂肪量';
+
+  @override
+  String get bodyScanWaist => '腰围';
+
+  @override
+  String get bodyScanHip => '臀围';
+
+  @override
+  String get bodyScanChest => '胸围';
+
+  @override
+  String get bodyScanWaistToHip => '腰臀比';
+
+  @override
+  String bodyScanQuotaRemaining(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 次扫描剩余',
+      one: '本周期还剩 1 次扫描',
+      zero: '本周期没有剩余扫描次数',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get bodyScanEmptyTitle => '了解身体的变化';
+
+  @override
+  String get bodyScanEmptyBody =>
+      '两张照片即可估算您的体脂和瘦体重，并测量关键部位，还可生成一个 3D 模型，方便您长期对比。';
+
+  @override
+  String get bodyScanLatestTitle => '最近扫描';
+
+  @override
+  String get bodyScanHistoryTitle => '之前的扫描';
+
+  @override
+  String get bodyScanStartCta => '开始身体扫描';
+
+  @override
+  String get bodyScanRescanCta => '再次扫描';
+
+  @override
+  String get bodyScanRescanHint => '身体成分变化缓慢。大约每月扫描一次，最有助于进行有意义的比较。';
+
+  @override
+  String bodyScanDeltaSinceLast(String value) {
+    return '与上次扫描相比变化了 $value%';
+  }
+
+  @override
+  String get bodyScanNoComposition => '暂无估算结果';
+
+  @override
+  String get bodyScanSourcesTitle => '这些结果如何得出';
+
+  @override
+  String get bodyScanSourcesBody =>
+      '系统会将您的照片转换为身体的 3D 轮廓，并结合您的身高、体重、年龄和性别，根据该形状估算体脂和瘦体重。瘦体重包括肌肉、水分、骨骼和器官，并不单指蛋白质。';
+
+  @override
+  String get bodyScanDisclaimer =>
+      '这些是估算结果，并非医学测量值。针对这种方法的研究显示，与临床 DXA 扫描相比，体脂平均误差约为 3.5%；与单次读数相比，其跟踪变化的一致性较弱。本功能不用于诊断。如需作出健康相关决定，请咨询医疗专业人士。';
+
+  @override
+  String get bodyScanErrorCameraPermission => 'Celia 需要访问相机才能扫描您的身体。';
+
+  @override
+  String get bodyScanErrorNoCamera => '此设备上没有可用的相机。';
+
+  @override
+  String get bodyScanErrorFraming => '您的全身需要出现在画面中。请将手机拿远一些，并确保头部和脚部都清晰可见。';
+
+  @override
+  String get bodyScanErrorQuality => '照片太暗或太模糊。请寻找更明亮、均匀的光线，并在计时期间保持不动。';
+
+  @override
+  String get bodyScanErrorPose =>
+      '您的姿势不太合适。请面向相机站直，双臂略微离开身体两侧，然后向右完整转身拍摄第二张照片。';
+
+  @override
+  String get bodyScanErrorClothing => '宽松的衣物会遮挡您的身体轮廓。穿着贴身衣物才能获得可用的扫描结果。';
+
+  @override
+  String get bodyScanErrorPhotoUnknown => '这些照片无法使用。请在光线良好、背景简洁的地方重试。';
+
+  @override
+  String get bodyScanErrorPhotosTooLarge => '这些照片太大，无法上传。请重试。';
+
+  @override
+  String get bodyScanErrorQuota => '您已用完本周期的扫描次数。重置后即可再次扫描。';
+
+  @override
+  String get bodyScanErrorAge => '身体扫描仅向年满 18 岁的用户开放。';
+
+  @override
+  String get bodyScanErrorStats => '请检查您的身高、体重、年龄和性别，然后重试。';
+
+  @override
+  String get bodyScanErrorSignedIn => '请重新登录后再扫描。';
+
+  @override
+  String get bodyScanErrorUnavailable => '身体扫描暂时不可用。';
+
+  @override
+  String get bodyScanErrorNetwork => '无法连接到 Celia。请检查网络连接后重试。';
+
+  @override
+  String get bodyScanErrorServer => '扫描时出了点问题。请重试。';
+
+  @override
+  String get bodyScanErrorLoadHistory => '无法加载您之前的扫描记录。';
+
+  @override
+  String get profileBodyScan => '身体扫描';
+
+  @override
+  String get homeBodyScan => '身体扫描';
+
+  @override
+  String get homeBodyScanSubtitle => '根据两张照片估算体脂';
 }

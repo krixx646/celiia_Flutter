@@ -130,10 +130,6 @@
   "chatListening": "聞いています…",
   "chatMicDenied": "Celia と話すにはマイクへのアクセスが必要です。",
   "chatSpeechUnavailable": "この端末では音声認識を利用できません。",
-  "chatAvatarReady": "待機中",
-  "chatAvatarThinking": "考え中…",
-  "chatAvatarSpeaking": "話しています…",
-  "chatAvatarSemantics": "Celiaのアバター、{status}",
   "chatCouldNotOpenRoutine": "そのルーティンを開けませんでした",
   "chatThisRoutine": "このルーティン",
   "chatThisMeal": "この食事",
@@ -1031,5 +1027,15 @@
       }
     }
   },
-  "insightsSectionTitle": "Celiaのインサイト"
+  "insightsSectionTitle": "Celiaのインサイト",
+  "profileAvatarMode": "アバターモード",
+  "profileAvatarModeSubtitle": "Celiaと全画面で話す",
+  "avatarModeReady": "待機中",
+  "avatarModeThinking": "考え中…",
+  "avatarModeSpeaking": "話しています…",
+  "avatarModeHoldToTalk": "長押しで話す",
+  "avatarModeExit": "手動モード",
+  "avatarModeConfirmTitle": "Celiaに確認しますか？",
+  "avatarModeConfirmBody": "Celiaが保存しようとしています。許可しますか？",
+  "avatarModeConfirmYes": "許可"
 }

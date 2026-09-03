@@ -352,20 +352,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get chatMicTooltip => 'Удерживайте, чтобы говорить';
 
   @override
-  String get chatAvatarReady => 'Готова';
-
-  @override
-  String get chatAvatarThinking => 'Думает…';
-
-  @override
-  String get chatAvatarSpeaking => 'Говорит…';
-
-  @override
-  String chatAvatarSemantics(String status) {
-    return 'Аватар Celia, $status';
-  }
-
-  @override
   String get chatListening => 'Слушаю…';
 
   @override
@@ -374,6 +360,31 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get chatSpeechUnavailable =>
       'Распознавание речи недоступно на этом устройстве.';
+
+  @override
+  String get avatarModeReady => 'Готова';
+
+  @override
+  String get avatarModeThinking => 'Думает…';
+
+  @override
+  String get avatarModeSpeaking => 'Говорит…';
+
+  @override
+  String get avatarModeHoldToTalk => 'Удерживайте, чтобы говорить';
+
+  @override
+  String get avatarModeExit => 'Обычный режим';
+
+  @override
+  String get avatarModeConfirmTitle => 'Подтвердить с Celia?';
+
+  @override
+  String get avatarModeConfirmBody =>
+      'Celia хочет что-то сохранить. Разрешить?';
+
+  @override
+  String get avatarModeConfirmYes => 'Разрешить';
 
   @override
   String get chatCouldNotOpenRoutine => 'Не удалось открыть эту программу';
@@ -1370,6 +1381,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get profileDarkMode => 'Тёмная тема';
+
+  @override
+  String get profileAvatarMode => 'Режим аватара';
+
+  @override
+  String get profileAvatarModeSubtitle => 'Говорите с Celia на весь экран';
 
   @override
   String get profileLanguage => 'Язык';

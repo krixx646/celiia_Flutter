@@ -6,6 +6,7 @@ import 'providers/locale_provider.dart';
 import 'services/firebase_service.dart';
 import 'services/supabase_service.dart';
 import 'providers/auth_provider.dart';
+import 'providers/avatar_mode_provider.dart';
 import 'providers/chat_provider.dart';
 import 'providers/navigation_provider.dart';
 import 'providers/nutrition_profile_provider.dart';
@@ -13,6 +14,7 @@ import 'providers/nutrition_tracker_provider.dart';
 import 'providers/routine_provider.dart';
 import 'providers/theme_provider.dart';
 import 'screens/auth_screen.dart';
+import 'screens/avatar/avatar_mode_shell.dart';
 import 'screens/email_verification_screen.dart';
 import 'screens/main_screen.dart';
 import 'screens/name_setup_screen.dart';
@@ -68,6 +70,7 @@ class CeliaRoot extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => LocaleProvider()..load()),
+        ChangeNotifierProvider(create: (_) => AvatarModeProvider()..load()),
         ChangeNotifierProvider(create: (_) => RoutineProvider()),
         ChangeNotifierProvider(create: (_) => NutritionProfileProvider()),
         ChangeNotifierProvider(create: (_) => NutritionTrackerProvider()),
@@ -219,7 +222,23 @@ class _AuthenticatedGateState extends State<_AuthenticatedGate> {
       );
     }
 
-    return const MainScreen();
+    return Consumer<AvatarModeProvider>(
+      builder: (context, avatarMode, _) {
+        if (!avatarMode.isLoaded) {
+          return Scaffold(
+            body: Center(
+              child: LoadingIndicator(
+                message: AppLocalizations.of(context).loadingPreparing,
+              ),
+            ),
+          );
+        }
+        if (avatarMode.isEnabled) {
+          return const AvatarModeShell();
+        }
+        return const MainScreen();
+      },
+    );
   }
 }
 

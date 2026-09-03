@@ -4,10 +4,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../avatar/celia_avatar_controller.dart';
-import '../avatar/celia_avatar_state.dart';
-import '../avatar/celia_chat_avatar_panel.dart';
-import '../avatar/celia_lip_sync.dart';
 import '../config/env.dart';
 import '../l10n/app_localizations.dart';
 import '../models/celia_chat_message.dart';
@@ -48,29 +44,12 @@ class _ChatScreenState extends State<ChatScreen> {
   final ScrollController _scrollController = ScrollController();
   final ChatSttService _stt = ChatSttService();
   final ChatTtsService _tts = ChatTtsService();
-  CeliaAvatarController? _avatar;
-  CeliaLipSync? _lipSync;
-  Timer? _blinkTimer;
   bool _listening = false;
-  bool _speaking = false;
-  CeliaAvatarState _avatarState = CeliaAvatarState.idle;
 
   @override
   void initState() {
     super.initState();
     _focusNode.addListener(() => setState(() {}));
-    if (Env.enableVrmAvatar) {
-      _avatar = CeliaAvatarController();
-      _lipSync = CeliaLipSync(onMorphs: (morphs) {
-        unawaited(_avatar?.setMorphs(morphs) ?? Future<void>.value());
-      });
-      _tts.onWord = (word) => _lipSync?.speakWord(word);
-      _tts.onSpeechEnd = _onSpeechEnd;
-      _blinkTimer = Timer.periodic(const Duration(seconds: 5), (_) {
-        if (_avatarState == CeliaAvatarState.speaking) return;
-        unawaited(_avatar?.blinkOnce() ?? Future<void>.value());
-      });
-    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       _publishUserState();
@@ -88,42 +67,12 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void dispose() {
-    _blinkTimer?.cancel();
-    _lipSync?.dispose();
-    _tts.onWord = null;
-    _tts.onSpeechEnd = null;
     _stt.dispose();
     unawaited(_tts.dispose());
-    unawaited(_avatar?.dispose() ?? Future<void>.value());
     _controller.dispose();
     _focusNode.dispose();
     _scrollController.dispose();
     super.dispose();
-  }
-
-  void _onSpeechEnd() {
-    if (!mounted) return;
-    _lipSync?.close();
-    setState(() => _speaking = false);
-    _syncAvatarState(streaming: context.read<ChatProvider>().isStreaming);
-  }
-
-  Future<void> _setAvatarState(CeliaAvatarState state) async {
-    if (_avatarState == state) return;
-    if (mounted) setState(() => _avatarState = state);
-    await _avatar?.setState(state);
-  }
-
-  void _syncAvatarState({required bool streaming}) {
-    if (!Env.enableVrmAvatar) return;
-    final next = _listening
-        ? CeliaAvatarState.listening
-        : _speaking
-            ? CeliaAvatarState.speaking
-            : streaming
-                ? CeliaAvatarState.thinking
-                : CeliaAvatarState.idle;
-    unawaited(_setAvatarState(next));
   }
 
   /// Hands Celia the profile numbers she cannot read from the backend.
@@ -144,14 +93,12 @@ class _ChatScreenState extends State<ChatScreen> {
     if (text.trim().isEmpty) return;
     await _tts.stop();
     if (!mounted) return;
-    setState(() => _speaking = false);
     final chat = context.read<ChatProvider>();
     final auth = context.read<AuthProvider>();
     final routines = context.read<RoutineProvider>();
     _publishUserState();
     _controller.clear();
     _scrollToEnd();
-    _syncAvatarState(streaming: true);
     await chat.sendMessage(text);
     if (!mounted) return;
     // A routine Celia just saved should show up in the library straight away.
@@ -161,32 +108,21 @@ class _ChatScreenState extends State<ChatScreen> {
     }
     if (speakReply) {
       await _speakLastAssistantReply(chat);
-    } else {
-      _syncAvatarState(streaming: chat.isStreaming);
     }
   }
 
   Future<void> _speakLastAssistantReply(ChatProvider chat) async {
     if (!Env.enableChatVoice || !mounted) return;
-    if (chat.error != null) {
-      _syncAvatarState(streaming: false);
-      return;
-    }
+    if (chat.error != null) return;
     final locale = Localizations.localeOf(context).toLanguageTag();
     for (var i = chat.messages.length - 1; i >= 0; i--) {
       final message = chat.messages[i];
       if (message.role != ChatRole.assistant) continue;
       final text = message.text.trim();
-      if (text.isEmpty) {
-        _syncAvatarState(streaming: false);
-        return;
-      }
-      setState(() => _speaking = true);
-      _syncAvatarState(streaming: false);
+      if (text.isEmpty) return;
       await _tts.speak(text, localeName: locale);
       return;
     }
-    _syncAvatarState(streaming: false);
   }
 
   Future<void> _startListening() async {
@@ -194,7 +130,7 @@ class _ChatScreenState extends State<ChatScreen> {
     final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     await _tts.stop();
-    if (mounted) setState(() => _speaking = false);
+    if (!mounted) return;
 
     final ready = await _stt.ensureReady();
     if (!mounted) return;
@@ -224,7 +160,6 @@ class _ChatScreenState extends State<ChatScreen> {
       return;
     }
     setState(() => _listening = true);
-    _syncAvatarState(streaming: false);
   }
 
   Future<void> _stopListeningAndSend() async {
@@ -232,7 +167,6 @@ class _ChatScreenState extends State<ChatScreen> {
     final transcript = await _stt.stop();
     if (!mounted) return;
     setState(() => _listening = false);
-    _syncAvatarState(streaming: false);
     final text = transcript.trim().isNotEmpty
         ? transcript.trim()
         : _controller.text.trim();
@@ -368,21 +302,8 @@ class _ChatScreenState extends State<ChatScreen> {
             );
           }
 
-          if (Env.enableVrmAvatar) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (!mounted) return;
-              _syncAvatarState(streaming: chat.isStreaming);
-            });
-          }
-
           return Column(
             children: [
-              if (Env.enableVrmAvatar && _avatar != null)
-                CeliaChatAvatarPanel(
-                  controller: _avatar!,
-                  state: _avatarState,
-                  theme: theme,
-                ),
               Expanded(
                 child: chat.hasMessages
                     ? ListView.builder(
@@ -404,10 +325,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           onOpenRoutine: _openRoutine,
                         ),
                       )
-                    : _EmptyState(
-                        onSuggestion: _send,
-                        hideStaticFace: Env.enableVrmAvatar,
-                      ),
+                    : _EmptyState(onSuggestion: _send),
               ),
               if (chat.error != null)
                 _ErrorBanner(
@@ -436,13 +354,9 @@ class _ChatScreenState extends State<ChatScreen> {
 }
 
 class _EmptyState extends StatelessWidget {
-  const _EmptyState({
-    required this.onSuggestion,
-    this.hideStaticFace = false,
-  });
+  const _EmptyState({required this.onSuggestion});
 
   final Future<void> Function(String prompt) onSuggestion;
-  final bool hideStaticFace;
 
   @override
   Widget build(BuildContext context) {
@@ -458,23 +372,21 @@ class _EmptyState extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (!hideStaticFace) ...[
-            Container(
-              width: 96,
-              height: 96,
-              decoration: BoxDecoration(
-                color: theme.accentOrange.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/images/app_icon_foreground.png',
-                  fit: BoxFit.cover,
-                ),
+          Container(
+            width: 96,
+            height: 96,
+            decoration: BoxDecoration(
+              color: theme.accentOrange.withValues(alpha: 0.1),
+              shape: BoxShape.circle,
+            ),
+            child: ClipOval(
+              child: Image.asset(
+                'assets/images/app_icon_foreground.png',
+                fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(height: 24),
-          ],
+          ),
+          const SizedBox(height: 24),
           Text(
             l10n.chatEmptyPrompt,
             style: TextStyle(

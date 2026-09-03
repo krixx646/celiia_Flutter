@@ -352,20 +352,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get chatMicTooltip => 'Mantén pulsado para hablar';
 
   @override
-  String get chatAvatarReady => 'Lista';
-
-  @override
-  String get chatAvatarThinking => 'Pensando…';
-
-  @override
-  String get chatAvatarSpeaking => 'Hablando…';
-
-  @override
-  String chatAvatarSemantics(String status) {
-    return 'Avatar de Celia, $status';
-  }
-
-  @override
   String get chatListening => 'Escuchando…';
 
   @override
@@ -375,6 +361,31 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get chatSpeechUnavailable =>
       'El reconocimiento de voz no está disponible en este dispositivo.';
+
+  @override
+  String get avatarModeReady => 'Lista';
+
+  @override
+  String get avatarModeThinking => 'Pensando…';
+
+  @override
+  String get avatarModeSpeaking => 'Hablando…';
+
+  @override
+  String get avatarModeHoldToTalk => 'Mantén pulsado para hablar';
+
+  @override
+  String get avatarModeExit => 'Modo manual';
+
+  @override
+  String get avatarModeConfirmTitle => '¿Confirmar con Celia?';
+
+  @override
+  String get avatarModeConfirmBody =>
+      'Celia quiere guardar algo. ¿Lo permites?';
+
+  @override
+  String get avatarModeConfirmYes => 'Permitir';
 
   @override
   String get chatCouldNotOpenRoutine => 'No se pudo abrir esa rutina';
@@ -1372,6 +1383,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get profileDarkMode => 'Modo oscuro';
+
+  @override
+  String get profileAvatarMode => 'Modo avatar';
+
+  @override
+  String get profileAvatarModeSubtitle => 'Habla con Celia a pantalla completa';
 
   @override
   String get profileLanguage => 'Idioma';

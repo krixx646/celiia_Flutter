@@ -342,20 +342,6 @@ class AppLocalizationsTh extends AppLocalizations {
   String get chatMicTooltip => 'กดค้างเพื่อพูด';
 
   @override
-  String get chatAvatarReady => 'พร้อม';
-
-  @override
-  String get chatAvatarThinking => 'กำลังคิด…';
-
-  @override
-  String get chatAvatarSpeaking => 'กำลังพูด…';
-
-  @override
-  String chatAvatarSemantics(String status) {
-    return 'อวาตาร์ของ Celia, $status';
-  }
-
-  @override
   String get chatListening => 'กำลังฟัง…';
 
   @override
@@ -364,6 +350,30 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get chatSpeechUnavailable => 'อุปกรณ์นี้ไม่รองรับการรู้จำเสียงพูด';
+
+  @override
+  String get avatarModeReady => 'พร้อม';
+
+  @override
+  String get avatarModeThinking => 'กำลังคิด…';
+
+  @override
+  String get avatarModeSpeaking => 'กำลังพูด…';
+
+  @override
+  String get avatarModeHoldToTalk => 'กดค้างเพื่อพูด';
+
+  @override
+  String get avatarModeExit => 'โหมดธรรมดา';
+
+  @override
+  String get avatarModeConfirmTitle => 'ยืนยันกับ Celia?';
+
+  @override
+  String get avatarModeConfirmBody => 'Celia ต้องการบันทึกบางอย่าง อนุญาตไหม?';
+
+  @override
+  String get avatarModeConfirmYes => 'อนุญาต';
 
   @override
   String get chatCouldNotOpenRoutine => 'เปิดตารางฝึกนั้นไม่ได้';
@@ -1348,6 +1358,12 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get profileDarkMode => 'โหมดมืด';
+
+  @override
+  String get profileAvatarMode => 'โหมดอวาตาร์';
+
+  @override
+  String get profileAvatarModeSubtitle => 'คุยกับ Celia แบบเต็มจอ';
 
   @override
   String get profileLanguage => 'ภาษา';

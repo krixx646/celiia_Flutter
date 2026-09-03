@@ -130,10 +130,6 @@
   "chatListening": "กำลังฟัง…",
   "chatMicDenied": "ต้องอนุญาตให้เข้าถึงไมโครโฟนเพื่อพูดคุยกับ Celia",
   "chatSpeechUnavailable": "อุปกรณ์นี้ไม่รองรับการรู้จำเสียงพูด",
-  "chatAvatarReady": "พร้อม",
-  "chatAvatarThinking": "กำลังคิด…",
-  "chatAvatarSpeaking": "กำลังพูด…",
-  "chatAvatarSemantics": "อวาตาร์ของ Celia, {status}",
   "chatCouldNotOpenRoutine": "เปิดตารางฝึกนั้นไม่ได้",
   "chatThisRoutine": "ตารางฝึกนี้",
   "chatThisMeal": "มื้อนี้",
@@ -1031,5 +1027,15 @@
       }
     }
   },
-  "insightsSectionTitle": "ข้อมูลเชิงลึกจาก Celia"
+  "insightsSectionTitle": "ข้อมูลเชิงลึกจาก Celia",
+  "profileAvatarMode": "โหมดอวาตาร์",
+  "profileAvatarModeSubtitle": "คุยกับ Celia แบบเต็มจอ",
+  "avatarModeReady": "พร้อม",
+  "avatarModeThinking": "กำลังคิด…",
+  "avatarModeSpeaking": "กำลังพูด…",
+  "avatarModeHoldToTalk": "กดค้างเพื่อพูด",
+  "avatarModeExit": "โหมดธรรมดา",
+  "avatarModeConfirmTitle": "ยืนยันกับ Celia?",
+  "avatarModeConfirmBody": "Celia ต้องการบันทึกบางอย่าง อนุญาตไหม?",
+  "avatarModeConfirmYes": "อนุญาต"
 }

@@ -748,30 +748,6 @@ abstract class AppLocalizations {
   /// **'Hold to talk'**
   String get chatMicTooltip;
 
-  /// No description provided for @chatAvatarReady.
-  ///
-  /// In en, this message translates to:
-  /// **'Ready'**
-  String get chatAvatarReady;
-
-  /// No description provided for @chatAvatarThinking.
-  ///
-  /// In en, this message translates to:
-  /// **'Thinking…'**
-  String get chatAvatarThinking;
-
-  /// No description provided for @chatAvatarSpeaking.
-  ///
-  /// In en, this message translates to:
-  /// **'Speaking…'**
-  String get chatAvatarSpeaking;
-
-  /// No description provided for @chatAvatarSemantics.
-  ///
-  /// In en, this message translates to:
-  /// **'Celia avatar, {status}'**
-  String chatAvatarSemantics(String status);
-
   /// No description provided for @chatListening.
   ///
   /// In en, this message translates to:
@@ -789,6 +765,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Speech recognition isn\'t available on this device.'**
   String get chatSpeechUnavailable;
+
+  /// No description provided for @avatarModeReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get avatarModeReady;
+
+  /// No description provided for @avatarModeThinking.
+  ///
+  /// In en, this message translates to:
+  /// **'Thinking…'**
+  String get avatarModeThinking;
+
+  /// No description provided for @avatarModeSpeaking.
+  ///
+  /// In en, this message translates to:
+  /// **'Speaking…'**
+  String get avatarModeSpeaking;
+
+  /// No description provided for @avatarModeHoldToTalk.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold to talk'**
+  String get avatarModeHoldToTalk;
+
+  /// No description provided for @avatarModeExit.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual mode'**
+  String get avatarModeExit;
+
+  /// No description provided for @avatarModeConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm with Celia?'**
+  String get avatarModeConfirmTitle;
+
+  /// No description provided for @avatarModeConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Celia wants to save something. Allow it?'**
+  String get avatarModeConfirmBody;
+
+  /// No description provided for @avatarModeConfirmYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow'**
+  String get avatarModeConfirmYes;
 
   /// No description provided for @chatCouldNotOpenRoutine.
   ///
@@ -2403,6 +2427,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark Mode'**
   String get profileDarkMode;
+
+  /// No description provided for @profileAvatarMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Avatar Mode'**
+  String get profileAvatarMode;
+
+  /// No description provided for @profileAvatarModeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Talk to Celia full-screen, hands-free'**
+  String get profileAvatarModeSubtitle;
 
   /// No description provided for @profileLanguage.
   ///

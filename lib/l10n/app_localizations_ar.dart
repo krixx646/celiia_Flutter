@@ -344,20 +344,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get chatMicTooltip => 'اضغط مع الاستمرار للتحدث';
 
   @override
-  String get chatAvatarReady => 'جاهزة';
-
-  @override
-  String get chatAvatarThinking => 'تفكّر…';
-
-  @override
-  String get chatAvatarSpeaking => 'تتحدث…';
-
-  @override
-  String chatAvatarSemantics(String status) {
-    return 'صورة سيليا الرمزية، $status';
-  }
-
-  @override
   String get chatListening => 'تستمع…';
 
   @override
@@ -366,6 +352,30 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get chatSpeechUnavailable =>
       'التعرف على الكلام غير متاح على هذا الجهاز.';
+
+  @override
+  String get avatarModeReady => 'جاهزة';
+
+  @override
+  String get avatarModeThinking => 'تفكّر…';
+
+  @override
+  String get avatarModeSpeaking => 'تتحدث…';
+
+  @override
+  String get avatarModeHoldToTalk => 'اضغط مع الاستمرار للتحدث';
+
+  @override
+  String get avatarModeExit => 'الوضع اليدوي';
+
+  @override
+  String get avatarModeConfirmTitle => 'تأكيد مع سيليا؟';
+
+  @override
+  String get avatarModeConfirmBody => 'سيليا تريد حفظ شيء. هل تسمح؟';
+
+  @override
+  String get avatarModeConfirmYes => 'السماح';
 
   @override
   String get chatCouldNotOpenRoutine => 'تعذر فتح ذلك الروتين';
@@ -1350,6 +1360,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profileDarkMode => 'الوضع الداكن';
+
+  @override
+  String get profileAvatarMode => 'وضع الصورة الرمزية';
+
+  @override
+  String get profileAvatarModeSubtitle => 'تحدث مع سيليا بملء الشاشة';
 
   @override
   String get profileLanguage => 'اللغة';

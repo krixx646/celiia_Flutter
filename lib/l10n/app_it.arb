@@ -130,10 +130,6 @@
   "chatListening": "In ascolto…",
   "chatMicDenied": "Serve l'accesso al microfono per parlare con Celia.",
   "chatSpeechUnavailable": "Il riconoscimento vocale non è disponibile su questo dispositivo.",
-  "chatAvatarReady": "Pronta",
-  "chatAvatarThinking": "Sta pensando…",
-  "chatAvatarSpeaking": "Sta parlando…",
-  "chatAvatarSemantics": "Avatar di Celia, {status}",
   "chatCouldNotOpenRoutine": "Impossibile aprire questa routine",
   "chatThisRoutine": "questa routine",
   "chatThisMeal": "questo pasto",
@@ -1031,5 +1027,15 @@
       }
     }
   },
-  "insightsSectionTitle": "Insights di Celia"
+  "insightsSectionTitle": "Insights di Celia",
+  "profileAvatarMode": "Modalità avatar",
+  "profileAvatarModeSubtitle": "Parla con Celia a schermo intero",
+  "avatarModeReady": "Pronta",
+  "avatarModeThinking": "Sta pensando…",
+  "avatarModeSpeaking": "Sta parlando…",
+  "avatarModeHoldToTalk": "Tieni premuto per parlare",
+  "avatarModeExit": "Modalità manuale",
+  "avatarModeConfirmTitle": "Confermare con Celia?",
+  "avatarModeConfirmBody": "Celia vuole salvare qualcosa. Consentire?",
+  "avatarModeConfirmYes": "Consenti"
 }

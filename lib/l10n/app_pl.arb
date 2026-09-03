@@ -130,10 +130,6 @@
   "chatListening": "Słucham…",
   "chatMicDenied": "Dostęp do mikrofonu jest potrzebny, aby rozmawiać z Celią.",
   "chatSpeechUnavailable": "Rozpoznawanie mowy nie jest dostępne na tym urządzeniu.",
-  "chatAvatarReady": "Gotowa",
-  "chatAvatarThinking": "Myśli…",
-  "chatAvatarSpeaking": "Mówi…",
-  "chatAvatarSemantics": "Awatar Celii, {status}",
   "chatCouldNotOpenRoutine": "Nie udało się otworzyć tego planu",
   "chatThisRoutine": "tego planu",
   "chatThisMeal": "tego posiłku",
@@ -1031,5 +1027,15 @@
       }
     }
   },
-  "insightsSectionTitle": "Wskazówki Celia"
+  "insightsSectionTitle": "Wskazówki Celia",
+  "profileAvatarMode": "Tryb awatara",
+  "profileAvatarModeSubtitle": "Rozmawiaj z Celią na pełnym ekranie",
+  "avatarModeReady": "Gotowa",
+  "avatarModeThinking": "Myśli…",
+  "avatarModeSpeaking": "Mówi…",
+  "avatarModeHoldToTalk": "Przytrzymaj, aby mówić",
+  "avatarModeExit": "Tryb ręczny",
+  "avatarModeConfirmTitle": "Potwierdzić z Celią?",
+  "avatarModeConfirmBody": "Celia chce coś zapisać. Zezwolić?",
+  "avatarModeConfirmYes": "Zezwól"
 }

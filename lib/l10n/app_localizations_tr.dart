@@ -350,20 +350,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get chatMicTooltip => 'Konuşmak için basılı tutun';
 
   @override
-  String get chatAvatarReady => 'Hazır';
-
-  @override
-  String get chatAvatarThinking => 'Düşünüyor…';
-
-  @override
-  String get chatAvatarSpeaking => 'Konuşuyor…';
-
-  @override
-  String chatAvatarSemantics(String status) {
-    return 'Celia avatarı, $status';
-  }
-
-  @override
   String get chatListening => 'Dinliyor…';
 
   @override
@@ -373,6 +359,31 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get chatSpeechUnavailable =>
       'Bu cihazda konuşma tanıma kullanılamıyor.';
+
+  @override
+  String get avatarModeReady => 'Hazır';
+
+  @override
+  String get avatarModeThinking => 'Düşünüyor…';
+
+  @override
+  String get avatarModeSpeaking => 'Konuşuyor…';
+
+  @override
+  String get avatarModeHoldToTalk => 'Konuşmak için basılı tut';
+
+  @override
+  String get avatarModeExit => 'Manuel mod';
+
+  @override
+  String get avatarModeConfirmTitle => 'Celia ile onayla?';
+
+  @override
+  String get avatarModeConfirmBody =>
+      'Celia bir şey kaydetmek istiyor. İzin ver?';
+
+  @override
+  String get avatarModeConfirmYes => 'İzin ver';
 
   @override
   String get chatCouldNotOpenRoutine => 'Bu rutin açılamadı';
@@ -1363,6 +1374,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get profileDarkMode => 'Koyu Mod';
+
+  @override
+  String get profileAvatarMode => 'Avatar modu';
+
+  @override
+  String get profileAvatarModeSubtitle => 'Celia ile tam ekran konuş';
 
   @override
   String get profileLanguage => 'Dil';

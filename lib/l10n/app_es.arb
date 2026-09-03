@@ -1,8 +1,6 @@
 {
   "@@locale": "es",
-
   "appName": "Celia Integral Coach",
-
   "actionCancel": "Cancelar",
   "actionSave": "Guardar",
   "actionDelete": "Eliminar",
@@ -14,10 +12,8 @@
   "actionSeeAll": "Ver todo",
   "actionYesDoIt": "Sí, adelante",
   "actionNotNow": "Ahora no",
-
   "loadingPreparing": "Preparando a Celia...",
   "loadingGeneric": "Cargando...",
-
   "errorGeneric": "Algo ha salido mal. Inténtalo de nuevo.",
   "errorCanceled": "Acción cancelada.",
   "errorTooManyRequests": "Demasiados intentos. Espera un minuto e inténtalo de nuevo.",
@@ -46,10 +42,8 @@
   "errorAppleSignIn": "No se pudo iniciar sesión con Apple. Inténtalo de nuevo.",
   "errorRefreshNutrition": "No se pudieron actualizar los datos de nutrición.",
   "errorLoadNutritionProfile": "No se pudo cargar tu perfil nutricional.",
-
   "startupErrorTitle": "No se puede iniciar la aplicación",
   "startupErrorBody": "Cierra la aplicación y vuelve a abrirla. Si el problema continúa, contacta con soporte.",
-
   "authTagline": "Tu compañera de entrenamiento",
   "authSignUp": "Crear cuenta",
   "authLogIn": "Iniciar sesión",
@@ -65,7 +59,6 @@
   "authFieldName": "Tu nombre",
   "authFieldEmail": "Correo electrónico",
   "authFieldPassword": "Contraseña",
-
   "verifyEmailTitle": "Verifica tu correo",
   "verifyEmailHeading": "Revisa tu bandeja de entrada",
   "verifyEmailBody": "Hemos enviado un enlace de verificación a tu correo.",
@@ -76,18 +69,15 @@
   "verifyEmailResend": "Reenviar correo de verificación",
   "verifyEmailResendIn": "Reenviar en {seconds} s",
   "verifyEmailAddress": "Correo: {email}",
-
   "forgotPasswordTitle": "Recuperar contraseña",
   "forgotPasswordBody": "Introduce tu correo para recibir un enlace de restablecimiento.",
   "forgotPasswordEmptyEmail": "Introduce un correo electrónico",
   "forgotPasswordSent": "Correo de restablecimiento enviado.",
   "forgotPasswordSend": "Enviar enlace",
   "forgotPasswordSending": "Enviando...",
-
   "nameSetupTitle": "¿Cómo quieres que Celia te llame?",
   "nameSetupBody": "Usamos tu nombre en toda la aplicación para que el entrenamiento sea más cercano.",
   "nameSetupSaveFailed": "No se pudo guardar tu nombre. Inténtalo de nuevo.",
-
   "homeGoodMorning": "Buenos días,",
   "homeCeliaActive": "CELIA ACTIVA",
   "homeGenerateRoutine": "Crea tu rutina\npersonalizada\ncon IA",
@@ -103,7 +93,6 @@
   "homeNutritionSubtitle": "Consulta calorías, macros y comidas",
   "homeBrowseLibrary": "Explorar\nbiblioteca",
   "homeTrackProgress": "Seguir\nprogreso",
-
   "chatTitle": "Entrenadora Celia",
   "chatEmptyPrompt": "¿En qué puedo ayudarte\nhoy con tu entrenamiento?",
   "chatYourChats": "Tus conversaciones",
@@ -117,10 +106,6 @@
   "chatListening": "Escuchando…",
   "chatMicDenied": "Se necesita acceso al micrófono para hablar con Celia.",
   "chatSpeechUnavailable": "El reconocimiento de voz no está disponible en este dispositivo.",
-  "chatAvatarReady": "Lista",
-  "chatAvatarThinking": "Pensando…",
-  "chatAvatarSpeaking": "Hablando…",
-  "chatAvatarSemantics": "Avatar de Celia, {status}",
   "chatCouldNotOpenRoutine": "No se pudo abrir esa rutina",
   "chatThisRoutine": "esta rutina",
   "chatThisMeal": "esta comida",
@@ -128,17 +113,14 @@
   "chatMoreExercises": "+ {count} más",
   "chatEmptySubtitle": "Pregúntame por tu entrenamiento, tu comida o tu progreso.",
   "chatLoggedToday": "Hoy has registrado {calories} kcal.",
-
   "chatSuggestionHiit": "Créame una rutina HIIT de 20 minutos",
   "chatSuggestionDinner": "¿Qué debería cenar hoy?",
   "chatSuggestionProgress": "¿Cómo voy esta semana?",
   "chatSuggestionIngredients": "Tengo pollo, arroz y espinacas",
-
   "chatJustNow": "Ahora mismo",
   "chatMinutesAgo": "hace {minutes} min",
   "chatHoursAgo": "hace {hours} h",
   "chatDaysAgo": "hace {days} d",
-
   "chatRoutineAlreadySaved": "Ya está en tu biblioteca: toca para abrir",
   "chatRoutineTapToOpen": "Toca para abrir",
   "chatToolCancelled": "Cancelado",
@@ -147,7 +129,6 @@
   "chatToolRoutineSaved": "Guardado en tu biblioteca",
   "chatToolMealLogged": "Añadido al registro de hoy",
   "chatToolRoutineAdded": "Añadido a tu biblioteca",
-
   "activityCheckingProgress": "Revisando tu progreso",
   "activityCheckingNutrition": "Revisando lo que has comido hoy",
   "activityReviewingMeals": "Revisando tus comidas recientes",
@@ -158,20 +139,17 @@
   "activityLoggingMeal": "Registrando tu comida",
   "activitySavingToLibrary": "Guardando en tu biblioteca",
   "activityWorking": "Trabajando en ello",
-
   "approvalSaveRoutineWithCount": "¿Guardar «{name}» con {count} ejercicios en tu biblioteca?",
   "approvalSaveRoutine": "¿Guardar «{name}» en tu biblioteca?",
   "approvalLogMealWithCalories": "¿Registrar «{name}» con {calories} kcal?",
   "approvalLogMeal": "¿Registrar «{name}»?",
   "approvalAddRoutine": "¿Añadir esta rutina a tu biblioteca?",
   "approvalGeneric": "¿Permitir que Celia haga esto?",
-
   "libraryTitle": "Biblioteca de rutinas",
   "librarySteps": "{count, plural, one{{count} ejercicio} other{{count} ejercicios}}",
   "libraryEmpty": "Aún no hay rutinas",
   "libraryEmptyBody": "Crea y publica rutinas desde el panel de administración.",
   "libraryLoadFailed": "No se pudieron cargar las rutinas",
-
   "routineStartWorkout": "Empezar entrenamiento",
   "routineNoSteps": "No hay ejercicios disponibles",
   "routineNoVideoForStep": "No hay vídeo disponible para este ejercicio",
@@ -182,7 +160,6 @@
   "routineDetails": "Detalles",
   "routineNotFound": "Rutina no encontrada",
   "routineCompletedTimes": "Completada {count} veces",
-
   "playerVideoUnavailable": "Este vídeo no está disponible en este momento.",
   "playerSteps": "Ejercicios",
   "playerStepCounter": "{current}/{total}",
@@ -199,7 +176,6 @@
   "playerLoadingVideo": "Cargando vídeo...",
   "playerFailedToLoadVideo": "No se pudo cargar el vídeo",
   "playerNotInitialized": "El reproductor de vídeo no se ha inicializado",
-
   "guidedExerciseCounter": "Ejercicio {current}/{total}",
   "guidedGetReady": "PREPÁRATE",
   "guidedSetOf": "Serie {current} de {total}",
@@ -213,7 +189,6 @@
   "guidedKeepGoing": "Seguir",
   "guidedEnd": "Terminar",
   "guidedReps": "{count, plural, one{{count} repetición} other{{count} repeticiones}}",
-
   "generateSheetTitle": "Crear rutina con IA",
   "generateSheetPrompt": "¿Qué tipo de entrenamiento quieres?",
   "generateSheetHint": "Por ejemplo: «Estiramientos rápidos para despertarme» o «Fuerza de cuerpo completo para principiantes»",
@@ -227,7 +202,6 @@
   "generateSheetAlreadyExists": "Ya tienes esta: {title}",
   "generateSheetCreated": "Creada: {title}",
   "generateSheetFailed": "No se pudo generar la rutina",
-
   "guidedNoExercises": "Esta rutina aún no tiene ejercicios.",
   "guidedStartFailed": "No se puede iniciar este entrenamiento ahora mismo. Inténtalo de nuevo.",
   "guidedSaveFailed": "No se pudo guardar este entrenamiento. Toca reintentar para actualizar tu racha.",
@@ -236,7 +210,6 @@
   "guidedNextSet": "Siguiente serie",
   "guidedUpNext": "A continuación",
   "guidedSetsHold": "{sets} × {seconds}s de mantenimiento",
-
   "coachGetReady": "Prepárate. {exercise}",
   "coachStartReps": "Vamos. {count} repeticiones.",
   "coachStartHold": "Mantén durante {seconds} segundos.",
@@ -245,7 +218,6 @@
   "coachComplete": "Buen trabajo. Entrenamiento terminado.",
   "coachRep": "{count}",
   "coachCountdown": "{seconds}",
-
   "playerNoVideosInRoutine": "No se encontraron vídeos reproducibles en esta rutina.",
   "playerLoadRoutineFailed": "No se puede cargar esta rutina ahora mismo. Inténtalo de nuevo.",
   "playerStepLoadFailedSkipping": "No se pudo cargar «{title}». Saltando…",
@@ -254,24 +226,19 @@
   "playerStepPreviewSubtitle": "{duration} • Vista previa",
   "playerNoVideosReady": "Esta rutina todavía no tiene vídeos listos para reproducir.",
   "playerPlaybackFailed": "No se puede reproducir este vídeo ahora mismo. Inténtalo de nuevo.",
-
   "libraryTabCurated": "Seleccionadas",
   "libraryTabAiGenerated": "Generadas con IA",
-
   "profileSavedRoutines": "Rutinas guardadas",
   "savedRoutinesNoFavorites": "Aún no tienes rutinas favoritas.",
   "savedRoutinesEmpty": "Aún no tienes rutinas guardadas.",
   "actionFavorite": "Añadir a favoritos",
   "actionUnfavorite": "Quitar de favoritos",
-
   "routineDurationMinutes": "{minutes} min",
   "routineDurationHoursMinutes": "{hours} h {minutes} min",
   "routineDurationHours": "{hours} h",
-
   "difficultyEasy": "Fácil",
   "difficultyMedium": "Media",
   "difficultyHard": "Difícil",
-
   "categoryStrength": "Fuerza",
   "categoryCardio": "Cardio",
   "categoryFlexibility": "Flexibilidad",
@@ -280,12 +247,10 @@
   "categoryHiit": "HIIT",
   "categoryYoga": "Yoga",
   "categoryCustom": "Personalizada",
-
   "navHome": "Inicio",
   "navLibrary": "Biblioteca",
   "navChat": "Chat",
   "navProfile": "Perfil",
-
   "equipmentNone": "Ninguno",
   "equipmentDumbbells": "Mancuernas",
   "equipmentResistanceBands": "Bandas elásticas",
@@ -293,7 +258,6 @@
   "equipmentKettlebell": "Pesa rusa",
   "equipmentPullUpBar": "Barra de dominadas",
   "equipmentJumpRope": "Comba",
-
   "nutritionTitle": "Nutrición",
   "nutritionSubtitle": "Calorías, macros e historial de comidas",
   "nutritionSetGoalsTitle": "Define tus objetivos diarios",
@@ -313,7 +277,6 @@
   "nutritionFieldFoodName": "Nombre del alimento",
   "nutritionFieldGrams": "Gramos",
   "nutritionFieldCalories": "Calorías",
-
   "scannerStatusAnalyzing": "ANALIZANDO...",
   "scannerStatusIdle": "ESCÁNER CELIA",
   "scannerFieldFoodName": "Nombre del alimento",
@@ -358,7 +321,6 @@
   "nutritionLoadFailedBody": "Desliza para actualizar o comprueba la conexión con el servidor.",
   "nutritionNoMeals": "Aún no has registrado comidas",
   "nutritionNoMealsBody": "Escanea tu primera comida y Celia empezará tu historial de nutrición.",
-
   "progressToday": "Hoy",
   "progressSetGoals": "Define tus objetivos de nutrición para activar el seguimiento de calorías y macros.",
   "progressOfTarget": "de {target} kcal",
@@ -368,7 +330,6 @@
   "progressProtein": "Proteína",
   "progressCarbs": "Carbohidratos",
   "progressFat": "Grasa",
-
   "scannerEditItem": "Editar alimento",
   "scannerSaveChanges": "Guardar cambios",
   "scannerItemCalories": "{name} · {calories} kcal",
@@ -379,7 +340,6 @@
   "scannerGramsDecimal": "{grams} g",
   "scannerItemServing": "{name} · {grams} g",
   "scannerNoMealDetected": "No se detectó ninguna comida",
-
   "onboardingWelcome": "Bienvenido, {name}",
   "onboardingGender": "Sexo",
   "onboardingCalculateGoals": "Calcular mis objetivos",
@@ -397,11 +357,9 @@
   "onboardingInvalidHeight": "Introduce una altura válida en cm.",
   "onboardingInvalidAge": "Introduce una edad válida entre 13 y 100.",
   "onboardingSaveFailed": "No se pudo guardar tu perfil nutricional.",
-
   "genderMale": "Hombre",
   "genderFemale": "Mujer",
   "genderOther": "Otro",
-
   "nutritionSetupTitle": "Objetivos diarios de nutrición",
   "nutritionSetupBody": "Cuéntale a Celia cómo es tu cuerpo para que calcule tus calorías y macros diarios.",
   "nutritionSetupGender": "Sexo",
@@ -410,7 +368,6 @@
   "nutritionSourcesBody": "Las calorías diarias usan la ecuación de energía en reposo de Mifflin–St Jeor con un factor de actividad física moderada (aprox. 1,55). La proteína se estima cerca de 1,8 g por kg de peso corporal para adultos activos. La grasa se sitúa cerca del 25 % de las calorías, y los carbohidratos completan el resto — dentro de rangos habituales de orientación dietética.",
   "nutritionSourcesDisclaimer": "Estas cifras son solo estimaciones generales de bienestar. No son un diagnóstico, una prescripción ni un sustituto del consejo de un profesional sanitario o un dietista-nutricionista cualificado.",
   "nutritionSetupSave": "Guardar objetivos",
-
   "profileTitle": "Perfil",
   "profileCeliaAi": "Celia IA",
   "profileEliteMember": "Miembro",
@@ -433,12 +390,10 @@
   "profileSubscription": "Suscripción",
   "profileNutrition": "Nutrición",
   "profileHelpSupport": "Ayuda y soporte",
-
   "profileFriend": "Amigo",
   "profileStatSaved": "Guardadas",
   "profileStatStreak": "Racha",
   "profileStatWorkouts": "Entrenos",
-
   "streakDayOneStarted": "Día 1 empezado — vuelve mañana para construir tu racha.",
   "streakRebuild": "Ayer estuviste activo — registra una comida o completa un entrenamiento hoy para recuperar tu racha.",
   "streakStart": "Registra una comida o completa un entrenamiento para empezar tu racha.",
@@ -447,18 +402,15 @@
   "streakNeedWorkout": "Racha de {days} días. Un entrenamiento corto redondearía el día.",
   "streakNeedMeal": "Racha de {days} días. Registra una comida para seguir tu alimentación.",
   "streakStayActive": "Racha de {days} días — mantente activo hoy.",
-
   "editProfileTitle": "Editar perfil",
   "editProfileName": "Nombre",
   "editProfileFootnote": "Los cambios se guardan en tu cuenta y aparecerán en Inicio y Perfil.",
   "editProfileSaveFailed": "No se pudo actualizar el perfil. Inténtalo de nuevo.",
-
   "languageTitle": "Idioma",
   "languageSystem": "Idioma del dispositivo",
   "languageSystemSubtitle": "Usar el idioma configurado en tu teléfono",
   "languageEnglish": "Inglés",
   "languageSpanish": "Español",
-
   "insightStartFuelingTitle": "Empieza a alimentarte hoy",
   "insightStartFuelingBody": "Tienes todo tu presupuesto de calorías disponible. Escanea o registra tu primera comida para no perder el ritmo.",
   "insightAboveTargetTitle": "Por encima del objetivo",
@@ -476,6 +428,15 @@
   "insightTrendOnTarget": "justo en tu objetivo diario",
   "insightTrendAbove": "{delta} kcal por encima de tu objetivo de media",
   "insightTrendBelow": "{delta} kcal por debajo de tu objetivo de media",
-
-  "insightsSectionTitle": "Consejos de Celia"
+  "insightsSectionTitle": "Consejos de Celia",
+  "profileAvatarMode": "Modo avatar",
+  "profileAvatarModeSubtitle": "Habla con Celia a pantalla completa",
+  "avatarModeReady": "Lista",
+  "avatarModeThinking": "Pensando…",
+  "avatarModeSpeaking": "Hablando…",
+  "avatarModeHoldToTalk": "Mantén pulsado para hablar",
+  "avatarModeExit": "Modo manual",
+  "avatarModeConfirmTitle": "¿Confirmar con Celia?",
+  "avatarModeConfirmBody": "Celia quiere guardar algo. ¿Lo permites?",
+  "avatarModeConfirmYes": "Permitir"
 }

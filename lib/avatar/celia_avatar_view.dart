@@ -94,19 +94,19 @@ class _CeliaAvatarViewState extends State<CeliaAvatarView> {
         nativeView,
         if (_loading)
           const ColoredBox(
-            color: Color(0xFF101018),
+            color: Colors.white,
             child: Center(child: CircularProgressIndicator()),
           ),
         if (_error != null)
           ColoredBox(
-            color: const Color(0xFF101018),
+            color: Colors.white,
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.all(24),
                 child: Text(
                   'Avatar failed to load:\n$_error',
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white70),
+                  style: const TextStyle(color: Colors.black54),
                 ),
               ),
             ),

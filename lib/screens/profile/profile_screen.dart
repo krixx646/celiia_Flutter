@@ -8,6 +8,7 @@ import '../../providers/nutrition_profile_provider.dart';
 import '../../providers/nutrition_tracker_provider.dart';
 import '../../providers/routine_provider.dart';
 import '../../config/env.dart';
+import '../../providers/avatar_mode_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../utils/progress.dart';
 import '../debug/vrm_avatar_test_screen.dart';
@@ -444,6 +445,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
         const SizedBox(height: 8),
+        if (Env.enableVrmAvatar) ...[
+          _buildAvatarModeToggle(l10n, theme),
+          const SizedBox(height: 8),
+        ],
         _buildDarkModeToggle(l10n, theme),
         const SizedBox(height: 16), // Extra space before Help
         _buildMenuItem(
@@ -602,6 +607,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Icon(Icons.chevron_right, color: theme.textSecondary),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildAvatarModeToggle(AppLocalizations l10n, ThemeProvider theme) {
+    final avatarMode = context.watch<AvatarModeProvider>();
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: theme.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: theme.border),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: theme.accentOrange.withValues(alpha: 0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.face_retouching_natural,
+              color: theme.accentOrange,
+              size: 20,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.profileAvatarMode,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: theme.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  l10n.profileAvatarModeSubtitle,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: theme.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Switch(
+            value: avatarMode.isEnabled,
+            activeThumbColor: theme.accentOrange,
+            activeTrackColor: theme.accentOrange.withValues(alpha: 0.3),
+            onChanged: (val) => avatarMode.setEnabled(val),
+          ),
+        ],
       ),
     );
   }

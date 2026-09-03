@@ -2,10 +2,11 @@ package eu.thefit.celia.avatar
 
 import android.content.Context
 import android.view.Choreographer
-import android.view.SurfaceView
+import android.view.TextureView
 import android.view.View
-import com.google.android.filament.EntityManager
-import com.google.android.filament.LightManager
+import com.google.android.filament.ColorGrading
+import com.google.android.filament.ToneMapper
+import com.google.android.filament.utils.Manipulator
 import com.google.android.filament.utils.ModelViewer
 import com.google.android.filament.utils.Utils
 import io.flutter.plugin.common.BinaryMessenger
@@ -35,17 +36,19 @@ class CeliaAvatarPlatformView(
         private const val MODEL_ASSET = "avatars/Celia_filament.glb"
 
         /**
-         * ModelViewer's default orbit Manipulator starts its eye at (0, 0, 1)
-         * and looks down -Z (see Manipulator.Builder.orbitHomePosition and
-         * ModelViewer.kDefaultObjectPosition).
+         * The orbit Manipulator below starts its eye at (0, 0, 1) and looks
+         * down -Z at [TARGET_Z] (see Manipulator.Builder.orbitHomePosition).
          */
         private const val EYE_Z = 1.0f
+
+        /** Matches ModelViewer.kDefaultObjectPosition, which we cannot read. */
+        private const val TARGET_Z = -4.0f
 
         /** Filament assumes a 36x24mm frame, so half the frame height is 12mm. */
         private const val SENSOR_HALF_HEIGHT_MM = 12.0f
 
-        /** Fraction of the model's height to show: head plus shoulders. */
-        private const val BUST_FRACTION = 0.32f
+        /** Fraction of the model's height to show: head, shoulders, upper torso. */
+        private const val BUST_FRACTION = 0.48f
 
         /** How much of the viewport the bust fills, leaving a little margin. */
         private const val BUST_FILL = 0.85f
@@ -112,8 +115,27 @@ class CeliaAvatarPlatformView(
         )
     }
 
-    private val surfaceView = SurfaceView(context)
-    private val modelViewer = ModelViewer(surfaceView)
+    /**
+     * A TextureView, not a SurfaceView: Flutter composites platform views by
+     * drawing them into its own hardware canvas, and a SurfaceView's content
+     * lives on a separate hardware layer that never lands in that canvas — the
+     * avatar area just came out blank.
+     */
+    private val textureView = TextureView(context)
+
+    /**
+     * The manipulator is built with a 1x1 viewport instead of the view's own
+     * size, which is still 0x0 here; ModelViewer's default would divide by that
+     * zero and feed NaN into camera.lookAt. SurfaceCallback.onResized replaces
+     * it with the real viewport as soon as the surface exists.
+     */
+    private val modelViewer = ModelViewer(
+        textureView,
+        manipulator = Manipulator.Builder()
+            .targetPosition(0.0f, 0.0f, TARGET_Z)
+            .viewport(1, 1)
+            .build(Manipulator.Mode.ORBIT),
+    )
     private val choreographer = Choreographer.getInstance()
     private val channel = MethodChannel(messenger, CHANNEL)
     private val contextRef = context.applicationContext
@@ -122,47 +144,80 @@ class CeliaAvatarPlatformView(
     private var morphNames: List<String> = emptyList()
     private var morphWeights: FloatArray = FloatArray(0)
     private var framePosted = false
+    private var avatarState = "idle"
+    private var swayPhase = 0f
+    /** Bust framing matrix; idle sway is applied on top of this each frame. */
+    private var baseTransform: FloatArray? = null
+
+    /**
+     * False once the view leaves the window. ModelViewer installs its own
+     * detach listener that calls destroy() — which tears down the Filament
+     * engine, asset loader and resource loader — and documents itself as
+     * invalid afterwards. Every call into [modelViewer] therefore has to be
+     * gated on this, or we dereference freed native objects and take a SIGSEGV.
+     */
+    private var viewerValid = true
+
+    /** Distinguishes "detached, already destroyed" from "never attached". */
+    private var wasAttached = false
 
     init {
         channel.setMethodCallHandler(this)
-        addSunLight()
         modelViewer.view.blendMode = com.google.android.filament.View.BlendMode.OPAQUE
         modelViewer.scene.skybox = null
         modelViewer.renderer.clearOptions = modelViewer.renderer.clearOptions.apply {
             clear = true
+            clearColor = doubleArrayOf(1.0, 1.0, 1.0, 1.0)
         }
+        // Post-processing tone maps the whole frame, and Filament's default
+        // ACES curve turned the white clear colour beige and shifted the
+        // baked VRoid textures. Celia's materials are unlit, so there is no
+        // HDR range to compress and a linear pass is what we want.
+        modelViewer.view.colorGrading = ColorGrading.Builder()
+            .toneMapper(ToneMapper.Linear())
+            .build(modelViewer.engine)
+        // Added after ModelViewer's own listener, so its destroy() has already
+        // run by the time this fires. Only bookkeeping happens here.
+        textureView.addOnAttachStateChangeListener(
+            object : View.OnAttachStateChangeListener {
+                override fun onViewAttachedToWindow(v: View) {
+                    wasAttached = true
+                }
+
+                override fun onViewDetachedFromWindow(v: View) {
+                    viewerValid = false
+                    stopFrames()
+                }
+            },
+        )
     }
+
+    override fun getView(): View = textureView
 
     /**
-     * Every material on Celia_filament.glb declares KHR_materials_unlit, so
-     * the model is shaded entirely by its baked VRoid textures and ignores
-     * scene lights. This single light exists only so the scene is still lit if
-     * we later swap in a lit/toon material; adding more is a no-op today.
+     * Deliberately does not destroy the model or the engine: Flutter removes
+     * the view from the window around this call, and ModelViewer's detach
+     * listener performs the full teardown itself. Calling destroyModel() here
+     * raced that and crashed inside ResourceLoader::asyncCancelLoad.
      */
-    private fun addSunLight() {
-        val engine = modelViewer.engine
-        val key = EntityManager.get().create()
-        LightManager.Builder(LightManager.Type.DIRECTIONAL)
-            .color(1.0f, 0.98f, 0.95f)
-            .intensity(90_000.0f)
-            .direction(-0.25f, -1.0f, -0.55f)
-            .castShadows(false)
-            .build(engine, key)
-        modelViewer.scene.addEntity(key)
-    }
-
-    override fun getView(): View = surfaceView
-
     override fun dispose() {
+        viewerValid = false
         stopFrames()
         channel.setMethodCallHandler(null)
-        try {
-            modelViewer.destroyModel()
-        } catch (_: Throwable) {
+        if (!wasAttached) {
+            // No detach will ever come, so nothing else would free the engine.
+            try {
+                modelViewer.destroy()
+            } catch (_: Throwable) {
+            }
         }
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
+        if (!viewerValid && call.method != "dispose") {
+            result.error("viewer_detached", "Avatar viewer is no longer attached", null)
+            return
+        }
         when (call.method) {
             "attach" -> {
                 startFrames()
@@ -176,7 +231,10 @@ class CeliaAvatarPlatformView(
                     result.error("load_failed", e.message, null)
                 }
             }
-            "setState" -> result.success(null)
+            "setState" -> {
+                avatarState = call.argument<String>("state") ?: "idle"
+                result.success(null)
+            }
             "setMorphs" -> {
                 val morphs = call.argument<Map<String, Any>>("morphs") ?: emptyMap()
                 applyMorphs(morphs)
@@ -245,6 +303,7 @@ class CeliaAvatarPlatformView(
             -focusY,
             EYE_Z - distance - center[2],
         )
+        baseTransform = transform.copyOf()
         tm.setTransform(rootInstance, transform)
     }
 
@@ -271,7 +330,7 @@ class CeliaAvatarPlatformView(
     }
 
     private fun applyMorphs(morphs: Map<String, Any>) {
-        if (faceEntity == 0 || morphWeights.isEmpty()) return
+        if (!viewerValid || faceEntity == 0 || morphWeights.isEmpty()) return
         for (i in morphWeights.indices) morphWeights[i] = 0f
         for ((name, raw) in morphs) {
             val idx = morphNames.indexOf(name)
@@ -289,7 +348,7 @@ class CeliaAvatarPlatformView(
     }
 
     private fun startFrames() {
-        if (framePosted) return
+        if (framePosted || !viewerValid) return
         framePosted = true
         choreographer.postFrameCallback(this)
     }
@@ -300,10 +359,27 @@ class CeliaAvatarPlatformView(
     }
 
     override fun doFrame(frameTimeNanos: Long) {
-        if (!framePosted) return
+        if (!framePosted || !viewerValid) return
         choreographer.postFrameCallback(this)
         modelViewer.animator?.apply {
             updateBoneMatrices()
+        }
+        val base = baseTransform
+        val asset = modelViewer.asset
+        if (base != null && asset != null) {
+            val tm = modelViewer.engine.transformManager
+            val rootInstance = tm.getInstance(asset.root)
+            if (rootInstance != 0) {
+                val framed = base.copyOf()
+                if (avatarState == "idle" ||
+                    avatarState == "listening" ||
+                    avatarState == "thinking"
+                ) {
+                    swayPhase += 0.02f
+                    framed[12] += kotlin.math.sin(swayPhase.toDouble()).toFloat() * 0.015f
+                }
+                tm.setTransform(rootInstance, framed)
+            }
         }
         modelViewer.render(frameTimeNanos)
     }

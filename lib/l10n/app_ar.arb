@@ -130,10 +130,6 @@
   "chatListening": "تستمع…",
   "chatMicDenied": "يلزم الوصول إلى الميكروفون للتحدث مع سيليا.",
   "chatSpeechUnavailable": "التعرف على الكلام غير متاح على هذا الجهاز.",
-  "chatAvatarReady": "جاهزة",
-  "chatAvatarThinking": "تفكّر…",
-  "chatAvatarSpeaking": "تتحدث…",
-  "chatAvatarSemantics": "صورة سيليا الرمزية، {status}",
   "chatCouldNotOpenRoutine": "تعذر فتح ذلك الروتين",
   "chatThisRoutine": "هذا الروتين",
   "chatThisMeal": "هذه الوجبة",
@@ -1031,5 +1027,15 @@
       }
     }
   },
-  "insightsSectionTitle": "رؤى Celia"
+  "insightsSectionTitle": "رؤى Celia",
+  "profileAvatarMode": "وضع الصورة الرمزية",
+  "profileAvatarModeSubtitle": "تحدث مع سيليا بملء الشاشة",
+  "avatarModeReady": "جاهزة",
+  "avatarModeThinking": "تفكّر…",
+  "avatarModeSpeaking": "تتحدث…",
+  "avatarModeHoldToTalk": "اضغط مع الاستمرار للتحدث",
+  "avatarModeExit": "الوضع اليدوي",
+  "avatarModeConfirmTitle": "تأكيد مع سيليا؟",
+  "avatarModeConfirmBody": "سيليا تريد حفظ شيء. هل تسمح؟",
+  "avatarModeConfirmYes": "السماح"
 }

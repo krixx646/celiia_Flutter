@@ -352,20 +352,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get chatMicTooltip => 'Houd ingedrukt om te praten';
 
   @override
-  String get chatAvatarReady => 'Klaar';
-
-  @override
-  String get chatAvatarThinking => 'Denkt na…';
-
-  @override
-  String get chatAvatarSpeaking => 'Spreekt…';
-
-  @override
-  String chatAvatarSemantics(String status) {
-    return 'Celia-avatar, $status';
-  }
-
-  @override
   String get chatListening => 'Luistert…';
 
   @override
@@ -375,6 +361,30 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get chatSpeechUnavailable =>
       'Spraakherkenning is niet beschikbaar op dit apparaat.';
+
+  @override
+  String get avatarModeReady => 'Klaar';
+
+  @override
+  String get avatarModeThinking => 'Denkt na…';
+
+  @override
+  String get avatarModeSpeaking => 'Spreekt…';
+
+  @override
+  String get avatarModeHoldToTalk => 'Houd vast om te praten';
+
+  @override
+  String get avatarModeExit => 'Handmatige modus';
+
+  @override
+  String get avatarModeConfirmTitle => 'Bevestigen met Celia?';
+
+  @override
+  String get avatarModeConfirmBody => 'Celia wil iets opslaan. Toestaan?';
+
+  @override
+  String get avatarModeConfirmYes => 'Toestaan';
 
   @override
   String get chatCouldNotOpenRoutine => 'Die routine kon niet worden geopend';
@@ -1373,6 +1383,12 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get profileDarkMode => 'Donkere modus';
+
+  @override
+  String get profileAvatarMode => 'Avatarmodus';
+
+  @override
+  String get profileAvatarModeSubtitle => 'Praat full-screen met Celia';
 
   @override
   String get profileLanguage => 'Taal';

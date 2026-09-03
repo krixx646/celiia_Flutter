@@ -324,20 +324,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get chatMicTooltip => '按住说话';
 
   @override
-  String get chatAvatarReady => '准备就绪';
-
-  @override
-  String get chatAvatarThinking => '思考中…';
-
-  @override
-  String get chatAvatarSpeaking => '说话中…';
-
-  @override
-  String chatAvatarSemantics(String status) {
-    return 'Celia 虚拟形象，$status';
-  }
-
-  @override
   String get chatListening => '正在聆听…';
 
   @override
@@ -345,6 +331,30 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get chatSpeechUnavailable => '此设备不支持语音识别。';
+
+  @override
+  String get avatarModeReady => '准备就绪';
+
+  @override
+  String get avatarModeThinking => '思考中…';
+
+  @override
+  String get avatarModeSpeaking => '说话中…';
+
+  @override
+  String get avatarModeHoldToTalk => '按住说话';
+
+  @override
+  String get avatarModeExit => '手动模式';
+
+  @override
+  String get avatarModeConfirmTitle => '与 Celia 确认？';
+
+  @override
+  String get avatarModeConfirmBody => 'Celia 想保存内容。允许吗？';
+
+  @override
+  String get avatarModeConfirmYes => '允许';
 
   @override
   String get chatCouldNotOpenRoutine => '无法打开该训练计划';
@@ -1308,6 +1318,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get profileDarkMode => '深色模式';
+
+  @override
+  String get profileAvatarMode => '虚拟形象模式';
+
+  @override
+  String get profileAvatarModeSubtitle => '与 Celia 全屏语音对话';
 
   @override
   String get profileLanguage => '语言';

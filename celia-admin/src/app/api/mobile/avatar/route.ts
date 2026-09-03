@@ -8,43 +8,34 @@ import {
 } from 'ai';
 import { verifyFirebaseUser } from '@/lib/firebaseAuth';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
-import { createCeliaAgent, type UserStateSnapshot } from '@/lib/celiaAgent/agent';
+import { createAvatarAgent } from '@/lib/celiaAgent/avatarAgent';
+import type { UserStateSnapshot } from '@/lib/celiaAgent/agent';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
 
-// Enough for a long coaching answer; older turns are dropped so a long-running
-// conversation can't grow the prompt without bound.
 const MAX_HISTORY_MESSAGES = 40;
+/** Separates Avatar Mode threads from the manual chat tab. */
+const CONVERSATION_MODE = 'avatar';
 
 type ApprovalDecision = {
   approvalId: string;
   approved: boolean;
 };
 
-type ChatBody = {
-  /** Omit to start a new conversation. */
+type AvatarBody = {
   conversationId?: string;
-  /** The new user message. Omitted when only answering a pending approval. */
   message?: string;
-  /** Minutes east of UTC on the device, so "today" matches the app. */
   tzOffsetMinutes?: number;
-  /** Profile/targets the backend can't read itself (they live in Firestore). */
   state?: UserStateSnapshot;
-  /** Responses to tool confirmations Celia asked for on a previous turn. */
   approvals?: ApprovalDecision[];
 };
 
-/** Shape of a tool part waiting on a decision, as stored in `chat_messages.parts`. */
 type ApprovalRequestedPart = {
   state: string;
   approval?: { id?: string };
 };
 
-/**
- * Records the user's decisions on the tool parts that asked for them and
- * returns the messages that changed, so they can be written back.
- */
 function applyApprovals(history: UIMessage[], decisions: ApprovalDecision[]) {
   const byId = new Map(decisions.map((d) => [d.approvalId, d.approved]));
   const changed: UIMessage[] = [];
@@ -64,8 +55,6 @@ function applyApprovals(history: UIMessage[], decisions: ApprovalDecision[]) {
       return {
         ...part,
         state: 'approval-responded',
-        // Keeping the original approval object preserves the signature that
-        // binds this decision to the tool call it came from.
         approval: { ...candidate.approval, approved: byId.get(id) },
       } as UIMessage['parts'][number];
     });
@@ -92,7 +81,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const body = (await req.json()) as ChatBody;
+    const body = (await req.json()) as AvatarBody;
     const messageText = String(body.message || '').trim();
     const approvals = Array.isArray(body.approvals) ? body.approvals : [];
 
@@ -106,16 +95,19 @@ export async function POST(req: NextRequest) {
 
     const supabase = getSupabaseAdmin();
 
-    // Resolve the conversation, refusing ids that belong to someone else.
     let conversationId = body.conversationId?.trim() || '';
     if (conversationId) {
       const { data: existing } = await supabase
         .from('chat_conversations')
-        .select('id,user_id')
+        .select('id,user_id,mode')
         .eq('id', conversationId)
         .maybeSingle();
 
-      if (!existing || existing.user_id !== user.uid) {
+      if (
+        !existing ||
+        existing.user_id !== user.uid ||
+        (existing.mode != null && existing.mode !== CONVERSATION_MODE)
+      ) {
         return NextResponse.json({ error: 'Conversation not found' }, { status: 404 });
       }
     } else {
@@ -123,8 +115,8 @@ export async function POST(req: NextRequest) {
         .from('chat_conversations')
         .insert({
           user_id: user.uid,
-          title: messageText ? titleFrom(messageText) : 'New chat',
-          mode: 'chat',
+          title: messageText ? titleFrom(messageText) : 'Avatar chat',
+          mode: CONVERSATION_MODE,
         })
         .select('id')
         .single();
@@ -151,11 +143,6 @@ export async function POST(req: NextRequest) {
       parts: (Array.isArray(row.parts) ? row.parts : []) as UIMessage['parts'],
     }));
 
-    // Answers to the confirmations Celia asked for last turn. The decision has
-    // to be written onto the tool part that requested it: the agent matches an
-    // approval to its pending tool call by id and checks the signature it
-    // issued, so a free-standing approval message leaves the call pending and
-    // the turn produces nothing.
     if (approvals.length > 0) {
       const changed = applyApprovals(history, approvals);
       for (const message of changed) {
@@ -176,7 +163,6 @@ export async function POST(req: NextRequest) {
 
     const messages: ModelMessage[] = await convertToModelMessages(history);
 
-    // Persist the user's turn now, so it isn't lost if generation fails.
     if (messageText) {
       await supabase.from('chat_messages').insert({
         conversation_id: conversationId,
@@ -187,35 +173,16 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const lastForDebug = messages.at(-1);
-    console.log(
-      '[chat] resume-debug',
-      JSON.stringify({
-        count: messages.length,
-        lastRole: lastForDebug?.role,
-        lastTypes: Array.isArray(lastForDebug?.content)
-          ? lastForDebug.content.map((p) => p.type)
-          : typeof lastForDebug?.content,
-        approvalsIn: approvals,
-      })
-    );
-
-    const agent = createCeliaAgent({ uid: user.uid, tzOffsetMinutes }, body.state);
+    const agent = createAvatarAgent({ uid: user.uid, tzOffsetMinutes }, body.state);
     const result = await agent.stream({ messages });
 
     return createUIMessageStreamResponse({
       headers: { 'x-conversation-id': conversationId },
       stream: toUIMessageStream({
         stream: result.stream,
-        // Required for resuming an approved tool call: the call was made on a
-        // previous turn, so without the conversation here the stream has no
-        // tool part to attach the result to and throws "no tool invocation
-        // found for tool call id".
         originalMessages: history,
-        // The SDK's default swallows the cause behind "An error occurred.",
-        // which leaves nothing to debug from once this is running on a device.
         onError: (error) => {
-          console.error('[chat] stream error', error);
+          console.error('[avatar] stream error', error);
           return error instanceof Error ? error.message : String(error);
         },
         onEnd: async ({ responseMessage, isContinuation }) => {
@@ -226,13 +193,9 @@ export async function POST(req: NextRequest) {
             .join('\n')
             .trim();
 
-          // A turn that died before producing anything would otherwise leave an
-          // empty row that the next turn feeds back to the model as history.
           if (parts.length === 0) return;
 
           if (isContinuation) {
-            // Answering an approval extends the assistant message that asked
-            // for it, so the stored turn is rewritten rather than duplicated.
             await supabase
               .from('chat_messages')
               .update({ content: text, parts })

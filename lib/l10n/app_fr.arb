@@ -130,10 +130,6 @@
   "chatListening": "Écoute…",
   "chatMicDenied": "L'accès au micro est nécessaire pour parler à Celia.",
   "chatSpeechUnavailable": "La reconnaissance vocale n'est pas disponible sur cet appareil.",
-  "chatAvatarReady": "Prête",
-  "chatAvatarThinking": "Réflexion…",
-  "chatAvatarSpeaking": "Elle parle…",
-  "chatAvatarSemantics": "Avatar de Celia, {status}",
   "chatCouldNotOpenRoutine": "Impossible d’ouvrir ce programme",
   "chatThisRoutine": "ce programme",
   "chatThisMeal": "ce repas",
@@ -1031,5 +1027,15 @@
       }
     }
   },
-  "insightsSectionTitle": "Analyses Celia"
+  "insightsSectionTitle": "Analyses Celia",
+  "profileAvatarMode": "Mode avatar",
+  "profileAvatarModeSubtitle": "Parlez à Celia en plein écran",
+  "avatarModeReady": "Prête",
+  "avatarModeThinking": "Réflexion…",
+  "avatarModeSpeaking": "Elle parle…",
+  "avatarModeHoldToTalk": "Maintenir pour parler",
+  "avatarModeExit": "Mode manuel",
+  "avatarModeConfirmTitle": "Confirmer avec Celia ?",
+  "avatarModeConfirmBody": "Celia veut enregistrer quelque chose. Autoriser ?",
+  "avatarModeConfirmYes": "Autoriser"
 }

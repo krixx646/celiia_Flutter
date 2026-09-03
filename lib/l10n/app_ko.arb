@@ -130,10 +130,6 @@
   "chatListening": "듣는 중…",
   "chatMicDenied": "Celia와 대화하려면 마이크 권한이 필요합니다.",
   "chatSpeechUnavailable": "이 기기에서는 음성 인식을 사용할 수 없습니다.",
-  "chatAvatarReady": "준비됨",
-  "chatAvatarThinking": "생각 중…",
-  "chatAvatarSpeaking": "말하는 중…",
-  "chatAvatarSemantics": "Celia 아바타, {status}",
   "chatCouldNotOpenRoutine": "해당 루틴을 열 수 없습니다",
   "chatThisRoutine": "이 루틴",
   "chatThisMeal": "이 식사",
@@ -1031,5 +1027,15 @@
       }
     }
   },
-  "insightsSectionTitle": "Celia 인사이트"
+  "insightsSectionTitle": "Celia 인사이트",
+  "profileAvatarMode": "아바타 모드",
+  "profileAvatarModeSubtitle": "Celia와 전체 화면으로 대화",
+  "avatarModeReady": "준비됨",
+  "avatarModeThinking": "생각 중…",
+  "avatarModeSpeaking": "말하는 중…",
+  "avatarModeHoldToTalk": "길게 눌러 말하기",
+  "avatarModeExit": "수동 모드",
+  "avatarModeConfirmTitle": "Celia에게 확인할까요?",
+  "avatarModeConfirmBody": "Celia가 저장하려 합니다. 허용할까요?",
+  "avatarModeConfirmYes": "허용"
 }

@@ -1,9 +1,9 @@
 {
   "@@locale": "en",
-
   "appName": "Celia Integral Coach",
-  "@appName": {"description": "The app's name. Not translated."},
-
+  "@appName": {
+    "description": "The app's name. Not translated."
+  },
   "actionCancel": "Cancel",
   "actionSave": "Save",
   "actionDelete": "Delete",
@@ -15,10 +15,8 @@
   "actionSeeAll": "See All",
   "actionYesDoIt": "Yes, do it",
   "actionNotNow": "Not now",
-
   "loadingPreparing": "Preparing Celia...",
   "loadingGeneric": "Loading...",
-
   "errorGeneric": "Something went wrong. Please try again.",
   "errorCanceled": "Action canceled.",
   "errorTooManyRequests": "Too many attempts. Please wait a minute and try again.",
@@ -47,15 +45,19 @@
   "errorAppleSignIn": "Apple sign-in failed. Please try again.",
   "errorRefreshNutrition": "Could not refresh nutrition data.",
   "errorLoadNutritionProfile": "Could not load your nutrition profile.",
-
   "startupErrorTitle": "Unable to start the app",
   "startupErrorBody": "Please close and reopen the app. If this continues, contact support.",
-
   "authTagline": "Your fitness buddy",
   "authSignUp": "Sign Up",
   "authLogIn": "Log In",
   "authVersion": "Version {version}",
-  "@authVersion": {"placeholders": {"version": {"type": "String"}}},
+  "@authVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "authForgotPassword": "Forgot Password?",
   "authOr": "OR",
   "authContinueWithGoogle": "Continue with Google",
@@ -67,7 +69,6 @@
   "authFieldName": "Your name",
   "authFieldEmail": "Email",
   "authFieldPassword": "Password",
-
   "verifyEmailTitle": "Verify your email",
   "verifyEmailHeading": "Check your inbox",
   "verifyEmailBody": "A verification link has been sent to your email.",
@@ -77,21 +78,30 @@
   "verifyEmailSending": "Sending...",
   "verifyEmailResend": "Resend verification email",
   "verifyEmailResendIn": "Resend in {seconds}s",
-  "@verifyEmailResendIn": {"placeholders": {"seconds": {"type": "int"}}},
+  "@verifyEmailResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
   "verifyEmailAddress": "Email: {email}",
-  "@verifyEmailAddress": {"placeholders": {"email": {"type": "String"}}},
-
+  "@verifyEmailAddress": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
   "forgotPasswordTitle": "Forgot Password",
   "forgotPasswordBody": "Enter your email to receive a password reset link.",
   "forgotPasswordEmptyEmail": "Please enter an email",
   "forgotPasswordSent": "Password reset email sent.",
   "forgotPasswordSend": "Send reset link",
   "forgotPasswordSending": "Sending...",
-
   "nameSetupTitle": "What should Celia call you?",
   "nameSetupBody": "We use your name across the app so coaching feels personal.",
   "nameSetupSaveFailed": "Could not save your name. Please try again.",
-
   "homeGoodMorning": "Good Morning,",
   "homeCeliaActive": "CELIA ACTIVE",
   "homeGenerateRoutine": "Generate your\npersonalized\nroutine with AI",
@@ -107,7 +117,6 @@
   "homeNutritionSubtitle": "View calories, macros & meals",
   "homeBrowseLibrary": "Browse\nLibrary",
   "homeTrackProgress": "Track\nProgress",
-
   "chatTitle": "Coach Celia",
   "chatEmptyPrompt": "How can I help you\nget fit today?",
   "chatYourChats": "Your chats",
@@ -118,47 +127,82 @@
   "chatScanAMeal": "Scan a meal",
   "chatInputHint": "Ask Celia anything about your training...",
   "chatMicTooltip": "Hold to talk",
-  "chatAvatarReady": "Ready",
-  "chatAvatarThinking": "Thinking…",
-  "chatAvatarSpeaking": "Speaking…",
-  "chatAvatarSemantics": "Celia avatar, {status}",
-  "@chatAvatarSemantics": {"placeholders": {"status": {"type": "String"}}},
   "chatListening": "Listening…",
   "chatMicDenied": "Microphone access is needed to talk to Celia.",
   "chatSpeechUnavailable": "Speech recognition isn't available on this device.",
+  "avatarModeReady": "Ready",
+  "avatarModeThinking": "Thinking…",
+  "avatarModeSpeaking": "Speaking…",
+  "avatarModeHoldToTalk": "Hold to talk",
+  "avatarModeExit": "Manual mode",
+  "avatarModeConfirmTitle": "Confirm with Celia?",
+  "avatarModeConfirmBody": "Celia wants to save something. Allow it?",
+  "avatarModeConfirmYes": "Allow",
   "chatCouldNotOpenRoutine": "Could not open that routine",
   "chatThisRoutine": "this routine",
   "chatThisMeal": "this meal",
   "chatYourRoutine": "Your routine",
   "chatMoreExercises": "+ {count} more",
-  "@chatMoreExercises": {"placeholders": {"count": {"type": "int"}}},
+  "@chatMoreExercises": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "chatEmptySubtitle": "Ask about your training, your food, or your progress.",
   "chatLoggedToday": "You've logged {calories} kcal today.",
-  "@chatLoggedToday": {"placeholders": {"calories": {"type": "int"}}},
-
+  "@chatLoggedToday": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "chatSuggestionHiit": "Build me a 20-minute HIIT routine",
   "chatSuggestionDinner": "What should I eat tonight?",
   "chatSuggestionProgress": "How am I doing this week?",
   "chatSuggestionIngredients": "I have chicken, rice and spinach",
-
   "chatJustNow": "Just now",
   "chatMinutesAgo": "{minutes}m ago",
-  "@chatMinutesAgo": {"placeholders": {"minutes": {"type": "int"}}},
+  "@chatMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "chatHoursAgo": "{hours}h ago",
-  "@chatHoursAgo": {"placeholders": {"hours": {"type": "int"}}},
+  "@chatHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
   "chatDaysAgo": "{days}d ago",
-  "@chatDaysAgo": {"placeholders": {"days": {"type": "int"}}},
-
+  "@chatDaysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "chatRoutineAlreadySaved": "Already in your library — tap to open",
   "chatRoutineTapToOpen": "Tap to open",
   "chatToolCancelled": "Cancelled",
   "chatToolFailed": "{label} — that did not work",
-  "@chatToolFailed": {"placeholders": {"label": {"type": "String"}}},
+  "@chatToolFailed": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
   "chatToolRoutineSaveFailed": "Could not save the routine",
   "chatToolRoutineSaved": "Saved to your library",
   "chatToolMealLogged": "Added to today's log",
   "chatToolRoutineAdded": "Added to your library",
-
   "activityCheckingProgress": "Checking your progress",
   "activityCheckingNutrition": "Checking what you ate today",
   "activityReviewingMeals": "Reviewing your recent meals",
@@ -169,25 +213,58 @@
   "activityLoggingMeal": "Logging your meal",
   "activitySavingToLibrary": "Saving to your library",
   "activityWorking": "Working on it",
-
   "approvalSaveRoutineWithCount": "Save \"{name}\" with {count} exercises to your library?",
-  "@approvalSaveRoutineWithCount": {"placeholders": {"name": {"type": "String"}, "count": {"type": "int"}}},
+  "@approvalSaveRoutineWithCount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "approvalSaveRoutine": "Save \"{name}\" to your library?",
-  "@approvalSaveRoutine": {"placeholders": {"name": {"type": "String"}}},
+  "@approvalSaveRoutine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "approvalLogMealWithCalories": "Log \"{name}\" at {calories} kcal?",
-  "@approvalLogMealWithCalories": {"placeholders": {"name": {"type": "String"}, "calories": {"type": "int"}}},
+  "@approvalLogMealWithCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "approvalLogMeal": "Log \"{name}\"?",
-  "@approvalLogMeal": {"placeholders": {"name": {"type": "String"}}},
+  "@approvalLogMeal": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "approvalAddRoutine": "Add this routine to your library?",
   "approvalGeneric": "Allow Celia to do this?",
-
   "libraryTitle": "Routine Library",
   "librarySteps": "{count, plural, one{{count} step} other{{count} steps}}",
-  "@librarySteps": {"placeholders": {"count": {"type": "int"}}},
+  "@librarySteps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "libraryEmpty": "No routines yet",
   "libraryEmptyBody": "Create and publish routines in the admin dashboard.",
   "libraryLoadFailed": "Failed to load routines",
-
   "routineStartWorkout": "Start Workout",
   "routineNoSteps": "No steps available",
   "routineNoVideoForStep": "No video available for this step",
@@ -198,12 +275,26 @@
   "routineDetails": "Details",
   "routineNotFound": "Routine not found",
   "routineCompletedTimes": "Completed {count}x",
-  "@routineCompletedTimes": {"placeholders": {"count": {"type": "int"}}},
-
+  "@routineCompletedTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "playerVideoUnavailable": "This video is not available right now.",
   "playerSteps": "Steps",
   "playerStepCounter": "{current}/{total}",
-  "@playerStepCounter": {"placeholders": {"current": {"type": "int"}, "total": {"type": "int"}}},
+  "@playerStepCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "playerNoPlayableVideos": "No playable videos",
   "playerWorkoutComplete": "Workout complete!",
   "playerSavingStreak": "Saving to your streak…",
@@ -213,17 +304,46 @@
   "playerNotReady": "Player not ready",
   "playerPreviewUnavailable": "Preview not available right now.",
   "playerClipCounter": "Clip {current} of {total} · {duration}",
-  "@playerClipCounter": {"placeholders": {"current": {"type": "int"}, "total": {"type": "int"}, "duration": {"type": "String"}}},
+  "@playerClipCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
   "playerErrorLoadingVideo": "Error loading video",
   "playerLoadingVideo": "Loading video...",
   "playerFailedToLoadVideo": "Failed to load video",
   "playerNotInitialized": "Video player not initialized",
-
   "guidedExerciseCounter": "Exercise {current}/{total}",
-  "@guidedExerciseCounter": {"placeholders": {"current": {"type": "int"}, "total": {"type": "int"}}},
+  "@guidedExerciseCounter": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "guidedGetReady": "GET READY",
   "guidedSetOf": "Set {current} of {total}",
-  "@guidedSetOf": {"placeholders": {"current": {"type": "int"}, "total": {"type": "int"}}},
+  "@guidedSetOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "guidedRest": "REST",
   "guidedSkipRest": "Skip rest",
   "guidedPaused": "Paused",
@@ -234,83 +354,188 @@
   "guidedKeepGoing": "Keep going",
   "guidedEnd": "End",
   "guidedReps": "{count, plural, one{{count} rep} other{{count} reps}}",
-  "@guidedReps": {"placeholders": {"count": {"type": "int"}}},
-
+  "@guidedReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "generateSheetTitle": "Generate Routine with AI",
   "generateSheetPrompt": "What kind of workout do you want?",
   "generateSheetHint": "e.g., \"A quick morning stretch to wake up\" or \"Full body strength training for beginners\"",
   "generateSheetDuration": "Duration",
   "generateSheetMinutes": "{count} min",
-  "@generateSheetMinutes": {"placeholders": {"count": {"type": "int"}}},
+  "@generateSheetMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "generateSheetDifficulty": "Difficulty",
   "generateSheetEquipment": "Available Equipment",
   "generateSheetGenerating": "Generating...",
   "generateSheetSubmit": "Generate Routine",
   "generateSheetDescribeFirst": "Please describe the workout you want",
   "generateSheetAlreadyExists": "You already have this one: {title}",
-  "@generateSheetAlreadyExists": {"placeholders": {"title": {"type": "String"}}},
+  "@generateSheetAlreadyExists": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "generateSheetCreated": "Created: {title}",
-  "@generateSheetCreated": {"placeholders": {"title": {"type": "String"}}},
+  "@generateSheetCreated": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "generateSheetFailed": "Failed to generate routine",
-
   "guidedNoExercises": "This routine has no exercises yet.",
   "guidedStartFailed": "Unable to start this workout right now. Please try again.",
   "guidedSaveFailed": "Could not save this workout. Tap retry to update your streak.",
   "guidedOfReps": "of {count} reps",
-  "@guidedOfReps": {"placeholders": {"count": {"type": "int"}}},
+  "@guidedOfReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "guidedHold": "hold",
   "guidedNextSet": "Next set",
   "guidedUpNext": "Up next",
   "guidedSetsHold": "{sets} × {seconds}s hold",
-  "@guidedSetsHold": {"placeholders": {"sets": {"type": "int"}, "seconds": {"type": "int"}}},
-
+  "@guidedSetsHold": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
   "coachGetReady": "Get ready. {exercise}",
-  "@coachGetReady": {"placeholders": {"exercise": {"type": "String"}}},
+  "@coachGetReady": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
   "coachStartReps": "Go. {count} reps.",
-  "@coachStartReps": {"placeholders": {"count": {"type": "int"}}},
+  "@coachStartReps": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "coachStartHold": "Hold for {seconds} seconds.",
-  "@coachStartHold": {"placeholders": {"seconds": {"type": "int"}}},
+  "@coachStartHold": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
   "coachRest": "Rest. Next up: {exercise}",
-  "@coachRest": {"placeholders": {"exercise": {"type": "String"}}},
+  "@coachRest": {
+    "placeholders": {
+      "exercise": {
+        "type": "String"
+      }
+    }
+  },
   "coachRestShort": "Rest.",
   "coachComplete": "Great work. Workout complete.",
   "coachRep": "{count}",
-  "@coachRep": {"placeholders": {"count": {"type": "int"}}},
+  "@coachRep": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "coachCountdown": "{seconds}",
-  "@coachCountdown": {"placeholders": {"seconds": {"type": "int"}}},
-
+  "@coachCountdown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
   "playerNoVideosInRoutine": "No playable videos found in this routine.",
   "playerLoadRoutineFailed": "Unable to load this routine right now. Please try again.",
   "playerStepLoadFailedSkipping": "Failed to load \"{title}\". Skipping…",
-  "@playerStepLoadFailedSkipping": {"placeholders": {"title": {"type": "String"}}},
+  "@playerStepLoadFailedSkipping": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "playerStepLoadFailed": "Failed to load \"{title}\".",
-  "@playerStepLoadFailed": {"placeholders": {"title": {"type": "String"}}},
+  "@playerStepLoadFailed": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
   "playerSaveCompletionFailed": "Could not save completion. Tap retry to update your streak.",
   "playerStepPreviewSubtitle": "{duration} • Preview",
-  "@playerStepPreviewSubtitle": {"placeholders": {"duration": {"type": "String"}}},
+  "@playerStepPreviewSubtitle": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
   "playerNoVideosReady": "This routine has no videos ready to play yet.",
   "playerPlaybackFailed": "Unable to play this video right now. Please try again.",
-
   "libraryTabCurated": "Curated",
   "libraryTabAiGenerated": "AI-Generated",
-
   "profileSavedRoutines": "Saved Routines",
   "savedRoutinesNoFavorites": "No favorite routines yet.",
   "savedRoutinesEmpty": "No saved routines yet.",
   "actionFavorite": "Favorite",
   "actionUnfavorite": "Unfavorite",
-
   "routineDurationMinutes": "{minutes} min",
-  "@routineDurationMinutes": {"placeholders": {"minutes": {"type": "int"}}},
+  "@routineDurationMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "routineDurationHoursMinutes": "{hours}h {minutes}m",
-  "@routineDurationHoursMinutes": {"placeholders": {"hours": {"type": "int"}, "minutes": {"type": "int"}}},
+  "@routineDurationHoursMinutes": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "routineDurationHours": "{hours}h",
-  "@routineDurationHours": {"placeholders": {"hours": {"type": "int"}}},
-
+  "@routineDurationHours": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
   "difficultyEasy": "Easy",
   "difficultyMedium": "Medium",
   "difficultyHard": "Hard",
-
   "categoryStrength": "Strength",
   "categoryCardio": "Cardio",
   "categoryFlexibility": "Flexibility",
@@ -319,12 +544,10 @@
   "categoryHiit": "HIIT",
   "categoryYoga": "Yoga",
   "categoryCustom": "Custom",
-
   "navHome": "Home",
   "navLibrary": "Library",
   "navChat": "Chat",
   "navProfile": "Profile",
-
   "equipmentNone": "None",
   "equipmentDumbbells": "Dumbbells",
   "equipmentResistanceBands": "Resistance Bands",
@@ -332,7 +555,6 @@
   "equipmentKettlebell": "Kettlebell",
   "equipmentPullUpBar": "Pull-up Bar",
   "equipmentJumpRope": "Jump Rope",
-
   "nutritionTitle": "Nutrition",
   "nutritionSubtitle": "Calories, macros, and meal history",
   "nutritionSetGoalsTitle": "Set your daily nutrition goals",
@@ -341,23 +563,57 @@
   "nutritionDailyTarget": "Daily target",
   "nutritionDailyGoals": "Daily goals",
   "nutritionKcal": "{calories} kcal",
-  "@nutritionKcal": {"placeholders": {"calories": {"type": "int"}}},
+  "@nutritionKcal": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "nutritionMacroSummary": "P {protein}g · C {carbs}g · F {fat}g",
-  "@nutritionMacroSummary": {"placeholders": {"protein": {"type": "int"}, "carbs": {"type": "int"}, "fat": {"type": "int"}}},
+  "@nutritionMacroSummary": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
   "nutritionToday": "Today",
   "nutritionMealHistory": "Meal History",
   "nutritionCeliaInsights": "Celia Insights",
   "nutritionWeeklyTrend": "Weekly Trend",
   "nutritionTodayMeals": "kcal • {count, plural, one{{count} meal} other{{count} meals}}",
-  "@nutritionTodayMeals": {"placeholders": {"count": {"type": "int"}}},
+  "@nutritionTodayMeals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "nutritionTodayOfTargetMeals": "of {target} kcal • {count, plural, one{{count} meal} other{{count} meals}}",
-  "@nutritionTodayOfTargetMeals": {"placeholders": {"target": {"type": "int"}, "count": {"type": "int"}}},
+  "@nutritionTodayOfTargetMeals": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "nutritionWeekdayInitials": "M,T,W,T,F,S,S",
-  "@nutritionWeekdayInitials": {"description": "Single-letter weekday labels for the weekly chart, Monday first, comma separated."},
+  "@nutritionWeekdayInitials": {
+    "description": "Single-letter weekday labels for the weekly chart, Monday first, comma separated."
+  },
   "nutritionFieldFoodName": "Food name",
   "nutritionFieldGrams": "Grams",
   "nutritionFieldCalories": "Calories",
-
   "scannerStatusAnalyzing": "ANALYZING...",
   "scannerStatusIdle": "CELIA SCANNER",
   "scannerFieldFoodName": "Food name",
@@ -368,9 +624,24 @@
   "scannerMacroCarb": "CARB",
   "scannerMacroFat": "FAT",
   "scannerRemainingAfterLogging": "{calories} kcal and {grams}g protein left today",
-  "@scannerRemainingAfterLogging": {"placeholders": {"calories": {"type": "int"}, "grams": {"type": "int"}}},
+  "@scannerRemainingAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
   "scannerOverTargetAfterLogging": "{calories} kcal over your daily target",
-  "@scannerOverTargetAfterLogging": {"placeholders": {"calories": {"type": "int"}}},
+  "@scannerOverTargetAfterLogging": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "scannerButtonAnalyzing": "Analyzing",
   "scannerButtonQuotaNeeded": "Quota Needed",
   "scannerButtonScanNow": "Scan Now",
@@ -387,62 +658,176 @@
   "scannerErrorMealTableMissing": "Meal logging table is not ready yet. The scan result is still available.",
   "scannerErrorGeneric": "Celia could not analyze this meal yet. Hold the camera steady, keep the food centered, and scan again.",
   "nutritionGrams": "{grams}g",
-  "@nutritionGrams": {"placeholders": {"grams": {"type": "String"}}},
+  "@nutritionGrams": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
   "nutritionMealSubtitle": "{time} · {count, plural, one{{count} item} other{{count} items}}",
-  "@nutritionMealSubtitle": {"placeholders": {"time": {"type": "String"}, "count": {"type": "int"}}},
+  "@nutritionMealSubtitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "nutritionMealDetails": "Meal Details",
   "nutritionFoodItems": "Food Items",
   "nutritionItemSubtitle": "{grams}g · {calories} kcal",
-  "@nutritionItemSubtitle": {"placeholders": {"grams": {"type": "int"}, "calories": {"type": "int"}}},
+  "@nutritionItemSubtitle": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "nutritionNeedsOneItem": "A meal needs at least one food item.",
   "nutritionMealUpdated": "Meal updated",
   "nutritionUpdateFailed": "Could not update meal: {error}",
-  "@nutritionUpdateFailed": {"placeholders": {"error": {"type": "String"}}},
+  "@nutritionUpdateFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "nutritionDeleteMealTitle": "Delete meal?",
   "nutritionDeleteMealBody": "This removes the meal from your nutrition history.",
   "nutritionDeleteMeal": "Delete meal",
   "nutritionDeleteFailed": "Could not delete meal: {error}",
-  "@nutritionDeleteFailed": {"placeholders": {"error": {"type": "String"}}},
+  "@nutritionDeleteFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "nutritionEditFood": "Edit Food",
   "nutritionSaveFood": "Save Food",
   "nutritionLoadFailed": "Could not load meals",
   "nutritionLoadFailedBody": "Pull to refresh or check the backend connection.",
   "nutritionNoMeals": "No meals logged yet",
   "nutritionNoMealsBody": "Scan your first meal and Celia will build your nutrition history.",
-
   "progressToday": "Today",
   "progressSetGoals": "Set your nutrition goals to unlock calorie and macro tracking.",
   "progressOfTarget": "of {target} kcal",
-  "@progressOfTarget": {"placeholders": {"target": {"type": "int"}}},
+  "@progressOfTarget": {
+    "placeholders": {
+      "target": {
+        "type": "int"
+      }
+    }
+  },
   "progressMacroAmount": "{consumed} / {target}g",
-  "@progressMacroAmount": {"placeholders": {"consumed": {"type": "int"}, "target": {"type": "int"}}},
+  "@progressMacroAmount": {
+    "placeholders": {
+      "consumed": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
   "progressKcalOver": "{calories} kcal over",
-  "@progressKcalOver": {"placeholders": {"calories": {"type": "int"}}},
+  "@progressKcalOver": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "progressKcalLeft": "{calories} kcal left",
-  "@progressKcalLeft": {"placeholders": {"calories": {"type": "int"}}},
+  "@progressKcalLeft": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "progressProtein": "Protein",
   "progressCarbs": "Carbs",
   "progressFat": "Fat",
-
   "scannerEditItem": "Edit Food Item",
   "scannerSaveChanges": "Save Changes",
   "scannerItemCalories": "{name} · {calories} kcal",
-  "@scannerItemCalories": {"placeholders": {"name": {"type": "String"}, "calories": {"type": "int"}}},
+  "@scannerItemCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "scannerConfidence": "Confidence {percent}% · {provider}",
-  "@scannerConfidence": {"placeholders": {"percent": {"type": "int"}, "provider": {"type": "String"}}},
+  "@scannerConfidence": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
   "scannerMoreItems": "+ {count} more items included in this meal log",
-  "@scannerMoreItems": {"placeholders": {"count": {"type": "int"}}},
+  "@scannerMoreItems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "scannerIfYouLog": "If you log this meal",
   "scannerAfterLogging": "{after} / {target} kcal today",
-  "@scannerAfterLogging": {"placeholders": {"after": {"type": "int"}, "target": {"type": "int"}}},
+  "@scannerAfterLogging": {
+    "placeholders": {
+      "after": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
   "scannerGramsDecimal": "{grams}g",
-  "@scannerGramsDecimal": {"placeholders": {"grams": {"type": "String"}}},
+  "@scannerGramsDecimal": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
   "scannerItemServing": "{name} · {grams}g",
-  "@scannerItemServing": {"placeholders": {"name": {"type": "String"}, "grams": {"type": "int"}}},
+  "@scannerItemServing": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
   "scannerNoMealDetected": "No meal detected",
-
   "onboardingWelcome": "Welcome, {name}",
-  "@onboardingWelcome": {"placeholders": {"name": {"type": "String"}}},
+  "@onboardingWelcome": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "onboardingGender": "Gender",
   "onboardingCalculateGoals": "Calculate My Goals",
   "onboardingScanFirstMeal": "Scan My First Meal",
@@ -450,9 +835,27 @@
   "onboardingGoHome": "Go to Home",
   "onboardingDailyTargets": "Your daily targets",
   "onboardingProtein": "Protein {grams}g ·",
-  "@onboardingProtein": {"placeholders": {"grams": {"type": "int"}}},
+  "@onboardingProtein": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
   "onboardingMacroTargets": "Protein {protein}g • Carbs {carbs}g • Fat {fat}g",
-  "@onboardingMacroTargets": {"placeholders": {"protein": {"type": "int"}, "carbs": {"type": "int"}, "fat": {"type": "int"}}},
+  "@onboardingMacroTargets": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      }
+    }
+  },
   "onboardingTargetsReady": "Your daily nutrition targets are ready. Choose how you want to start.",
   "onboardingWeightKg": "Weight (kg)",
   "onboardingHeightCm": "Height (cm)",
@@ -461,11 +864,9 @@
   "onboardingInvalidHeight": "Enter a valid height in cm.",
   "onboardingInvalidAge": "Enter a valid age between 13 and 100.",
   "onboardingSaveFailed": "Could not save your nutrition profile.",
-
   "genderMale": "Male",
   "genderFemale": "Female",
   "genderOther": "Other",
-
   "nutritionSetupTitle": "Daily Nutrition Goals",
   "nutritionSetupBody": "Tell Celia about your body so she can calculate your daily calories and macros.",
   "nutritionSetupGender": "Gender",
@@ -474,15 +875,22 @@
   "nutritionSourcesBody": "Daily calories use the Mifflin–St Jeor resting energy equation with a moderate physical activity factor (about 1.55). Protein is estimated near 1.8 g per kg body weight for active adults. Fat is set near 25% of calories, with carbs filling the remainder — within common dietary guidance ranges.",
   "nutritionSourcesDisclaimer": "These figures are general wellness estimates only. They are not a diagnosis, prescription, or substitute for advice from a qualified clinician or registered dietitian.",
   "nutritionSetupSave": "Save Goals",
-
   "profileTitle": "Profile",
   "profileCeliaAi": "Celia AI",
   "profileEliteMember": "Member",
   "profileAccount": "Account",
   "profileSignedInAs": "Signed in as:\n{email}",
-  "@profileSignedInAs": {"placeholders": {"email": {"type": "String"}}},
+  "@profileSignedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
   "profileUnknownEmail": "Unknown",
   "profileDarkMode": "Dark Mode",
+  "profileAvatarMode": "Avatar Mode",
+  "profileAvatarModeSubtitle": "Talk to Celia full-screen, hands-free",
   "profileLanguage": "Language",
   "profileLogOutTitle": "Log out?",
   "profileLogOutBody": "Are you sure you want to log out?",
@@ -498,61 +906,136 @@
   "profileSubscription": "Subscription",
   "profileNutrition": "Nutrition",
   "profileHelpSupport": "Help & Support",
-
   "profileFriend": "Friend",
   "profileStatSaved": "Saved",
   "profileStatStreak": "Streak",
   "profileStatWorkouts": "Workouts",
-
   "streakDayOneStarted": "Day 1 started — come back tomorrow to build your streak.",
   "streakRebuild": "You were active yesterday — log a meal or finish a workout today to rebuild your streak.",
   "streakStart": "Log a meal or finish a workout to start your active streak.",
   "streakLongRun": "{days}-day streak! Keep showing up — Celia is tracking your consistency.",
-  "@streakLongRun": {"placeholders": {"days": {"type": "int"}}},
+  "@streakLongRun": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "streakBothLogged": "{days}-day streak — workout and nutrition both logged today.",
-  "@streakBothLogged": {"placeholders": {"days": {"type": "int"}}},
+  "@streakBothLogged": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "streakNeedWorkout": "{days}-day streak. A quick workout would round out today.",
-  "@streakNeedWorkout": {"placeholders": {"days": {"type": "int"}}},
+  "@streakNeedWorkout": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "streakNeedMeal": "{days}-day streak. Log a meal to track your fueling.",
-  "@streakNeedMeal": {"placeholders": {"days": {"type": "int"}}},
+  "@streakNeedMeal": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "streakStayActive": "{days}-day streak — stay active today.",
-  "@streakStayActive": {"placeholders": {"days": {"type": "int"}}},
-
+  "@streakStayActive": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "editProfileTitle": "Edit Profile",
   "editProfileName": "Name",
   "editProfileFootnote": "Changes are saved to your account and will show on Home/Profile.",
   "editProfileSaveFailed": "Could not update profile. Please try again.",
-
   "languageTitle": "Language",
   "languageSystem": "Device language",
   "languageSystemSubtitle": "Follow the language your phone is set to",
   "languageEnglish": "English",
   "languageSpanish": "Spanish",
-
   "insightStartFuelingTitle": "Start fueling today",
   "insightStartFuelingBody": "You have your full calorie budget left. Scan or log your first meal to stay on track.",
   "insightAboveTargetTitle": "Above target today",
   "insightAboveTargetBody": "You are {calories} kcal above your daily target. Keep dinner lighter or add a short workout.",
-  "@insightAboveTargetBody": {"placeholders": {"calories": {"type": "int"}}},
+  "@insightAboveTargetBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "insightLowProteinTitle": "Protein is still low",
   "insightLowProteinBody": "You still need about {grams}g protein today to hit your target.",
-  "@insightLowProteinBody": {"placeholders": {"grams": {"type": "int"}}},
+  "@insightLowProteinBody": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
   "insightAlmostThereTitle": "Almost at your goal",
   "insightAlmostThereBody": "You have {calories} kcal left today. A balanced snack should fit nicely.",
-  "@insightAlmostThereBody": {"placeholders": {"calories": {"type": "int"}}},
+  "@insightAlmostThereBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
   "insightOnTrackTitle": "On track today",
   "insightOnTrackBody": "{calories} kcal and {grams}g protein left to reach your daily targets.",
-  "@insightOnTrackBody": {"placeholders": {"calories": {"type": "int"}, "grams": {"type": "int"}}},
+  "@insightOnTrackBody": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      },
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
   "insightWeeklyRhythmTitle": "Build your weekly rhythm",
   "insightWeeklyRhythmBody": "Log meals across the week so Celia can spot patterns and coach you better.",
   "insightWeeklyTrendTitle": "Weekly trend",
   "insightWeeklyTrendBody": "You logged meals on {days} of the last 7 days, averaging {average} kcal — {direction}.",
-  "@insightWeeklyTrendBody": {"placeholders": {"days": {"type": "int"}, "average": {"type": "int"}, "direction": {"type": "String"}}},
+  "@insightWeeklyTrendBody": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "average": {
+        "type": "int"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
   "insightTrendOnTarget": "right around your daily target",
   "insightTrendAbove": "{delta} kcal above your target on average",
-  "@insightTrendAbove": {"placeholders": {"delta": {"type": "int"}}},
+  "@insightTrendAbove": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
   "insightTrendBelow": "{delta} kcal below your target on average",
-  "@insightTrendBelow": {"placeholders": {"delta": {"type": "int"}}},
-
+  "@insightTrendBelow": {
+    "placeholders": {
+      "delta": {
+        "type": "int"
+      }
+    }
+  },
   "insightsSectionTitle": "Celia Insights"
 }

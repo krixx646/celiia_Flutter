@@ -43,10 +43,14 @@ class CeliaAvatarController {
   Future<void> setState(CeliaAvatarState state) async {
     _state = state;
     if (!_ready) return;
+    // Catches broadly on purpose: once the native view is torn down the
+    // channel has no handler and throws MissingPluginException, not a
+    // PlatformException, and these calls are all fire-and-forget.
     try {
       await _channel.invokeMethod<void>('setState', {'state': state.name});
-    } on PlatformException catch (e) {
+    } catch (e) {
       debugPrint('CeliaAvatarController.setState failed: $e');
+      _ready = false;
     }
   }
 
@@ -61,8 +65,9 @@ class CeliaAvatarController {
     if (!_ready) return;
     try {
       await _channel.invokeMethod<void>('setMorphs', {'morphs': morphs});
-    } on PlatformException catch (e) {
+    } catch (e) {
       debugPrint('CeliaAvatarController.setMorphs failed: $e');
+      _ready = false;
     }
   }
 
@@ -77,8 +82,9 @@ class CeliaAvatarController {
       await _channel.invokeMethod<void>('setMorphs', {
         'morphs': {CeliaAvatarMorphs.eyeClose: 0.0},
       });
-    } on PlatformException catch (e) {
+    } catch (e) {
       debugPrint('CeliaAvatarController.blinkOnce failed: $e');
+      _ready = false;
     }
   }
 
@@ -86,6 +92,6 @@ class CeliaAvatarController {
     _ready = false;
     try {
       await _channel.invokeMethod<void>('dispose');
-    } on PlatformException catch (_) {}
+    } catch (_) {}
   }
 }

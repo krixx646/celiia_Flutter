@@ -345,20 +345,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String get chatMicTooltip => 'Giữ để nói';
 
   @override
-  String get chatAvatarReady => 'Sẵn sàng';
-
-  @override
-  String get chatAvatarThinking => 'Đang nghĩ…';
-
-  @override
-  String get chatAvatarSpeaking => 'Đang nói…';
-
-  @override
-  String chatAvatarSemantics(String status) {
-    return 'Hình đại diện Celia, $status';
-  }
-
-  @override
   String get chatListening => 'Đang nghe…';
 
   @override
@@ -368,6 +354,30 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get chatSpeechUnavailable =>
       'Thiết bị này không hỗ trợ nhận dạng giọng nói.';
+
+  @override
+  String get avatarModeReady => 'Sẵn sàng';
+
+  @override
+  String get avatarModeThinking => 'Đang nghĩ…';
+
+  @override
+  String get avatarModeSpeaking => 'Đang nói…';
+
+  @override
+  String get avatarModeHoldToTalk => 'Giữ để nói';
+
+  @override
+  String get avatarModeExit => 'Chế độ thủ công';
+
+  @override
+  String get avatarModeConfirmTitle => 'Xác nhận với Celia?';
+
+  @override
+  String get avatarModeConfirmBody => 'Celia muốn lưu nội dung. Cho phép?';
+
+  @override
+  String get avatarModeConfirmYes => 'Cho phép';
 
   @override
   String get chatCouldNotOpenRoutine => 'Không thể mở lịch tập đó';
@@ -1355,6 +1365,12 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get profileDarkMode => 'Chế độ tối';
+
+  @override
+  String get profileAvatarMode => 'Chế độ avatar';
+
+  @override
+  String get profileAvatarModeSubtitle => 'Nói với Celia toàn màn hình';
 
   @override
   String get profileLanguage => 'Ngôn ngữ';

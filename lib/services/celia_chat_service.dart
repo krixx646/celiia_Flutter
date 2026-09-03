@@ -42,9 +42,13 @@ class CeliaStreamError extends CeliaStreamEvent {
 /// SDK UI message protocol) rather than one JSON blob, so text can render token
 /// by token and tool activity can be shown as it happens.
 class CeliaChatService {
-  CeliaChatService({FirebaseAuth? firebaseAuth, http.Client? httpClient})
-    : _injectedAuth = firebaseAuth,
-      _httpClient = httpClient ?? http.Client();
+  CeliaChatService({
+    FirebaseAuth? firebaseAuth,
+    http.Client? httpClient,
+    String chatPath = '/api/mobile/chat',
+  }) : _injectedAuth = firebaseAuth,
+       _httpClient = httpClient ?? http.Client(),
+       _chatPath = chatPath;
 
   final FirebaseAuth? _injectedAuth;
 
@@ -52,6 +56,7 @@ class CeliaChatService {
   /// be initialised.
   FirebaseAuth get _firebaseAuth => _injectedAuth ?? FirebaseAuth.instance;
   final http.Client _httpClient;
+  final String _chatPath;
 
   @visibleForTesting
   static String Function() backendBaseUrl = () => Env.celiaBackendBaseUrl;
@@ -103,7 +108,7 @@ class CeliaChatService {
         final token = await _idToken();
         final request = http.Request(
           'POST',
-          Uri.parse('${_baseUrl()}/api/mobile/chat'),
+          Uri.parse('${_baseUrl()}$_chatPath'),
         );
         request.headers.addAll({
           'Content-Type': 'application/json',

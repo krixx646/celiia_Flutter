@@ -130,10 +130,6 @@
   "chatListening": "正在聆听…",
   "chatMicDenied": "需要麦克风权限才能与 Celia 对话。",
   "chatSpeechUnavailable": "此设备不支持语音识别。",
-  "chatAvatarReady": "准备就绪",
-  "chatAvatarThinking": "思考中…",
-  "chatAvatarSpeaking": "说话中…",
-  "chatAvatarSemantics": "Celia 虚拟形象，{status}",
   "chatCouldNotOpenRoutine": "无法打开该训练计划",
   "chatThisRoutine": "该训练计划",
   "chatThisMeal": "这餐",
@@ -1031,5 +1027,15 @@
       }
     }
   },
-  "insightsSectionTitle": "Celia 洞察"
+  "insightsSectionTitle": "Celia 洞察",
+  "profileAvatarMode": "虚拟形象模式",
+  "profileAvatarModeSubtitle": "与 Celia 全屏语音对话",
+  "avatarModeReady": "准备就绪",
+  "avatarModeThinking": "思考中…",
+  "avatarModeSpeaking": "说话中…",
+  "avatarModeHoldToTalk": "按住说话",
+  "avatarModeExit": "手动模式",
+  "avatarModeConfirmTitle": "与 Celia 确认？",
+  "avatarModeConfirmBody": "Celia 想保存内容。允许吗？",
+  "avatarModeConfirmYes": "允许"
 }

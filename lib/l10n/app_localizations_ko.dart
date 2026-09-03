@@ -325,20 +325,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get chatMicTooltip => '길게 눌러 말하기';
 
   @override
-  String get chatAvatarReady => '준비됨';
-
-  @override
-  String get chatAvatarThinking => '생각 중…';
-
-  @override
-  String get chatAvatarSpeaking => '말하는 중…';
-
-  @override
-  String chatAvatarSemantics(String status) {
-    return 'Celia 아바타, $status';
-  }
-
-  @override
   String get chatListening => '듣는 중…';
 
   @override
@@ -346,6 +332,30 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get chatSpeechUnavailable => '이 기기에서는 음성 인식을 사용할 수 없습니다.';
+
+  @override
+  String get avatarModeReady => '준비됨';
+
+  @override
+  String get avatarModeThinking => '생각 중…';
+
+  @override
+  String get avatarModeSpeaking => '말하는 중…';
+
+  @override
+  String get avatarModeHoldToTalk => '길게 눌러 말하기';
+
+  @override
+  String get avatarModeExit => '수동 모드';
+
+  @override
+  String get avatarModeConfirmTitle => 'Celia에게 확인할까요?';
+
+  @override
+  String get avatarModeConfirmBody => 'Celia가 저장하려 합니다. 허용할까요?';
+
+  @override
+  String get avatarModeConfirmYes => '허용';
 
   @override
   String get chatCouldNotOpenRoutine => '해당 루틴을 열 수 없습니다';
@@ -1315,6 +1325,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get profileDarkMode => '다크 모드';
+
+  @override
+  String get profileAvatarMode => '아바타 모드';
+
+  @override
+  String get profileAvatarModeSubtitle => 'Celia와 전체 화면으로 대화';
 
   @override
   String get profileLanguage => '언어';

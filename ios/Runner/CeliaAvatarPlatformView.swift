@@ -37,6 +37,8 @@ final class CeliaAvatarPlatformView: NSObject, FlutterPlatformView {
   private let channel: FlutterMethodChannel
   private var faceNodes: [SCNNode] = []
   private var morphNames: [String] = []
+  private var avatarState = "idle"
+  private var swayAction: SCNAction?
 
   init(
     frame: CGRect,
@@ -45,11 +47,11 @@ final class CeliaAvatarPlatformView: NSObject, FlutterPlatformView {
     messenger: FlutterBinaryMessenger
   ) {
     container = UIView(frame: frame)
-    container.backgroundColor = UIColor(red: 0.06, green: 0.06, blue: 0.09, alpha: 1)
+    container.backgroundColor = UIColor.white
 
     scnView = SCNView(frame: container.bounds)
     scnView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    scnView.backgroundColor = UIColor(red: 0.06, green: 0.06, blue: 0.09, alpha: 1)
+    scnView.backgroundColor = UIColor.white
     scnView.antialiasingMode = .multisampling4X
     scnView.allowsCameraControl = false
     scnView.autoenablesDefaultLighting = false
@@ -86,6 +88,9 @@ final class CeliaAvatarPlatformView: NSObject, FlutterPlatformView {
         )
       }
     case "setState":
+      let args = call.arguments as? [String: Any]
+      avatarState = args?["state"] as? String ?? "idle"
+      updateIdleSway()
       result(nil)
     case "setMorphs":
       let args = call.arguments as? [String: Any]
@@ -126,7 +131,7 @@ final class CeliaAvatarPlatformView: NSObject, FlutterPlatformView {
 
     let scene = SCNScene()
     scene.rootNode.addChildNode(root)
-    scene.background.contents = UIColor(red: 0.06, green: 0.06, blue: 0.09, alpha: 1)
+    scene.background.contents = UIColor.white
 
     // Soft fill so unlit textures still read in SceneKit's default pipeline.
     let key = SCNNode()
@@ -161,17 +166,19 @@ final class CeliaAvatarPlatformView: NSObject, FlutterPlatformView {
     } else {
       morphNames = []
     }
+    updateIdleSway()
   }
 
-  /// Head-and-shoulders crop matching the Android Filament framing.
+  /// Head-and-shoulders crop for a full-screen portrait (more torso than the
+  /// old chat banner crop).
   private func frameBust(root: SCNNode, in scene: SCNScene) {
     let (minVec, maxVec) = root.boundingBox
     let height = max(maxVec.y - minVec.y, 0.001)
-    let headY = minVec.y + height * 0.90
+    let visibleHeight = height * 0.48
+    let headY = maxVec.y - visibleHeight * 0.5
     let centerX = (minVec.x + maxVec.x) * 0.5
     let centerZ = (minVec.z + maxVec.z) * 0.5
-    let visibleHeight = height * 0.30
-    let distance = visibleHeight * 2.2
+    let distance = visibleHeight * 2.0
 
     let cameraNode = SCNNode()
     cameraNode.name = "celia_camera"
@@ -182,6 +189,19 @@ final class CeliaAvatarPlatformView: NSObject, FlutterPlatformView {
     cameraNode.position = SCNVector3(centerX, headY, centerZ + distance)
     cameraNode.look(at: SCNVector3(centerX, headY, centerZ))
     scene.rootNode.addChildNode(cameraNode)
+  }
+
+  private func updateIdleSway() {
+    guard let root = scnView.scene?.rootNode.childNodes.first else { return }
+    root.removeAction(forKey: "idleSway")
+    let shouldSway =
+      avatarState == "idle" || avatarState == "listening" || avatarState == "thinking"
+    guard shouldSway else { return }
+    let left = SCNAction.moveBy(x: 0.012, y: 0, z: 0, duration: 1.6)
+    left.timingMode = .easeInEaseOut
+    let right = SCNAction.moveBy(x: -0.012, y: 0, z: 0, duration: 1.6)
+    right.timingMode = .easeInEaseOut
+    root.runAction(SCNAction.repeatForever(SCNAction.sequence([left, right])), forKey: "idleSway")
   }
 
   private func applyMorphs(_ morphs: [String: Any]) {

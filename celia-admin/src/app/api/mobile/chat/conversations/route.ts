@@ -13,10 +13,12 @@ export async function GET(req: NextRequest) {
     }
 
     const supabase = getSupabaseAdmin();
+    // Manual chat only — Avatar Mode threads live under mode='avatar'.
     const { data, error } = await supabase
       .from('chat_conversations')
       .select('id,title,updated_at')
       .eq('user_id', user.uid)
+      .or('mode.eq.chat,mode.is.null')
       .order('updated_at', { ascending: false })
       .limit(50);
 

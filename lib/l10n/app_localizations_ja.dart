@@ -325,20 +325,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get chatMicTooltip => '長押しで話す';
 
   @override
-  String get chatAvatarReady => '待機中';
-
-  @override
-  String get chatAvatarThinking => '考え中…';
-
-  @override
-  String get chatAvatarSpeaking => '話しています…';
-
-  @override
-  String chatAvatarSemantics(String status) {
-    return 'Celiaのアバター、$status';
-  }
-
-  @override
   String get chatListening => '聞いています…';
 
   @override
@@ -346,6 +332,30 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get chatSpeechUnavailable => 'この端末では音声認識を利用できません。';
+
+  @override
+  String get avatarModeReady => '待機中';
+
+  @override
+  String get avatarModeThinking => '考え中…';
+
+  @override
+  String get avatarModeSpeaking => '話しています…';
+
+  @override
+  String get avatarModeHoldToTalk => '長押しで話す';
+
+  @override
+  String get avatarModeExit => '手動モード';
+
+  @override
+  String get avatarModeConfirmTitle => 'Celiaに確認しますか？';
+
+  @override
+  String get avatarModeConfirmBody => 'Celiaが保存しようとしています。許可しますか？';
+
+  @override
+  String get avatarModeConfirmYes => '許可';
 
   @override
   String get chatCouldNotOpenRoutine => 'そのルーティンを開けませんでした';
@@ -1313,6 +1323,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get profileDarkMode => 'ダークモード';
+
+  @override
+  String get profileAvatarMode => 'アバターモード';
+
+  @override
+  String get profileAvatarModeSubtitle => 'Celiaと全画面で話す';
 
   @override
   String get profileLanguage => '言語';

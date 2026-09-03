@@ -351,20 +351,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get chatMicTooltip => 'Przytrzymaj, aby mówić';
 
   @override
-  String get chatAvatarReady => 'Gotowa';
-
-  @override
-  String get chatAvatarThinking => 'Myśli…';
-
-  @override
-  String get chatAvatarSpeaking => 'Mówi…';
-
-  @override
-  String chatAvatarSemantics(String status) {
-    return 'Awatar Celii, $status';
-  }
-
-  @override
   String get chatListening => 'Słucham…';
 
   @override
@@ -374,6 +360,30 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get chatSpeechUnavailable =>
       'Rozpoznawanie mowy nie jest dostępne na tym urządzeniu.';
+
+  @override
+  String get avatarModeReady => 'Gotowa';
+
+  @override
+  String get avatarModeThinking => 'Myśli…';
+
+  @override
+  String get avatarModeSpeaking => 'Mówi…';
+
+  @override
+  String get avatarModeHoldToTalk => 'Przytrzymaj, aby mówić';
+
+  @override
+  String get avatarModeExit => 'Tryb ręczny';
+
+  @override
+  String get avatarModeConfirmTitle => 'Potwierdzić z Celią?';
+
+  @override
+  String get avatarModeConfirmBody => 'Celia chce coś zapisać. Zezwolić?';
+
+  @override
+  String get avatarModeConfirmYes => 'Zezwól';
 
   @override
   String get chatCouldNotOpenRoutine => 'Nie udało się otworzyć tego planu';
@@ -1368,6 +1378,12 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get profileDarkMode => 'Tryb ciemny';
+
+  @override
+  String get profileAvatarMode => 'Tryb awatara';
+
+  @override
+  String get profileAvatarModeSubtitle => 'Rozmawiaj z Celią na pełnym ekranie';
 
   @override
   String get profileLanguage => 'Język';

@@ -348,20 +348,6 @@ class AppLocalizationsHi extends AppLocalizations {
   String get chatMicTooltip => 'बोलने के लिए दबाए रखें';
 
   @override
-  String get chatAvatarReady => 'तैयार';
-
-  @override
-  String get chatAvatarThinking => 'सोच रही है…';
-
-  @override
-  String get chatAvatarSpeaking => 'बोल रही है…';
-
-  @override
-  String chatAvatarSemantics(String status) {
-    return 'सीलिया अवतार, $status';
-  }
-
-  @override
   String get chatListening => 'सुन रही है…';
 
   @override
@@ -370,6 +356,31 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get chatSpeechUnavailable => 'इस डिवाइस पर वाक् पहचान उपलब्ध नहीं है।';
+
+  @override
+  String get avatarModeReady => 'तैयार';
+
+  @override
+  String get avatarModeThinking => 'सोच रही है…';
+
+  @override
+  String get avatarModeSpeaking => 'बोल रही है…';
+
+  @override
+  String get avatarModeHoldToTalk => 'बोलने के लिए दबाकर रखें';
+
+  @override
+  String get avatarModeExit => 'मैनुअल मोड';
+
+  @override
+  String get avatarModeConfirmTitle => 'सीलिया से पुष्टि करें?';
+
+  @override
+  String get avatarModeConfirmBody =>
+      'सीलिया कुछ सेव करना चाहती है। अनुमति दें?';
+
+  @override
+  String get avatarModeConfirmYes => 'अनुमति दें';
 
   @override
   String get chatCouldNotOpenRoutine => 'वह रूटीन खोली नहीं जा सकी';
@@ -1364,6 +1375,12 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get profileDarkMode => 'डार्क मोड';
+
+  @override
+  String get profileAvatarMode => 'अवतार मोड';
+
+  @override
+  String get profileAvatarModeSubtitle => 'सीलिया से फुल स्क्रीन पर बात करें';
 
   @override
   String get profileLanguage => 'भाषा';

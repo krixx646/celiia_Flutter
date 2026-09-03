@@ -130,10 +130,6 @@
   "chatListening": "Слушаю…",
   "chatMicDenied": "Для разговора с Celia нужен доступ к микрофону.",
   "chatSpeechUnavailable": "Распознавание речи недоступно на этом устройстве.",
-  "chatAvatarReady": "Готова",
-  "chatAvatarThinking": "Думает…",
-  "chatAvatarSpeaking": "Говорит…",
-  "chatAvatarSemantics": "Аватар Celia, {status}",
   "chatCouldNotOpenRoutine": "Не удалось открыть эту программу",
   "chatThisRoutine": "эту программу",
   "chatThisMeal": "это блюдо",
@@ -1031,5 +1027,15 @@
       }
     }
   },
-  "insightsSectionTitle": "Советы Celia"
+  "insightsSectionTitle": "Советы Celia",
+  "profileAvatarMode": "Режим аватара",
+  "profileAvatarModeSubtitle": "Говорите с Celia на весь экран",
+  "avatarModeReady": "Готова",
+  "avatarModeThinking": "Думает…",
+  "avatarModeSpeaking": "Говорит…",
+  "avatarModeHoldToTalk": "Удерживайте, чтобы говорить",
+  "avatarModeExit": "Обычный режим",
+  "avatarModeConfirmTitle": "Подтвердить с Celia?",
+  "avatarModeConfirmBody": "Celia хочет что-то сохранить. Разрешить?",
+  "avatarModeConfirmYes": "Разрешить"
 }

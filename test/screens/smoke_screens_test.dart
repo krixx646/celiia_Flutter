@@ -1,5 +1,6 @@
 import 'package:celia_flutter/l10n/app_localizations.dart';
 import 'package:celia_flutter/providers/auth_provider.dart';
+import 'package:celia_flutter/providers/avatar_mode_provider.dart';
 import 'package:celia_flutter/providers/chat_provider.dart';
 import 'package:celia_flutter/providers/navigation_provider.dart';
 import 'package:celia_flutter/providers/nutrition_tracker_provider.dart';
@@ -94,6 +95,7 @@ Widget _wrap(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
+        ChangeNotifierProvider(create: (_) => AvatarModeProvider()),
         ChangeNotifierProvider(
           create: (_) => NutritionTrackerProvider(
             mealService: CalorieScannerService(

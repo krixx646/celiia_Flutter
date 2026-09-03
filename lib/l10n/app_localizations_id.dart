@@ -349,20 +349,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get chatMicTooltip => 'Tahan untuk berbicara';
 
   @override
-  String get chatAvatarReady => 'Siap';
-
-  @override
-  String get chatAvatarThinking => 'Berpikir…';
-
-  @override
-  String get chatAvatarSpeaking => 'Berbicara…';
-
-  @override
-  String chatAvatarSemantics(String status) {
-    return 'Avatar Celia, $status';
-  }
-
-  @override
   String get chatListening => 'Mendengarkan…';
 
   @override
@@ -372,6 +358,30 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get chatSpeechUnavailable =>
       'Pengenalan suara tidak tersedia di perangkat ini.';
+
+  @override
+  String get avatarModeReady => 'Siap';
+
+  @override
+  String get avatarModeThinking => 'Berpikir…';
+
+  @override
+  String get avatarModeSpeaking => 'Berbicara…';
+
+  @override
+  String get avatarModeHoldToTalk => 'Tahan untuk berbicara';
+
+  @override
+  String get avatarModeExit => 'Mode manual';
+
+  @override
+  String get avatarModeConfirmTitle => 'Konfirmasi dengan Celia?';
+
+  @override
+  String get avatarModeConfirmBody => 'Celia ingin menyimpan sesuatu. Izinkan?';
+
+  @override
+  String get avatarModeConfirmYes => 'Izinkan';
 
   @override
   String get chatCouldNotOpenRoutine => 'Rutinitas tersebut tidak dapat dibuka';
@@ -1366,6 +1376,12 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get profileDarkMode => 'Mode Gelap';
+
+  @override
+  String get profileAvatarMode => 'Mode avatar';
+
+  @override
+  String get profileAvatarModeSubtitle => 'Bicara dengan Celia layar penuh';
 
   @override
   String get profileLanguage => 'Bahasa';

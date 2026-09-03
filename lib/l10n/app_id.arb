@@ -130,10 +130,6 @@
   "chatListening": "Mendengarkan…",
   "chatMicDenied": "Akses mikrofon diperlukan untuk berbicara dengan Celia.",
   "chatSpeechUnavailable": "Pengenalan suara tidak tersedia di perangkat ini.",
-  "chatAvatarReady": "Siap",
-  "chatAvatarThinking": "Berpikir…",
-  "chatAvatarSpeaking": "Berbicara…",
-  "chatAvatarSemantics": "Avatar Celia, {status}",
   "chatCouldNotOpenRoutine": "Rutinitas tersebut tidak dapat dibuka",
   "chatThisRoutine": "rutinitas ini",
   "chatThisMeal": "makanan ini",
@@ -1031,5 +1027,15 @@
       }
     }
   },
-  "insightsSectionTitle": "Wawasan Celia"
+  "insightsSectionTitle": "Wawasan Celia",
+  "profileAvatarMode": "Mode avatar",
+  "profileAvatarModeSubtitle": "Bicara dengan Celia layar penuh",
+  "avatarModeReady": "Siap",
+  "avatarModeThinking": "Berpikir…",
+  "avatarModeSpeaking": "Berbicara…",
+  "avatarModeHoldToTalk": "Tahan untuk berbicara",
+  "avatarModeExit": "Mode manual",
+  "avatarModeConfirmTitle": "Konfirmasi dengan Celia?",
+  "avatarModeConfirmBody": "Celia ingin menyimpan sesuatu. Izinkan?",
+  "avatarModeConfirmYes": "Izinkan"
 }

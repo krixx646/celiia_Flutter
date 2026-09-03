@@ -130,10 +130,6 @@
   "chatListening": "Đang nghe…",
   "chatMicDenied": "Cần quyền truy cập micrô để trò chuyện với Celia.",
   "chatSpeechUnavailable": "Thiết bị này không hỗ trợ nhận dạng giọng nói.",
-  "chatAvatarReady": "Sẵn sàng",
-  "chatAvatarThinking": "Đang nghĩ…",
-  "chatAvatarSpeaking": "Đang nói…",
-  "chatAvatarSemantics": "Hình đại diện Celia, {status}",
   "chatCouldNotOpenRoutine": "Không thể mở lịch tập đó",
   "chatThisRoutine": "lịch tập này",
   "chatThisMeal": "bữa ăn này",
@@ -1031,5 +1027,15 @@
       }
     }
   },
-  "insightsSectionTitle": "Thông tin chuyên sâu từ Celia"
+  "insightsSectionTitle": "Thông tin chuyên sâu từ Celia",
+  "profileAvatarMode": "Chế độ avatar",
+  "profileAvatarModeSubtitle": "Nói với Celia toàn màn hình",
+  "avatarModeReady": "Sẵn sàng",
+  "avatarModeThinking": "Đang nghĩ…",
+  "avatarModeSpeaking": "Đang nói…",
+  "avatarModeHoldToTalk": "Giữ để nói",
+  "avatarModeExit": "Chế độ thủ công",
+  "avatarModeConfirmTitle": "Xác nhận với Celia?",
+  "avatarModeConfirmBody": "Celia muốn lưu nội dung. Cho phép?",
+  "avatarModeConfirmYes": "Cho phép"
 }

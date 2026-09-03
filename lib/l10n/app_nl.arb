@@ -130,10 +130,6 @@
   "chatListening": "Luistert…",
   "chatMicDenied": "Toegang tot de microfoon is nodig om met Celia te praten.",
   "chatSpeechUnavailable": "Spraakherkenning is niet beschikbaar op dit apparaat.",
-  "chatAvatarReady": "Klaar",
-  "chatAvatarThinking": "Denkt na…",
-  "chatAvatarSpeaking": "Spreekt…",
-  "chatAvatarSemantics": "Celia-avatar, {status}",
   "chatCouldNotOpenRoutine": "Die routine kon niet worden geopend",
   "chatThisRoutine": "deze routine",
   "chatThisMeal": "deze maaltijd",
@@ -1031,5 +1027,15 @@
       }
     }
   },
-  "insightsSectionTitle": "Inzichten van Celia"
+  "insightsSectionTitle": "Inzichten van Celia",
+  "profileAvatarMode": "Avatarmodus",
+  "profileAvatarModeSubtitle": "Praat full-screen met Celia",
+  "avatarModeReady": "Klaar",
+  "avatarModeThinking": "Denkt na…",
+  "avatarModeSpeaking": "Spreekt…",
+  "avatarModeHoldToTalk": "Houd vast om te praten",
+  "avatarModeExit": "Handmatige modus",
+  "avatarModeConfirmTitle": "Bevestigen met Celia?",
+  "avatarModeConfirmBody": "Celia wil iets opslaan. Toestaan?",
+  "avatarModeConfirmYes": "Toestaan"
 }

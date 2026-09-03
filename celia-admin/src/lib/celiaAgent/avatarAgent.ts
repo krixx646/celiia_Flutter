@@ -64,15 +64,10 @@ export function createAvatarAgent(
       ...celiaTools,
       ...avatarAppControlTools,
     },
-    toolsContext: {
-      ...celiaToolsContext(context),
-      // App-control tools ignore context; AI SDK still wants a slot per tool.
-      open_screen: context,
-      open_routine: context,
-      start_workout: context,
-      open_meal_scanner: context,
-      go_back: context,
-    },
+    // Only tools that declare a context requirement belong here. The
+    // app-control tools resolve from their own arguments, so listing them
+    // is a type error rather than a no-op.
+    toolsContext: celiaToolsContext(context),
     stopWhen: isStepCount(MAX_STEPS),
     toolApproval: Object.fromEntries(
       WRITE_TOOLS.map((name) => [name, 'user-approval' as const])

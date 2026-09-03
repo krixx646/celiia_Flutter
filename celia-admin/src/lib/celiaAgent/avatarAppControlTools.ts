@@ -1,4 +1,4 @@
-import 'package:ai';
+import { tool } from 'ai';
 import { z } from 'zod';
 
 /**

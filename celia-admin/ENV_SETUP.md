@@ -43,7 +43,33 @@ OPENAI_VISION_MODEL=gpt-5.6-luna
 OPENAI_TTS_MODEL=tts-1
 OPENAI_TTS_VOICE=nova
 FIREBASE_PROJECT_ID=...
+
+# Body Scan (Bodygram Platform)
+# Sign up at https://platform.bodygram.com — the account page shows both
+# values. The key is a server-side secret: it can create and read scans for
+# the whole organisation and spend the scan quota, so it must never be sent
+# to the app or committed.
+BODYGRAM_ORG_ID=org_...
+BODYGRAM_API_KEY=...
+# Optional override; defaults to https://platform.bodygram.com
+# BODYGRAM_BASE_URL=https://platform.bodygram.com
 ```
+
+### Body Scan setup
+
+1. Run `supabase/migrations/20260903_body_scans.sql`. It creates the
+   `body_scans` and `user_entitlements` tables, the atomic scan-quota
+   functions, and the private `body-meshes` storage bucket.
+2. Add `BODYGRAM_ORG_ID` and `BODYGRAM_API_KEY` above. New accounts get 5 free
+   scans, which is enough to build and test the whole flow before signing
+   anything.
+3. Scan allowance defaults to one scan per user per 30 days. Raise it per user
+   with `update public.user_entitlements set scans_limit = N where user_id = '<firebase uid>'`
+   until real billing exists.
+
+Photos are never persisted: they pass through `/api/mobile/body-scan` in memory
+on the way to Bodygram, and only the derived measurements and the converted
+`.glb` mesh are stored.
 
 ### Protect the dashboard (recommended for cloud)
 

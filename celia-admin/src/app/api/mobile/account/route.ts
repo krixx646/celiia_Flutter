@@ -21,12 +21,40 @@ export async function DELETE(req: NextRequest) {
 
     const supabase = getSupabaseAdmin();
 
+    // Body scan meshes live in Storage rather than a table, so they need
+    // removing by prefix before the rows that point at them go.
+    const { data: meshes, error: meshListError } = await supabase.storage
+      .from('body-meshes')
+      .list(user.uid);
+
+    if (meshListError) {
+      return NextResponse.json(
+        { error: 'Could not list body scan meshes', details: meshListError.message },
+        { status: 500 }
+      );
+    }
+
+    if (meshes && meshes.length > 0) {
+      const { error } = await supabase.storage
+        .from('body-meshes')
+        .remove(meshes.map((file) => `${user.uid}/${file.name}`));
+
+      if (error) {
+        return NextResponse.json(
+          { error: 'Could not delete body scan meshes', details: error.message },
+          { status: 500 }
+        );
+      }
+    }
+
     // chat_messages cascades from chat_conversations.
     const tables = [
       'chat_conversations',
       'user_meals',
       'user_routines',
       'routine_requests',
+      'body_scans',
+      'user_entitlements',
     ] as const;
 
     for (const table of tables) {

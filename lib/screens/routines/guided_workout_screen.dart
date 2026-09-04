@@ -75,11 +75,6 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
 
   VideoPlayerController? _video;
   String? _loadedClipUrl;
-  VoidCallback? _videoListener;
-
-  /// Set once a hold clip has finished its single play-through so we never
-  /// seek/play it again during that hold (repeated seek looked like a glitch).
-  bool _holdClipPinned = false;
 
   bool _completionRecorded = false;
   bool _completionSaving = false;
@@ -130,7 +125,6 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
     _ticker?.cancel();
     _coach?.stop();
     unawaited(_voiceCoach?.dispose());
-    _detachVideoListener();
     _video?.dispose();
     unawaited(WakelockPlus.disable());
     super.dispose();
@@ -207,7 +201,6 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
       _phaseIndex = index;
       _lastSpokenRep = null;
       _lastSpokenSecond = null;
-      _holdClipPinned = false;
     });
 
     await _loadClipFor(phase);
@@ -225,16 +218,14 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
     _coach?.onPhaseStart(phase);
   }
 
-  /// Reps loop with the user. Holds play through once, then freeze on the
-  /// final frame for the rest of the timer — never looped, never scrubbed.
+  /// Work phases keep the demo looping for the whole set — counted or held.
+  /// Freezing a hold after one play looked like the workout had stalled.
   Future<void> _applyPlaybackForPhase(
     WorkoutPhase phase, {
     required bool fromStart,
   }) async {
     final video = _video;
     if (video == null) return;
-
-    _detachVideoListener();
 
     if (phase.kind != WorkoutPhaseKind.work) {
       await video.setLooping(false);
@@ -244,82 +235,12 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
       return;
     }
 
-    if (phase.isCounted) {
-      _holdClipPinned = false;
-      await video.setLooping(true);
-      await video.setPlaybackSpeed(_demoPlaybackSpeedFor(phase));
-      if (fromStart) await video.seekTo(Duration.zero);
-      await video.play();
-      return;
-    }
-
-    // Hold: one clean play-through, then stay on the last frame.
-    await video.setPlaybackSpeed(1.0);
-    await video.setLooping(false);
-    if (_holdClipPinned) {
-      await video.pause();
-      return;
-    }
-
-    if (fromStart) {
-      await video.seekTo(Duration.zero);
-      _attachHoldCompletionListener(video);
-      await video.play();
-      return;
-    }
-
-    // Resume after a user pause: continue only if the one-shot is unfinished.
-    if (video.value.isCompleted || _holdClipFinished(video)) {
-      await _pinHoldLastFrame(video);
-    } else {
-      _attachHoldCompletionListener(video);
-      await video.play();
-    }
-  }
-
-  void _attachHoldCompletionListener(VideoPlayerController video) {
-    _detachVideoListener();
-    void listener() {
-      if (_holdClipPinned) return;
-      if (!video.value.isInitialized) return;
-      if (!(video.value.isCompleted || _holdClipFinished(video))) return;
-      _detachVideoListener();
-      unawaited(_pinHoldLastFrame(video));
-    }
-
-    _videoListener = listener;
-    video.addListener(listener);
-  }
-
-  void _detachVideoListener() {
-    final video = _video;
-    final listener = _videoListener;
-    if (video != null && listener != null) {
-      video.removeListener(listener);
-    }
-    _videoListener = null;
-  }
-
-  bool _holdClipFinished(VideoPlayerController video) {
-    final duration = video.value.duration;
-    if (duration <= Duration.zero) return false;
-    return video.value.position >=
-        duration - const Duration(milliseconds: 120);
-  }
-
-  Future<void> _pinHoldLastFrame(VideoPlayerController video) async {
-    if (_holdClipPinned) return;
-    _holdClipPinned = true;
-    final duration = video.value.duration;
-    // Pause first so ExoPlayer cannot restart; then settle on the last frame
-    // only if the player reset the playhead (common on completion).
-    await video.pause();
-    await video.setLooping(false);
-    if (duration > Duration.zero &&
-        video.value.position < duration - const Duration(milliseconds: 120)) {
-      await video.seekTo(duration);
-      await video.pause();
-    }
+    await video.setLooping(true);
+    await video.setPlaybackSpeed(
+      phase.isCounted ? _demoPlaybackSpeedFor(phase) : 1.0,
+    );
+    if (fromStart) await video.seekTo(Duration.zero);
+    await video.play();
   }
 
   /// Slow a too-short loop cut so each spoken rep still lands with the demo.
@@ -346,12 +267,10 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
     // Sets of the same exercise share one controller, so only a genuine
     // change of exercise pays the cost of setting up a new one.
     if (url == _loadedClipUrl && _video != null) {
-      await _video!.setLooping(false);
       return;
     }
 
     final previous = _video;
-    _detachVideoListener();
     _video = null;
     _loadedClipUrl = null;
     await previous?.dispose();
@@ -363,7 +282,7 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
         videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
       );
       await controller.initialize().timeout(widget.initTimeout);
-      await controller.setLooping(false);
+      await controller.setLooping(true);
       await controller.setVolume(0);
       if (!mounted) {
         await controller.dispose();

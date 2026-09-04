@@ -5,8 +5,8 @@ import 'supabase_service.dart';
 
 /// Looks up the filmed demo clip for a routine step.
 ///
-/// The library is 72 rows of public reference data, so it is fetched once per
-/// app session and held in memory.
+/// The library is public reference data (pack v1 + pack v2 studio takes), so
+/// it is fetched once per app session and held in memory.
 ///
 /// Matching is deliberately forgiving. A routine step may name an exercise
 /// the way a coach would say it ("Push-Ups") while the library files it the
@@ -83,10 +83,32 @@ class ExerciseClipLibrary {
     'deep-breathing': 'diaphragmatic-breathing',
     'hamstring-stretch-standing': 'hamstring-stretch',
     'hip-flexor-stretch': 'kneeling-hip-flexor-stretch',
-    'pigeon-stretch': 'figure-4-glute-stretch',
+    'pigeon-stretch': 'pigeon-pose',
     'glute-stretch': 'figure-4-glute-stretch',
     'spinal-twist-stretch': 'spinal-twist',
     'chest-stretch': 'wall-pec-stretch',
+    // Pack v2 studio additions
+    'jumping-jack': 'jumping-jacks',
+    'crunches': 'crunch',
+    'sit-ups': 'sit-up',
+    'situps': 'sit-up',
+    'reverse-crunches': 'reverse-crunch',
+    'leg-raise': 'lying-leg-raise',
+    'leg-raises': 'lying-leg-raise',
+    'scissor-kick': 'scissor-kicks',
+    'scissors': 'scissor-kicks',
+    'v-up': 'v-up-with-ball',
+    'v-ups': 'v-up-with-ball',
+    'jackknife': 'v-up-with-ball',
+    'donkey-kicks': 'donkey-kick',
+    'fire-hydrant': 'fire-hydrant-forearm',
+    'fire-hydrants': 'fire-hydrant-forearm',
+    'superman': 'prone-superman',
+    'supermans': 'prone-superman',
+    'pigeon': 'pigeon-pose',
+    'forward-fold': 'standing-forward-fold',
+    'toe-touch': 'standing-toe-touch',
+    'toe-touches': 'standing-toe-touch',
   };
 
   ExerciseClipLibrary({SupabaseService? supabase})

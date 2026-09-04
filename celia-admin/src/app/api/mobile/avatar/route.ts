@@ -111,15 +111,27 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Conversation not found' }, { status: 404 });
       }
     } else {
-      const { data: created, error: createErr } = await supabase
+      const row: Record<string, string> = {
+        user_id: user.uid,
+        title: messageText ? titleFrom(messageText) : 'Avatar chat',
+        mode: CONVERSATION_MODE,
+      };
+
+      let { data: created, error: createErr } = await supabase
         .from('chat_conversations')
-        .insert({
-          user_id: user.uid,
-          title: messageText ? titleFrom(messageText) : 'Avatar chat',
-          mode: CONVERSATION_MODE,
-        })
+        .insert(row)
         .select('id')
         .single();
+
+      // Same fallback as /api/mobile/chat: the mode column may not exist yet.
+      if (createErr?.code === 'PGRST204' || /mode/i.test(createErr?.message || '')) {
+        delete row.mode;
+        ({ data: created, error: createErr } = await supabase
+          .from('chat_conversations')
+          .insert(row)
+          .select('id')
+          .single());
+      }
 
       if (createErr || !created) {
         return NextResponse.json(

@@ -1,0 +1,453 @@
+{
+  "source": "C:\\Users\\ADMIN\\Desktop\\gif exercises\\App Celine",
+  "kept": 36,
+  "dropped_from_59": 23,
+  "entries": [
+    {
+      "src": "bodyweight_squat_hands_clasped.mp4",
+      "slug": "bodyweight-squat-hands-clasped",
+      "category": "01_Squat",
+      "name_en": "Bodyweight Squat (Hands Clasped)",
+      "name_es": "Sentadilla sin peso (manos juntas)",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 12,
+      "filename": "01_bodyweight-squat-hands-clasped.mp4",
+      "library_path": "pack_v2/library/01_Squat/01_bodyweight-squat-hands-clasped.mp4"
+    },
+    {
+      "src": "swiss_ball_squat.mp4",
+      "slug": "swiss-ball-squat",
+      "category": "01_Squat",
+      "name_en": "Swiss Ball Squat",
+      "name_es": "Sentadilla con fitball",
+      "equipment": [
+        "swiss_ball"
+      ],
+      "step_type": "reps",
+      "default_reps": 10,
+      "filename": "02_swiss-ball-squat.mp4",
+      "library_path": "pack_v2/library/01_Squat/02_swiss-ball-squat.mp4"
+    },
+    {
+      "src": "donkey_kick_quadruped.mp4",
+      "slug": "donkey-kick",
+      "category": "02_Hinge",
+      "name_en": "Donkey Kick",
+      "name_es": "Patada de glúteo",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 12,
+      "filename": "01_donkey-kick.mp4",
+      "library_path": "pack_v2/library/02_Hinge/01_donkey-kick.mp4"
+    },
+    {
+      "src": "donkey_kick_kneeling_leg_raise.mp4",
+      "slug": "donkey-kick-kneeling",
+      "category": "02_Hinge",
+      "name_en": "Donkey Kick (Kneeling)",
+      "name_es": "Patada de glúteo de rodillas",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 12,
+      "filename": "02_donkey-kick-kneeling.mp4",
+      "library_path": "pack_v2/library/02_Hinge/02_donkey-kick-kneeling.mp4"
+    },
+    {
+      "src": "donkey_kick_quadruped_glute_kickback.mp4",
+      "slug": "fire-hydrant-forearm",
+      "category": "02_Hinge",
+      "name_en": "Fire Hydrant (Forearm)",
+      "name_es": "Hidrante (antebrazos)",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 12,
+      "filename": "03_fire-hydrant-forearm.mp4",
+      "library_path": "pack_v2/library/02_Hinge/03_fire-hydrant-forearm.mp4"
+    },
+    {
+      "src": "swiss_ball_leg_curl.mp4",
+      "slug": "swiss-ball-glute-bridge",
+      "category": "02_Hinge",
+      "name_en": "Swiss Ball Glute Bridge",
+      "name_es": "Puente de glúteos con fitball",
+      "equipment": [
+        "swiss_ball"
+      ],
+      "step_type": "reps",
+      "default_reps": 12,
+      "filename": "04_swiss-ball-glute-bridge.mp4",
+      "library_path": "pack_v2/library/02_Hinge/04_swiss-ball-glute-bridge.mp4"
+    },
+    {
+      "src": "side_lying_leg_raise.mp4",
+      "slug": "side-lying-leg-raise",
+      "category": "02_Hinge",
+      "name_en": "Side-Lying Leg Raise",
+      "name_es": "Elevación de pierna de lado",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 12,
+      "filename": "05_side-lying-leg-raise.mp4",
+      "library_path": "pack_v2/library/02_Hinge/05_side-lying-leg-raise.mp4"
+    },
+    {
+      "src": "side_lying_leg_raise_hip_abduction.mp4",
+      "slug": "side-lying-hip-abduction",
+      "category": "02_Hinge",
+      "name_en": "Side-Lying Hip Abduction",
+      "name_es": "Abducción de cadera de lado",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 12,
+      "filename": "06_side-lying-hip-abduction.mp4",
+      "library_path": "pack_v2/library/02_Hinge/06_side-lying-hip-abduction.mp4"
+    },
+    {
+      "src": "jumping_jacks.mp4",
+      "slug": "jumping-jacks",
+      "category": "07_Core_Rotation",
+      "name_en": "Jumping Jacks",
+      "name_es": "Saltos de tijera",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 20,
+      "filename": "01_jumping-jacks.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/01_jumping-jacks.mp4"
+    },
+    {
+      "src": "crunch.mp4",
+      "slug": "crunch",
+      "category": "07_Core_Rotation",
+      "name_en": "Crunch",
+      "name_es": "Crunch",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 15,
+      "filename": "02_crunch.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/02_crunch.mp4"
+    },
+    {
+      "src": "crunch_sit_up.mp4",
+      "slug": "sit-up",
+      "category": "07_Core_Rotation",
+      "name_en": "Sit-Up",
+      "name_es": "Abdominal completo",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 12,
+      "filename": "03_sit-up.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/03_sit-up.mp4"
+    },
+    {
+      "src": "reverse_crunch_knee_to_chest.mp4",
+      "slug": "reverse-crunch",
+      "category": "07_Core_Rotation",
+      "name_en": "Reverse Crunch",
+      "name_es": "Crunch inverso",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 12,
+      "filename": "04_reverse-crunch.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/04_reverse-crunch.mp4"
+    },
+    {
+      "src": "lying_leg_raise_legs_up.mp4",
+      "slug": "lying-leg-raise",
+      "category": "07_Core_Rotation",
+      "name_en": "Lying Leg Raise",
+      "name_es": "Elevación de piernas tumbado",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 12,
+      "filename": "05_lying-leg-raise.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/05_lying-leg-raise.mp4"
+    },
+    {
+      "src": "lying_leg_raise_scissors.mp4",
+      "slug": "scissor-kicks",
+      "category": "07_Core_Rotation",
+      "name_en": "Scissor Kicks",
+      "name_es": "Tijeras de piernas",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 16,
+      "filename": "06_scissor-kicks.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/06_scissor-kicks.mp4"
+    },
+    {
+      "src": "lying_leg_raise_bicycle_crunch.mp4",
+      "slug": "crossed-scissor-kicks",
+      "category": "07_Core_Rotation",
+      "name_en": "Crossed Scissor Kicks",
+      "name_es": "Tijeras cruzadas",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 16,
+      "filename": "07_crossed-scissor-kicks.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/07_crossed-scissor-kicks.mp4"
+    },
+    {
+      "src": "jackknife_v_up_with_ball.mp4",
+      "slug": "v-up-with-ball",
+      "category": "07_Core_Rotation",
+      "name_en": "V-Up with Ball",
+      "name_es": "V-up con balón",
+      "equipment": [
+        "medicine_ball"
+      ],
+      "step_type": "reps",
+      "default_reps": 10,
+      "filename": "08_v-up-with-ball.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/08_v-up-with-ball.mp4"
+    },
+    {
+      "src": "swiss_ball_leg_raise.mp4",
+      "slug": "swiss-ball-dead-bug",
+      "category": "07_Core_Rotation",
+      "name_en": "Swiss Ball Dead Bug",
+      "name_es": "Dead bug con fitball",
+      "equipment": [
+        "swiss_ball"
+      ],
+      "step_type": "reps",
+      "default_reps": 10,
+      "filename": "09_swiss-ball-dead-bug.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/09_swiss-ball-dead-bug.mp4"
+    },
+    {
+      "src": "swiss_ball_reverse_crunch_ball_pass.mp4",
+      "slug": "swiss-ball-ball-pass",
+      "category": "07_Core_Rotation",
+      "name_en": "Swiss Ball Pass",
+      "name_es": "Pase de fitball",
+      "equipment": [
+        "swiss_ball"
+      ],
+      "step_type": "reps",
+      "default_reps": 10,
+      "filename": "10_swiss-ball-ball-pass.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/10_swiss-ball-ball-pass.mp4"
+    },
+    {
+      "src": "swiss_ball_pike.mp4",
+      "slug": "swiss-ball-plank",
+      "category": "07_Core_Rotation",
+      "name_en": "Swiss Ball Plank",
+      "name_es": "Plancha con fitball",
+      "equipment": [
+        "swiss_ball"
+      ],
+      "step_type": "hold",
+      "default_hold_seconds": 30,
+      "filename": "11_swiss-ball-plank.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/11_swiss-ball-plank.mp4"
+    },
+    {
+      "src": "swiss_ball_plank_pike.mp4",
+      "slug": "swiss-ball-forearm-plank",
+      "category": "07_Core_Rotation",
+      "name_en": "Swiss Ball Forearm Plank",
+      "name_es": "Plancha de antebrazos con fitball",
+      "equipment": [
+        "swiss_ball"
+      ],
+      "step_type": "hold",
+      "default_hold_seconds": 30,
+      "filename": "12_swiss-ball-forearm-plank.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/12_swiss-ball-forearm-plank.mp4"
+    },
+    {
+      "src": "side_plank_arm_up.mp4",
+      "slug": "side-plank-arm-raise",
+      "category": "07_Core_Rotation",
+      "name_en": "Side Plank Arm Raise",
+      "name_es": "Plancha lateral con brazo arriba",
+      "equipment": [],
+      "step_type": "hold",
+      "default_hold_seconds": 25,
+      "filename": "13_side-plank-arm-raise.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/13_side-plank-arm-raise.mp4"
+    },
+    {
+      "src": "side_plank_with_leg_raise.mp4",
+      "slug": "side-plank-leg-raise",
+      "category": "07_Core_Rotation",
+      "name_en": "Side Plank Leg Raise",
+      "name_es": "Plancha lateral con pierna arriba",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 10,
+      "filename": "14_side-plank-leg-raise.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/14_side-plank-leg-raise.mp4"
+    },
+    {
+      "src": "plank_rotation_side_plank_reach.mp4",
+      "slug": "side-plank-reach-under",
+      "category": "07_Core_Rotation",
+      "name_en": "Side Plank Reach Under",
+      "name_es": "Plancha lateral con paso por debajo",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 10,
+      "filename": "15_side-plank-reach-under.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/15_side-plank-reach-under.mp4"
+    },
+    {
+      "src": "plank_leg_raise_mountain_climber.mp4",
+      "slug": "down-dog-glute-kickback",
+      "category": "02_Hinge",
+      "name_en": "Down-Dog Glute Kickback",
+      "name_es": "Patada de glúteo en perro mirando abajo",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 12,
+      "filename": "07_down-dog-glute-kickback.mp4",
+      "library_path": "pack_v2/library/02_Hinge/07_down-dog-glute-kickback.mp4"
+    },
+    {
+      "src": "prone_back_extension_superman_swimmer.mp4",
+      "slug": "forearm-plank-leg-abduction",
+      "category": "07_Core_Rotation",
+      "name_en": "Forearm Plank Leg Abduction",
+      "name_es": "Plancha de antebrazos con abducción",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 12,
+      "filename": "16_forearm-plank-leg-abduction.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/16_forearm-plank-leg-abduction.mp4"
+    },
+    {
+      "src": "prone_superman.mp4",
+      "slug": "prone-superman",
+      "category": "07_Core_Rotation",
+      "name_en": "Prone Superman",
+      "name_es": "Superman tumbado",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 10,
+      "filename": "17_prone-superman.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/17_prone-superman.mp4"
+    },
+    {
+      "src": "prone_superman_arms_overhead.mp4",
+      "slug": "prone-superman-arms-overhead",
+      "category": "07_Core_Rotation",
+      "name_en": "Prone Superman (Arms Overhead)",
+      "name_es": "Superman con brazos arriba",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 10,
+      "filename": "18_prone-superman-arms-overhead.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/18_prone-superman-arms-overhead.mp4"
+    },
+    {
+      "src": "prone_superman_arms_back.mp4",
+      "slug": "prone-superman-arms-back",
+      "category": "07_Core_Rotation",
+      "name_en": "Prone Superman (Arms Back)",
+      "name_es": "Superman con brazos atrás",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 10,
+      "filename": "19_prone-superman-arms-back.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/19_prone-superman-arms-back.mp4"
+    },
+    {
+      "src": "prone_superman_arms_out.mp4",
+      "slug": "prone-t-raise",
+      "category": "07_Core_Rotation",
+      "name_en": "Prone T-Raise",
+      "name_es": "Elevación en T tumbado",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 10,
+      "filename": "20_prone-t-raise.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/20_prone-t-raise.mp4"
+    },
+    {
+      "src": "lying_leg_raise_glute_bridge.mp4",
+      "slug": "prone-superman-alternating-arms",
+      "category": "07_Core_Rotation",
+      "name_en": "Prone Superman (Alternating Arms)",
+      "name_es": "Superman con brazos alternos",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 10,
+      "filename": "21_prone-superman-alternating-arms.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/21_prone-superman-alternating-arms.mp4"
+    },
+    {
+      "src": "prone_back_extension_superman_hold.mp4",
+      "slug": "prone-t-hold",
+      "category": "07_Core_Rotation",
+      "name_en": "Prone T Hold",
+      "name_es": "Isométrico en T tumbado",
+      "equipment": [],
+      "step_type": "hold",
+      "default_hold_seconds": 25,
+      "filename": "22_prone-t-hold.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/22_prone-t-hold.mp4"
+    },
+    {
+      "src": "side_lying_reach_clamshell.mp4",
+      "slug": "prone-back-extension",
+      "category": "07_Core_Rotation",
+      "name_en": "Prone Back Extension",
+      "name_es": "Extensión de espalda tumbado",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 12,
+      "filename": "23_prone-back-extension.mp4",
+      "library_path": "pack_v2/library/07_Core_Rotation/23_prone-back-extension.mp4"
+    },
+    {
+      "src": "prone_back_extension_superman.mp4",
+      "slug": "sphinx-press",
+      "category": "08_Recovery",
+      "name_en": "Sphinx Press",
+      "name_es": "Press esfinge",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 8,
+      "filename": "01_sphinx-press.mp4",
+      "library_path": "pack_v2/library/08_Recovery/01_sphinx-press.mp4"
+    },
+    {
+      "src": "cobra_prone_back_extension.mp4",
+      "slug": "pigeon-pose",
+      "category": "08_Recovery",
+      "name_en": "Pigeon Pose",
+      "name_es": "Postura de la paloma",
+      "equipment": [],
+      "step_type": "hold",
+      "default_hold_seconds": 30,
+      "filename": "02_pigeon-pose.mp4",
+      "library_path": "pack_v2/library/08_Recovery/02_pigeon-pose.mp4"
+    },
+    {
+      "src": "standing_forward_fold_hinge.mp4",
+      "slug": "standing-forward-fold",
+      "category": "08_Recovery",
+      "name_en": "Standing Forward Fold",
+      "name_es": "Flexión de pie hacia delante",
+      "equipment": [],
+      "step_type": "hold",
+      "default_hold_seconds": 30,
+      "filename": "03_standing-forward-fold.mp4",
+      "library_path": "pack_v2/library/08_Recovery/03_standing-forward-fold.mp4"
+    },
+    {
+      "src": "standing_hip_hinge_toe_touch.mp4",
+      "slug": "standing-toe-touch",
+      "category": "08_Recovery",
+      "name_en": "Standing Toe Touch",
+      "name_es": "Tocar puntas de pie",
+      "equipment": [],
+      "step_type": "reps",
+      "default_reps": 8,
+      "filename": "04_standing-toe-touch.mp4",
+      "library_path": "pack_v2/library/08_Recovery/04_standing-toe-touch.mp4"
+    }
+  ]
+}

@@ -119,15 +119,31 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Conversation not found' }, { status: 404 });
       }
     } else {
-      const { data: created, error: createErr } = await supabase
+      // mode separates Avatar Mode threads from the chat tab. The column was
+      // added in 20260830_chat_conversations_mode.sql; until that migration
+      // lands on a given database, inserting with mode fails and every new
+      // chat shows "Could not start conversation". Fall back so chat keeps
+      // working, and Avatar Mode shares the same table until the column exists.
+      const row: Record<string, string> = {
+        user_id: user.uid,
+        title: messageText ? titleFrom(messageText) : 'New chat',
+        mode: 'chat',
+      };
+
+      let { data: created, error: createErr } = await supabase
         .from('chat_conversations')
-        .insert({
-          user_id: user.uid,
-          title: messageText ? titleFrom(messageText) : 'New chat',
-          mode: 'chat',
-        })
+        .insert(row)
         .select('id')
         .single();
+
+      if (createErr?.code === 'PGRST204' || /mode/i.test(createErr?.message || '')) {
+        delete row.mode;
+        ({ data: created, error: createErr } = await supabase
+          .from('chat_conversations')
+          .insert(row)
+          .select('id')
+          .single());
+      }
 
       if (createErr || !created) {
         return NextResponse.json(

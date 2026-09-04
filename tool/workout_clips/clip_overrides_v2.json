@@ -1,0 +1,275 @@
+{
+  "_readme": [
+    "Pack v2 (App Celine studio takes). Names were corrected from the",
+    "contact sheets / ID frames — the auto-rename map was often wrong.",
+    "Clips that pack v1 already covers (bodyweight squat, push-up,",
+    "bird-dog, cat-cow, basic planks, mountain climber, glute bridge,",
+    "plain side plank) were deliberately left out."
+  ],
+  "bodyweight-squat-hands-clasped": {
+    "name_en": "Bodyweight Squat (Hands Clasped)",
+    "name_es": "Sentadilla sin peso (manos juntas)",
+    "equipment": [],
+    "default_reps": 12,
+    "reps_per_loop": 1
+  },
+  "swiss-ball-squat": {
+    "name_en": "Swiss Ball Squat",
+    "name_es": "Sentadilla con fitball",
+    "equipment": [
+      "swiss_ball"
+    ],
+    "default_reps": 10,
+    "reps_per_loop": 1
+  },
+  "donkey-kick": {
+    "name_en": "Donkey Kick",
+    "name_es": "Patada de glúteo",
+    "equipment": [],
+    "default_reps": 12,
+    "reps_per_loop": 1
+  },
+  "donkey-kick-kneeling": {
+    "name_en": "Donkey Kick (Kneeling)",
+    "name_es": "Patada de glúteo de rodillas",
+    "equipment": [],
+    "default_reps": 12,
+    "reps_per_loop": 1
+  },
+  "fire-hydrant-forearm": {
+    "name_en": "Fire Hydrant (Forearm)",
+    "name_es": "Hidrante (antebrazos)",
+    "equipment": [],
+    "default_reps": 12,
+    "reps_per_loop": 4
+  },
+  "swiss-ball-glute-bridge": {
+    "name_en": "Swiss Ball Glute Bridge",
+    "name_es": "Puente de glúteos con fitball",
+    "equipment": [
+      "swiss_ball"
+    ],
+    "default_reps": 12,
+    "reps_per_loop": 5
+  },
+  "side-lying-leg-raise": {
+    "name_en": "Side-Lying Leg Raise",
+    "name_es": "Elevación de pierna de lado",
+    "equipment": [],
+    "default_reps": 12,
+    "reps_per_loop": 1
+  },
+  "side-lying-hip-abduction": {
+    "name_en": "Side-Lying Hip Abduction",
+    "name_es": "Abducción de cadera de lado",
+    "equipment": [],
+    "default_reps": 12,
+    "reps_per_loop": 1
+  },
+  "jumping-jacks": {
+    "name_en": "Jumping Jacks",
+    "name_es": "Saltos de tijera",
+    "equipment": [],
+    "default_reps": 20,
+    "reps_per_loop": 1
+  },
+  "crunch": {
+    "name_en": "Crunch",
+    "name_es": "Crunch",
+    "equipment": [],
+    "default_reps": 15,
+    "reps_per_loop": 1
+  },
+  "sit-up": {
+    "name_en": "Sit-Up",
+    "name_es": "Abdominal completo",
+    "equipment": [],
+    "default_reps": 12,
+    "reps_per_loop": 1
+  },
+  "reverse-crunch": {
+    "name_en": "Reverse Crunch",
+    "name_es": "Crunch inverso",
+    "equipment": [],
+    "default_reps": 12,
+    "reps_per_loop": 2
+  },
+  "lying-leg-raise": {
+    "name_en": "Lying Leg Raise",
+    "name_es": "Elevación de piernas tumbado",
+    "equipment": [],
+    "default_reps": 12,
+    "reps_per_loop": 1
+  },
+  "scissor-kicks": {
+    "name_en": "Scissor Kicks",
+    "name_es": "Tijeras de piernas",
+    "equipment": [],
+    "default_reps": 16,
+    "reps_per_loop": 1
+  },
+  "crossed-scissor-kicks": {
+    "name_en": "Crossed Scissor Kicks",
+    "name_es": "Tijeras cruzadas",
+    "equipment": [],
+    "default_reps": 16,
+    "reps_per_loop": 3
+  },
+  "v-up-with-ball": {
+    "name_en": "V-Up with Ball",
+    "name_es": "V-up con balón",
+    "equipment": [
+      "medicine_ball"
+    ],
+    "default_reps": 10,
+    "reps_per_loop": 1
+  },
+  "swiss-ball-dead-bug": {
+    "name_en": "Swiss Ball Dead Bug",
+    "name_es": "Dead bug con fitball",
+    "equipment": [
+      "swiss_ball"
+    ],
+    "default_reps": 10,
+    "reps_per_loop": 1
+  },
+  "swiss-ball-ball-pass": {
+    "name_en": "Swiss Ball Pass",
+    "name_es": "Pase de fitball",
+    "equipment": [
+      "swiss_ball"
+    ],
+    "default_reps": 10,
+    "reps_per_loop": 3
+  },
+  "swiss-ball-plank": {
+    "name_en": "Swiss Ball Plank",
+    "name_es": "Plancha con fitball",
+    "equipment": [
+      "swiss_ball"
+    ],
+    "reps_per_loop": null,
+    "default_hold_seconds": 30
+  },
+  "swiss-ball-forearm-plank": {
+    "name_en": "Swiss Ball Forearm Plank",
+    "name_es": "Plancha de antebrazos con fitball",
+    "equipment": [
+      "swiss_ball"
+    ],
+    "reps_per_loop": null,
+    "default_hold_seconds": 30
+  },
+  "side-plank-arm-raise": {
+    "name_en": "Side Plank Arm Raise",
+    "name_es": "Plancha lateral con brazo arriba",
+    "equipment": [],
+    "reps_per_loop": null,
+    "default_hold_seconds": 25
+  },
+  "side-plank-leg-raise": {
+    "name_en": "Side Plank Leg Raise",
+    "name_es": "Plancha lateral con pierna arriba",
+    "equipment": [],
+    "default_reps": 10,
+    "reps_per_loop": 1
+  },
+  "side-plank-reach-under": {
+    "name_en": "Side Plank Reach Under",
+    "name_es": "Plancha lateral con paso por debajo",
+    "equipment": [],
+    "default_reps": 10,
+    "reps_per_loop": 2
+  },
+  "down-dog-glute-kickback": {
+    "name_en": "Down-Dog Glute Kickback",
+    "name_es": "Patada de glúteo en perro mirando abajo",
+    "equipment": [],
+    "default_reps": 12,
+    "reps_per_loop": 2
+  },
+  "forearm-plank-leg-abduction": {
+    "name_en": "Forearm Plank Leg Abduction",
+    "name_es": "Plancha de antebrazos con abducción",
+    "equipment": [],
+    "default_reps": 12,
+    "reps_per_loop": 1
+  },
+  "prone-superman": {
+    "name_en": "Prone Superman",
+    "name_es": "Superman tumbado",
+    "equipment": [],
+    "default_reps": 10,
+    "reps_per_loop": 6
+  },
+  "prone-superman-arms-overhead": {
+    "name_en": "Prone Superman (Arms Overhead)",
+    "name_es": "Superman con brazos arriba",
+    "equipment": [],
+    "default_reps": 10,
+    "reps_per_loop": 8
+  },
+  "prone-superman-arms-back": {
+    "name_en": "Prone Superman (Arms Back)",
+    "name_es": "Superman con brazos atrás",
+    "equipment": [],
+    "default_reps": 10,
+    "reps_per_loop": 3
+  },
+  "prone-t-raise": {
+    "name_en": "Prone T-Raise",
+    "name_es": "Elevación en T tumbado",
+    "equipment": [],
+    "default_reps": 10,
+    "reps_per_loop": 2
+  },
+  "prone-superman-alternating-arms": {
+    "name_en": "Prone Superman (Alternating Arms)",
+    "name_es": "Superman con brazos alternos",
+    "equipment": [],
+    "default_reps": 10,
+    "reps_per_loop": 1
+  },
+  "prone-t-hold": {
+    "name_en": "Prone T Hold",
+    "name_es": "Isométrico en T tumbado",
+    "equipment": [],
+    "reps_per_loop": null,
+    "default_hold_seconds": 25
+  },
+  "prone-back-extension": {
+    "name_en": "Prone Back Extension",
+    "name_es": "Extensión de espalda tumbado",
+    "equipment": [],
+    "default_reps": 12,
+    "reps_per_loop": 6
+  },
+  "sphinx-press": {
+    "name_en": "Sphinx Press",
+    "name_es": "Press esfinge",
+    "equipment": [],
+    "default_reps": 8,
+    "reps_per_loop": 6
+  },
+  "pigeon-pose": {
+    "name_en": "Pigeon Pose",
+    "name_es": "Postura de la paloma",
+    "equipment": [],
+    "reps_per_loop": null,
+    "default_hold_seconds": 30
+  },
+  "standing-forward-fold": {
+    "name_en": "Standing Forward Fold",
+    "name_es": "Flexión de pie hacia delante",
+    "equipment": [],
+    "reps_per_loop": null,
+    "default_hold_seconds": 30
+  },
+  "standing-toe-touch": {
+    "name_en": "Standing Toe Touch",
+    "name_es": "Tocar puntas de pie",
+    "equipment": [],
+    "default_reps": 8,
+    "reps_per_loop": 1
+  }
+}

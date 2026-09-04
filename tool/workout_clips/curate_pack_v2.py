@@ -372,8 +372,8 @@ KEEP: list[dict] = [
         "name_en": "Sphinx Press",
         "name_es": "Press esfinge",
         "equipment": [],
-        "step_type": "reps",
-        "default_reps": 8,
+        "step_type": "hold",
+        "default_hold_seconds": 30,
     },
     # --- Recovery ---
     {
@@ -404,8 +404,8 @@ KEEP: list[dict] = [
         "name_en": "Standing Toe Touch",
         "name_es": "Tocar puntas de pie",
         "equipment": [],
-        "step_type": "reps",
-        "default_reps": 8,
+        "step_type": "hold",
+        "default_hold_seconds": 30,
     },
 ]
 
@@ -466,6 +466,21 @@ def main() -> int:
             # Leave reps_per_loop unset so analyze_clips can estimate; make_loops
             # then writes the count that matches the trimmed file.
             override["default_reps"] = entry["default_reps"]
+
+        # Static stretches are holds even when analysis sees motion getting
+        # into the pose. Dynamic mobility (cat-cow, world's greatest, etc.)
+        # stays as reps and is not listed here.
+        if entry["slug"] in {
+            "sphinx-press",
+            "standing-toe-touch",
+            "pigeon-pose",
+            "standing-forward-fold",
+        }:
+            override["reps_per_loop"] = None
+            override.pop("default_reps", None)
+            override["default_hold_seconds"] = entry.get(
+                "default_hold_seconds", 30
+            )
         overrides[entry["slug"]] = override
 
         curation.append(

@@ -248,8 +248,8 @@
     "name_en": "Sphinx Press",
     "name_es": "Press esfinge",
     "equipment": [],
-    "default_reps": 8,
-    "reps_per_loop": 6
+    "reps_per_loop": null,
+    "default_hold_seconds": 30
   },
   "pigeon-pose": {
     "name_en": "Pigeon Pose",
@@ -269,7 +269,7 @@
     "name_en": "Standing Toe Touch",
     "name_es": "Tocar puntas de pie",
     "equipment": [],
-    "default_reps": 8,
-    "reps_per_loop": 1
+    "reps_per_loop": null,
+    "default_hold_seconds": 30
   }
 }

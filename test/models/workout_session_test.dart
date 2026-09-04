@@ -157,6 +157,29 @@ void main() {
       expect(exercise.holdSeconds, 45);
     });
 
+    test('a hold clip beats a mistaken rep prescription', () {
+      // Stretches occasionally land in the library with reps set. The filmed
+      // hold is authoritative — counting them makes the demo pause/loop.
+      final exercise = PreparedExercise(
+        step: _step(
+          title: 'Supine Spinal Twist',
+          sets: 1,
+          reps: 10,
+          durationSeconds: 40,
+        ),
+        clip: _clip(
+          slug: 'spinal-twist',
+          isCounted: false,
+          repsPerLoop: null,
+          defaultReps: null,
+          defaultHoldSeconds: 40,
+        ),
+      );
+
+      expect(exercise.isCounted, isFalse);
+      expect(exercise.holdSeconds, 40);
+    });
+
     test('rest points at the next exercise once the sets are done', () {
       final plan = WorkoutPlan.from([
         PreparedExercise(

@@ -87,10 +87,12 @@ class PreparedExercise {
 
   /// Whether this exercise is counted in reps rather than held for time.
   ///
-  /// The routine's own prescription wins, because a coach may ask for a timed
-  /// set of an exercise that is normally counted. The clip only decides when
-  /// the routine says nothing.
+  /// A filmed hold always wins: stretches like spinal twist used to get stored
+  /// with a rep count by mistake, and the player then looped/paused the clip
+  /// instead of running a countdown. Timed prescriptions of normally-counted
+  /// moves (e.g. 45s of squats) still win over the clip via [durationSeconds].
   bool get isCounted {
+    if (clip != null && !clip!.isCounted) return false;
     if (step.isCounted) return true;
     if (step.durationSeconds > 0) return false;
     return clip?.isCounted ?? false;

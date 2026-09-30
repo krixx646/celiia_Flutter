@@ -21,7 +21,8 @@ import 'steps/summary_step.dart';
 import 'steps/training_step.dart';
 import 'steps/wearables_step.dart';
 
-/// The nine-step onboarding flow.
+/// The onboarding flow (eight questions plus the summary; the wearable
+/// question is not offered).
 ///
 /// Only the steps the user has no answer for are shown, so someone who signed
 /// up before a step existed is asked the new question and nothing else. The
@@ -68,14 +69,11 @@ class _OnboardingFlowScreenState extends State<OnboardingFlowScreen> {
     }
 
     final missing = existing?.missingSteps ?? _allCollectingSteps;
-    _steps = [
-      ...missing,
-      // The wearable question is optional, so it is not in `missing`. Offer it
-      // to new users, but do not re-ask someone who is only here for a step
-      // that was added since they signed up.
-      if (existing == null) OnboardingStep.wearables,
-      OnboardingStep.summary,
-    ];
+    // The wearable question is not offered: no device integration exists (direct
+    // Garmin access is closed to new apps), so asking would promise something
+    // the app cannot do. The step, enum value and stored column stay in place
+    // for when an integration is built.
+    _steps = [...missing, OnboardingStep.summary];
   }
 
   static List<OnboardingStep> get _allCollectingSteps => OnboardingStep.values

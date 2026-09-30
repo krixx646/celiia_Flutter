@@ -1,6 +1,6 @@
 # Onboarding v2 — personalization plan (this month)
 
-Scope: the 9-step onboarding from the client spec, plus the plumbing that makes the
+Scope: the onboarding from the client spec (the wearable step, 8, is no longer offered), plus the plumbing that makes the
 collected data actually change what the user gets (nutrition targets, routines, Celia).
 
 Status: equipment preference added 2026-09-20 (onboarding v2). See §8.

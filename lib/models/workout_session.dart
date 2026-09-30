@@ -21,11 +21,58 @@ const double kFallbackSecondsPerRep = 3.0;
 
 const Duration kGetReadyDuration = Duration(seconds: 10);
 
-/// Used when a routine asks for rest but does not say how much.
-const int kDefaultRestSeconds = 30;
+/// Rest between sets of the same exercise, and between exercises inside a
+/// block. The client asked for short transitions so the session keeps moving.
+const int kDefaultRestSeconds = 20;
+
+/// Rest after finishing a block of [kExercisesPerBlock] exercises, before the
+/// next block starts. Longer than the in-block rest so the user can recover
+/// between groups without dragging every transition out.
+const int kBlockRestSeconds = 40;
+
+/// How many exercises make one block. After the last one, [kBlockRestSeconds]
+/// applies instead of [kDefaultRestSeconds].
+const int kExercisesPerBlock = 3;
 
 /// Used when a held exercise arrives with no duration at all.
 const int kDefaultHoldSeconds = 30;
+
+/// Seconds to rest after finishing a set.
+///
+/// The client asked for a fixed policy rather than whatever each routine
+/// happened to store (old steps still carry 30–45s): 20s between sets and
+/// between exercises inside a block, 40s after every [kExercisesPerBlock]
+/// exercises so the next block starts with a longer recovery.
+int restSecondsFor({
+  required int stepIndex,
+  required bool isLastSetOfExercise,
+}) {
+  // Still mid-exercise: only the short recovery between sets.
+  if (!isLastSetOfExercise) return kDefaultRestSeconds;
+
+  // Moving on to the next exercise. Every third finish is a block boundary.
+  final finishedCount = stepIndex + 1;
+  final endsBlock = finishedCount % kExercisesPerBlock == 0;
+  return endsBlock ? kBlockRestSeconds : kDefaultRestSeconds;
+}
+
+/// Titles that clearly mean a static hold / stretch when no clip is attached.
+bool titleLooksLikeHold(String title) {
+  final t = title.toLowerCase();
+  const markers = <String>[
+    'hold',
+    'plank',
+    'stretch',
+    'pose',
+    'wall sit',
+    'wall-sit',
+    'breath',
+    'cool down',
+    'cooldown',
+    'cool-down',
+  ];
+  return markers.any(t.contains);
+}
 
 /// One stretch of the workout with a single clock and a single instruction.
 class WorkoutPhase {
@@ -64,6 +111,18 @@ class WorkoutPhase {
   final String? nextLabel;
 
   bool get isCounted => kind == WorkoutPhaseKind.work && (reps ?? 0) > 0;
+
+  /// Whether the work overlay should say "hold" under the clock.
+  ///
+  /// Timed cardio (jog, jacks) still runs on a countdown, but it is not a
+  /// static hold — only isometric / stretch demos and hold-named steps get
+  /// that label.
+  bool get isHoldCaption {
+    if (kind != WorkoutPhaseKind.work || isCounted) return false;
+    final demo = clip;
+    if (demo != null) return !demo.isCounted;
+    return titleLooksLikeHold(step.title);
+  }
 
   /// Which rep the user should be on after [elapsed] of this phase, from 1 to
   /// [reps]. Null when nothing is being counted.
@@ -210,9 +269,10 @@ class WorkoutPlan {
         final isLastSet = set == totalSets;
         if (isLastSet && isLastExercise) continue;
 
-        final restSeconds = exercise.step.restSeconds > 0
-            ? exercise.step.restSeconds
-            : kDefaultRestSeconds;
+        final restSeconds = restSecondsFor(
+          stepIndex: stepIndex,
+          isLastSetOfExercise: isLastSet,
+        );
         final nextLabel = isLastSet
             ? exercises[stepIndex + 1].title
             : exercise.title;

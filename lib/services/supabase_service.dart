@@ -428,7 +428,8 @@ class SupabaseService {
         .toList();
   }
 
-  /// Fetch the filmed demo clip library used by the guided workout player.
+  /// Fetch the filmed clip library: workout demos for the guided player and
+  /// the equipment demonstrations shown in the "How to" tab.
   ///
   /// Small, public and rarely changing, so callers should cache it for the
   /// session (see [ExerciseClipLibrary]) rather than hitting it per step.
@@ -438,7 +439,7 @@ class SupabaseService {
         .select(
           'slug, name_en, name_es, pattern, video_url, poster_url, step_type, '
           'reps_per_loop, clip_seconds, equipment, default_reps, '
-          'default_hold_seconds, orientation',
+          'default_hold_seconds, orientation, source',
         )
         .eq('is_active', true)
         .limit(500);

@@ -501,6 +501,41 @@
   "playerPlaybackFailed": "Unable to play this video right now. Please try again.",
   "libraryTabCurated": "Curated",
   "libraryTabAiGenerated": "AI-Generated",
+  "libraryTabHowTo": "How to",
+  "libraryHowToIntro": "Type an exercise, or a series like \"dumbbell chest and triceps\", to see how to do it properly with full demonstrations.",
+  "libraryHowToSearchHint": "e.g. dumbbell row, or back and biceps",
+  "howToPlaySeries": "Play series ({count})",
+  "@howToPlaySeries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "howToSeriesTitle": "How-to series",
+  "howToNext": "Next",
+  "howToRest": "Rest",
+  "howToUpNext": "Up next: {name}",
+  "@howToUpNext": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "howToUpNextBadge": "Up next",
+  "howToChooseNextHint": "Tap an exercise to choose what plays next.",
+  "howToSeriesDone": "Series complete",
+  "howToPlayAgain": "Play again",
+  "howToDone": "Done",
+  "libraryHowToNoMatch": "No demonstration for \"{query}\" yet. Try another exercise name.",
+  "@libraryHowToNoMatch": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
   "profileSavedRoutines": "Saved Routines",
   "savedRoutinesNoFavorites": "No favorite routines yet.",
   "savedRoutinesEmpty": "No saved routines yet.",
@@ -1038,7 +1073,6 @@
     }
   },
   "insightsSectionTitle": "Celia Insights",
-
   "@@bodyScan": "--- Body Scan ---",
   "bodyScanTitle": "Body scan",
   "bodyScanContinue": "Continue",
@@ -1050,7 +1084,7 @@
   "bodyScanConsentProcessingTitle": "Analysed by Bodygram",
   "bodyScanConsentProcessingBody": "Your photos are sent to our scanning provider, Bodygram, to estimate your measurements. They are used for nothing else.",
   "bodyScanConsentStorageTitle": "Your photos are never stored",
-  "bodyScanConsentStorageBody": "Celia does not keep them. Only the resulting numbers and your 3D model are saved to your account, and deleting your account deletes them.",
+  "bodyScanConsentStorageBody": "Celia does not keep them. Only the measurements from the scan are saved to your account, and deleting your account deletes them.",
   "bodyScanConsentAgeTitle": "You must be 18 or over",
   "bodyScanConsentAgeBody": "Body scanning is not available to under-18s.",
   "bodyScanConsentAgree": "I understand and agree to my photos being analysed",
@@ -1076,7 +1110,7 @@
   "bodyScanNextPose": "Next photo",
   "bodyScanGetResults": "Get my results",
   "bodyScanProcessingTitle": "Analysing your scan",
-  "bodyScanProcessingBody": "Building your 3D model and estimating your measurements. This takes up to a minute.",
+  "bodyScanProcessingBody": "Estimating your measurements. This takes up to a minute.",
   "bodyScanResultTitle": "Your body scan",
   "bodyScanResultSubtitle": "Estimated from your photos. Best used to follow a trend over time.",
   "bodyScanBodyFat": "Body fat",
@@ -1086,6 +1120,17 @@
   "bodyScanHip": "Hips",
   "bodyScanChest": "Chest",
   "bodyScanWaistToHip": "Waist to hip",
+  "bodyScanMoreMeasurements": "More measurements",
+  "bodyScanNeck": "Neck",
+  "bodyScanUnderBust": "Under bust",
+  "bodyScanBelly": "Belly",
+  "bodyScanUpperArm": "Upper arm",
+  "bodyScanForearm": "Forearm",
+  "bodyScanWrist": "Wrist",
+  "bodyScanThigh": "Thigh",
+  "bodyScanMidThigh": "Mid-thigh",
+  "bodyScanKnee": "Knee",
+  "bodyScanCalf": "Calf",
   "bodyScanQuotaRemaining": "{count, plural, =0{No scans left this period} =1{1 scan left this period} other{{count} scans left this period}}",
   "@bodyScanQuotaRemaining": {
     "placeholders": {
@@ -1095,7 +1140,7 @@
     }
   },
   "bodyScanEmptyTitle": "See how your body is changing",
-  "bodyScanEmptyBody": "Two photos give you an estimate of your body fat, lean mass and key measurements, plus a 3D model you can compare over time.",
+  "bodyScanEmptyBody": "Two photos give you an estimate of your body fat, lean mass and key measurements, shown on a body drawing you can compare over time.",
   "bodyScanLatestTitle": "Latest scan",
   "bodyScanHistoryTitle": "Previous scans",
   "bodyScanStartCta": "Start a body scan",
@@ -1111,7 +1156,7 @@
   },
   "bodyScanNoComposition": "No estimate",
   "bodyScanSourcesTitle": "How this is worked out",
-  "bodyScanSourcesBody": "Your photos are turned into a 3D outline of your body, and body fat and lean mass are estimated from that shape together with your height, weight, age and sex. Lean mass covers muscle, water, bone and organs together, not protein on its own.",
+  "bodyScanSourcesBody": "Your photos are used to estimate body shape, and body fat and lean mass are estimated from that shape together with your height, weight, age and sex. Lean mass covers muscle, water, bone and organs together, not protein on its own.",
   "bodyScanDisclaimer": "These are estimates, not medical measurements. Studies of this method report an average error of about 3.5% body fat against a clinical DXA scan, and agreement is weaker for tracking change than for a single reading. Not for diagnosis. Talk to a healthcare professional about health decisions.",
   "bodyScanErrorCameraPermission": "Celia needs camera access to scan your body.",
   "bodyScanErrorNoCamera": "No camera is available on this device.",
@@ -1131,5 +1176,195 @@
   "bodyScanErrorLoadHistory": "Could not load your previous scans.",
   "profileBodyScan": "Body scan",
   "homeBodyScan": "Body scan",
-  "homeBodyScanSubtitle": "Estimate body fat from two photos"
+  "homeBodyScanSubtitle": "Estimate body fat from two photos",
+  "obStepOf": "Step {current} of {total}",
+  "@obStepOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "obBack": "Back",
+  "obSkip": "Skip",
+  "obYes": "Yes",
+  "obNo": "No",
+  "obOptional": "Optional",
+  "obAddHint": "Type and press enter to add",
+  "obFinish": "Start using Celia",
+  "obAnswerRequired": "Please answer this to continue",
+  "obConsentTitle": "Before we start",
+  "obConsentBody": "Celia builds your nutrition, training and coaching plans from what you tell us here. You can change any answer later in your profile.",
+  "obDisclaimerTitle": "Not medical advice",
+  "obDisclaimerBody": "Celia is a wellbeing coach, not a doctor. It does not diagnose, treat or prescribe. Speak to a health professional before changing your diet or training if you are pregnant, injured, or managing a medical condition.",
+  "obAcceptTerms": "I accept the Terms & Conditions and the Privacy Policy",
+  "obAcceptDisclaimer": "I understand Celia does not provide medical advice",
+  "obConsentRequired": "Please accept both to continue",
+  "obPhysicalTitle": "Your body",
+  "obPhysicalBody": "Used to estimate how much energy you burn at rest.",
+  "obBmrTitle": "Estimated basal metabolism",
+  "obBmrValue": "{kcal} kcal per day at rest",
+  "@obBmrValue": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "obBmrExplainer": "Mifflin–St Jeor formula. Your daily target adds your activity and your goal on top of this.",
+  "obGoalTitle": "Your main goal",
+  "obGoalBody": "This decides whether your plan runs at a deficit, at maintenance, or at a surplus.",
+  "obGoalLoseWeight": "Lose weight",
+  "obGoalGainWeight": "Gain weight",
+  "obGoalBuildMuscle": "Build muscle",
+  "obNutritionTitle": "Nutrition",
+  "obDietPattern": "How do you eat?",
+  "obDietOmnivore": "No restrictions",
+  "obDietVegetarian": "Vegetarian",
+  "obDietVegan": "Vegan",
+  "obDietPescatarian": "Pescatarian",
+  "obIntolerances": "Intolerances",
+  "obIntoleranceGluten": "Gluten / celiac",
+  "obIntoleranceLactose": "Lactose",
+  "obIntoleranceFructose": "Fructose",
+  "obAllergiesLabel": "Food allergies",
+  "obEatingDisorderQuestion": "Have you ever been treated for an eating disorder?",
+  "obEatingDisorderWhy": "If yes, Celia keeps your calories at maintenance instead of suggesting a deficit, and avoids weight-focused language.",
+  "obNutritionMode": "Who plans your meals?",
+  "obModeAutomatic": "Celia plans for me",
+  "obModeManual": "I plan it myself",
+  "obWaterTarget": "Daily water target (ml)",
+  "obTrainingTitle": "Training",
+  "obTrainingLocation": "Where will you train?",
+  "obLocationHome": "At home",
+  "obLocationGym": "At the gym",
+  "obLocationBoth": "Both",
+  "obInjuriesLabel": "Injuries or areas to avoid",
+  "obInjuryKnee": "Knee",
+  "obInjuryLowerBack": "Lower back",
+  "obInjuryShoulder": "Shoulder",
+  "obInjuryNeck": "Neck",
+  "obInjuryAnkle": "Ankle",
+  "obInjuryWrist": "Wrist",
+  "obConditionsLabel": "Medical conditions",
+  "obConditionHypertension": "High blood pressure",
+  "obConditionDiabetes": "Diabetes",
+  "obConditionAsthma": "Asthma",
+  "obConditionHeart": "Heart condition",
+  "obConditionPregnancy": "Pregnant or postpartum",
+  "obFitnessGoalLabel": "What do you want from training?",
+  "obFitnessLoseFat": "Lose fat",
+  "obFitnessStrength": "Get stronger",
+  "obFitnessTone": "Tone up",
+  "obFitnessHealth": "General health",
+  "obFitnessTactical": "Performance",
+  "obFitnessCustom": "Something else",
+  "obOutcomesLabel": "What else should Celia work on?",
+  "obOutcomeStress": "Stress",
+  "obOutcomeSleep": "Sleep",
+  "obOutcomeEnergy": "Energy",
+  "obOutcomeHabits": "Habits",
+  "obOutcomeConfidence": "Confidence",
+  "obIntensityLabel": "How hard do you want to go?",
+  "obIntensityEasy": "Easy",
+  "obIntensityModerate": "Moderate",
+  "obIntensityIntense": "Intense",
+  "obExperienceLabel": "How much have you trained before?",
+  "obExperienceBeginner": "New to this",
+  "obExperienceRegular": "I train regularly",
+  "obPlanningMode": "Who plans your workouts?",
+  "obMinutesPerDay": "Minutes per session",
+  "obMinutesValue": "{minutes} min",
+  "@obMinutesValue": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "obPreferredTime": "Preferred time of day",
+  "obPickTime": "Pick a time",
+  "obCoachingTitle": "Life coaching",
+  "obMoodQuestion": "How have you been feeling lately?",
+  "obMoodGreat": "Great",
+  "obMoodOkay": "Okay",
+  "obMoodTired": "Tired",
+  "obMoodStressed": "Stressed",
+  "obMoodLow": "Low",
+  "obCoachingFocusLabel": "Anything you would like to work on?",
+  "obCoachingFocusHint": "A sentence is enough",
+  "obNotificationsTitle": "Notifications",
+  "obNotificationsBody": "Choose what you want to hear about. You can change this any time.",
+  "obNotifyMeals": "Meal reminders",
+  "obNotifyWorkouts": "Workout reminders",
+  "obNotifyWater": "Water reminders",
+  "obNotifyProgress": "Weekly progress",
+  "obNotifyCoach": "Messages from Celia",
+  "obNotificationsPending": "We are saving your choices now. Reminders start arriving when delivery is switched on in a coming update.",
+  "obWearablesTitle": "Connect a wearable",
+  "obWearablesBody": "Optional. Tell us what you use and we will connect it as soon as support is ready.",
+  "obWearableNone": "Not now",
+  "obSummaryTitle": "You are all set, {name}",
+  "@obSummaryTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "obSummaryBody": "This is what Celia will use to plan for you.",
+  "obSummaryGoal": "Goal",
+  "obSummaryNutrition": "Nutrition",
+  "obSummaryTraining": "Training",
+  "obSummaryCoaching": "Coaching",
+  "obSummaryEditLater": "You can change any of this later in your profile.",
+  "obFirstRecommendation": "Your first step today",
+  "obRecoCalories": "Aim for about {kcal} kcal today, with {protein} g of protein.",
+  "@obRecoCalories": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      },
+      "protein": {
+        "type": "int"
+      }
+    }
+  },
+  "obRecoTraining": "Do a {minutes} minute session — Celia picks the exercises.",
+  "@obRecoTraining": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "obRecoWater": "Drink {ml} ml of water.",
+  "@obRecoWater": {
+    "placeholders": {
+      "ml": {
+        "type": "int"
+      }
+    }
+  },
+  "obRecoCheckIn": "Take five minutes to check in with how you feel.",
+  "obEquipmentMode": "Do you train with equipment?",
+  "obEquipmentBodyweight": "Bodyweight only",
+  "obEquipmentWith": "With equipment",
+  "obEquipmentWhich": "What do you have?",
+  "obEquipmentRequired": "Choose bodyweight or pick at least one item",
+  "obEquipDumbbell": "Dumbbells",
+  "obEquipBarbell": "Barbell",
+  "obEquipKettlebell": "Kettlebell",
+  "obEquipBand": "Resistance bands",
+  "obEquipCable": "Cable machine",
+  "obEquipMachine": "Gym machines",
+  "obEquipPullUpBar": "Pull-up bar",
+  "obEquipJumpRope": "Jump rope",
+  "obEquipMat": "Yoga mat",
+  "genEquipmentMode": "Equipment",
+  "genEquipmentBodyweight": "Bodyweight only",
+  "genEquipmentWith": "With equipment"
 }

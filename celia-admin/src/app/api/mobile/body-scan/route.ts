@@ -10,8 +10,6 @@ import {
   type BodygramGender,
   type BodygramMeasurement,
 } from '@/lib/bodygram';
-import { ObjParseError, objToGlb } from '@/lib/objToGlb';
-
 export const runtime = 'nodejs';
 export const maxDuration = 60;
 
@@ -178,31 +176,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Scanning failed' }, { status: 502 });
   }
 
-  // Convert and store the mesh. A mesh problem must not lose the metrics, so
-  // every failure past this point degrades to a scan without a 3D model.
-  let meshPath: string | null = null;
-  if (entry.avatar?.data) {
-    try {
-      const raw = Buffer.from(entry.avatar.data, 'base64');
-      const glb =
-        entry.avatar.format?.toLowerCase() === 'glb'
-          ? raw
-          : objToGlb(raw.toString('utf8')).glb;
-
-      const path = `${user.uid}/${scanRowId}.glb`;
-      const { error } = await supabase.storage.from(MESH_BUCKET).upload(path, glb, {
-        contentType: 'model/gltf-binary',
-        upsert: true,
-      });
-      if (error) throw new Error(error.message);
-      meshPath = path;
-    } catch (e) {
-      console.error(
-        '[body-scan] mesh unavailable:',
-        e instanceof ObjParseError ? `OBJ parse failed: ${e.message}` : e
-      );
-    }
-  }
+  // The results screen draws a body figure from the measurements. The vendor
+  // still returns a mesh, and we deliberately do not store it.
+  const meshPath: string | null = null;
 
   const measurements = Array.isArray(entry.measurements) ? entry.measurements : [];
   const composition = entry.bodyComposition ?? null;
@@ -313,6 +289,7 @@ export async function GET(req: NextRequest) {
         waistGirthMm: findMeasurement(measurements, 'waistGirth'),
         hipGirthMm: findMeasurement(measurements, 'hipGirth'),
         bustGirthMm: findMeasurement(measurements, 'bustGirth'),
+        measurements,
         meshUrl,
       };
     })

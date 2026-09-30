@@ -109,6 +109,34 @@ class ExerciseClipLibrary {
     'forward-fold': 'standing-forward-fold',
     'toe-touch': 'standing-toe-touch',
     'toe-touches': 'standing-toe-touch',
+    // Cardio / warm-ups the studio has not filmed yet — nearest looping demos.
+    'warm-up-jog-in-place': 'jumping-jacks',
+    'warmup-jog-in-place': 'jumping-jacks',
+    'jog-in-place': 'jumping-jacks',
+    'jogging-in-place': 'jumping-jacks',
+    'high-knees': 'jumping-jacks',
+    'high-knee': 'jumping-jacks',
+    'jumps-with-knees-high': 'jumping-jacks',
+    'burpee': 'mountain-climber-slow',
+    'burpees': 'mountain-climber-slow',
+    'tricep-dip': 'incline-push-up',
+    'tricep-dips': 'incline-push-up',
+    'triceps-dip': 'incline-push-up',
+    'triceps-dips': 'incline-push-up',
+    'dips-on-chair': 'incline-push-up',
+    'cool-down': 'standing-forward-fold',
+    'cooldown': 'standing-forward-fold',
+    'cool-down-stretch': 'childs-pose',
+    'arm-circles': 'jumping-jacks',
+    'circles-with-arms': 'jumping-jacks',
+    // Legacy GIF / Spanish pack slugs → filmed library.
+    'mountain-climber-of-mountain': 'mountain-climber-slow',
+    'mountain-climber-1': 'mountain-climber-slow',
+    'knee-push-ups-1': 'kneeling-push-up',
+    'plank-1': 'plank-variations',
+    'superman-1': 'prone-superman',
+    'jumping-jack-front': 'jumping-jacks',
+    'stretch-of-the-sphinx': 'sphinx-press',
   };
 
   ExerciseClipLibrary({SupabaseService? supabase})
@@ -116,6 +144,7 @@ class ExerciseClipLibrary {
 
   final SupabaseService _supabase;
   Map<String, ExerciseClip>? _bySlug;
+  List<ExerciseClip> _howTo = const [];
   Future<Map<String, ExerciseClip>>? _loading;
 
   Future<Map<String, ExerciseClip>> _ensureLoaded() {
@@ -127,21 +156,31 @@ class ExerciseClipLibrary {
   Future<Map<String, ExerciseClip>> _load() async {
     try {
       final clips = await _supabase.getExerciseClips();
-      final map = {for (final clip in clips) clip.slug: clip};
+      final map = {
+        for (final clip in clips)
+          if (!clip.isHowTo) clip.slug: clip,
+      };
+      _howTo = clips.where((clip) => clip.isHowTo).toList()
+        ..sort((a, b) => a.nameEn.compareTo(b.nameEn));
       _bySlug = map;
       return map;
     } catch (_) {
       // Never block a workout on the library failing to load; the player
       // falls back to whatever other media the step has.
       _bySlug = const {};
+      _howTo = const [];
       return const {};
     } finally {
       _loading = null;
     }
   }
 
-  /// Every clip in the library, for browsing and for routine building.
-  Future<List<ExerciseClip>> all() async => (await _ensureLoaded()).values.toList();
+  /// The equipment demonstrations for the "How to" tab, sorted by name.
+  /// These never back a workout step.
+  Future<List<ExerciseClip>> howTo() async {
+    await _ensureLoaded();
+    return _howTo;
+  }
 
   /// The filmed clip for [step], or null when the library has no match.
   Future<ExerciseClip?> resolveForStep(RoutineStep step) async {

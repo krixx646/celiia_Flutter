@@ -1,5 +1,6 @@
 import { ensureSavedToLibrary, findMatchingRoutine } from '@/lib/routineDedupe';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
+import { HOW_TO_CLIP_SOURCE, isWorkoutFriendlyEquipment } from '@/lib/clipSources';
 
 // Shared by POST /api/mobile/generate-routine (the Create Routine sheet) and by
 // the Celia coach agent's create_routine tool, so a routine built in chat is
@@ -35,17 +36,6 @@ const SUSPEND_REAL_VIDEOS = process.env.SUSPEND_REAL_VIDEOS !== 'false';
 // GIF anywhere, so building routines out of them would produce steps that
 // show nothing. Suspended rather than removed, exactly like the videos above.
 const ENABLE_GIF_FALLBACK = process.env.ENABLE_GIF_FALLBACK === 'true';
-
-// What the clip library calls the kit an exercise needs, mapped from what the
-// Create Routine sheet offers. Everything a home has anyway — a wall, a chair,
-// and the bench or box a chair stands in for — is always available; only the
-// bought equipment is gated on the user actually owning it.
-const ALWAYS_AVAILABLE_EQUIPMENT = ['wall', 'chair', 'bench', 'box'];
-
-const EQUIPMENT_SYNONYMS: Record<string, string[]> = {
-  dumbbell: ['dumbbell', 'dumbbells', 'kettlebell', 'weight', 'weights'],
-  band: ['band', 'bands', 'resistance band', 'resistance bands'],
-};
 
 export type Difficulty = 'easy' | 'medium' | 'hard';
 
@@ -192,7 +182,66 @@ export type GenerateRoutineInput = {
   durationMinutes: number;
   difficulty: Difficulty;
   equipment: string[];
+  /**
+   * Onboarding answers that constrain the routine. Loaded server-side from
+   * `user_profiles`, never taken from the request: an injury the caller can
+   * edit away is not a constraint.
+   */
+  profile?: RoutineProfileConstraints | null;
 };
+
+export type RoutineProfileConstraints = {
+  injuries?: string[] | null;
+  medicalConditions?: string[] | null;
+  trainingLocation?: string | null;
+  experienceLevel?: string | null;
+  trainingIntensity?: string | null;
+};
+
+/**
+ * The constraints as prompt rules.
+ *
+ * Phrased as hard rules rather than context because the model treats a rule
+ * as binding and a fact as decoration, and a knee injury is not decoration.
+ */
+function profileRules(profile: RoutineProfileConstraints | null | undefined): string {
+  if (!profile) return '';
+
+  const rules: string[] = [];
+  const injuries = (profile.injuries || [])
+    .map((entry) => String(entry).replace(/_/g, ' ').trim())
+    .filter(Boolean);
+  if (injuries.length) {
+    rules.push(
+      `- This user reports problems with: ${injuries.join(', ')}. Do NOT include exercises that load those areas. ` +
+        'Choose an alternative from the catalog that trains the same pattern without them.'
+    );
+  }
+
+  const conditions = (profile.medicalConditions || [])
+    .map((entry) => String(entry).replace(/_/g, ' ').trim())
+    .filter(Boolean);
+  if (conditions.length) {
+    rules.push(
+      `- Reported medical conditions: ${conditions.join(', ')}. Keep intensity conservative and avoid breath-holding, ` +
+        'maximal effort, and abrupt position changes.'
+    );
+  }
+
+  if (profile.experienceLevel === 'beginner') {
+    rules.push(
+      '- This user is a beginner. Favour simple, well-known movements, lower volume, and longer rests.'
+    );
+  }
+
+  if (profile.trainingIntensity === 'easy') {
+    rules.push('- Keep this session easy: lower volume, longer rest, no maximal effort.');
+  } else if (profile.trainingIntensity === 'intense') {
+    rules.push('- This user asked for intense sessions: more sets and shorter rests are appropriate.');
+  }
+
+  return rules.length ? `\nUser-specific rules (these override the request):\n${rules.join('\n')}\n` : '';
+}
 
 export type GenerateRoutineResult =
   | {
@@ -334,18 +383,6 @@ function topUpAcrossCategories(
   return out;
 }
 
-// Which of the clip library's equipment tags this user can actually work
-// with, given what they ticked on the Create Routine sheet.
-function availableEquipment(selected: string[]): Set<string> {
-  const available = new Set(ALWAYS_AVAILABLE_EQUIPMENT);
-  const haystack = selected.join(' ').toLowerCase();
-
-  for (const [tag, synonyms] of Object.entries(EQUIPMENT_SYNONYMS)) {
-    if (synonyms.some((synonym) => haystack.includes(synonym))) available.add(tag);
-  }
-  return available;
-}
-
 function selectCatalogForPrompt(
   entries: CatalogEntryForPrompt[],
   requestText: string,
@@ -427,6 +464,7 @@ export async function generateRoutine(
         'default_hold_seconds,clip_seconds,poster_url'
     )
     .eq('is_active', true)
+    .neq('source', HOW_TO_CLIP_SOURCE)
     .limit(500);
 
   if (clipErr) {
@@ -438,7 +476,6 @@ export async function generateRoutine(
     };
   }
 
-  const usable = availableEquipment(equipment);
   const clipCatalog: CatalogClip[] = ((clips || []) as unknown as ExerciseClipRow[])
     .map((c) => ({
       slug: String(c.slug || ''),
@@ -452,7 +489,7 @@ export async function generateRoutine(
       clipSeconds: Number(c.clip_seconds) || 0,
       posterUrl: c.poster_url ? String(c.poster_url) : null,
     }))
-    .filter((c) => c.slug && c.equipment.every((item) => usable.has(item)));
+    .filter((c) => c.slug && isWorkoutFriendlyEquipment(c.equipment));
 
   // Stock GIF exercise library, suspended alongside the app's GIF rendering.
   let gifCatalog: CatalogGif[] = [];
@@ -550,15 +587,16 @@ Respond ONLY with valid JSON:
       "sets": 3,
       "reps": 12,
       "durationSeconds": 0,
-      "restSeconds": 45
+      "restSeconds": 20
     }
   ],
   "tags": ["tag1","tag2"],
   "caloriesBurned": 150,
-  "equipment": "None" or "Dumbbells, Mat"
+  "equipment": "None"
 }
 
 Rules:
+- Every workout is a bodyweight session. Use only exercises from the catalog; none of them needs equipment beyond a wall, chair, bench or box.
 - Build a varied routine that actually fits the user's request (target muscle groups / workout style), not just whatever is easiest — the catalog has strength, calisthenics, functional/HIIT, and stretching/mobility exercises to choose from.
 - It's fine to reuse the same exercise as multiple steps (e.g. as a superset or second round), but don't make the whole routine a single exercise repeated unless the user explicitly asked for that.
 ${preferClipRule}
@@ -567,10 +605,10 @@ ${preferClipRule}
   - "hold": set "reps" to 0 and "durationSeconds" to how long to hold each set (typically 20-60s). Celia runs a countdown.
   Entries with no "stepType" are older library entries; treat those as "hold".
 - "sets" is 1-5. Use more sets for strength work, one for stretches and cool-downs.
-- "restSeconds" is the recovery after each set: 0-30s for mobility and easy work, 30-60s for strength, 60-90s for hard compound lifts. Use 0 only for stretches.
+- "restSeconds" is the recovery after each set. Prefer 20 between sets and between exercises inside a block of 3; use 40 after every third exercise (the block rest). Use 0 only for stretches and cool-downs. The app also enforces this 20/40 policy when playing.
 - The whole routine, including rest, should come to roughly the requested duration.
 - Keep steps <= 40.
-`;
+${profileRules(input.profile)}`;
 
   const userPrompt = {
     request: requestText,
@@ -677,7 +715,7 @@ ${preferClipRule}
   // own reviewed defaults.
   const prescriptionFor = (s: RoutineStepJson, clip: CatalogClip | undefined) => {
     const sets = Math.max(1, Math.min(5, safeInt(s?.sets, 1)));
-    const rest = Math.max(0, Math.min(180, safeInt(s?.restSeconds, 30)));
+    const rest = Math.max(0, Math.min(180, safeInt(s?.restSeconds, 20)));
 
     const counted = clip ? clip.stepType === 'reps' : false;
     const reps = counted

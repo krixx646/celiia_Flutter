@@ -10,6 +10,7 @@ import { verifyFirebaseUser } from '@/lib/firebaseAuth';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
 import { createAvatarAgent } from '@/lib/celiaAgent/avatarAgent';
 import type { UserStateSnapshot } from '@/lib/celiaAgent/agent';
+import { loadOnboardingFacts } from '@/lib/celiaAgent/onboardingFacts';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -185,7 +186,13 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const agent = createAvatarAgent({ uid: user.uid, tzOffsetMinutes }, body.state);
+    // Same as the chat route: the onboarding constraints are read here rather
+    // than trusted from the request body.
+    const onboarding = await loadOnboardingFacts(user.uid);
+    const agent = createAvatarAgent(
+      { uid: user.uid, tzOffsetMinutes },
+      { ...body.state, onboarding }
+    );
     const result = await agent.stream({ messages });
 
     return createUIMessageStreamResponse({

@@ -19,7 +19,13 @@ class ExerciseClip {
     this.defaultReps,
     this.defaultHoldSeconds,
     this.orientation = 'square',
+    this.source,
   });
+
+  /// Source of the equipment demonstrations. They are full form guides for the
+  /// "How to" tab, played once from start to finish and never used as a
+  /// workout step.
+  static const howToSource = 'premium_equipment_v1';
 
   final String slug;
   final String nameEn;
@@ -46,8 +52,11 @@ class ExerciseClip {
   final int? defaultReps;
   final int? defaultHoldSeconds;
   final String orientation;
+  final String? source;
 
   bool get needsNoEquipment => equipment.isEmpty;
+
+  bool get isHowTo => source == howToSource;
 
   /// How long one rep takes at the pace the clip was filmed at. This is what
   /// keeps the spoken count in step with the demonstration: the clip loops at
@@ -75,6 +84,7 @@ class ExerciseClip {
       defaultReps: (json['default_reps'] as num?)?.toInt(),
       defaultHoldSeconds: (json['default_hold_seconds'] as num?)?.toInt(),
       orientation: json['orientation'] as String? ?? 'square',
+      source: json['source'] as String?,
     );
   }
 }

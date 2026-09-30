@@ -13,12 +13,13 @@ import 'providers/nutrition_profile_provider.dart';
 import 'providers/nutrition_tracker_provider.dart';
 import 'providers/routine_provider.dart';
 import 'providers/theme_provider.dart';
+import 'providers/user_profile_provider.dart';
 import 'screens/auth_screen.dart';
 import 'screens/avatar/avatar_mode_shell.dart';
 import 'screens/email_verification_screen.dart';
 import 'screens/main_screen.dart';
 import 'screens/name_setup_screen.dart';
-import 'screens/onboarding/onboarding_screen.dart';
+import 'screens/onboarding/onboarding_flow_screen.dart';
 import 'services/onboarding_service.dart';
 import 'utils/responsive.dart';
 import 'widgets/loading_indicator.dart';
@@ -73,6 +74,7 @@ class CeliaRoot extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AvatarModeProvider()..load()),
         ChangeNotifierProvider(create: (_) => RoutineProvider()),
         ChangeNotifierProvider(create: (_) => NutritionProfileProvider()),
+        ChangeNotifierProvider(create: (_) => UserProfileProvider()),
         ChangeNotifierProvider(create: (_) => NutritionTrackerProvider()),
       ],
       child: const CeliaApp(),
@@ -188,17 +190,29 @@ class _AuthenticatedGateState extends State<_AuthenticatedGate> {
       return;
     }
 
-    // Both providers are resolved before the first await: reading them off
+    // All providers are resolved before the first await: reading them off
     // `context` afterwards throws if the widget was disposed mid-load.
+    final userProfiles = context.read<UserProfileProvider>();
     final profileProvider = context.read<NutritionProfileProvider>();
     final trackerProvider = context.read<NutritionTrackerProvider>();
-    await profileProvider.loadProfile();
+
+    await Future.wait([userProfiles.load(), profileProvider.loadProfile()]);
     trackerProvider.syncProfile(profileProvider.profile);
 
-    var complete = await OnboardingService.isComplete(uid);
-    if (!complete && profileProvider.hasProfile) {
-      await OnboardingService.markComplete(uid);
-      complete = true;
+    final bool complete;
+    if (userProfiles.hasLoaded) {
+      // The server profile is the authority: it knows which onboarding
+      // version the user answered, so a flow that has since grown a step
+      // sends them back for that step alone.
+      complete = userProfiles.isOnboardingComplete;
+      if (complete) await OnboardingService.markComplete(uid);
+    } else {
+      // The profile could not be fetched — offline, or the backend is down.
+      // Trusting the local flag here is the difference between a returning
+      // user seeing their dashboard and being marched through onboarding
+      // again with no way to save the answers.
+      complete =
+          await OnboardingService.isComplete(uid) || profileProvider.hasProfile;
     }
 
     if (mounted) setState(() => _onboardingComplete = complete);
@@ -217,7 +231,7 @@ class _AuthenticatedGateState extends State<_AuthenticatedGate> {
     }
 
     if (!_onboardingComplete!) {
-      return OnboardingScreen(
+      return OnboardingFlowScreen(
         onComplete: () => setState(() => _onboardingComplete = true),
       );
     }

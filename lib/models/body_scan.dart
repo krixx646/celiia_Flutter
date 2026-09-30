@@ -24,8 +24,7 @@ class BodyMeasurement {
   }
 }
 
-/// The result of one body scan: composition estimates, circumferences and a
-/// signed URL to the 3D mesh.
+/// The result of one body scan: composition estimates and circumferences.
 ///
 /// Every number here is an estimate from photo analysis, not a measurement.
 /// Anything that displays one must say so — see [methodologySource].
@@ -55,8 +54,43 @@ class BodyScan {
   final double? hipGirthMm;
   final double? bustGirthMm;
 
-  /// Signed and short-lived, so it must be downloaded rather than stored.
+  /// Legacy field from older scans that stored a mesh. Unused in the UI.
   final String? meshUrl;
+
+  /// Circumferences shown below the headline waist / hip / chest cards.
+  ///
+  /// Bodygram returns dozens of lengths and widths; these are the girths a
+  /// user can track without drowning the results screen.
+  static const List<String> additionalGirthNames = [
+    'neckGirth',
+    'underBustGirth',
+    'bellyWaistGirth',
+    'upperArmGirthR',
+    'forearmGirthR',
+    'wristGirthR',
+    'thighGirthR',
+    'midThighGirthR',
+    'kneeGirthR',
+    'calfGirthR',
+  ];
+
+  /// Girths already surfaced as headline cards, so they are not repeated.
+  static const Set<String> headlineGirthNames = {
+    'waistGirth',
+    'hipGirth',
+    'bustGirth',
+  };
+
+  List<BodyMeasurement> get additionalGirths {
+    final byName = <String, BodyMeasurement>{
+      for (final m in measurements)
+        if (m.name.isNotEmpty && m.value > 0) m.name: m,
+    };
+    return [
+      for (final name in additionalGirthNames)
+        if (byName[name] != null) byName[name]!,
+    ];
+  }
 
   double? get leanMassKg => leanMassG == null ? null : leanMassG! / 1000;
   double? get bodyFatMassKg => bodyFatMassG == null ? null : bodyFatMassG! / 1000;

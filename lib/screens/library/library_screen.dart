@@ -9,6 +9,7 @@ import '../../services/routine_thumbnail_resolver.dart';
 import '../../utils/responsive.dart';
 import '../../utils/routine_text.dart';
 import '../routines/routine_detail_screen.dart';
+import 'how_to_tab.dart';
 import 'dart:ui';
 
 class LibraryScreen extends StatefulWidget {
@@ -64,18 +65,25 @@ class _LibraryScreenState extends State<LibraryScreen> {
                       horizontal: 24,
                       vertical: 8,
                     ),
-                    child: Row(
-                      children: [
-                        _buildTabItem(l10n.libraryTabCurated, 0, theme),
-                        const SizedBox(width: 8),
-                        _buildTabItem(l10n.libraryTabAiGenerated, 1, theme),
-                      ],
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          _buildTabItem(l10n.libraryTabCurated, 0, theme),
+                          const SizedBox(width: 8),
+                          _buildTabItem(l10n.libraryTabAiGenerated, 1, theme),
+                          const SizedBox(width: 8),
+                          _buildTabItem(l10n.libraryTabHowTo, 2, theme),
+                        ],
+                      ),
                     ),
                   ),
 
                   // Grid
                   Expanded(
-                    child: routineProvider.isLoading
+                    child: _selectedIndex == 2
+                        ? const HowToTab()
+                        : routineProvider.isLoading
                         ? Center(
                             child: CircularProgressIndicator(
                               valueColor: AlwaysStoppedAnimation(

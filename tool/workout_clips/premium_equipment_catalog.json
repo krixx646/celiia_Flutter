@@ -1,0 +1,754 @@
+[
+  {
+    "slug": "back_extension_glute_focus",
+    "file": "back_extension_glute_focus.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "back_extension_neutral_spine_cue",
+    "file": "back_extension_neutral_spine_cue.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "barbell_bench_press_close_grip",
+    "file": "barbell_bench_press_close_grip.mp4",
+    "equipment": [
+      "barbell",
+      "bench"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "barbell_bench_press_grip",
+    "file": "barbell_bench_press_grip.mp4",
+    "equipment": [
+      "barbell",
+      "bench"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "barbell_bent_over_row_lat_focus",
+    "file": "barbell_bent_over_row_lat_focus.mp4",
+    "equipment": [
+      "barbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "barbell_hip_thrust_bench_supported",
+    "file": "barbell_hip_thrust_bench_supported.mp4",
+    "equipment": [
+      "barbell",
+      "bench"
+    ],
+    "pattern": "hinge",
+    "step_type": "reps"
+  },
+  {
+    "slug": "barbell_incline_bench_press_elbow_tuck",
+    "file": "barbell_incline_bench_press_elbow_tuck.mp4",
+    "equipment": [
+      "barbell",
+      "bench"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "barbell_lying_triceps_extension",
+    "file": "barbell_lying_triceps_extension.mp4",
+    "equipment": [
+      "barbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "barbell_preacher_curl",
+    "file": "barbell_preacher_curl.mp4",
+    "equipment": [
+      "barbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "bench_seated_crunch",
+    "file": "bench_seated_crunch.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "bodyweight_calf_raise_standing",
+    "file": "bodyweight_calf_raise_standing.mp4",
+    "equipment": [],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "bodyweight_forearm_plank_form_cues",
+    "file": "bodyweight_forearm_plank_form_cues.mp4",
+    "equipment": [],
+    "pattern": "core",
+    "step_type": "hold"
+  },
+  {
+    "slug": "bodyweight_leg_raise_seated",
+    "file": "bodyweight_leg_raise_seated.mp4",
+    "equipment": [],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "bodyweight_seated_leg_drill",
+    "file": "bodyweight_seated_leg_drill.mp4",
+    "equipment": [],
+    "pattern": "other",
+    "step_type": "reps"
+  },
+  {
+    "slug": "bodyweight_v_up_core_focus",
+    "file": "bodyweight_v_up_core_focus.mp4",
+    "equipment": [],
+    "pattern": "core",
+    "step_type": "reps"
+  },
+  {
+    "slug": "bodyweight_wall_posture_drill",
+    "file": "bodyweight_wall_posture_drill.mp4",
+    "equipment": [
+      "wall"
+    ],
+    "pattern": "other",
+    "step_type": "reps"
+  },
+  {
+    "slug": "bulgarian_split_squat_quads_glutes_focus",
+    "file": "bulgarian_split_squat_quads_glutes_focus.mp4",
+    "equipment": [
+      "bench"
+    ],
+    "pattern": "squat",
+    "step_type": "reps"
+  },
+  {
+    "slug": "bulgarian_split_squat_rear_foot_bench_glute_focus",
+    "file": "bulgarian_split_squat_rear_foot_bench_glute_focus.mp4",
+    "equipment": [
+      "bench"
+    ],
+    "pattern": "squat",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_bent_over_row",
+    "file": "cable_bent_over_row.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_biceps_curl_straight_bar",
+    "file": "cable_biceps_curl_straight_bar.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_chest_fly_seated",
+    "file": "cable_chest_fly_seated.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_chest_fly_seated_2",
+    "file": "cable_chest_fly_seated_2.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_face_pull_traps_rear_delts_focus",
+    "file": "cable_face_pull_traps_rear_delts_focus.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "other",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_glute_kickback",
+    "file": "cable_glute_kickback.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "other",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_lat_pulldown_wide_grip",
+    "file": "cable_lat_pulldown_wide_grip.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_lateral_raise_shoulder_focus",
+    "file": "cable_lateral_raise_shoulder_focus.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_overhead_triceps_extension_rear_delts_focus",
+    "file": "cable_overhead_triceps_extension_rear_delts_focus.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_overhead_triceps_extension_seated",
+    "file": "cable_overhead_triceps_extension_seated.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_rope_curl",
+    "file": "cable_rope_curl.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_row_seated_back_focus",
+    "file": "cable_row_seated_back_focus.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_row_seated_close_grip_back_focus",
+    "file": "cable_row_seated_close_grip_back_focus.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_straight_arm_pulldown_lat_focus",
+    "file": "cable_straight_arm_pulldown_lat_focus.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_triceps_pushdown",
+    "file": "cable_triceps_pushdown.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "other",
+    "step_type": "reps"
+  },
+  {
+    "slug": "cable_triceps_pushdown_rope",
+    "file": "cable_triceps_pushdown_rope.mp4",
+    "equipment": [
+      "cable"
+    ],
+    "pattern": "other",
+    "step_type": "reps"
+  },
+  {
+    "slug": "close_grip_push_up_elbow_lever_progression",
+    "file": "close_grip_push_up_elbow_lever_progression.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_bench_press_flat_setup_cue",
+    "file": "dumbbell_bench_press_flat_setup_cue.mp4",
+    "equipment": [
+      "dumbbell",
+      "bench"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_bent_over_row_back_focus",
+    "file": "dumbbell_bent_over_row_back_focus.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_biceps_curl_hammer",
+    "file": "dumbbell_biceps_curl_hammer.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_biceps_curl_seated",
+    "file": "dumbbell_biceps_curl_seated.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_biceps_curl_seated_elbow_position_cue",
+    "file": "dumbbell_biceps_curl_seated_elbow_position_cue.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_biceps_curl_seated_single_arm",
+    "file": "dumbbell_biceps_curl_seated_single_arm.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_biceps_curl_standing_form_cues",
+    "file": "dumbbell_biceps_curl_standing_form_cues.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_concentration_curl",
+    "file": "dumbbell_concentration_curl.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_forearm_curl_variations",
+    "file": "dumbbell_forearm_curl_variations.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_goblet_squat_heel_lift_cue",
+    "file": "dumbbell_goblet_squat_heel_lift_cue.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "squat",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_goblet_squat_heel_lift_cue_2",
+    "file": "dumbbell_goblet_squat_heel_lift_cue_2.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "squat",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_hip_thrust_glute_focus",
+    "file": "dumbbell_hip_thrust_glute_focus.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "hinge",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_incline_curl",
+    "file": "dumbbell_incline_curl.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_lateral_raise_shoulder_focus",
+    "file": "dumbbell_lateral_raise_shoulder_focus.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_lateral_raise_standing_form_cues",
+    "file": "dumbbell_lateral_raise_standing_form_cues.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_lower_body_quads_glutes_focus",
+    "file": "dumbbell_lower_body_quads_glutes_focus.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "other",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_one_arm_row_bench_supported_lats_focus",
+    "file": "dumbbell_one_arm_row_bench_supported_lats_focus.mp4",
+    "equipment": [
+      "dumbbell",
+      "bench"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_romanian_deadlift_glute_focus",
+    "file": "dumbbell_romanian_deadlift_glute_focus.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "hinge",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_romanian_deadlift_mid_shin",
+    "file": "dumbbell_romanian_deadlift_mid_shin.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "hinge",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_row_one_arm_lat_focus",
+    "file": "dumbbell_row_one_arm_lat_focus.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_shoulder_press_seated",
+    "file": "dumbbell_shoulder_press_seated.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_shoulder_press_seated_2",
+    "file": "dumbbell_shoulder_press_seated_2.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_shoulder_press_seated_upright",
+    "file": "dumbbell_shoulder_press_seated_upright.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_shoulder_press_standing",
+    "file": "dumbbell_shoulder_press_standing.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_shrug",
+    "file": "dumbbell_shrug.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "other",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_squat_glutes_focus",
+    "file": "dumbbell_squat_glutes_focus.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "squat",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_sumo_squat_glute_focus",
+    "file": "dumbbell_sumo_squat_glute_focus.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "squat",
+    "step_type": "reps"
+  },
+  {
+    "slug": "dumbbell_sumo_squat_glutes_inner_thighs_focus",
+    "file": "dumbbell_sumo_squat_glutes_inner_thighs_focus.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "squat",
+    "step_type": "reps"
+  },
+  {
+    "slug": "lat_pulldown_elbow_path_cue",
+    "file": "lat_pulldown_elbow_path_cue.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "lat_pulldown_grip_cue",
+    "file": "lat_pulldown_grip_cue.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "lat_pulldown_seated_setup_grip_and_torso_cues",
+    "file": "lat_pulldown_seated_setup_grip_and_torso_cues.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "leg_extension_quad_focus",
+    "file": "leg_extension_quad_focus.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "leg_extension_quad_focus_2",
+    "file": "leg_extension_quad_focus_2.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "leg_extension_seated_machine_glute_focus",
+    "file": "leg_extension_seated_machine_glute_focus.mp4",
+    "equipment": [
+      "machine"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "leg_press_foot_placement_hamstring_focus",
+    "file": "leg_press_foot_placement_hamstring_focus.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "leg_press_knee_tracking",
+    "file": "leg_press_knee_tracking.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "machine_seated_row_back_focus",
+    "file": "machine_seated_row_back_focus.mp4",
+    "equipment": [
+      "machine"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "mat_childs_pose",
+    "file": "mat_childs_pose.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "other",
+    "step_type": "hold"
+  },
+  {
+    "slug": "overhead_press_wide_grip",
+    "file": "overhead_press_wide_grip.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "pec_deck_fly_chest_focus",
+    "file": "pec_deck_fly_chest_focus.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "pike_push_up_forearm_stand_progression",
+    "file": "pike_push_up_forearm_stand_progression.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "pull_up_grip_cue",
+    "file": "pull_up_grip_cue.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "push_up",
+    "file": "push_up.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "push_up_2",
+    "file": "push_up_2.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "push_up_chest_focus",
+    "file": "push_up_chest_focus.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "push_up_hand_placement",
+    "file": "push_up_hand_placement.mp4",
+    "equipment": [
+      "dumbbell"
+    ],
+    "pattern": "push",
+    "step_type": "reps"
+  },
+  {
+    "slug": "smith_machine_shoulder_press",
+    "file": "smith_machine_shoulder_press.mp4",
+    "equipment": [
+      "smith"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "smith_machine_shoulder_press_2",
+    "file": "smith_machine_shoulder_press_2.mp4",
+    "equipment": [
+      "smith"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  },
+  {
+    "slug": "smith_machine_shoulder_press_3",
+    "file": "smith_machine_shoulder_press_3.mp4",
+    "equipment": [
+      "smith"
+    ],
+    "pattern": "pull",
+    "step_type": "reps"
+  }
+]

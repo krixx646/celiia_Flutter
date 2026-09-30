@@ -1546,6 +1546,90 @@ abstract class AppLocalizations {
   /// **'AI-Generated'**
   String get libraryTabAiGenerated;
 
+  /// No description provided for @libraryTabHowTo.
+  ///
+  /// In en, this message translates to:
+  /// **'How to'**
+  String get libraryTabHowTo;
+
+  /// No description provided for @libraryHowToIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Type an exercise, or a series like \"dumbbell chest and triceps\", to see how to do it properly with full demonstrations.'**
+  String get libraryHowToIntro;
+
+  /// No description provided for @libraryHowToSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. dumbbell row, or back and biceps'**
+  String get libraryHowToSearchHint;
+
+  /// No description provided for @howToPlaySeries.
+  ///
+  /// In en, this message translates to:
+  /// **'Play series ({count})'**
+  String howToPlaySeries(int count);
+
+  /// No description provided for @howToSeriesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How-to series'**
+  String get howToSeriesTitle;
+
+  /// No description provided for @howToNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get howToNext;
+
+  /// No description provided for @howToRest.
+  ///
+  /// In en, this message translates to:
+  /// **'Rest'**
+  String get howToRest;
+
+  /// No description provided for @howToUpNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Up next: {name}'**
+  String howToUpNext(String name);
+
+  /// No description provided for @howToUpNextBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Up next'**
+  String get howToUpNextBadge;
+
+  /// No description provided for @howToChooseNextHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap an exercise to choose what plays next.'**
+  String get howToChooseNextHint;
+
+  /// No description provided for @howToSeriesDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Series complete'**
+  String get howToSeriesDone;
+
+  /// No description provided for @howToPlayAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Play again'**
+  String get howToPlayAgain;
+
+  /// No description provided for @howToDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get howToDone;
+
+  /// No description provided for @libraryHowToNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No demonstration for \"{query}\" yet. Try another exercise name.'**
+  String libraryHowToNoMatch(String query);
+
   /// No description provided for @profileSavedRoutines.
   ///
   /// In en, this message translates to:
@@ -2827,7 +2911,7 @@ abstract class AppLocalizations {
   /// No description provided for @bodyScanConsentStorageBody.
   ///
   /// In en, this message translates to:
-  /// **'Celia does not keep them. Only the resulting numbers and your 3D model are saved to your account, and deleting your account deletes them.'**
+  /// **'Celia does not keep them. Only the measurements from the scan are saved to your account, and deleting your account deletes them.'**
   String get bodyScanConsentStorageBody;
 
   /// No description provided for @bodyScanConsentAgeTitle.
@@ -2983,7 +3067,7 @@ abstract class AppLocalizations {
   /// No description provided for @bodyScanProcessingBody.
   ///
   /// In en, this message translates to:
-  /// **'Building your 3D model and estimating your measurements. This takes up to a minute.'**
+  /// **'Estimating your measurements. This takes up to a minute.'**
   String get bodyScanProcessingBody;
 
   /// No description provided for @bodyScanResultTitle.
@@ -3040,6 +3124,72 @@ abstract class AppLocalizations {
   /// **'Waist to hip'**
   String get bodyScanWaistToHip;
 
+  /// No description provided for @bodyScanMoreMeasurements.
+  ///
+  /// In en, this message translates to:
+  /// **'More measurements'**
+  String get bodyScanMoreMeasurements;
+
+  /// No description provided for @bodyScanNeck.
+  ///
+  /// In en, this message translates to:
+  /// **'Neck'**
+  String get bodyScanNeck;
+
+  /// No description provided for @bodyScanUnderBust.
+  ///
+  /// In en, this message translates to:
+  /// **'Under bust'**
+  String get bodyScanUnderBust;
+
+  /// No description provided for @bodyScanBelly.
+  ///
+  /// In en, this message translates to:
+  /// **'Belly'**
+  String get bodyScanBelly;
+
+  /// No description provided for @bodyScanUpperArm.
+  ///
+  /// In en, this message translates to:
+  /// **'Upper arm'**
+  String get bodyScanUpperArm;
+
+  /// No description provided for @bodyScanForearm.
+  ///
+  /// In en, this message translates to:
+  /// **'Forearm'**
+  String get bodyScanForearm;
+
+  /// No description provided for @bodyScanWrist.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrist'**
+  String get bodyScanWrist;
+
+  /// No description provided for @bodyScanThigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Thigh'**
+  String get bodyScanThigh;
+
+  /// No description provided for @bodyScanMidThigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Mid-thigh'**
+  String get bodyScanMidThigh;
+
+  /// No description provided for @bodyScanKnee.
+  ///
+  /// In en, this message translates to:
+  /// **'Knee'**
+  String get bodyScanKnee;
+
+  /// No description provided for @bodyScanCalf.
+  ///
+  /// In en, this message translates to:
+  /// **'Calf'**
+  String get bodyScanCalf;
+
   /// No description provided for @bodyScanQuotaRemaining.
   ///
   /// In en, this message translates to:
@@ -3055,7 +3205,7 @@ abstract class AppLocalizations {
   /// No description provided for @bodyScanEmptyBody.
   ///
   /// In en, this message translates to:
-  /// **'Two photos give you an estimate of your body fat, lean mass and key measurements, plus a 3D model you can compare over time.'**
+  /// **'Two photos give you an estimate of your body fat, lean mass and key measurements, shown on a body drawing you can compare over time.'**
   String get bodyScanEmptyBody;
 
   /// No description provided for @bodyScanLatestTitle.
@@ -3109,7 +3259,7 @@ abstract class AppLocalizations {
   /// No description provided for @bodyScanSourcesBody.
   ///
   /// In en, this message translates to:
-  /// **'Your photos are turned into a 3D outline of your body, and body fat and lean mass are estimated from that shape together with your height, weight, age and sex. Lean mass covers muscle, water, bone and organs together, not protein on its own.'**
+  /// **'Your photos are used to estimate body shape, and body fat and lean mass are estimated from that shape together with your height, weight, age and sex. Lean mass covers muscle, water, bone and organs together, not protein on its own.'**
   String get bodyScanSourcesBody;
 
   /// No description provided for @bodyScanDisclaimer.
@@ -3231,6 +3381,816 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Estimate body fat from two photos'**
   String get homeBodyScanSubtitle;
+
+  /// No description provided for @obStepOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String obStepOf(int current, int total);
+
+  /// No description provided for @obBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get obBack;
+
+  /// No description provided for @obSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get obSkip;
+
+  /// No description provided for @obYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get obYes;
+
+  /// No description provided for @obNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get obNo;
+
+  /// No description provided for @obOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get obOptional;
+
+  /// No description provided for @obAddHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type and press enter to add'**
+  String get obAddHint;
+
+  /// No description provided for @obFinish.
+  ///
+  /// In en, this message translates to:
+  /// **'Start using Celia'**
+  String get obFinish;
+
+  /// No description provided for @obAnswerRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please answer this to continue'**
+  String get obAnswerRequired;
+
+  /// No description provided for @obConsentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Before we start'**
+  String get obConsentTitle;
+
+  /// No description provided for @obConsentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Celia builds your nutrition, training and coaching plans from what you tell us here. You can change any answer later in your profile.'**
+  String get obConsentBody;
+
+  /// No description provided for @obDisclaimerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Not medical advice'**
+  String get obDisclaimerTitle;
+
+  /// No description provided for @obDisclaimerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Celia is a wellbeing coach, not a doctor. It does not diagnose, treat or prescribe. Speak to a health professional before changing your diet or training if you are pregnant, injured, or managing a medical condition.'**
+  String get obDisclaimerBody;
+
+  /// No description provided for @obAcceptTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'I accept the Terms & Conditions and the Privacy Policy'**
+  String get obAcceptTerms;
+
+  /// No description provided for @obAcceptDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'I understand Celia does not provide medical advice'**
+  String get obAcceptDisclaimer;
+
+  /// No description provided for @obConsentRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please accept both to continue'**
+  String get obConsentRequired;
+
+  /// No description provided for @obPhysicalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your body'**
+  String get obPhysicalTitle;
+
+  /// No description provided for @obPhysicalBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Used to estimate how much energy you burn at rest.'**
+  String get obPhysicalBody;
+
+  /// No description provided for @obBmrTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated basal metabolism'**
+  String get obBmrTitle;
+
+  /// No description provided for @obBmrValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{kcal} kcal per day at rest'**
+  String obBmrValue(int kcal);
+
+  /// No description provided for @obBmrExplainer.
+  ///
+  /// In en, this message translates to:
+  /// **'Mifflin–St Jeor formula. Your daily target adds your activity and your goal on top of this.'**
+  String get obBmrExplainer;
+
+  /// No description provided for @obGoalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your main goal'**
+  String get obGoalTitle;
+
+  /// No description provided for @obGoalBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This decides whether your plan runs at a deficit, at maintenance, or at a surplus.'**
+  String get obGoalBody;
+
+  /// No description provided for @obGoalLoseWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Lose weight'**
+  String get obGoalLoseWeight;
+
+  /// No description provided for @obGoalGainWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Gain weight'**
+  String get obGoalGainWeight;
+
+  /// No description provided for @obGoalBuildMuscle.
+  ///
+  /// In en, this message translates to:
+  /// **'Build muscle'**
+  String get obGoalBuildMuscle;
+
+  /// No description provided for @obNutritionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition'**
+  String get obNutritionTitle;
+
+  /// No description provided for @obDietPattern.
+  ///
+  /// In en, this message translates to:
+  /// **'How do you eat?'**
+  String get obDietPattern;
+
+  /// No description provided for @obDietOmnivore.
+  ///
+  /// In en, this message translates to:
+  /// **'No restrictions'**
+  String get obDietOmnivore;
+
+  /// No description provided for @obDietVegetarian.
+  ///
+  /// In en, this message translates to:
+  /// **'Vegetarian'**
+  String get obDietVegetarian;
+
+  /// No description provided for @obDietVegan.
+  ///
+  /// In en, this message translates to:
+  /// **'Vegan'**
+  String get obDietVegan;
+
+  /// No description provided for @obDietPescatarian.
+  ///
+  /// In en, this message translates to:
+  /// **'Pescatarian'**
+  String get obDietPescatarian;
+
+  /// No description provided for @obIntolerances.
+  ///
+  /// In en, this message translates to:
+  /// **'Intolerances'**
+  String get obIntolerances;
+
+  /// No description provided for @obIntoleranceGluten.
+  ///
+  /// In en, this message translates to:
+  /// **'Gluten / celiac'**
+  String get obIntoleranceGluten;
+
+  /// No description provided for @obIntoleranceLactose.
+  ///
+  /// In en, this message translates to:
+  /// **'Lactose'**
+  String get obIntoleranceLactose;
+
+  /// No description provided for @obIntoleranceFructose.
+  ///
+  /// In en, this message translates to:
+  /// **'Fructose'**
+  String get obIntoleranceFructose;
+
+  /// No description provided for @obAllergiesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Food allergies'**
+  String get obAllergiesLabel;
+
+  /// No description provided for @obEatingDisorderQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Have you ever been treated for an eating disorder?'**
+  String get obEatingDisorderQuestion;
+
+  /// No description provided for @obEatingDisorderWhy.
+  ///
+  /// In en, this message translates to:
+  /// **'If yes, Celia keeps your calories at maintenance instead of suggesting a deficit, and avoids weight-focused language.'**
+  String get obEatingDisorderWhy;
+
+  /// No description provided for @obNutritionMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Who plans your meals?'**
+  String get obNutritionMode;
+
+  /// No description provided for @obModeAutomatic.
+  ///
+  /// In en, this message translates to:
+  /// **'Celia plans for me'**
+  String get obModeAutomatic;
+
+  /// No description provided for @obModeManual.
+  ///
+  /// In en, this message translates to:
+  /// **'I plan it myself'**
+  String get obModeManual;
+
+  /// No description provided for @obWaterTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily water target (ml)'**
+  String get obWaterTarget;
+
+  /// No description provided for @obTrainingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Training'**
+  String get obTrainingTitle;
+
+  /// No description provided for @obTrainingLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Where will you train?'**
+  String get obTrainingLocation;
+
+  /// No description provided for @obLocationHome.
+  ///
+  /// In en, this message translates to:
+  /// **'At home'**
+  String get obLocationHome;
+
+  /// No description provided for @obLocationGym.
+  ///
+  /// In en, this message translates to:
+  /// **'At the gym'**
+  String get obLocationGym;
+
+  /// No description provided for @obLocationBoth.
+  ///
+  /// In en, this message translates to:
+  /// **'Both'**
+  String get obLocationBoth;
+
+  /// No description provided for @obInjuriesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Injuries or areas to avoid'**
+  String get obInjuriesLabel;
+
+  /// No description provided for @obInjuryKnee.
+  ///
+  /// In en, this message translates to:
+  /// **'Knee'**
+  String get obInjuryKnee;
+
+  /// No description provided for @obInjuryLowerBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Lower back'**
+  String get obInjuryLowerBack;
+
+  /// No description provided for @obInjuryShoulder.
+  ///
+  /// In en, this message translates to:
+  /// **'Shoulder'**
+  String get obInjuryShoulder;
+
+  /// No description provided for @obInjuryNeck.
+  ///
+  /// In en, this message translates to:
+  /// **'Neck'**
+  String get obInjuryNeck;
+
+  /// No description provided for @obInjuryAnkle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ankle'**
+  String get obInjuryAnkle;
+
+  /// No description provided for @obInjuryWrist.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrist'**
+  String get obInjuryWrist;
+
+  /// No description provided for @obConditionsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Medical conditions'**
+  String get obConditionsLabel;
+
+  /// No description provided for @obConditionHypertension.
+  ///
+  /// In en, this message translates to:
+  /// **'High blood pressure'**
+  String get obConditionHypertension;
+
+  /// No description provided for @obConditionDiabetes.
+  ///
+  /// In en, this message translates to:
+  /// **'Diabetes'**
+  String get obConditionDiabetes;
+
+  /// No description provided for @obConditionAsthma.
+  ///
+  /// In en, this message translates to:
+  /// **'Asthma'**
+  String get obConditionAsthma;
+
+  /// No description provided for @obConditionHeart.
+  ///
+  /// In en, this message translates to:
+  /// **'Heart condition'**
+  String get obConditionHeart;
+
+  /// No description provided for @obConditionPregnancy.
+  ///
+  /// In en, this message translates to:
+  /// **'Pregnant or postpartum'**
+  String get obConditionPregnancy;
+
+  /// No description provided for @obFitnessGoalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want from training?'**
+  String get obFitnessGoalLabel;
+
+  /// No description provided for @obFitnessLoseFat.
+  ///
+  /// In en, this message translates to:
+  /// **'Lose fat'**
+  String get obFitnessLoseFat;
+
+  /// No description provided for @obFitnessStrength.
+  ///
+  /// In en, this message translates to:
+  /// **'Get stronger'**
+  String get obFitnessStrength;
+
+  /// No description provided for @obFitnessTone.
+  ///
+  /// In en, this message translates to:
+  /// **'Tone up'**
+  String get obFitnessTone;
+
+  /// No description provided for @obFitnessHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'General health'**
+  String get obFitnessHealth;
+
+  /// No description provided for @obFitnessTactical.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance'**
+  String get obFitnessTactical;
+
+  /// No description provided for @obFitnessCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Something else'**
+  String get obFitnessCustom;
+
+  /// No description provided for @obOutcomesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'What else should Celia work on?'**
+  String get obOutcomesLabel;
+
+  /// No description provided for @obOutcomeStress.
+  ///
+  /// In en, this message translates to:
+  /// **'Stress'**
+  String get obOutcomeStress;
+
+  /// No description provided for @obOutcomeSleep.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep'**
+  String get obOutcomeSleep;
+
+  /// No description provided for @obOutcomeEnergy.
+  ///
+  /// In en, this message translates to:
+  /// **'Energy'**
+  String get obOutcomeEnergy;
+
+  /// No description provided for @obOutcomeHabits.
+  ///
+  /// In en, this message translates to:
+  /// **'Habits'**
+  String get obOutcomeHabits;
+
+  /// No description provided for @obOutcomeConfidence.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidence'**
+  String get obOutcomeConfidence;
+
+  /// No description provided for @obIntensityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'How hard do you want to go?'**
+  String get obIntensityLabel;
+
+  /// No description provided for @obIntensityEasy.
+  ///
+  /// In en, this message translates to:
+  /// **'Easy'**
+  String get obIntensityEasy;
+
+  /// No description provided for @obIntensityModerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate'**
+  String get obIntensityModerate;
+
+  /// No description provided for @obIntensityIntense.
+  ///
+  /// In en, this message translates to:
+  /// **'Intense'**
+  String get obIntensityIntense;
+
+  /// No description provided for @obExperienceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'How much have you trained before?'**
+  String get obExperienceLabel;
+
+  /// No description provided for @obExperienceBeginner.
+  ///
+  /// In en, this message translates to:
+  /// **'New to this'**
+  String get obExperienceBeginner;
+
+  /// No description provided for @obExperienceRegular.
+  ///
+  /// In en, this message translates to:
+  /// **'I train regularly'**
+  String get obExperienceRegular;
+
+  /// No description provided for @obPlanningMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Who plans your workouts?'**
+  String get obPlanningMode;
+
+  /// No description provided for @obMinutesPerDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes per session'**
+  String get obMinutesPerDay;
+
+  /// No description provided for @obMinutesValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String obMinutesValue(int minutes);
+
+  /// No description provided for @obPreferredTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred time of day'**
+  String get obPreferredTime;
+
+  /// No description provided for @obPickTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a time'**
+  String get obPickTime;
+
+  /// No description provided for @obCoachingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Life coaching'**
+  String get obCoachingTitle;
+
+  /// No description provided for @obMoodQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'How have you been feeling lately?'**
+  String get obMoodQuestion;
+
+  /// No description provided for @obMoodGreat.
+  ///
+  /// In en, this message translates to:
+  /// **'Great'**
+  String get obMoodGreat;
+
+  /// No description provided for @obMoodOkay.
+  ///
+  /// In en, this message translates to:
+  /// **'Okay'**
+  String get obMoodOkay;
+
+  /// No description provided for @obMoodTired.
+  ///
+  /// In en, this message translates to:
+  /// **'Tired'**
+  String get obMoodTired;
+
+  /// No description provided for @obMoodStressed.
+  ///
+  /// In en, this message translates to:
+  /// **'Stressed'**
+  String get obMoodStressed;
+
+  /// No description provided for @obMoodLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get obMoodLow;
+
+  /// No description provided for @obCoachingFocusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Anything you would like to work on?'**
+  String get obCoachingFocusLabel;
+
+  /// No description provided for @obCoachingFocusHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A sentence is enough'**
+  String get obCoachingFocusHint;
+
+  /// No description provided for @obNotificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get obNotificationsTitle;
+
+  /// No description provided for @obNotificationsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose what you want to hear about. You can change this any time.'**
+  String get obNotificationsBody;
+
+  /// No description provided for @obNotifyMeals.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal reminders'**
+  String get obNotifyMeals;
+
+  /// No description provided for @obNotifyWorkouts.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout reminders'**
+  String get obNotifyWorkouts;
+
+  /// No description provided for @obNotifyWater.
+  ///
+  /// In en, this message translates to:
+  /// **'Water reminders'**
+  String get obNotifyWater;
+
+  /// No description provided for @obNotifyProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly progress'**
+  String get obNotifyProgress;
+
+  /// No description provided for @obNotifyCoach.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages from Celia'**
+  String get obNotifyCoach;
+
+  /// No description provided for @obNotificationsPending.
+  ///
+  /// In en, this message translates to:
+  /// **'We are saving your choices now. Reminders start arriving when delivery is switched on in a coming update.'**
+  String get obNotificationsPending;
+
+  /// No description provided for @obWearablesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a wearable'**
+  String get obWearablesTitle;
+
+  /// No description provided for @obWearablesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. Tell us what you use and we will connect it as soon as support is ready.'**
+  String get obWearablesBody;
+
+  /// No description provided for @obWearableNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get obWearableNone;
+
+  /// No description provided for @obSummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You are all set, {name}'**
+  String obSummaryTitle(String name);
+
+  /// No description provided for @obSummaryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This is what Celia will use to plan for you.'**
+  String get obSummaryBody;
+
+  /// No description provided for @obSummaryGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal'**
+  String get obSummaryGoal;
+
+  /// No description provided for @obSummaryNutrition.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition'**
+  String get obSummaryNutrition;
+
+  /// No description provided for @obSummaryTraining.
+  ///
+  /// In en, this message translates to:
+  /// **'Training'**
+  String get obSummaryTraining;
+
+  /// No description provided for @obSummaryCoaching.
+  ///
+  /// In en, this message translates to:
+  /// **'Coaching'**
+  String get obSummaryCoaching;
+
+  /// No description provided for @obSummaryEditLater.
+  ///
+  /// In en, this message translates to:
+  /// **'You can change any of this later in your profile.'**
+  String get obSummaryEditLater;
+
+  /// No description provided for @obFirstRecommendation.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first step today'**
+  String get obFirstRecommendation;
+
+  /// No description provided for @obRecoCalories.
+  ///
+  /// In en, this message translates to:
+  /// **'Aim for about {kcal} kcal today, with {protein} g of protein.'**
+  String obRecoCalories(int kcal, int protein);
+
+  /// No description provided for @obRecoTraining.
+  ///
+  /// In en, this message translates to:
+  /// **'Do a {minutes} minute session — Celia picks the exercises.'**
+  String obRecoTraining(int minutes);
+
+  /// No description provided for @obRecoWater.
+  ///
+  /// In en, this message translates to:
+  /// **'Drink {ml} ml of water.'**
+  String obRecoWater(int ml);
+
+  /// No description provided for @obRecoCheckIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Take five minutes to check in with how you feel.'**
+  String get obRecoCheckIn;
+
+  /// No description provided for @obEquipmentMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you train with equipment?'**
+  String get obEquipmentMode;
+
+  /// No description provided for @obEquipmentBodyweight.
+  ///
+  /// In en, this message translates to:
+  /// **'Bodyweight only'**
+  String get obEquipmentBodyweight;
+
+  /// No description provided for @obEquipmentWith.
+  ///
+  /// In en, this message translates to:
+  /// **'With equipment'**
+  String get obEquipmentWith;
+
+  /// No description provided for @obEquipmentWhich.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you have?'**
+  String get obEquipmentWhich;
+
+  /// No description provided for @obEquipmentRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose bodyweight or pick at least one item'**
+  String get obEquipmentRequired;
+
+  /// No description provided for @obEquipDumbbell.
+  ///
+  /// In en, this message translates to:
+  /// **'Dumbbells'**
+  String get obEquipDumbbell;
+
+  /// No description provided for @obEquipBarbell.
+  ///
+  /// In en, this message translates to:
+  /// **'Barbell'**
+  String get obEquipBarbell;
+
+  /// No description provided for @obEquipKettlebell.
+  ///
+  /// In en, this message translates to:
+  /// **'Kettlebell'**
+  String get obEquipKettlebell;
+
+  /// No description provided for @obEquipBand.
+  ///
+  /// In en, this message translates to:
+  /// **'Resistance bands'**
+  String get obEquipBand;
+
+  /// No description provided for @obEquipCable.
+  ///
+  /// In en, this message translates to:
+  /// **'Cable machine'**
+  String get obEquipCable;
+
+  /// No description provided for @obEquipMachine.
+  ///
+  /// In en, this message translates to:
+  /// **'Gym machines'**
+  String get obEquipMachine;
+
+  /// No description provided for @obEquipPullUpBar.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull-up bar'**
+  String get obEquipPullUpBar;
+
+  /// No description provided for @obEquipJumpRope.
+  ///
+  /// In en, this message translates to:
+  /// **'Jump rope'**
+  String get obEquipJumpRope;
+
+  /// No description provided for @obEquipMat.
+  ///
+  /// In en, this message translates to:
+  /// **'Yoga mat'**
+  String get obEquipMat;
+
+  /// No description provided for @genEquipmentMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment'**
+  String get genEquipmentMode;
+
+  /// No description provided for @genEquipmentBodyweight.
+  ///
+  /// In en, this message translates to:
+  /// **'Bodyweight only'**
+  String get genEquipmentBodyweight;
+
+  /// No description provided for @genEquipmentWith.
+  ///
+  /// In en, this message translates to:
+  /// **'With equipment'**
+  String get genEquipmentWith;
 }
 
 class _AppLocalizationsDelegate

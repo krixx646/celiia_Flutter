@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
 import '../l10n/app_localizations.dart';
 import '../models/routine.dart';
 import '../providers/routine_provider.dart';
 import '../providers/theme_provider.dart';
 import '../utils/routine_text.dart';
 
-/// Bottom sheet for generating AI routines
+/// Bottom sheet for generating AI routines.
 class GenerateRoutineSheet extends StatefulWidget {
   const GenerateRoutineSheet({super.key});
 
@@ -18,46 +20,13 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
   final _requestController = TextEditingController();
   int _selectedDuration = 15;
   RoutineDifficulty _selectedDifficulty = RoutineDifficulty.medium;
-  final List<String> _selectedEquipment = [];
 
   final List<int> _durations = [10, 15, 20, 30, 45, 60];
-  final List<String> _equipmentOptions = [
-    'None',
-    'Dumbbells',
-    'Resistance Bands',
-    'Yoga Mat',
-    'Kettlebell',
-    'Pull-up Bar',
-    'Jump Rope',
-  ];
 
   @override
   void dispose() {
     _requestController.dispose();
     super.dispose();
-  }
-
-  /// The equipment values above are what the backend matches on, so they stay
-  /// English; only the chip text follows the app language.
-  String _equipmentLabel(AppLocalizations l10n, String equipment) {
-    switch (equipment) {
-      case 'None':
-        return l10n.equipmentNone;
-      case 'Dumbbells':
-        return l10n.equipmentDumbbells;
-      case 'Resistance Bands':
-        return l10n.equipmentResistanceBands;
-      case 'Yoga Mat':
-        return l10n.equipmentYogaMat;
-      case 'Kettlebell':
-        return l10n.equipmentKettlebell;
-      case 'Pull-up Bar':
-        return l10n.equipmentPullUpBar;
-      case 'Jump Rope':
-        return l10n.equipmentJumpRope;
-      default:
-        return equipment;
-    }
   }
 
   @override
@@ -78,87 +47,56 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
           children: [
-            // Handle bar
             Center(
               child: Container(
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: theme.textSecondary.withValues(alpha: 0.3),
+                  color: theme.border,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
             ),
             const SizedBox(height: 20),
-
-            // Title
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFFFB74D), Color(0xFFF57C00)],
-                    ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(
-                    Icons.auto_awesome,
-                    color: Colors.white,
-                    size: 24,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  l10n.generateSheetTitle,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: theme.textPrimary,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-
-            // Request input
             Text(
-              l10n.generateSheetPrompt,
+              l10n.generateSheetTitle,
               style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: theme.textSecondary,
+                fontSize: 22,
+                fontWeight: FontWeight.w800,
+                color: theme.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
+            Text(
+              l10n.generateSheetPrompt,
+              style: TextStyle(color: theme.textSecondary, height: 1.35),
+            ),
+            const SizedBox(height: 20),
             TextField(
               controller: _requestController,
               maxLines: 3,
               style: TextStyle(color: theme.textPrimary),
               decoration: InputDecoration(
                 hintText: l10n.generateSheetHint,
-                hintStyle: TextStyle(
-                  color: theme.textSecondary.withValues(alpha: 0.6),
-                ),
+                hintStyle: TextStyle(color: theme.textSecondary),
                 filled: true,
-                fillColor: theme.isDarkMode
-                    ? Colors.white.withValues(alpha: 0.05)
-                    : Colors.grey.withValues(alpha: 0.1),
+                fillColor: theme.background,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: theme.border),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: theme.border),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: theme.accentOrange, width: 2),
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: theme.accentOrange),
                 ),
               ),
             ),
             const SizedBox(height: 20),
-
-            // Duration selector
             Text(
               l10n.generateSheetDuration,
               style: TextStyle(
@@ -170,30 +108,22 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
-              children: _durations.map((duration) {
-                final isSelected = _selectedDuration == duration;
+              children: _durations.map((minutes) {
+                final selected = _selectedDuration == minutes;
                 return ChoiceChip(
-                  label: Text(l10n.generateSheetMinutes(duration)),
-                  selected: isSelected,
-                  onSelected: (selected) {
-                    if (selected) {
-                      setState(() => _selectedDuration = duration);
-                    }
-                  },
+                  label: Text('$minutes'),
+                  selected: selected,
+                  onSelected: (_) =>
+                      setState(() => _selectedDuration = minutes),
                   selectedColor: theme.accentOrange,
-                  backgroundColor: theme.isDarkMode
-                      ? Colors.white.withValues(alpha: 0.1)
-                      : Colors.grey.withValues(alpha: 0.1),
                   labelStyle: TextStyle(
-                    color: isSelected ? Colors.white : theme.textPrimary,
+                    color: selected ? Colors.white : theme.textPrimary,
                     fontWeight: FontWeight.w600,
                   ),
                 );
               }).toList(),
             ),
             const SizedBox(height: 20),
-
-            // Difficulty selector
             Text(
               l10n.generateSheetDifficulty,
               style: TextStyle(
@@ -219,9 +149,6 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
                         }
                       },
                       selectedColor: theme.accentOrange,
-                      backgroundColor: theme.isDarkMode
-                          ? Colors.white.withValues(alpha: 0.1)
-                          : Colors.grey.withValues(alpha: 0.1),
                       labelStyle: TextStyle(
                         color: isSelected ? Colors.white : theme.textPrimary,
                         fontWeight: FontWeight.w600,
@@ -231,55 +158,7 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
                 );
               }).toList(),
             ),
-            const SizedBox(height: 20),
-
-            // Equipment selector
-            Text(
-              l10n.generateSheetEquipment,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: theme.textSecondary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: _equipmentOptions.map((equipment) {
-                final isSelected = _selectedEquipment.contains(equipment);
-                return FilterChip(
-                  label: Text(_equipmentLabel(l10n, equipment)),
-                  selected: isSelected,
-                  onSelected: (selected) {
-                    setState(() {
-                      if (selected) {
-                        if (equipment == 'None') {
-                          _selectedEquipment.clear();
-                        } else {
-                          _selectedEquipment.remove('None');
-                        }
-                        _selectedEquipment.add(equipment);
-                      } else {
-                        _selectedEquipment.remove(equipment);
-                      }
-                    });
-                  },
-                  selectedColor: theme.accentOrange.withValues(alpha: 0.3),
-                  checkmarkColor: theme.accentOrange,
-                  backgroundColor: theme.isDarkMode
-                      ? Colors.white.withValues(alpha: 0.1)
-                      : Colors.grey.withValues(alpha: 0.1),
-                  labelStyle: TextStyle(
-                    color: isSelected ? theme.accentOrange : theme.textPrimary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                );
-              }).toList(),
-            ),
             const SizedBox(height: 32),
-
-            // Generate button
             SizedBox(
               width: double.infinity,
               height: 56,
@@ -304,7 +183,8 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
                             height: 20,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation(Colors.white),
+                              valueColor:
+                                  AlwaysStoppedAnimation(Colors.white),
                             ),
                           ),
                           const SizedBox(width: 12),
@@ -351,13 +231,12 @@ class _GenerateRoutineSheetState extends State<GenerateRoutineSheet> {
       );
       return;
     }
-
+    HapticFeedback.lightImpact();
     final provider = context.read<RoutineProvider>();
     final result = await provider.generateRoutine(
       request: request,
       durationMinutes: _selectedDuration,
       difficulty: _selectedDifficulty,
-      equipment: _selectedEquipment.isEmpty ? ['None'] : _selectedEquipment,
     );
 
     if (!context.mounted) return;

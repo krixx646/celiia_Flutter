@@ -12,6 +12,7 @@ import '../../providers/nutrition_profile_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/body_scan_service.dart';
 import '../../widgets/body_scan_sources_citation.dart';
+import 'widgets/body_scan_figure.dart';
 import 'widgets/body_silhouette_overlay.dart';
 
 enum _Step { consent, stats, capture, processing, result }
@@ -852,6 +853,8 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
           style: TextStyle(color: theme.textSecondary, height: 1.4),
         ),
         const SizedBox(height: 20),
+        BodyScanFigure(theme: theme, scan: scan),
+        const SizedBox(height: 16),
         BodyScanMetricsGrid(theme: theme, scan: scan),
         const SizedBox(height: 20),
         BodyScanSourcesCitation(theme: theme),
@@ -917,8 +920,9 @@ class BodyScanMetricsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final width = (MediaQuery.of(context).size.width - 60) / 2;
 
-    final metrics = <({String label, String value})>[
+    final headline = <({String label, String value})>[
       if (scan.bodyFatPercentage != null)
         (
           label: l10n.bodyScanBodyFat,
@@ -950,13 +954,47 @@ class BodyScanMetricsGrid extends StatelessWidget {
         ),
     ];
 
+    final extra = [
+      for (final m in scan.additionalGirths)
+        (
+          label: _girthLabel(l10n, m.name),
+          value: '${m.centimetres.toStringAsFixed(1)} cm',
+        ),
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _metricWrap(context, width, headline),
+        if (extra.isNotEmpty) ...[
+          const SizedBox(height: 20),
+          Text(
+            l10n.bodyScanMoreMeasurements,
+            style: TextStyle(
+              color: theme.textPrimary,
+              fontSize: 15,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          const SizedBox(height: 12),
+          _metricWrap(context, width, extra),
+        ],
+      ],
+    );
+  }
+
+  Widget _metricWrap(
+    BuildContext context,
+    double width,
+    List<({String label, String value})> metrics,
+  ) {
     return Wrap(
       spacing: 12,
       runSpacing: 12,
       children: [
         for (final metric in metrics)
           SizedBox(
-            width: (MediaQuery.of(context).size.width - 60) / 2,
+            width: width,
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -986,5 +1024,21 @@ class BodyScanMetricsGrid extends StatelessWidget {
           ),
       ],
     );
+  }
+
+  String _girthLabel(AppLocalizations l10n, String name) {
+    return switch (name) {
+      'neckGirth' => l10n.bodyScanNeck,
+      'underBustGirth' => l10n.bodyScanUnderBust,
+      'bellyWaistGirth' => l10n.bodyScanBelly,
+      'upperArmGirthR' => l10n.bodyScanUpperArm,
+      'forearmGirthR' => l10n.bodyScanForearm,
+      'wristGirthR' => l10n.bodyScanWrist,
+      'thighGirthR' => l10n.bodyScanThigh,
+      'midThighGirthR' => l10n.bodyScanMidThigh,
+      'kneeGirthR' => l10n.bodyScanKnee,
+      'calfGirthR' => l10n.bodyScanCalf,
+      _ => name,
+    };
   }
 }

@@ -22,8 +22,8 @@ import '../../utils/responsive.dart';
 /// Runs a routine as a coached session rather than a playlist.
 ///
 /// The demo clip loops underneath while the app counts the prescribed reps,
-/// holds the clock for timed exercises, and rests alongside the user between
-/// sets before calling them back in for the next one.
+/// freezes on the final frame for true holds, and rests alongside the user
+/// between sets before calling them back in for the next one.
 class GuidedWorkoutScreen extends StatefulWidget {
   const GuidedWorkoutScreen({
     super.key,
@@ -75,6 +75,11 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
 
   VideoPlayerController? _video;
   String? _loadedClipUrl;
+  VoidCallback? _videoListener;
+
+  /// Set once a hold clip has finished its single play-through so we never
+  /// seek/play it again during that hold (repeated seek looked like a glitch).
+  bool _holdClipPinned = false;
 
   bool _completionRecorded = false;
   bool _completionSaving = false;
@@ -125,6 +130,7 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
     _ticker?.cancel();
     _coach?.stop();
     unawaited(_voiceCoach?.dispose());
+    _detachVideoListener();
     _video?.dispose();
     unawaited(WakelockPlus.disable());
     super.dispose();
@@ -201,6 +207,7 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
       _phaseIndex = index;
       _lastSpokenRep = null;
       _lastSpokenSecond = null;
+      _holdClipPinned = false;
     });
 
     await _loadClipFor(phase);
@@ -218,14 +225,17 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
     _coach?.onPhaseStart(phase);
   }
 
-  /// Work phases keep the demo looping for the whole set — counted or held.
-  /// Freezing a hold after one play looked like the workout had stalled.
+  /// Counted / timed-cardio demos loop. True holds (plank, cool-down stretch)
+  /// play through once, then freeze on the final frame for the rest of the
+  /// timer — that is the position the user is meant to hold.
   Future<void> _applyPlaybackForPhase(
     WorkoutPhase phase, {
     required bool fromStart,
   }) async {
     final video = _video;
     if (video == null) return;
+
+    _detachVideoListener();
 
     if (phase.kind != WorkoutPhaseKind.work) {
       await video.setLooping(false);
@@ -235,12 +245,85 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
       return;
     }
 
-    await video.setLooping(true);
-    await video.setPlaybackSpeed(
-      phase.isCounted ? _demoPlaybackSpeedFor(phase) : 1.0,
-    );
-    if (fromStart) await video.seekTo(Duration.zero);
-    await video.play();
+    // Loop anything that is not a static hold (reps + timed cardio like jog).
+    if (!phase.isHoldCaption) {
+      _holdClipPinned = false;
+      await video.setLooping(true);
+      await video.setPlaybackSpeed(
+        phase.isCounted ? _demoPlaybackSpeedFor(phase) : 1.0,
+      );
+      if (fromStart) await video.seekTo(Duration.zero);
+      await video.play();
+      return;
+    }
+
+    // Hold: one clean play-through, then stay on the last frame.
+    await video.setPlaybackSpeed(1.0);
+    await video.setLooping(false);
+    if (_holdClipPinned) {
+      await video.pause();
+      return;
+    }
+
+    if (fromStart) {
+      await video.seekTo(Duration.zero);
+      _attachHoldCompletionListener(video);
+      await video.play();
+      return;
+    }
+
+    // Resume after a user pause: continue only if the one-shot is unfinished.
+    if (video.value.isCompleted || _holdClipFinished(video)) {
+      await _pinHoldLastFrame(video);
+    } else {
+      _attachHoldCompletionListener(video);
+      await video.play();
+    }
+  }
+
+  void _attachHoldCompletionListener(VideoPlayerController video) {
+    _detachVideoListener();
+    void listener() {
+      if (_holdClipPinned) return;
+      if (!video.value.isInitialized) return;
+      if (!(video.value.isCompleted || _holdClipFinished(video))) return;
+      _detachVideoListener();
+      unawaited(_pinHoldLastFrame(video));
+    }
+
+    _videoListener = listener;
+    video.addListener(listener);
+  }
+
+  void _detachVideoListener() {
+    final video = _video;
+    final listener = _videoListener;
+    if (video != null && listener != null) {
+      video.removeListener(listener);
+    }
+    _videoListener = null;
+  }
+
+  bool _holdClipFinished(VideoPlayerController video) {
+    final duration = video.value.duration;
+    if (duration <= Duration.zero) return false;
+    return video.value.position >=
+        duration - const Duration(milliseconds: 120);
+  }
+
+  Future<void> _pinHoldLastFrame(VideoPlayerController video) async {
+    if (_holdClipPinned) return;
+    _holdClipPinned = true;
+    final duration = video.value.duration;
+    // Pause first so ExoPlayer cannot restart; then settle on the last frame
+    // only if the player reset the playhead (common on completion).
+    await video.pause();
+    await video.setLooping(false);
+    if (duration > Duration.zero &&
+        video.value.position < duration - const Duration(milliseconds: 120)) {
+      await video.seekTo(duration);
+      await video.pause();
+    }
   }
 
   /// Slow a too-short loop cut so each spoken rep still lands with the demo.
@@ -267,10 +350,12 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
     // Sets of the same exercise share one controller, so only a genuine
     // change of exercise pays the cost of setting up a new one.
     if (url == _loadedClipUrl && _video != null) {
+      await _video!.setLooping(false);
       return;
     }
 
     final previous = _video;
+    _detachVideoListener();
     _video = null;
     _loadedClipUrl = null;
     await previous?.dispose();
@@ -282,7 +367,7 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
         videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
       );
       await controller.initialize().timeout(widget.initTimeout);
-      await controller.setLooping(true);
+      await controller.setLooping(false);
       await controller.setVolume(0);
       if (!mounted) {
         await controller.dispose();
@@ -335,9 +420,9 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
   }
 
   void _ensureDemoPlaying(WorkoutPhase phase) {
-    // Only counted sets need the loop kept alive. Holds play once via their
-    // own completion listener; touching them here caused the glitchy replay.
-    if (phase.kind != WorkoutPhaseKind.work || !phase.isCounted) return;
+    // Keep looping demos alive (reps + timed cardio). True holds freeze via
+    // their own completion listener; touching them here caused a glitchy replay.
+    if (phase.kind != WorkoutPhaseKind.work || phase.isHoldCaption) return;
     final video = _video;
     if (video == null || !video.value.isInitialized) return;
     if (video.value.isPlaying) return;
@@ -613,7 +698,36 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
       );
     }
 
-    return const ColoredBox(color: Colors.black);
+    // No filmed clip and GIF fallback is off — show the exercise name so the
+    // screen is never a silent black rectangle.
+    return ColoredBox(
+      color: Colors.black,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 28),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.fitness_center_rounded,
+                color: Colors.white.withValues(alpha: 0.28),
+                size: 56,
+              ),
+              const SizedBox(height: 14),
+              Text(
+                phase.step.title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white.withValues(alpha: 0.72),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildScrim(
@@ -713,7 +827,8 @@ class _GuidedWorkoutScreenState extends State<GuidedWorkoutScreen>
           else
             _BigReadout(
               value: _clock(_remaining),
-              caption: l10n.guidedHold,
+              // Timed cardio still uses a clock; only true holds say "hold".
+              caption: phase.isHoldCaption ? l10n.guidedHold : '',
               colour: theme.accentOrange,
             ),
         ],

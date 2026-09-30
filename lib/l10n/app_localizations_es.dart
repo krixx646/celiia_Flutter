@@ -847,6 +847,56 @@ class AppLocalizationsEs extends AppLocalizations {
   String get libraryTabAiGenerated => 'Generadas con IA';
 
   @override
+  String get libraryTabHowTo => 'Cómo hacerlo';
+
+  @override
+  String get libraryHowToIntro =>
+      'Escribe un ejercicio, o una serie como \"pecho y tríceps con mancuernas\", para ver cómo hacerlo correctamente con demostraciones completas.';
+
+  @override
+  String get libraryHowToSearchHint =>
+      'p. ej. remo con mancuerna, o espalda y bíceps';
+
+  @override
+  String howToPlaySeries(int count) {
+    return 'Reproducir serie ($count)';
+  }
+
+  @override
+  String get howToSeriesTitle => 'Serie de técnica';
+
+  @override
+  String get howToNext => 'Siguiente';
+
+  @override
+  String get howToRest => 'Descanso';
+
+  @override
+  String howToUpNext(String name) {
+    return 'A continuación: $name';
+  }
+
+  @override
+  String get howToUpNextBadge => 'Siguiente';
+
+  @override
+  String get howToChooseNextHint => 'Toca un ejercicio para elegir cuál sigue.';
+
+  @override
+  String get howToSeriesDone => 'Serie completada';
+
+  @override
+  String get howToPlayAgain => 'Repetir';
+
+  @override
+  String get howToDone => 'Listo';
+
+  @override
+  String libraryHowToNoMatch(String query) {
+    return 'Aún no hay demostración para \"$query\". Prueba con otro nombre de ejercicio.';
+  }
+
+  @override
   String get profileSavedRoutines => 'Rutinas guardadas';
 
   @override
@@ -1621,7 +1671,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bodyScanConsentStorageBody =>
-      'Celia no las guarda. Solo se guardan en tu cuenta los números resultantes y tu modelo 3D, y al eliminar tu cuenta también se eliminan.';
+      'Celia no las guarda. Solo se guardan en tu cuenta las medidas del escaneo, y al eliminar tu cuenta también se eliminan.';
 
   @override
   String get bodyScanConsentAgeTitle => 'Debes tener 18 años o más';
@@ -1707,7 +1757,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bodyScanProcessingBody =>
-      'Estamos creando tu modelo 3D y estimando tus medidas. Tardará hasta un minuto.';
+      'Estamos estimando tus medidas. Tardará hasta un minuto.';
 
   @override
   String get bodyScanResultTitle => 'Tu escaneo corporal';
@@ -1738,6 +1788,39 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bodyScanWaistToHip => 'Relación cintura-cadera';
 
   @override
+  String get bodyScanMoreMeasurements => 'Más medidas';
+
+  @override
+  String get bodyScanNeck => 'Cuello';
+
+  @override
+  String get bodyScanUnderBust => 'Bajo pecho';
+
+  @override
+  String get bodyScanBelly => 'Abdomen';
+
+  @override
+  String get bodyScanUpperArm => 'Brazo';
+
+  @override
+  String get bodyScanForearm => 'Antebrazo';
+
+  @override
+  String get bodyScanWrist => 'Muñeca';
+
+  @override
+  String get bodyScanThigh => 'Muslo';
+
+  @override
+  String get bodyScanMidThigh => 'Muslo medio';
+
+  @override
+  String get bodyScanKnee => 'Rodilla';
+
+  @override
+  String get bodyScanCalf => 'Pantorrilla';
+
+  @override
   String bodyScanQuotaRemaining(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -1754,7 +1837,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bodyScanEmptyBody =>
-      'Dos fotos te ofrecen una estimación de tu grasa corporal, masa magra y medidas clave, además de un modelo 3D que puedes comparar con el tiempo.';
+      'Dos fotos te ofrecen una estimación de tu grasa corporal, masa magra y medidas clave, sobre un dibujo del cuerpo que puedes comparar con el tiempo.';
 
   @override
   String get bodyScanLatestTitle => 'Último escaneo';
@@ -1785,7 +1868,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bodyScanSourcesBody =>
-      'Tus fotos se convierten en un contorno 3D de tu cuerpo, y la grasa corporal y la masa magra se estiman a partir de esa forma junto con tu altura, peso, edad y sexo. La masa magra incluye músculos, agua, huesos y órganos en conjunto, no solo proteínas.';
+      'Tus fotos se usan para estimar la forma de tu cuerpo, y la grasa corporal y la masa magra se estiman a partir de esa forma junto con tu altura, peso, edad y sexo. La masa magra incluye músculos, agua, huesos y órganos en conjunto, no solo proteínas.';
 
   @override
   String get bodyScanDisclaimer =>
@@ -1863,4 +1946,437 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get homeBodyScanSubtitle =>
       'Estima la grasa corporal a partir de dos fotos';
+
+  @override
+  String obStepOf(int current, int total) {
+    return 'Paso $current de $total';
+  }
+
+  @override
+  String get obBack => 'Atrás';
+
+  @override
+  String get obSkip => 'Omitir';
+
+  @override
+  String get obYes => 'Sí';
+
+  @override
+  String get obNo => 'No';
+
+  @override
+  String get obOptional => 'Opcional';
+
+  @override
+  String get obAddHint => 'Escribe y pulsa enter para añadir';
+
+  @override
+  String get obFinish => 'Empezar a usar Celia';
+
+  @override
+  String get obAnswerRequired => 'Responde esto para continuar';
+
+  @override
+  String get obConsentTitle => 'Antes de empezar';
+
+  @override
+  String get obConsentBody =>
+      'Celia crea tus planes de nutrición, entrenamiento y coaching con lo que nos cuentes aquí. Podrás cambiar cualquier respuesta después en tu perfil.';
+
+  @override
+  String get obDisclaimerTitle => 'No es consejo médico';
+
+  @override
+  String get obDisclaimerBody =>
+      'Celia es un coach de bienestar, no un médico. No diagnostica, ni trata, ni prescribe. Consulta a un profesional de la salud antes de cambiar tu alimentación o tu entrenamiento si estás embarazada, lesionada o con alguna condición médica.';
+
+  @override
+  String get obAcceptTerms =>
+      'Acepto los Términos y Condiciones y la Política de Privacidad';
+
+  @override
+  String get obAcceptDisclaimer => 'Entiendo que Celia no da consejo médico';
+
+  @override
+  String get obConsentRequired => 'Acepta ambas para continuar';
+
+  @override
+  String get obPhysicalTitle => 'Tu cuerpo';
+
+  @override
+  String get obPhysicalBody =>
+      'Lo usamos para estimar la energía que gastas en reposo.';
+
+  @override
+  String get obBmrTitle => 'Metabolismo basal estimado';
+
+  @override
+  String obBmrValue(int kcal) {
+    return '$kcal kcal al día en reposo';
+  }
+
+  @override
+  String get obBmrExplainer =>
+      'Fórmula de Mifflin–St Jeor. Tu objetivo diario suma además tu actividad y tu meta.';
+
+  @override
+  String get obGoalTitle => 'Tu objetivo principal';
+
+  @override
+  String get obGoalBody =>
+      'Esto decide si tu plan va en déficit, en mantenimiento o en superávit.';
+
+  @override
+  String get obGoalLoseWeight => 'Perder peso';
+
+  @override
+  String get obGoalGainWeight => 'Ganar peso';
+
+  @override
+  String get obGoalBuildMuscle => 'Ganar músculo';
+
+  @override
+  String get obNutritionTitle => 'Nutrición';
+
+  @override
+  String get obDietPattern => '¿Cómo comes?';
+
+  @override
+  String get obDietOmnivore => 'Sin restricciones';
+
+  @override
+  String get obDietVegetarian => 'Vegetariana';
+
+  @override
+  String get obDietVegan => 'Vegana';
+
+  @override
+  String get obDietPescatarian => 'Pescetariana';
+
+  @override
+  String get obIntolerances => 'Intolerancias';
+
+  @override
+  String get obIntoleranceGluten => 'Gluten / celiaquía';
+
+  @override
+  String get obIntoleranceLactose => 'Lactosa';
+
+  @override
+  String get obIntoleranceFructose => 'Fructosa';
+
+  @override
+  String get obAllergiesLabel => 'Alergias alimentarias';
+
+  @override
+  String get obEatingDisorderQuestion =>
+      '¿Has recibido tratamiento por un trastorno alimentario?';
+
+  @override
+  String get obEatingDisorderWhy =>
+      'Si es sí, Celia mantiene tus calorías en mantenimiento en lugar de proponer un déficit, y evita el lenguaje centrado en el peso.';
+
+  @override
+  String get obNutritionMode => '¿Quién planifica tus comidas?';
+
+  @override
+  String get obModeAutomatic => 'Celia lo planifica por mí';
+
+  @override
+  String get obModeManual => 'Lo planifico yo';
+
+  @override
+  String get obWaterTarget => 'Objetivo diario de agua (ml)';
+
+  @override
+  String get obTrainingTitle => 'Entrenamiento';
+
+  @override
+  String get obTrainingLocation => '¿Dónde vas a entrenar?';
+
+  @override
+  String get obLocationHome => 'En casa';
+
+  @override
+  String get obLocationGym => 'En el gimnasio';
+
+  @override
+  String get obLocationBoth => 'Ambos';
+
+  @override
+  String get obInjuriesLabel => 'Lesiones o zonas a evitar';
+
+  @override
+  String get obInjuryKnee => 'Rodilla';
+
+  @override
+  String get obInjuryLowerBack => 'Lumbares';
+
+  @override
+  String get obInjuryShoulder => 'Hombro';
+
+  @override
+  String get obInjuryNeck => 'Cuello';
+
+  @override
+  String get obInjuryAnkle => 'Tobillo';
+
+  @override
+  String get obInjuryWrist => 'Muñeca';
+
+  @override
+  String get obConditionsLabel => 'Condiciones médicas';
+
+  @override
+  String get obConditionHypertension => 'Hipertensión';
+
+  @override
+  String get obConditionDiabetes => 'Diabetes';
+
+  @override
+  String get obConditionAsthma => 'Asma';
+
+  @override
+  String get obConditionHeart => 'Problema cardíaco';
+
+  @override
+  String get obConditionPregnancy => 'Embarazo o posparto';
+
+  @override
+  String get obFitnessGoalLabel => '¿Qué buscas en el entrenamiento?';
+
+  @override
+  String get obFitnessLoseFat => 'Perder grasa';
+
+  @override
+  String get obFitnessStrength => 'Más fuerza';
+
+  @override
+  String get obFitnessTone => 'Tonificar';
+
+  @override
+  String get obFitnessHealth => 'Salud general';
+
+  @override
+  String get obFitnessTactical => 'Rendimiento';
+
+  @override
+  String get obFitnessCustom => 'Otra cosa';
+
+  @override
+  String get obOutcomesLabel => '¿En qué más debe trabajar Celia?';
+
+  @override
+  String get obOutcomeStress => 'Estrés';
+
+  @override
+  String get obOutcomeSleep => 'Sueño';
+
+  @override
+  String get obOutcomeEnergy => 'Energía';
+
+  @override
+  String get obOutcomeHabits => 'Hábitos';
+
+  @override
+  String get obOutcomeConfidence => 'Confianza';
+
+  @override
+  String get obIntensityLabel => '¿Con qué intensidad quieres ir?';
+
+  @override
+  String get obIntensityEasy => 'Suave';
+
+  @override
+  String get obIntensityModerate => 'Moderada';
+
+  @override
+  String get obIntensityIntense => 'Intensa';
+
+  @override
+  String get obExperienceLabel => '¿Cuánto has entrenado antes?';
+
+  @override
+  String get obExperienceBeginner => 'Empiezo ahora';
+
+  @override
+  String get obExperienceRegular => 'Entreno con regularidad';
+
+  @override
+  String get obPlanningMode => '¿Quién planifica tus entrenamientos?';
+
+  @override
+  String get obMinutesPerDay => 'Minutos por sesión';
+
+  @override
+  String obMinutesValue(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String get obPreferredTime => 'Hora preferida del día';
+
+  @override
+  String get obPickTime => 'Elegir una hora';
+
+  @override
+  String get obCoachingTitle => 'Coaching de vida';
+
+  @override
+  String get obMoodQuestion => '¿Cómo te has sentido últimamente?';
+
+  @override
+  String get obMoodGreat => 'Genial';
+
+  @override
+  String get obMoodOkay => 'Normal';
+
+  @override
+  String get obMoodTired => 'Cansado/a';
+
+  @override
+  String get obMoodStressed => 'Estresado/a';
+
+  @override
+  String get obMoodLow => 'Bajo/a de ánimo';
+
+  @override
+  String get obCoachingFocusLabel => '¿Algo en lo que quieras trabajar?';
+
+  @override
+  String get obCoachingFocusHint => 'Con una frase basta';
+
+  @override
+  String get obNotificationsTitle => 'Notificaciones';
+
+  @override
+  String get obNotificationsBody =>
+      'Elige de qué quieres recibir avisos. Puedes cambiarlo cuando quieras.';
+
+  @override
+  String get obNotifyMeals => 'Recordatorios de comidas';
+
+  @override
+  String get obNotifyWorkouts => 'Recordatorios de entrenamiento';
+
+  @override
+  String get obNotifyWater => 'Recordatorios de agua';
+
+  @override
+  String get obNotifyProgress => 'Progreso semanal';
+
+  @override
+  String get obNotifyCoach => 'Mensajes de Celia';
+
+  @override
+  String get obNotificationsPending =>
+      'Guardamos tus preferencias ahora. Los recordatorios llegarán cuando se active el envío en una próxima actualización.';
+
+  @override
+  String get obWearablesTitle => 'Conectar un dispositivo';
+
+  @override
+  String get obWearablesBody =>
+      'Opcional. Dinos qué usas y lo conectaremos en cuanto esté disponible.';
+
+  @override
+  String get obWearableNone => 'Ahora no';
+
+  @override
+  String obSummaryTitle(String name) {
+    return 'Todo listo, $name';
+  }
+
+  @override
+  String get obSummaryBody =>
+      'Esto es lo que Celia usará para planificar por ti.';
+
+  @override
+  String get obSummaryGoal => 'Objetivo';
+
+  @override
+  String get obSummaryNutrition => 'Nutrición';
+
+  @override
+  String get obSummaryTraining => 'Entrenamiento';
+
+  @override
+  String get obSummaryCoaching => 'Coaching';
+
+  @override
+  String get obSummaryEditLater =>
+      'Puedes cambiar todo esto después en tu perfil.';
+
+  @override
+  String get obFirstRecommendation => 'Tu primer paso de hoy';
+
+  @override
+  String obRecoCalories(int kcal, int protein) {
+    return 'Apunta a unas $kcal kcal hoy, con $protein g de proteína.';
+  }
+
+  @override
+  String obRecoTraining(int minutes) {
+    return 'Haz una sesión de $minutes minutos: Celia elige los ejercicios.';
+  }
+
+  @override
+  String obRecoWater(int ml) {
+    return 'Bebe $ml ml de agua.';
+  }
+
+  @override
+  String get obRecoCheckIn => 'Dedica cinco minutos a revisar cómo te sientes.';
+
+  @override
+  String get obEquipmentMode => '¿Entrenarás con material?';
+
+  @override
+  String get obEquipmentBodyweight => 'Solo peso corporal';
+
+  @override
+  String get obEquipmentWith => 'Con material';
+
+  @override
+  String get obEquipmentWhich => '¿Qué tienes?';
+
+  @override
+  String get obEquipmentRequired =>
+      'Elige peso corporal o al menos un material';
+
+  @override
+  String get obEquipDumbbell => 'Mancuernas';
+
+  @override
+  String get obEquipBarbell => 'Barra';
+
+  @override
+  String get obEquipKettlebell => 'Pesa rusa';
+
+  @override
+  String get obEquipBand => 'Bandas elásticas';
+
+  @override
+  String get obEquipCable => 'Polea / cable';
+
+  @override
+  String get obEquipMachine => 'Máquinas del gym';
+
+  @override
+  String get obEquipPullUpBar => 'Barra de dominadas';
+
+  @override
+  String get obEquipJumpRope => 'Comba';
+
+  @override
+  String get obEquipMat => 'Esterilla';
+
+  @override
+  String get genEquipmentMode => 'Material';
+
+  @override
+  String get genEquipmentBodyweight => 'Solo peso corporal';
+
+  @override
+  String get genEquipmentWith => 'Con material';
 }

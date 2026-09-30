@@ -9,6 +9,7 @@ import {
 import { verifyFirebaseUser } from '@/lib/firebaseAuth';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
 import { createCeliaAgent, type UserStateSnapshot } from '@/lib/celiaAgent/agent';
+import { loadOnboardingFacts } from '@/lib/celiaAgent/onboardingFacts';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -216,7 +217,13 @@ export async function POST(req: NextRequest) {
       })
     );
 
-    const agent = createCeliaAgent({ uid: user.uid, tzOffsetMinutes }, body.state);
+    // Allergies and injuries come from the database, not the request body: a
+    // safety constraint the client could rewrite is not a constraint.
+    const onboarding = await loadOnboardingFacts(user.uid);
+    const agent = createCeliaAgent(
+      { uid: user.uid, tzOffsetMinutes },
+      { ...body.state, onboarding }
+    );
     const result = await agent.stream({ messages });
 
     return createUIMessageStreamResponse({

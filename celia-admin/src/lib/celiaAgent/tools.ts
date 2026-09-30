@@ -2,7 +2,7 @@ import { tool } from 'ai';
 import { z } from 'zod';
 import { ensureSavedToLibrary, findMatchingRoutine } from '@/lib/routineDedupe';
 import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
-
+import { HOW_TO_CLIP_SOURCE, isWorkoutFriendlyEquipment } from '@/lib/clipSources';
 /**
  * Per-request context handed to every tool by the route via `toolsContext`.
  *
@@ -146,6 +146,7 @@ async function resolveNearMissSlugs(unknown: string[]): Promise<{
     .from('exercise_clips')
     .select('slug,name_en')
     .eq('is_active', true)
+    .neq('source', HOW_TO_CLIP_SOURCE)
     .limit(500);
 
   if (error || !data) {
@@ -435,7 +436,7 @@ export const celiaTools = {
 
   search_exercises: tool({
     description:
-      "Search the app's exercise library: the filmed clips Celia can demonstrate and coach a user through. Use this to ground any exercise you recommend in something the app can actually play, and to check what exists for a movement before promising it. Each result says whether it is counted in reps or held for time, and what equipment it needs.",
+      "Search the app's workout exercise library: the filmed bodyweight clips Celia can demonstrate and coach a user through. Use this to ground any exercise you recommend in something the app can actually play, and to check what exists for a movement before promising it. Each result says whether it is counted in reps or held for time.",
     inputSchema: z.object({
       query: z
         .string()
@@ -447,20 +448,16 @@ export const celiaTools = {
         .enum(['squat', 'hinge', 'lunge', 'push', 'pull', 'carry', 'core', 'recovery'])
         .optional()
         .describe('The movement pattern the exercise belongs to'),
-      bodyweightOnly: z
-        .boolean()
-        .optional()
-        .describe('Only exercises needing no equipment at all. Use when the user trains at home with nothing.'),
       limit: z.number().int().min(1).max(40).default(15),
     }),
-    contextSchema: userContext,
-    execute: async ({ query, pattern, bodyweightOnly, limit }) => {
+    execute: async ({ query, pattern, limit }) => {
       const tokens = searchTokens(query);
 
       let builder = getSupabaseAdmin()
         .from('exercise_clips')
         .select('slug,name_en,pattern,step_type,equipment,default_reps,default_hold_seconds')
-        .eq('is_active', true);
+        .eq('is_active', true)
+        .neq('source', HOW_TO_CLIP_SOURCE);
 
       if (pattern) builder = builder.eq('pattern', pattern);
       // Any token is enough to be a candidate; ranking below sorts out how
@@ -481,7 +478,7 @@ export const celiaTools = {
           const equipment = Array.isArray(row.equipment) ? row.equipment.map(String) : [];
           return { row, name, hits, equipment };
         })
-        .filter((entry) => !bodyweightOnly || entry.equipment.length === 0)
+        .filter((entry) => isWorkoutFriendlyEquipment(entry.equipment))
         // Most query words matched wins; shorter names break ties, which
         // favours "Shoulder press" over "Shoulder press machine seated".
         .sort((a, b) => b.hits - a.hits || a.name.length - b.name.length)
@@ -545,13 +542,15 @@ export const celiaTools = {
               .int()
               .min(0)
               .max(180)
-              .default(30)
-              .describe('Recovery after each set. 0 for stretches, 30-60 for strength.'),
+              .default(20)
+              .describe(
+                'Recovery after each set. Prefer 20 between exercises inside a block of 3, and 40 after every third exercise. Use 0 for stretches.'
+              ),
           })
         )
         .min(2)
         .max(30),
-      equipment: z.string().optional().describe('e.g. "None" or "Dumbbells, Mat"'),
+      equipment: z.string().optional().describe('e.g. "None" or "Chair"'),
       caloriesBurned: z.number().int().min(0).max(2000).optional(),
       tags: z.array(z.string()).max(6).default([]),
     }),
@@ -564,6 +563,7 @@ export const celiaTools = {
         .from('exercise_clips')
         .select('slug,name_en,step_type,clip_seconds,default_reps,default_hold_seconds,poster_url')
         .eq('is_active', true)
+        .neq('source', HOW_TO_CLIP_SOURCE)
         .in('slug', slugs);
 
       if (lookupError) {
@@ -623,6 +623,7 @@ export const celiaTools = {
           const { data: extra } = await supabase
             .from('exercise_clips')
             .select('slug,name_en,step_type,clip_seconds,default_reps,default_hold_seconds,poster_url')
+            .neq('source', HOW_TO_CLIP_SOURCE)
             .in('slug', corrected);
 
           for (const row of extra || []) {

@@ -8,6 +8,7 @@ import '../../providers/theme_provider.dart';
 import '../../services/body_scan_service.dart';
 import '../../widgets/body_scan_sources_citation.dart';
 import 'body_scan_flow_screen.dart';
+import 'widgets/body_scan_figure.dart';
 
 /// Body scan hub: the latest result, how it is trending, and past scans.
 class BodyScanScreen extends StatefulWidget {
@@ -199,6 +200,8 @@ class _BodyScanScreenState extends State<BodyScanScreen> {
           ),
         ],
         const SizedBox(height: 14),
+        BodyScanFigure(theme: theme, scan: latest),
+        const SizedBox(height: 16),
         BodyScanMetricsGrid(theme: theme, scan: latest),
       ],
     );

@@ -41,11 +41,17 @@ class NutritionProfileProvider extends ChangeNotifier {
     }
   }
 
+  /// [activityMultiplier] and [calorieMultiplier] come from the onboarding
+  /// profile: how hard the user trains, and whether their goal calls for a
+  /// deficit or a surplus. Omitting them keeps the old maintenance-level
+  /// estimate, which is what the in-app editor still wants.
   Future<bool> saveProfile({
     required double weightKg,
     required double heightCm,
     required int age,
     required NutritionGender gender,
+    double activityMultiplier = 1.55,
+    double calorieMultiplier = 1.0,
   }) async {
     _isLoading = true;
     _error = null;
@@ -57,6 +63,8 @@ class NutritionProfileProvider extends ChangeNotifier {
         heightCm: heightCm,
         age: age,
         gender: gender,
+        activityMultiplier: activityMultiplier,
+        calorieMultiplier: calorieMultiplier,
       );
       _profile = await _repository.saveProfile(profile);
       return true;

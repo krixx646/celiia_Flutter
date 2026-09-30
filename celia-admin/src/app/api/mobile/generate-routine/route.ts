@@ -5,6 +5,7 @@ import {
   generateRoutine,
   normalizeDifficulty,
 } from '@/lib/routineGenerator';
+import { loadOnboardingFacts } from '@/lib/celiaAgent/onboardingFacts';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -13,7 +14,6 @@ type GenerateBody = {
   request?: string;
   durationMinutes?: number;
   difficulty?: string;
-  equipment?: string[];
 };
 
 export async function POST(req: NextRequest) {
@@ -28,12 +28,23 @@ export async function POST(req: NextRequest) {
     }
 
     const body = (await req.json()) as GenerateBody;
+    // Injuries and conditions come from the stored profile so every generated
+    // routine respects them, whether or not the user thought to mention them.
+    const facts = await loadOnboardingFacts(user.uid);
+
     const result = await generateRoutine({
       uid: user.uid,
       request: String(body.request || '').trim(),
       durationMinutes: clampDurationMinutes(body.durationMinutes),
       difficulty: normalizeDifficulty(body.difficulty),
-      equipment: Array.isArray(body.equipment) ? body.equipment.map(String) : [],
+      equipment: ['None'],
+      profile: facts && {
+        injuries: facts.injuries,
+        medicalConditions: facts.medicalConditions,
+        trainingLocation: facts.trainingLocation,
+        experienceLevel: facts.experienceLevel,
+        trainingIntensity: facts.trainingIntensity,
+      },
     });
 
     if (!result.ok) {

@@ -239,14 +239,14 @@ VALUES (
     250,
     'None',
     '[
-        {"id": "step1", "title": "Warm-up Jog in Place", "description": "Get your muscles warm and ready", "durationSeconds": 120, "orderIndex": 0},
-        {"id": "step2", "title": "Push-ups", "description": "Classic upper body builder - modify on knees if needed", "durationSeconds": 90, "orderIndex": 1},
-        {"id": "step3", "title": "Lunges", "description": "Alternate legs, keep your core tight", "durationSeconds": 90, "orderIndex": 2},
-        {"id": "step4", "title": "Plank Hold", "description": "Core stability - hold as long as you can", "durationSeconds": 60, "orderIndex": 3},
-        {"id": "step5", "title": "Tricep Dips", "description": "Use a chair or bench for support", "durationSeconds": 60, "orderIndex": 4},
-        {"id": "step6", "title": "Glute Bridges", "description": "Squeeze at the top for maximum activation", "durationSeconds": 60, "orderIndex": 5},
-        {"id": "step7", "title": "Burpees", "description": "Full body power move - take breaks as needed", "durationSeconds": 90, "orderIndex": 6},
-        {"id": "step8", "title": "Cool Down", "description": "Stretch all major muscle groups", "durationSeconds": 180, "orderIndex": 7}
+        {"id": "step1", "title": "Warm-up Jog in Place", "description": "Keep moving the whole time", "exercise_slug": "jumping-jacks", "duration_seconds": 60, "sets": 1, "rest_seconds": 20, "order_index": 0},
+        {"id": "step2", "title": "Push-ups", "description": "Classic upper body builder - modify on knees if needed", "exercise_slug": "floor-push-up", "reps": 10, "sets": 3, "rest_seconds": 30, "order_index": 1},
+        {"id": "step3", "title": "Lunges", "description": "Alternate legs, keep your core tight", "exercise_slug": "forward-lunge", "reps": 12, "sets": 3, "rest_seconds": 30, "order_index": 2},
+        {"id": "step4", "title": "Plank Hold", "description": "Core stability - hold with a strong line from head to heels", "exercise_slug": "plank-variations", "duration_seconds": 45, "sets": 2, "rest_seconds": 30, "order_index": 3},
+        {"id": "step5", "title": "Incline Push-Ups", "description": "Hands elevated — closest filmed substitute while chair dips are not in the library", "exercise_slug": "incline-push-up", "reps": 10, "sets": 3, "rest_seconds": 30, "order_index": 4},
+        {"id": "step6", "title": "Glute Bridges", "description": "Squeeze at the top for maximum activation", "exercise_slug": "glute-bridge", "reps": 12, "sets": 3, "rest_seconds": 30, "order_index": 5},
+        {"id": "step7", "title": "Mountain Climbers", "description": "Full-body cardio — closest filmed substitute while burpees are not in the library", "exercise_slug": "mountain-climber-slow", "reps": 20, "sets": 3, "rest_seconds": 30, "order_index": 6},
+        {"id": "step8", "title": "Cool Down Stretch", "description": "Settle into the stretch and hold — breathe steadily", "exercise_slug": "childs-pose", "duration_seconds": 60, "sets": 1, "order_index": 7}
     ]'::jsonb
 );
 

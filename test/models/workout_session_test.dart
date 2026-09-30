@@ -180,6 +180,110 @@ void main() {
       expect(exercise.holdSeconds, 40);
     });
 
+    test('timed cardio does not show a hold caption', () {
+      final plan = WorkoutPlan.from([
+        PreparedExercise(
+          step: _step(
+            title: 'Warm-up Jog in Place',
+            sets: 1,
+            durationSeconds: 60,
+          ),
+          clip: _clip(slug: 'jumping-jacks', isCounted: true),
+        ),
+      ]);
+      final work = plan.phases.firstWhere(
+        (phase) => phase.kind == WorkoutPhaseKind.work,
+      );
+      expect(work.isCounted, isFalse);
+      expect(work.isHoldCaption, isFalse);
+    });
+
+    test('plank hold shows a hold caption', () {
+      final plan = WorkoutPlan.from([
+        PreparedExercise(
+          step: _step(title: 'Plank Hold', sets: 1, durationSeconds: 45),
+          clip: _clip(
+            slug: 'plank-variations',
+            isCounted: false,
+            repsPerLoop: null,
+            defaultReps: null,
+            defaultHoldSeconds: 45,
+          ),
+        ),
+      ]);
+      final work = plan.phases.firstWhere(
+        (phase) => phase.kind == WorkoutPhaseKind.work,
+      );
+      expect(work.isHoldCaption, isTrue);
+    });
+
+    test('rest between exercises is 20 seconds inside a block', () {
+      final plan = WorkoutPlan.from([
+        PreparedExercise(
+          step: _step(title: 'A', sets: 1, reps: 10, restSeconds: 60),
+          clip: _clip(),
+        ),
+        PreparedExercise(
+          step: _step(title: 'B', sets: 1, reps: 10, orderIndex: 1),
+          clip: _clip(slug: 'floor-push-up'),
+        ),
+      ]);
+
+      final rest = plan.phases.firstWhere(
+        (phase) => phase.kind == WorkoutPhaseKind.rest,
+      );
+      // Stored 60s is ignored: the player follows the client rest policy.
+      expect(rest.duration, const Duration(seconds: kDefaultRestSeconds));
+      expect(rest.nextLabel, 'B');
+    });
+
+    test('rest after every third exercise is the longer block rest', () {
+      PreparedExercise exercise(String title, int index) => PreparedExercise(
+            step: _step(title: title, sets: 1, reps: 8, orderIndex: index),
+            clip: _clip(slug: 'bodyweight-squat-$index'),
+          );
+
+      final plan = WorkoutPlan.from([
+        exercise('One', 0),
+        exercise('Two', 1),
+        exercise('Three', 2),
+        exercise('Four', 3),
+      ]);
+
+      final rests = plan.phases
+          .where((phase) => phase.kind == WorkoutPhaseKind.rest)
+          .toList();
+
+      // One→Two and Two→Three stay at the short rest; Three→Four is the
+      // block boundary after three exercises.
+      expect(rests.map((phase) => phase.duration.inSeconds).toList(), [
+        kDefaultRestSeconds,
+        kDefaultRestSeconds,
+        kBlockRestSeconds,
+      ]);
+      expect(rests.last.nextLabel, 'Four');
+    });
+
+    test('rest between sets of the same exercise stays at 20 seconds', () {
+      final plan = WorkoutPlan.from([
+        PreparedExercise(
+          step: _step(sets: 3, reps: 10, restSeconds: 90),
+          clip: _clip(),
+        ),
+        PreparedExercise(
+          step: _step(title: 'Next', sets: 1, reps: 10, orderIndex: 1),
+          clip: _clip(slug: 'floor-push-up'),
+        ),
+      ]);
+
+      final rests = plan.phases
+          .where((phase) => phase.kind == WorkoutPhaseKind.rest)
+          .toList();
+      // Two between-set rests, then one between-exercise rest — all short,
+      // because this is only the first exercise of its block.
+      expect(rests.every((phase) => phase.duration.inSeconds == kDefaultRestSeconds), isTrue);
+    });
+
     test('rest points at the next exercise once the sets are done', () {
       final plan = WorkoutPlan.from([
         PreparedExercise(

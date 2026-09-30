@@ -77,11 +77,18 @@ class NutritionProfile {
     };
   }
 
+  /// Mifflin–St Jeor, scaled for activity and then for the user's goal.
+  ///
+  /// [activityMultiplier] defaults to the moderately active figure that was
+  /// used before onboarding asked about training. [calorieMultiplier] is the
+  /// surplus or deficit: 1.0 is maintenance.
   static NutritionProfile calculate({
     required double weightKg,
     required double heightCm,
     required int age,
     required NutritionGender gender,
+    double activityMultiplier = 1.55,
+    double calorieMultiplier = 1.0,
   }) {
     final bmr = _basalMetabolicRate(
       weightKg: weightKg,
@@ -89,8 +96,8 @@ class NutritionProfile {
       age: age,
       gender: gender,
     );
-    const activityMultiplier = 1.55;
-    final calories = (bmr * activityMultiplier).roundToDouble();
+    final calories = (bmr * activityMultiplier * calorieMultiplier)
+        .roundToDouble();
 
     final proteinGrams = (weightKg * 1.8).roundToDouble();
     final fatGrams = ((calories * 0.25) / 9).roundToDouble();
@@ -109,6 +116,21 @@ class NutritionProfile {
       dailyCarbsGrams: carbsGrams,
       dailyFatGrams: fatGrams,
       updatedAt: DateTime.now(),
+    );
+  }
+
+  /// Resting energy expenditure, before activity or goal is applied.
+  static double basalMetabolicRate({
+    required double weightKg,
+    required double heightCm,
+    required int age,
+    required NutritionGender gender,
+  }) {
+    return _basalMetabolicRate(
+      weightKg: weightKg,
+      heightCm: heightCm,
+      age: age,
+      gender: gender,
     );
   }
 

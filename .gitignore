@@ -59,3 +59,5 @@ key.properties
 # ships is committed per platform: android/app/src/main/assets/avatars/ and
 # ios/Runner/Celia_filament.glb.
 /assets/avatars/
+
+.env*

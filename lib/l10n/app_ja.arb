@@ -1063,7 +1063,7 @@
   "bodyScanStatsMale": "男性",
   "bodyScanStatsInvalid": "有効な身長、体重、年齢を入力してください。スキャンを利用するには18歳以上である必要があります。",
   "bodyScanCaptureFrontTitle": "カメラに正面を向く",
-  "bodyScanCaptureRightTitle": "右を向く",
+  "bodyScanCaptureRightTitle": "左を向き、右側をカメラに向ける",
   "bodyScanCaptureHowTo": "スマートフォンを約3m離れた場所に立てかけ、全身が輪郭内に収まるまで後ろに下がってから、タイマーを開始してください。",
   "bodyScanCaptureTips": "体にフィットした服、無地の背景、均一で明るい照明、腕は体の横から少し離してください。",
   "bodyScanPoseFront": "正面",

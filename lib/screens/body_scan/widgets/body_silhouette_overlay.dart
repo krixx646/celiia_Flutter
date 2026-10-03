@@ -15,9 +15,16 @@ class BodySilhouetteOverlay extends StatelessWidget {
     super.key,
     required this.pose,
     this.aligned = false,
+    this.mirrored = false,
   });
 
   final BodyScanPose pose;
+
+  /// The selfie preview is a mirror image, while the saved photo is not. The
+  /// side photo must show the person facing the right of the saved image, so
+  /// in a mirrored preview the guide has to face left to match what the user
+  /// sees as they turn.
+  final bool mirrored;
 
   /// Tints the guide once the countdown starts, so the user gets a signal
   /// that holding still now matters.
@@ -25,14 +32,21 @@ class BodySilhouetteOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: CustomPaint(
-        size: Size.infinite,
-        painter: _SilhouettePainter(
-          pose: pose,
-          color: aligned ? const Color(0xFF4ADE80) : Colors.white,
-        ),
+    final guide = CustomPaint(
+      size: Size.infinite,
+      painter: _SilhouettePainter(
+        pose: pose,
+        color: aligned ? const Color(0xFF4ADE80) : Colors.white,
       ),
+    );
+    return IgnorePointer(
+      child: mirrored
+          ? Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.diagonal3Values(-1, 1, 1),
+              child: guide,
+            )
+          : guide,
     );
   }
 }

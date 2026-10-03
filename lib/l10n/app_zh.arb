@@ -1063,7 +1063,7 @@
   "bodyScanStatsMale": "男性",
   "bodyScanStatsInvalid": "请输入有效的身高、体重和年龄。你必须年满 18 岁才能进行扫描。",
   "bodyScanCaptureFrontTitle": "面向摄像头",
-  "bodyScanCaptureRightTitle": "向右转身",
+  "bodyScanCaptureRightTitle": "向左转身，右侧朝向摄像头",
   "bodyScanCaptureHowTo": "将手机支撑在大约 3 米外，后退到全身都能放入轮廓线内，然后开始计时。",
   "bodyScanCaptureTips": "穿合身的衣服，选择简洁的背景，确保光线均匀充足，双臂稍微离开身体。",
   "bodyScanPoseFront": "正面",

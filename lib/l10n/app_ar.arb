@@ -1063,7 +1063,7 @@
   "bodyScanStatsMale": "ذكر",
   "bodyScanStatsInvalid": "أدخل طولًا ووزنًا وعمرًا صالحين. يجب أن يكون عمرك 18 عامًا أو أكثر لإجراء الفحص.",
   "bodyScanCaptureFrontTitle": "واجه الكاميرا",
-  "bodyScanCaptureRightTitle": "استدر إلى يمينك",
+  "bodyScanCaptureRightTitle": "استدر إلى يسارك ليكون جانبك الأيمن نحو الكاميرا",
   "bodyScanCaptureHowTo": "ثبّت هاتفك على بُعد نحو 3 أمتار، وتراجع حتى يظهر جسمك بالكامل داخل الإطار، ثم ابدأ المؤقت.",
   "bodyScanCaptureTips": "ملابس ضيقة نسبيًا، خلفية بسيطة، إضاءة جيدة ومتساوية، والذراعان مبتعدان قليلًا عن الجانبين.",
   "bodyScanPoseFront": "الأمام",

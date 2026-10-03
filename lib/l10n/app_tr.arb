@@ -1063,7 +1063,7 @@
   "bodyScanStatsMale": "Erkek",
   "bodyScanStatsInvalid": "Geçerli bir boy, kilo ve yaş girin. Taramayı kullanmak için 18 yaşında veya daha büyük olmalısınız.",
   "bodyScanCaptureFrontTitle": "Kameraya dönün",
-  "bodyScanCaptureRightTitle": "Sağınıza dönün",
+  "bodyScanCaptureRightTitle": "Sola dönün, sağ yanınız kameraya baksın",
   "bodyScanCaptureHowTo": "Telefonunuzu yaklaşık 3 m uzağa yerleştirin, tüm vücudunuz hatlara sığana kadar geriye çekilin ve ardından zamanlayıcıyı başlatın.",
   "bodyScanCaptureTips": "Üzerinize oturan kıyafetler, sade bir arka plan, iyi ve eşit aydınlatma, kollar yanlardan hafifçe açık.",
   "bodyScanPoseFront": "Ön",

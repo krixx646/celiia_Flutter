@@ -14,6 +14,7 @@ import '../../services/body_scan_service.dart';
 import '../../widgets/body_scan_sources_citation.dart';
 import 'widgets/body_scan_figure.dart';
 import 'widgets/body_silhouette_overlay.dart';
+import 'widgets/phone_level_banner.dart';
 
 enum _Step { consent, stats, capture, processing, result }
 
@@ -109,10 +110,11 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
       final cameras = await availableCameras();
       if (cameras.isEmpty) throw Exception('no-camera');
 
-      // Back camera: the phone has to be propped up for a full-body shot, so
-      // the user is never holding it and the selfie camera buys nothing.
+      // Front (selfie) camera: the phone is propped facing the user, so they
+      // must see themselves live inside the silhouette. Bodygram's own scan
+      // flow uses the selfie camera for the same reason.
       final lens = cameras.firstWhere(
-        (c) => c.lensDirection == CameraLensDirection.back,
+        (c) => c.lensDirection == CameraLensDirection.front,
         orElse: () => cameras.first,
       );
 
@@ -599,7 +601,12 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
             ),
 
           if (photo == null && camera != null && camera.value.isInitialized)
-            BodySilhouetteOverlay(pose: _pose, aligned: _secondsLeft > 0),
+            BodySilhouetteOverlay(
+              pose: _pose,
+              aligned: _secondsLeft > 0,
+              mirrored:
+                  camera.description.lensDirection == CameraLensDirection.front,
+            ),
 
           if (_secondsLeft > 0)
             Center(
@@ -617,6 +624,10 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
             child: Column(
               children: [
                 _captureHeader(l10n),
+                if (photo == null &&
+                    camera != null &&
+                    camera.value.isInitialized)
+                  const PhoneLevelBanner(),
                 const Spacer(),
                 if (_error != null) _captureError(l10n),
                 _captureControls(theme, l10n, photo, bothTaken),

@@ -1546,6 +1546,84 @@ abstract class AppLocalizations {
   /// **'AI-Generated'**
   String get libraryTabAiGenerated;
 
+  /// No description provided for @profileClub.
+  ///
+  /// In en, this message translates to:
+  /// **'The Fit Club'**
+  String get profileClub;
+
+  /// No description provided for @clubSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Join The Fit Club'**
+  String get clubSheetTitle;
+
+  /// No description provided for @clubSheetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The club has its own app, where members meet and follow the community.'**
+  String get clubSheetBody;
+
+  /// No description provided for @clubSheetNote.
+  ///
+  /// In en, this message translates to:
+  /// **'This is an early version and will be replaced by the full club app soon. It opens in your browser.'**
+  String get clubSheetNote;
+
+  /// No description provided for @clubOpenButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the club'**
+  String get clubOpenButton;
+
+  /// No description provided for @clubOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the club. Please try again.'**
+  String get clubOpenFailed;
+
+  /// No description provided for @updateAvailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update available'**
+  String get updateAvailableTitle;
+
+  /// No description provided for @updateAvailableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A newer version of Celia is ready. Update to get the latest improvements.'**
+  String get updateAvailableBody;
+
+  /// No description provided for @updateRequiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update required'**
+  String get updateRequiredTitle;
+
+  /// No description provided for @updateRequiredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This version of Celia is no longer supported. Please update to continue.'**
+  String get updateRequiredBody;
+
+  /// No description provided for @updateNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get updateNow;
+
+  /// No description provided for @updateLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get updateLater;
+
+  /// No description provided for @updateOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not start the update. Please try again.'**
+  String get updateOpenFailed;
+
   /// No description provided for @libraryTabHowTo.
   ///
   /// In en, this message translates to:
@@ -2995,19 +3073,19 @@ abstract class AppLocalizations {
   /// No description provided for @bodyScanCaptureFrontTitle.
   ///
   /// In en, this message translates to:
-  /// **'Face the camera'**
+  /// **'Face the selfie camera'**
   String get bodyScanCaptureFrontTitle;
 
   /// No description provided for @bodyScanCaptureRightTitle.
   ///
   /// In en, this message translates to:
-  /// **'Turn to your right'**
+  /// **'Turn left, right side to the camera'**
   String get bodyScanCaptureRightTitle;
 
   /// No description provided for @bodyScanCaptureHowTo.
   ///
   /// In en, this message translates to:
-  /// **'Prop your phone up about 3 m away, step back until your whole body fits the outline, then start the timer.'**
+  /// **'Place the phone on the floor or a low surface, lean it slightly back (against a wall works), then step back 2–3 m until your whole body fits the outline on screen. You should see yourself live — that is how you know you are framed correctly.'**
   String get bodyScanCaptureHowTo;
 
   /// No description provided for @bodyScanCaptureTips.
@@ -3015,6 +3093,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close-fitting clothes, plain background, good even light, arms slightly away from your sides.'**
   String get bodyScanCaptureTips;
+
+  /// No description provided for @bodyScanLevelOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone is upright — hold still'**
+  String get bodyScanLevelOk;
+
+  /// No description provided for @bodyScanLevelTilt.
+  ///
+  /// In en, this message translates to:
+  /// **'Straighten the phone so it is upright'**
+  String get bodyScanLevelTilt;
 
   /// No description provided for @bodyScanPoseFront.
   ///

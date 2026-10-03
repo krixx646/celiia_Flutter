@@ -1063,7 +1063,7 @@
   "bodyScanStatsMale": "Nam",
   "bodyScanStatsInvalid": "Nhập chiều cao, cân nặng và tuổi hợp lệ. Bạn phải từ 18 tuổi trở lên để quét.",
   "bodyScanCaptureFrontTitle": "Đứng đối diện máy ảnh",
-  "bodyScanCaptureRightTitle": "Xoay sang phải",
+  "bodyScanCaptureRightTitle": "Xoay sang trái, bên phải hướng về camera",
   "bodyScanCaptureHowTo": "Đặt điện thoại cách bạn khoảng 3 m, lùi lại cho đến khi toàn thân nằm vừa trong đường viền, rồi bắt đầu hẹn giờ.",
   "bodyScanCaptureTips": "Mặc quần áo ôm vừa người, chọn phông nền đơn giản, ánh sáng tốt và đồng đều, hai tay hơi cách cơ thể.",
   "bodyScanPoseFront": "Chính diện",

@@ -847,6 +847,50 @@ class AppLocalizationsEs extends AppLocalizations {
   String get libraryTabAiGenerated => 'Generadas con IA';
 
   @override
+  String get profileClub => 'The Fit Club';
+
+  @override
+  String get clubSheetTitle => 'Únete a The Fit Club';
+
+  @override
+  String get clubSheetBody =>
+      'El club tiene su propia app, donde los miembros se reúnen y siguen a la comunidad.';
+
+  @override
+  String get clubSheetNote =>
+      'Esta es una versión inicial y pronto será reemplazada por la app completa del club. Se abre en tu navegador.';
+
+  @override
+  String get clubOpenButton => 'Abrir el club';
+
+  @override
+  String get clubOpenFailed => 'No se pudo abrir el club. Inténtalo de nuevo.';
+
+  @override
+  String get updateAvailableTitle => 'Actualización disponible';
+
+  @override
+  String get updateAvailableBody =>
+      'Hay una versión más nueva de Celia. Actualiza para obtener las últimas mejoras.';
+
+  @override
+  String get updateRequiredTitle => 'Actualización necesaria';
+
+  @override
+  String get updateRequiredBody =>
+      'Esta versión de Celia ya no es compatible. Actualiza para continuar.';
+
+  @override
+  String get updateNow => 'Actualizar';
+
+  @override
+  String get updateLater => 'Más tarde';
+
+  @override
+  String get updateOpenFailed =>
+      'No se pudo iniciar la actualización. Inténtalo de nuevo.';
+
+  @override
   String get libraryTabHowTo => 'Cómo hacerlo';
 
   @override
@@ -1718,18 +1762,26 @@ class AppLocalizationsEs extends AppLocalizations {
       'Introduce una altura, un peso y una edad válidos. Debes tener 18 años o más para escanearte.';
 
   @override
-  String get bodyScanCaptureFrontTitle => 'Ponte de frente a la cámara';
+  String get bodyScanCaptureFrontTitle => 'Ponte de frente a la cámara selfie';
 
   @override
-  String get bodyScanCaptureRightTitle => 'Gira hacia tu derecha';
+  String get bodyScanCaptureRightTitle =>
+      'Gira a tu izquierda, lado derecho hacia la cámara';
 
   @override
   String get bodyScanCaptureHowTo =>
-      'Coloca el teléfono a unos 3 m de distancia, aléjate hasta que todo tu cuerpo quepa en el contorno y, después, inicia el temporizador.';
+      'Coloca el teléfono en el suelo o en una superficie baja, inclínalo un poco hacia atrás (contra una pared sirve), y aléjate 2–3 m hasta que todo tu cuerpo quepa en el contorno de la pantalla. Debes verte en vivo: así sabes que estás bien encuadrado.';
 
   @override
   String get bodyScanCaptureTips =>
       'Ropa ajustada, fondo liso, buena iluminación uniforme y brazos ligeramente separados del cuerpo.';
+
+  @override
+  String get bodyScanLevelOk => 'El teléfono está derecho — quédate quieto';
+
+  @override
+  String get bodyScanLevelTilt =>
+      'Endereza el teléfono para que quede vertical';
 
   @override
   String get bodyScanPoseFront => 'Frente';

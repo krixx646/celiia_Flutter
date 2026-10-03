@@ -1063,7 +1063,7 @@
   "bodyScanStatsMale": "ชาย",
   "bodyScanStatsInvalid": "กรอกส่วนสูง น้ำหนัก และอายุที่ถูกต้อง คุณต้องมีอายุ 18 ปีขึ้นไปจึงจะสแกนได้",
   "bodyScanCaptureFrontTitle": "หันหน้าเข้ากล้อง",
-  "bodyScanCaptureRightTitle": "หันไปทางขวา",
+  "bodyScanCaptureRightTitle": "หันไปทางซ้าย ให้ด้านขวาหันเข้าหากล้อง",
   "bodyScanCaptureHowTo": "ตั้งโทรศัพท์ของคุณให้ห่างประมาณ 3 ม. ถอยหลังจนร่างกายทั้งตัวอยู่ในกรอบ จากนั้นเริ่มจับเวลา",
   "bodyScanCaptureTips": "สวมเสื้อผ้าที่กระชับพอดี ใช้พื้นหลังเรียบ แสงสว่างสม่ำเสมอ และวางแขนห่างจากลำตัวเล็กน้อย",
   "bodyScanPoseFront": "ด้านหน้า",

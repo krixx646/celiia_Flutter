@@ -53,6 +53,10 @@ BODYGRAM_ORG_ID=org_...
 BODYGRAM_API_KEY=...
 # Optional override; defaults to https://platform.bodygram.com
 # BODYGRAM_BASE_URL=https://platform.bodygram.com
+
+# Club app link in Profile (optional)
+# CLUB_APP_URL=https://preview.builtwithrocket.new/thefitclub-0ewx?p=c
+# CLUB_APP_ENABLED=true
 ```
 
 ### Body Scan setup

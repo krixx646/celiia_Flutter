@@ -847,6 +847,50 @@ class AppLocalizationsNl extends AppLocalizations {
   String get libraryTabAiGenerated => 'Door AI gegenereerd';
 
   @override
+  String get profileClub => 'The Fit Club';
+
+  @override
+  String get clubSheetTitle => 'Join The Fit Club';
+
+  @override
+  String get clubSheetBody =>
+      'The club has its own app, where members meet and follow the community.';
+
+  @override
+  String get clubSheetNote =>
+      'This is an early version and will be replaced by the full club app soon. It opens in your browser.';
+
+  @override
+  String get clubOpenButton => 'Open the club';
+
+  @override
+  String get clubOpenFailed => 'Could not open the club. Please try again.';
+
+  @override
+  String get updateAvailableTitle => 'Update available';
+
+  @override
+  String get updateAvailableBody =>
+      'A newer version of Celia is ready. Update to get the latest improvements.';
+
+  @override
+  String get updateRequiredTitle => 'Update required';
+
+  @override
+  String get updateRequiredBody =>
+      'This version of Celia is no longer supported. Please update to continue.';
+
+  @override
+  String get updateNow => 'Update';
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String get updateOpenFailed =>
+      'Could not start the update. Please try again.';
+
+  @override
   String get libraryTabHowTo => 'How to';
 
   @override
@@ -1722,7 +1766,8 @@ class AppLocalizationsNl extends AppLocalizations {
   String get bodyScanCaptureFrontTitle => 'Kijk naar de camera';
 
   @override
-  String get bodyScanCaptureRightTitle => 'Draai naar rechts';
+  String get bodyScanCaptureRightTitle =>
+      'Draai naar links, rechterkant naar de camera';
 
   @override
   String get bodyScanCaptureHowTo =>
@@ -1731,6 +1776,12 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get bodyScanCaptureTips =>
       'Nauwsluitende kleding, een rustige achtergrond, gelijkmatig goed licht en je armen iets van je lichaam af.';
+
+  @override
+  String get bodyScanLevelOk => 'Phone is upright — hold still';
+
+  @override
+  String get bodyScanLevelTilt => 'Straighten the phone so it is upright';
 
   @override
   String get bodyScanPoseFront => 'Voorkant';

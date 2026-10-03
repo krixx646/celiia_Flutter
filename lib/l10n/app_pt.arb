@@ -1063,7 +1063,7 @@
   "bodyScanStatsMale": "Masculino",
   "bodyScanStatsInvalid": "Insira uma altura, um peso e uma idade válidos. Você precisa ter 18 anos ou mais para escanear.",
   "bodyScanCaptureFrontTitle": "Fique de frente para a câmera",
-  "bodyScanCaptureRightTitle": "Vire-se para a direita",
+  "bodyScanCaptureRightTitle": "Vire-se para a esquerda, lado direito para a câmera",
   "bodyScanCaptureHowTo": "Apoie seu celular a cerca de 3 m de distância, afaste-se até que seu corpo inteiro caiba no contorno e então inicie o timer.",
   "bodyScanCaptureTips": "Roupas justas, fundo liso, boa iluminação uniforme e braços ligeiramente afastados do corpo.",
   "bodyScanPoseFront": "Frente",

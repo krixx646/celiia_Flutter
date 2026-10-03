@@ -7,6 +7,7 @@ import '../providers/nutrition_profile_provider.dart';
 import '../providers/nutrition_tracker_provider.dart';
 import '../providers/theme_provider.dart';
 import '../utils/responsive.dart';
+import '../widgets/app_update_dialog.dart';
 import 'home/home_screen.dart';
 import 'library/library_screen.dart';
 import 'chat_screen.dart';
@@ -60,6 +61,7 @@ class _MainScreenState extends State<MainScreen> {
         tracker.syncProfile(profileProvider.profile);
         tracker.refresh(profile: profileProvider.profile);
       });
+      maybePromptAppUpdate(context);
     });
   }
 

@@ -797,6 +797,50 @@ class AppLocalizationsZh extends AppLocalizations {
   String get libraryTabAiGenerated => 'AI 生成';
 
   @override
+  String get profileClub => 'The Fit Club';
+
+  @override
+  String get clubSheetTitle => 'Join The Fit Club';
+
+  @override
+  String get clubSheetBody =>
+      'The club has its own app, where members meet and follow the community.';
+
+  @override
+  String get clubSheetNote =>
+      'This is an early version and will be replaced by the full club app soon. It opens in your browser.';
+
+  @override
+  String get clubOpenButton => 'Open the club';
+
+  @override
+  String get clubOpenFailed => 'Could not open the club. Please try again.';
+
+  @override
+  String get updateAvailableTitle => 'Update available';
+
+  @override
+  String get updateAvailableBody =>
+      'A newer version of Celia is ready. Update to get the latest improvements.';
+
+  @override
+  String get updateRequiredTitle => 'Update required';
+
+  @override
+  String get updateRequiredBody =>
+      'This version of Celia is no longer supported. Please update to continue.';
+
+  @override
+  String get updateNow => 'Update';
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String get updateOpenFailed =>
+      'Could not start the update. Please try again.';
+
+  @override
   String get libraryTabHowTo => 'How to';
 
   @override
@@ -1641,13 +1685,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get bodyScanCaptureFrontTitle => '面向摄像头';
 
   @override
-  String get bodyScanCaptureRightTitle => '向右转身';
+  String get bodyScanCaptureRightTitle => '向左转身，右侧朝向摄像头';
 
   @override
   String get bodyScanCaptureHowTo => '将手机支撑在大约 3 米外，后退到全身都能放入轮廓线内，然后开始计时。';
 
   @override
   String get bodyScanCaptureTips => '穿合身的衣服，选择简洁的背景，确保光线均匀充足，双臂稍微离开身体。';
+
+  @override
+  String get bodyScanLevelOk => 'Phone is upright — hold still';
+
+  @override
+  String get bodyScanLevelTilt => 'Straighten the phone so it is upright';
 
   @override
   String get bodyScanPoseFront => '正面';

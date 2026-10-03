@@ -1,4 +1,4 @@
-# Celia: September 2026 release (1.2.0, build 47)
+# Celia: September 2026 release (1.2.2, build 49)
 
 ## Summary
 
@@ -62,3 +62,11 @@ changes ship with this build.
 - The guided workout player and How to series have not had a full device pass.
 - Two test routines built on equipment clips were deleted, along with one saved by a
   real user that used dumbbell clips.
+
+## Club link
+- Profile > The Fit Club opens a sheet explaining the link is an early version, with a button that opens https://preview.builtwithrocket.new/thefitclub-0ewx?p=c in the browser.
+- Backend route /api/mobile/club-link returns {enabled, url}; set CLUB_APP_URL to change the link or CLUB_APP_ENABLED=false to hide the entry without a release. The app falls back to the built-in URL if the route is unreachable.
+
+## Play Store update prompt
+- After login, Android installs from Play Store ask Play if a newer build exists. Soft prompt: Update / Later (3-day snooze). High-priority updates can force an immediate in-app update. No Vercel version env vars.
+

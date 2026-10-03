@@ -800,6 +800,50 @@ class AppLocalizationsKo extends AppLocalizations {
   String get libraryTabAiGenerated => 'AI 생성';
 
   @override
+  String get profileClub => 'The Fit Club';
+
+  @override
+  String get clubSheetTitle => 'Join The Fit Club';
+
+  @override
+  String get clubSheetBody =>
+      'The club has its own app, where members meet and follow the community.';
+
+  @override
+  String get clubSheetNote =>
+      'This is an early version and will be replaced by the full club app soon. It opens in your browser.';
+
+  @override
+  String get clubOpenButton => 'Open the club';
+
+  @override
+  String get clubOpenFailed => 'Could not open the club. Please try again.';
+
+  @override
+  String get updateAvailableTitle => 'Update available';
+
+  @override
+  String get updateAvailableBody =>
+      'A newer version of Celia is ready. Update to get the latest improvements.';
+
+  @override
+  String get updateRequiredTitle => 'Update required';
+
+  @override
+  String get updateRequiredBody =>
+      'This version of Celia is no longer supported. Please update to continue.';
+
+  @override
+  String get updateNow => 'Update';
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String get updateOpenFailed =>
+      'Could not start the update. Please try again.';
+
+  @override
   String get libraryTabHowTo => 'How to';
 
   @override
@@ -1655,7 +1699,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get bodyScanCaptureFrontTitle => '카메라를 정면으로 바라보세요';
 
   @override
-  String get bodyScanCaptureRightTitle => '오른쪽으로 돌아서세요';
+  String get bodyScanCaptureRightTitle => '왼쪽으로 돌아 오른쪽 몸이 카메라를 향하게 하세요';
 
   @override
   String get bodyScanCaptureHowTo =>
@@ -1664,6 +1708,12 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get bodyScanCaptureTips =>
       '몸에 붙는 옷, 단색 배경, 고르고 밝은 조명, 팔은 몸에서 살짝 떨어뜨리세요.';
+
+  @override
+  String get bodyScanLevelOk => 'Phone is upright — hold still';
+
+  @override
+  String get bodyScanLevelTilt => 'Straighten the phone so it is upright';
 
   @override
   String get bodyScanPoseFront => '정면';

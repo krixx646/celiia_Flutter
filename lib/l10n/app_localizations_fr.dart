@@ -859,6 +859,51 @@ class AppLocalizationsFr extends AppLocalizations {
   String get libraryTabAiGenerated => 'Générées par l’IA';
 
   @override
+  String get profileClub => 'The Fit Club';
+
+  @override
+  String get clubSheetTitle => 'Rejoignez The Fit Club';
+
+  @override
+  String get clubSheetBody =>
+      'Le club a sa propre application, où les membres se retrouvent et suivent la communauté.';
+
+  @override
+  String get clubSheetNote =>
+      'Il s’agit d’une version préliminaire, bientôt remplacée par l’application complète du club. Elle s’ouvre dans votre navigateur.';
+
+  @override
+  String get clubOpenButton => 'Ouvrir le club';
+
+  @override
+  String get clubOpenFailed =>
+      'Impossible d’ouvrir le club. Veuillez réessayer.';
+
+  @override
+  String get updateAvailableTitle => 'Mise à jour disponible';
+
+  @override
+  String get updateAvailableBody =>
+      'Une nouvelle version de Celia est prête. Mettez à jour pour profiter des dernières améliorations.';
+
+  @override
+  String get updateRequiredTitle => 'Mise à jour requise';
+
+  @override
+  String get updateRequiredBody =>
+      'Cette version de Celia n’est plus prise en charge. Veuillez mettre à jour pour continuer.';
+
+  @override
+  String get updateNow => 'Mettre à jour';
+
+  @override
+  String get updateLater => 'Plus tard';
+
+  @override
+  String get updateOpenFailed =>
+      'Impossible de démarrer la mise à jour. Veuillez réessayer.';
+
+  @override
   String get libraryTabHowTo => 'Comment faire';
 
   @override
@@ -1734,18 +1779,26 @@ class AppLocalizationsFr extends AppLocalizations {
       'Saisissez une taille, un poids et un âge valides. Vous devez avoir 18 ans ou plus pour effectuer une analyse.';
 
   @override
-  String get bodyScanCaptureFrontTitle => 'Faites face à la caméra';
+  String get bodyScanCaptureFrontTitle => 'Faites face à la caméra selfie';
 
   @override
-  String get bodyScanCaptureRightTitle => 'Tournez-vous vers la droite';
+  String get bodyScanCaptureRightTitle =>
+      'Tournez-vous vers la gauche, côté droit face à la caméra';
 
   @override
   String get bodyScanCaptureHowTo =>
-      'Posez votre téléphone à environ 3 m de vous, reculez jusqu’à ce que votre corps entier corresponde au contour, puis lancez le minuteur.';
+      'Placez le téléphone au sol ou sur une surface basse, penchez-le légèrement en arrière (contre un mur, c’est idéal), puis reculez de 2 à 3 m jusqu’à ce que tout votre corps tienne dans le contour à l’écran. Vous devez vous voir en direct — c’est ainsi que vous savez que le cadrage est bon.';
 
   @override
   String get bodyScanCaptureTips =>
       'Vêtements près du corps, arrière-plan uni, lumière uniforme et suffisante, bras légèrement écartés du corps.';
+
+  @override
+  String get bodyScanLevelOk => 'Téléphone bien droit — restez immobile';
+
+  @override
+  String get bodyScanLevelTilt =>
+      'Redressez le téléphone pour qu’il soit vertical';
 
   @override
   String get bodyScanPoseFront => 'De face';

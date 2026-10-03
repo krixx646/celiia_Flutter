@@ -834,6 +834,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String get libraryTabAiGenerated => 'AI-Generated';
 
   @override
+  String get profileClub => 'The Fit Club';
+
+  @override
+  String get clubSheetTitle => 'Join The Fit Club';
+
+  @override
+  String get clubSheetBody =>
+      'The club has its own app, where members meet and follow the community.';
+
+  @override
+  String get clubSheetNote =>
+      'This is an early version and will be replaced by the full club app soon. It opens in your browser.';
+
+  @override
+  String get clubOpenButton => 'Open the club';
+
+  @override
+  String get clubOpenFailed => 'Could not open the club. Please try again.';
+
+  @override
+  String get updateAvailableTitle => 'Update available';
+
+  @override
+  String get updateAvailableBody =>
+      'A newer version of Celia is ready. Update to get the latest improvements.';
+
+  @override
+  String get updateRequiredTitle => 'Update required';
+
+  @override
+  String get updateRequiredBody =>
+      'This version of Celia is no longer supported. Please update to continue.';
+
+  @override
+  String get updateNow => 'Update';
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String get updateOpenFailed =>
+      'Could not start the update. Please try again.';
+
+  @override
   String get libraryTabHowTo => 'How to';
 
   @override
@@ -1702,18 +1746,24 @@ class AppLocalizationsEn extends AppLocalizations {
       'Enter a valid height, weight and age. You must be 18 or over to scan.';
 
   @override
-  String get bodyScanCaptureFrontTitle => 'Face the camera';
+  String get bodyScanCaptureFrontTitle => 'Face the selfie camera';
 
   @override
-  String get bodyScanCaptureRightTitle => 'Turn to your right';
+  String get bodyScanCaptureRightTitle => 'Turn left, right side to the camera';
 
   @override
   String get bodyScanCaptureHowTo =>
-      'Prop your phone up about 3 m away, step back until your whole body fits the outline, then start the timer.';
+      'Place the phone on the floor or a low surface, lean it slightly back (against a wall works), then step back 2–3 m until your whole body fits the outline on screen. You should see yourself live — that is how you know you are framed correctly.';
 
   @override
   String get bodyScanCaptureTips =>
       'Close-fitting clothes, plain background, good even light, arms slightly away from your sides.';
+
+  @override
+  String get bodyScanLevelOk => 'Phone is upright — hold still';
+
+  @override
+  String get bodyScanLevelTilt => 'Straighten the phone so it is upright';
 
   @override
   String get bodyScanPoseFront => 'Front';

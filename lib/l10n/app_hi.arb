@@ -1063,7 +1063,7 @@
   "bodyScanStatsMale": "पुरुष",
   "bodyScanStatsInvalid": "मान्य लंबाई, वज़न और उम्र दर्ज करें। स्कैन करने के लिए आपकी उम्र 18 वर्ष या उससे अधिक होनी चाहिए।",
   "bodyScanCaptureFrontTitle": "कैमरे की ओर देखें",
-  "bodyScanCaptureRightTitle": "दाईं ओर मुड़ें",
+  "bodyScanCaptureRightTitle": "बाईं ओर मुड़ें, दाईं तरफ़ कैमरे की ओर रखें",
   "bodyScanCaptureHowTo": "अपने फ़ोन को लगभग 3 मीटर दूर टिकाकर रखें, फिर पीछे हटें जब तक आपका पूरा शरीर रूपरेखा में न आ जाए। इसके बाद टाइमर शुरू करें।",
   "bodyScanCaptureTips": "शरीर से चिपके कपड़े, सादा बैकग्राउंड, अच्छी और समान रोशनी, हाथ शरीर से थोड़ा दूर।",
   "bodyScanPoseFront": "सामने",

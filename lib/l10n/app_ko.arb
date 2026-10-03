@@ -1063,7 +1063,7 @@
   "bodyScanStatsMale": "남성",
   "bodyScanStatsInvalid": "유효한 키, 체중, 나이를 입력하세요. 스캔하려면 만 18세 이상이어야 합니다.",
   "bodyScanCaptureFrontTitle": "카메라를 정면으로 바라보세요",
-  "bodyScanCaptureRightTitle": "오른쪽으로 돌아서세요",
+  "bodyScanCaptureRightTitle": "왼쪽으로 돌아 오른쪽 몸이 카메라를 향하게 하세요",
   "bodyScanCaptureHowTo": "휴대전화를 약 3m 떨어진 곳에 세워두고, 몸 전체가 윤곽선 안에 들어올 때까지 뒤로 물러난 다음 타이머를 시작하세요.",
   "bodyScanCaptureTips": "몸에 붙는 옷, 단색 배경, 고르고 밝은 조명, 팔은 몸에서 살짝 떨어뜨리세요.",
   "bodyScanPoseFront": "정면",

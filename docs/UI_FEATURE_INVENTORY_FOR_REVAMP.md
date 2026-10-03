@@ -425,3 +425,5 @@ When proposing a revamp:
 ## 16. One-paragraph product summary (for Grok)
 
 Celia is a multilingual fitness and nutrition coach app: users authenticate, complete a rich onboarding profile, then use a four-tab shell (Home, Library, Chat, Profile) to generate and play guided bodyweight workouts, look up how to do equipment exercises, log meals via camera, optionally run a photo body scan, and talk to an AI coach (text and optional voice). An opt-in Avatar Mode can replace the tabs with a full-screen talking 3D Celia. Notification bells, wearables sync, community (separate French and Spanish clubs), life-coaching content, water tracking, home widgets, and several daily proactive loops are requested but not yet given real UI homes. The current UI is functional but not considered modern or scalable for the growing feature set; redesigns will iterate as features are allocated month by month until a final IA is frozen for production.
+
+- Profile: 'The Fit Club' menu row (after Body Scan) opens a bottom sheet with an explanation and an 'Open the club' pill button that launches the club app in the external browser. Row hidden when the backend flag is off.

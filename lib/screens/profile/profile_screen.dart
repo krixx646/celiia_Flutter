@@ -10,10 +10,12 @@ import '../../providers/routine_provider.dart';
 import '../../config/env.dart';
 import '../../providers/avatar_mode_provider.dart';
 import '../../providers/theme_provider.dart';
+import '../../services/club_link_service.dart';
 import '../../utils/progress.dart';
 import '../body_scan/body_scan_screen.dart';
 import '../debug/vrm_avatar_test_screen.dart';
 import '../tools/nutrition_screen.dart';
+import 'club_sheet.dart';
 import 'edit_profile_screen.dart';
 import 'language_screen.dart';
 import 'saved_routines_screen.dart';
@@ -27,6 +29,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool _loaded = false;
+  final Future<ClubLink> _club = ClubLinkService().fetch();
 
   @override
   void didChangeDependencies() {
@@ -431,6 +434,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
         ),
         const SizedBox(height: 8),
+        FutureBuilder<ClubLink>(
+          future: _club,
+          builder: (context, snapshot) {
+            final link = snapshot.data;
+            if (link == null || !link.enabled) return const SizedBox.shrink();
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: _buildMenuItem(
+                theme: theme,
+                icon: Icons.groups_rounded,
+                title: l10n.profileClub,
+                onTap: () => showClubSheet(context, theme, link),
+              ),
+            );
+          },
+        ),
         _buildMenuItem(
           theme: theme,
           icon: Icons.language,

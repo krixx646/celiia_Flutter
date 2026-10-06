@@ -1095,6 +1095,7 @@
   "bodyScanCaptureTips": "Vêtements près du corps, arrière-plan uni, lumière uniforme et suffisante, bras légèrement écartés du corps.",
   "bodyScanLevelOk": "Téléphone bien droit — restez immobile",
   "bodyScanLevelTilt": "Redressez le téléphone pour qu’il soit vertical",
+  "bodyScanSavingPhoto": "Enregistrement de la photo…",
   "bodyScanPoseFront": "De face",
   "bodyScanPoseRight": "Côté droit",
   "bodyScanStartTimer": "Lancer le minuteur",
@@ -1157,9 +1158,58 @@
   "bodyScanErrorQuality": "Les photos étaient trop sombres ou trop floues. Choisissez un éclairage plus lumineux et uniforme, et ne bougez pas pendant le compte à rebours.",
   "bodyScanErrorPose": "Votre position n’était pas tout à fait correcte. Tenez-vous droit face à l’appareil photo, les bras légèrement écartés du corps, puis tournez-vous complètement vers votre droite pour la deuxième photo.",
   "bodyScanErrorClothing": "Les vêtements amples masquent votre silhouette. Des vêtements près du corps permettent d’obtenir un scan exploitable.",
-  "bodyScanErrorPhotoUnknown": "Ces photos n’ont pas pu être utilisées. Réessayez devant un arrière-plan uni et avec une bonne lumière.",
+  "bodyScanErrorPhotoUnknown": "Ces photos n’ont pas pu être utilisées. Assurez-vous que tout votre corps est dans le contour, avec une bonne lumière, puis réessayez.",
+  "bodyScanErrorCaptureFailed": "Impossible d’enregistrer cette photo. Relancez le minuteur et réessayez.",
   "bodyScanErrorPhotosTooLarge": "Ces photos étaient trop volumineuses pour être importées. Réessayez.",
-  "bodyScanErrorQuota": "Vous avez utilisé vos scans pour cette période. Vous pourrez scanner à nouveau une fois la limite réinitialisée.",
+  "bodyScanErrorQuota": "Vous n'avez plus de scans corporels. Achetez-en un ou saisissez un code gratuit pour continuer.",
+  "bodyScanPaywallTitle": "Accès au scan corporel",
+  "bodyScanPaywallHeadline": "Acheter un scan corporel",
+  "bodyScanPaywallBody": "Chaque scan est un achat dans le store. L'abonnement Premium n'inclut pas les scans corporels — tout le monde peut les acheter séparément.",
+  "bodyScanPaywallRemaining": "Scans disponibles : {count}",
+  "@bodyScanPaywallRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bodyScanPaywallBuy": "Acheter 1 scan · {price}",
+  "@bodyScanPaywallBuy": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "bodyScanPaywallPriceFallback": "€7.99",
+  "bodyScanPaywallStoreUnavailable": "Le produit du store n'est pas encore disponible sur cet appareil. Vous pouvez toujours saisir un code ci-dessous.",
+  "bodyScanPaywallCodeTitle": "Vous avez un code gratuit ?",
+  "bodyScanPaywallCodeBody": "Les coachs et les essais peuvent débloquer des scans avec un code. Saisissez-le ici.",
+  "bodyScanPaywallCodeHint": "CODE",
+  "bodyScanPaywallRedeem": "Utiliser le code",
+  "bodyScanPaywallLoadFailed": "Impossible de charger l'accès au scan. Réessayez.",
+  "bodyScanPaywallPurchaseFailed": "L'achat n'a pas pu être finalisé. Réessayez.",
+  "bodyScanPaywallPurchaseOk": "Scan débloqué. Vous en avez maintenant {count} disponible(s).",
+  "@bodyScanPaywallPurchaseOk": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bodyScanPaywallRedeemOk": "Code accepté. {granted} scan(s) ajouté(s). Vous en avez maintenant {remaining} disponible(s).",
+  "@bodyScanPaywallRedeemOk": {
+    "placeholders": {
+      "granted": {
+        "type": "int"
+      },
+      "remaining": {
+        "type": "int"
+      }
+    }
+  },
+  "bodyScanPaywallRedeemFailed": "Ce code n'a pas pu être utilisé.",
+  "bodyScanPaywallOpen": "Acheter ou utiliser un code",
   "bodyScanErrorAge": "Le scan corporel est disponible uniquement pour les utilisateurs âgés de 18 ans et plus.",
   "bodyScanErrorStats": "Vérifiez votre taille, votre poids, votre âge et votre sexe, puis réessayez.",
   "bodyScanErrorSignedIn": "Veuillez vous reconnecter pour scanner.",

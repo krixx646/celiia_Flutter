@@ -1801,6 +1801,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Redressez le téléphone pour qu’il soit vertical';
 
   @override
+  String get bodyScanSavingPhoto => 'Enregistrement de la photo…';
+
+  @override
   String get bodyScanPoseFront => 'De face';
 
   @override
@@ -1969,7 +1972,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bodyScanErrorPhotoUnknown =>
-      'Ces photos n’ont pas pu être utilisées. Réessayez devant un arrière-plan uni et avec une bonne lumière.';
+      'Ces photos n’ont pas pu être utilisées. Assurez-vous que tout votre corps est dans le contour, avec une bonne lumière, puis réessayez.';
+
+  @override
+  String get bodyScanErrorCaptureFailed =>
+      'Impossible d’enregistrer cette photo. Relancez le minuteur et réessayez.';
 
   @override
   String get bodyScanErrorPhotosTooLarge =>
@@ -1977,7 +1984,71 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bodyScanErrorQuota =>
-      'Vous avez utilisé vos scans pour cette période. Vous pourrez scanner à nouveau une fois la limite réinitialisée.';
+      'Vous n\'avez plus de scans corporels. Achetez-en un ou saisissez un code gratuit pour continuer.';
+
+  @override
+  String get bodyScanPaywallTitle => 'Accès au scan corporel';
+
+  @override
+  String get bodyScanPaywallHeadline => 'Acheter un scan corporel';
+
+  @override
+  String get bodyScanPaywallBody =>
+      'Chaque scan est un achat dans le store. L\'abonnement Premium n\'inclut pas les scans corporels — tout le monde peut les acheter séparément.';
+
+  @override
+  String bodyScanPaywallRemaining(int count) {
+    return 'Scans disponibles : $count';
+  }
+
+  @override
+  String bodyScanPaywallBuy(String price) {
+    return 'Acheter 1 scan · $price';
+  }
+
+  @override
+  String get bodyScanPaywallPriceFallback => '€7.99';
+
+  @override
+  String get bodyScanPaywallStoreUnavailable =>
+      'Le produit du store n\'est pas encore disponible sur cet appareil. Vous pouvez toujours saisir un code ci-dessous.';
+
+  @override
+  String get bodyScanPaywallCodeTitle => 'Vous avez un code gratuit ?';
+
+  @override
+  String get bodyScanPaywallCodeBody =>
+      'Les coachs et les essais peuvent débloquer des scans avec un code. Saisissez-le ici.';
+
+  @override
+  String get bodyScanPaywallCodeHint => 'CODE';
+
+  @override
+  String get bodyScanPaywallRedeem => 'Utiliser le code';
+
+  @override
+  String get bodyScanPaywallLoadFailed =>
+      'Impossible de charger l\'accès au scan. Réessayez.';
+
+  @override
+  String get bodyScanPaywallPurchaseFailed =>
+      'L\'achat n\'a pas pu être finalisé. Réessayez.';
+
+  @override
+  String bodyScanPaywallPurchaseOk(int count) {
+    return 'Scan débloqué. Vous en avez maintenant $count disponible(s).';
+  }
+
+  @override
+  String bodyScanPaywallRedeemOk(int granted, int remaining) {
+    return 'Code accepté. $granted scan(s) ajouté(s). Vous en avez maintenant $remaining disponible(s).';
+  }
+
+  @override
+  String get bodyScanPaywallRedeemFailed => 'Ce code n\'a pas pu être utilisé.';
+
+  @override
+  String get bodyScanPaywallOpen => 'Acheter ou utiliser un code';
 
   @override
   String get bodyScanErrorAge =>

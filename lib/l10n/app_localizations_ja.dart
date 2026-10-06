@@ -1713,6 +1713,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get bodyScanLevelTilt => 'Straighten the phone so it is upright';
 
   @override
+  String get bodyScanSavingPhoto => 'Saving photo…';
+
+  @override
   String get bodyScanPoseFront => '正面';
 
   @override
@@ -1882,11 +1885,79 @@ class AppLocalizationsJa extends AppLocalizations {
       'これらの写真は使用できませんでした。明るく無地の背景の前で、もう一度お試しください。';
 
   @override
+  String get bodyScanErrorCaptureFailed =>
+      'Could not save that photo. Start the timer and try again.';
+
+  @override
   String get bodyScanErrorPhotosTooLarge =>
       '写真のファイルサイズが大きすぎてアップロードできませんでした。もう一度お試しください。';
 
   @override
   String get bodyScanErrorQuota => 'この期間のスキャン回数を使い切りました。リセットされると、再びスキャンできます。';
+
+  @override
+  String get bodyScanPaywallTitle => 'Body scan access';
+
+  @override
+  String get bodyScanPaywallHeadline => 'Buy one body scan';
+
+  @override
+  String get bodyScanPaywallBody =>
+      'Each scan costs a store purchase. Premium membership does not include body scans — anyone can buy them separately.';
+
+  @override
+  String bodyScanPaywallRemaining(int count) {
+    return 'Scans available: $count';
+  }
+
+  @override
+  String bodyScanPaywallBuy(String price) {
+    return 'Buy 1 scan · $price';
+  }
+
+  @override
+  String get bodyScanPaywallPriceFallback => '€7.99';
+
+  @override
+  String get bodyScanPaywallStoreUnavailable =>
+      'The store product is not available on this device yet. You can still redeem a code below.';
+
+  @override
+  String get bodyScanPaywallCodeTitle => 'Have a free code?';
+
+  @override
+  String get bodyScanPaywallCodeBody =>
+      'Coaches and trials can unlock scans with a code. Enter it here.';
+
+  @override
+  String get bodyScanPaywallCodeHint => 'CODE';
+
+  @override
+  String get bodyScanPaywallRedeem => 'Redeem code';
+
+  @override
+  String get bodyScanPaywallLoadFailed =>
+      'Could not load scan access. Pull to refresh or try again.';
+
+  @override
+  String get bodyScanPaywallPurchaseFailed =>
+      'Purchase could not be completed. Try again.';
+
+  @override
+  String bodyScanPaywallPurchaseOk(int count) {
+    return 'Scan unlocked. You now have $count available.';
+  }
+
+  @override
+  String bodyScanPaywallRedeemOk(int granted, int remaining) {
+    return 'Code accepted. Added $granted scan(s). You now have $remaining available.';
+  }
+
+  @override
+  String get bodyScanPaywallRedeemFailed => 'That code could not be redeemed.';
+
+  @override
+  String get bodyScanPaywallOpen => 'Buy or redeem a scan';
 
   @override
   String get bodyScanErrorAge => 'ボディスキャンは18歳以上のユーザーのみ利用できます。';

@@ -1784,6 +1784,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Endereza el teléfono para que quede vertical';
 
   @override
+  String get bodyScanSavingPhoto => 'Guardando foto…';
+
+  @override
   String get bodyScanPoseFront => 'Frente';
 
   @override
@@ -1952,7 +1955,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bodyScanErrorPhotoUnknown =>
-      'No se pudieron usar esas fotos. Inténtalo de nuevo delante de un fondo sencillo y con buena iluminación.';
+      'No se pudieron usar esas fotos. Asegúrate de que todo tu cuerpo esté dentro del contorno, con buena luz, e inténtalo de nuevo.';
+
+  @override
+  String get bodyScanErrorCaptureFailed =>
+      'No se pudo guardar esa foto. Inicia el temporizador e inténtalo de nuevo.';
 
   @override
   String get bodyScanErrorPhotosTooLarge =>
@@ -1960,7 +1967,71 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bodyScanErrorQuota =>
-      'Has utilizado tus escaneos de este periodo. Podrás escanear de nuevo cuando se restablezca.';
+      'No te quedan escaneos corporales. Compra uno o introduce un código gratuito para continuar.';
+
+  @override
+  String get bodyScanPaywallTitle => 'Acceso al escaneo corporal';
+
+  @override
+  String get bodyScanPaywallHeadline => 'Compra un escaneo corporal';
+
+  @override
+  String get bodyScanPaywallBody =>
+      'Cada escaneo es una compra en la tienda. La membresía Premium no incluye escaneos corporales: cualquiera puede comprarlos por separado.';
+
+  @override
+  String bodyScanPaywallRemaining(int count) {
+    return 'Escaneos disponibles: $count';
+  }
+
+  @override
+  String bodyScanPaywallBuy(String price) {
+    return 'Comprar 1 escaneo · $price';
+  }
+
+  @override
+  String get bodyScanPaywallPriceFallback => '€7.99';
+
+  @override
+  String get bodyScanPaywallStoreUnavailable =>
+      'El producto de la tienda aún no está disponible en este dispositivo. Aún puedes canjear un código abajo.';
+
+  @override
+  String get bodyScanPaywallCodeTitle => '¿Tienes un código gratuito?';
+
+  @override
+  String get bodyScanPaywallCodeBody =>
+      'Entrenadores y pruebas pueden desbloquear escaneos con un código. Introdúcelo aquí.';
+
+  @override
+  String get bodyScanPaywallCodeHint => 'CÓDIGO';
+
+  @override
+  String get bodyScanPaywallRedeem => 'Canjear código';
+
+  @override
+  String get bodyScanPaywallLoadFailed =>
+      'No se pudo cargar el acceso al escaneo. Inténtalo de nuevo.';
+
+  @override
+  String get bodyScanPaywallPurchaseFailed =>
+      'No se pudo completar la compra. Inténtalo de nuevo.';
+
+  @override
+  String bodyScanPaywallPurchaseOk(int count) {
+    return 'Escaneo desbloqueado. Ahora tienes $count disponible(s).';
+  }
+
+  @override
+  String bodyScanPaywallRedeemOk(int granted, int remaining) {
+    return 'Código aceptado. Se añadieron $granted escaneo(s). Ahora tienes $remaining disponible(s).';
+  }
+
+  @override
+  String get bodyScanPaywallRedeemFailed => 'Ese código no se pudo canjear.';
+
+  @override
+  String get bodyScanPaywallOpen => 'Comprar o canjear un escaneo';
 
   @override
   String get bodyScanErrorAge =>

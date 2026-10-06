@@ -13,6 +13,19 @@ subprojects {
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
 
+// camera_android_camerax 0.7.2 + CameraX 1.6.0: javac needs CallbackToFutureAdapter
+// on the compile classpath when processing camera-core API stubs (AGP 9 / JDK 17).
+subprojects {
+    afterEvaluate {
+        if (name == "camera_android_camerax") {
+            dependencies.add(
+                "implementation",
+                "androidx.concurrent:concurrent-futures:1.2.0",
+            )
+        }
+    }
+}
+
 // Force plugin Android modules onto compileSdk 36 (several still declare 34/35).
 subprojects {
     afterEvaluate {

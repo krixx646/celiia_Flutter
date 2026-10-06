@@ -54,6 +54,8 @@ export async function DELETE(req: NextRequest) {
       'user_routines',
       'routine_requests',
       'body_scans',
+      'scanner_code_redemptions',
+      'purchases',
       'user_entitlements',
     ] as const;
 

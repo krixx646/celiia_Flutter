@@ -8,6 +8,7 @@ import '../../providers/theme_provider.dart';
 import '../../services/body_scan_service.dart';
 import '../../widgets/body_scan_sources_citation.dart';
 import 'body_scan_flow_screen.dart';
+import 'body_scan_paywall_screen.dart';
 import 'widgets/body_scan_figure.dart';
 
 /// Body scan hub: the latest result, how it is trending, and past scans.
@@ -58,6 +59,12 @@ class _BodyScanScreenState extends State<BodyScanScreen> {
       MaterialPageRoute(builder: (_) => const BodyScanFlowScreen()),
     );
     if (result != null) await _load();
+  }
+
+  Future<void> _openPaywall() async {
+    await Navigator.of(context).push<int>(
+      MaterialPageRoute(builder: (_) => const BodyScanPaywallScreen()),
+    );
   }
 
   @override
@@ -228,13 +235,27 @@ class _BodyScanScreenState extends State<BodyScanScreen> {
               backgroundColor: theme.accentOrange,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
+              shape: const StadiumBorder(),
             ),
             child: Text(
               latest == null ? l10n.bodyScanStartCta : l10n.bodyScanRescanCta,
               style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        SizedBox(
+          width: double.infinity,
+          child: OutlinedButton(
+            onPressed: _openPaywall,
+            style: OutlinedButton.styleFrom(
+              foregroundColor: theme.textPrimary,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              shape: const StadiumBorder(),
+            ),
+            child: Text(
+              l10n.bodyScanPaywallOpen,
+              style: const TextStyle(fontWeight: FontWeight.w700),
             ),
           ),
         ),

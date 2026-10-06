@@ -496,6 +496,7 @@
   "bodyScanCaptureTips": "Ropa ajustada, fondo liso, buena iluminación uniforme y brazos ligeramente separados del cuerpo.",
   "bodyScanLevelOk": "El teléfono está derecho — quédate quieto",
   "bodyScanLevelTilt": "Endereza el teléfono para que quede vertical",
+  "bodyScanSavingPhoto": "Guardando foto…",
   "bodyScanPoseFront": "Frente",
   "bodyScanPoseRight": "Lado derecho",
   "bodyScanStartTimer": "Iniciar temporizador",
@@ -558,9 +559,58 @@
   "bodyScanErrorQuality": "Las fotos estaban demasiado oscuras o borrosas. Busca una iluminación más brillante y uniforme, y quédate quieto mientras transcurre el temporizador.",
   "bodyScanErrorPose": "Tu postura no era del todo correcta. Ponte erguido frente a la cámara, con los brazos ligeramente separados del cuerpo, y luego gira completamente hacia la derecha para la segunda foto.",
   "bodyScanErrorClothing": "La ropa holgada oculta tu contorno. La ropa ajustada permite obtener un escaneo utilizable.",
-  "bodyScanErrorPhotoUnknown": "No se pudieron usar esas fotos. Inténtalo de nuevo delante de un fondo sencillo y con buena iluminación.",
+  "bodyScanErrorPhotoUnknown": "No se pudieron usar esas fotos. Asegúrate de que todo tu cuerpo esté dentro del contorno, con buena luz, e inténtalo de nuevo.",
+  "bodyScanErrorCaptureFailed": "No se pudo guardar esa foto. Inicia el temporizador e inténtalo de nuevo.",
   "bodyScanErrorPhotosTooLarge": "Esas fotos eran demasiado grandes para subirlas. Inténtalo de nuevo.",
-  "bodyScanErrorQuota": "Has utilizado tus escaneos de este periodo. Podrás escanear de nuevo cuando se restablezca.",
+  "bodyScanErrorQuota": "No te quedan escaneos corporales. Compra uno o introduce un código gratuito para continuar.",
+  "bodyScanPaywallTitle": "Acceso al escaneo corporal",
+  "bodyScanPaywallHeadline": "Compra un escaneo corporal",
+  "bodyScanPaywallBody": "Cada escaneo es una compra en la tienda. La membresía Premium no incluye escaneos corporales: cualquiera puede comprarlos por separado.",
+  "bodyScanPaywallRemaining": "Escaneos disponibles: {count}",
+  "@bodyScanPaywallRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bodyScanPaywallBuy": "Comprar 1 escaneo · {price}",
+  "@bodyScanPaywallBuy": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "bodyScanPaywallPriceFallback": "€7.99",
+  "bodyScanPaywallStoreUnavailable": "El producto de la tienda aún no está disponible en este dispositivo. Aún puedes canjear un código abajo.",
+  "bodyScanPaywallCodeTitle": "¿Tienes un código gratuito?",
+  "bodyScanPaywallCodeBody": "Entrenadores y pruebas pueden desbloquear escaneos con un código. Introdúcelo aquí.",
+  "bodyScanPaywallCodeHint": "CÓDIGO",
+  "bodyScanPaywallRedeem": "Canjear código",
+  "bodyScanPaywallLoadFailed": "No se pudo cargar el acceso al escaneo. Inténtalo de nuevo.",
+  "bodyScanPaywallPurchaseFailed": "No se pudo completar la compra. Inténtalo de nuevo.",
+  "bodyScanPaywallPurchaseOk": "Escaneo desbloqueado. Ahora tienes {count} disponible(s).",
+  "@bodyScanPaywallPurchaseOk": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bodyScanPaywallRedeemOk": "Código aceptado. Se añadieron {granted} escaneo(s). Ahora tienes {remaining} disponible(s).",
+  "@bodyScanPaywallRedeemOk": {
+    "placeholders": {
+      "granted": {
+        "type": "int"
+      },
+      "remaining": {
+        "type": "int"
+      }
+    }
+  },
+  "bodyScanPaywallRedeemFailed": "Ese código no se pudo canjear.",
+  "bodyScanPaywallOpen": "Comprar o canjear un escaneo",
   "bodyScanErrorAge": "El escaneo corporal solo está disponible para usuarios de 18 años o más.",
   "bodyScanErrorStats": "Comprueba tu altura, peso, edad y sexo, y vuelve a intentarlo.",
   "bodyScanErrorSignedIn": "Inicia sesión de nuevo para escanear.",

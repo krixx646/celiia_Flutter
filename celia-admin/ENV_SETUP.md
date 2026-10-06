@@ -57,6 +57,20 @@ BODYGRAM_API_KEY=...
 # Club app link in Profile (optional)
 # CLUB_APP_URL=https://preview.builtwithrocket.new/thefitclub-0ewx?p=c
 # CLUB_APP_ENABLED=true
+
+# Body-scan IAP verification (required for paid scans)
+# Google Play: service account JSON with Android Publisher access, as one line
+# GOOGLE_PLAY_PACKAGE_NAME=eu.thefit.celia
+# GOOGLE_PLAY_SERVICE_ACCOUNT_JSON={"type":"service_account",...}
+
+# Apple IAP (prefer App Store Server API credentials)
+# APPLE_BUNDLE_ID=eu.thefit.celia
+# APPLE_IAP_ISSUER_ID=...
+# APPLE_IAP_KEY_ID=...
+# APPLE_IAP_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----"
+# APPLE_IAP_ENVIRONMENT=sandbox
+# Legacy StoreKit 1 receipts only:
+# APPLE_IAP_SHARED_SECRET=...
 ```
 
 ### Body Scan setup
@@ -64,12 +78,22 @@ BODYGRAM_API_KEY=...
 1. Run `supabase/migrations/20260903_body_scans.sql`. It creates the
    `body_scans` and `user_entitlements` tables, the atomic scan-quota
    functions, and the private `body-meshes` storage bucket.
-2. Add `BODYGRAM_ORG_ID` and `BODYGRAM_API_KEY` above. New accounts get 5 free
-   scans, which is enough to build and test the whole flow before signing
-   anything.
-3. Scan allowance defaults to one scan per user per 30 days. Raise it per user
-   with `update public.user_entitlements set scans_limit = N where user_id = '<firebase uid>'`
-   until real billing exists.
+2. Run `supabase/migrations/20261006_body_scan_billing.sql` for purchased
+   scans (`bonus_scans`), the `purchases` audit table, and redeem codes.
+3. Add `BODYGRAM_ORG_ID` and `BODYGRAM_API_KEY` above.
+4. Create the consumable IAP product in Play Console and App Store Connect:
+   - Product ID: `eu.thefit.celia.body_scan.single`
+   - Price: €7.99
+   - Type: consumable
+5. Add the Google / Apple verification env vars above, then redeploy Vercel.
+6. Free scans default to **0**. Access is purchase (`eu.thefit.celia.body_scan.single`)
+   or a redeem code. Purchased/redeemed scans live in `bonus_scans`.
+7. Dev / coach codes (example already seeded as `VAL-TEST` in migration):
+   ```sql
+   insert into public.scanner_codes (code, scans_grant, max_redemptions, note)
+   values ('COACH-TRIAL1', 3, 50, 'Coach / trial pack')
+   on conflict (code) do nothing;
+   ```
 
 Photos are never persisted: they pass through `/api/mobile/body-scan` in memory
 on the way to Bodygram, and only the derived measurements and the converted

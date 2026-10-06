@@ -132,6 +132,20 @@ class CeliaApp extends StatelessWidget {
             scaffoldBackgroundColor: ThemeProvider.darkBackground,
             textTheme: GoogleFonts.urbanistTextTheme(baseDark.textTheme),
           ),
+          // Samsung (and other) users often raise system font size and display
+          // size; past ~1.25x our fixed-height controls start clipping.
+          builder: (context, child) {
+            final media = MediaQuery.of(context);
+            return MediaQuery(
+              data: media.copyWith(
+                textScaler: media.textScaler.clamp(
+                  minScaleFactor: 1.0,
+                  maxScaleFactor: 1.25,
+                ),
+              ),
+              child: child ?? const SizedBox.shrink(),
+            );
+          },
           home: const AppNavigator(),
           debugShowCheckedModeBanner: false,
         );

@@ -166,6 +166,20 @@ export async function POST(req: NextRequest) {
     }
     if (e instanceof BodygramRequestError) {
       console.error('[body-scan] vendor request failed:', e.status, e.body);
+      // 400/422 from the vendor means it rejected the request itself, almost
+      // always the photo file (size, resolution, format). That is fixable by
+      // retaking, so say so instead of reporting a server fault.
+      if (e.status === 400 || e.status === 422) {
+        return NextResponse.json(
+          {
+            error: 'The scan service rejected these photos',
+            code: 'vendorRejectedRequest',
+            category: 'quality',
+            details: e.body.slice(0, 200),
+          },
+          { status: 422 }
+        );
+      }
       return NextResponse.json(
         { error: e.status === 429 ? 'Scanning is temporarily unavailable' : 'Scanning failed' },
         { status: e.status === 429 ? 503 : 502 }

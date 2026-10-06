@@ -3106,6 +3106,12 @@ abstract class AppLocalizations {
   /// **'Straighten the phone so it is upright'**
   String get bodyScanLevelTilt;
 
+  /// No description provided for @bodyScanSavingPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving photo…'**
+  String get bodyScanSavingPhoto;
+
   /// No description provided for @bodyScanPoseFront.
   ///
   /// In en, this message translates to:
@@ -3397,8 +3403,14 @@ abstract class AppLocalizations {
   /// No description provided for @bodyScanErrorPhotoUnknown.
   ///
   /// In en, this message translates to:
-  /// **'Those photos could not be used. Try again against a plain background in good light.'**
+  /// **'Those photos could not be used. Make sure your whole body is inside the outline, stand in good light, then try again.'**
   String get bodyScanErrorPhotoUnknown;
+
+  /// No description provided for @bodyScanErrorCaptureFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save that photo. Start the timer and try again.'**
+  String get bodyScanErrorCaptureFailed;
 
   /// No description provided for @bodyScanErrorPhotosTooLarge.
   ///
@@ -3409,8 +3421,110 @@ abstract class AppLocalizations {
   /// No description provided for @bodyScanErrorQuota.
   ///
   /// In en, this message translates to:
-  /// **'You have used your scans for this period. You can scan again once it resets.'**
+  /// **'You have no body scans left. Buy one scan or enter a free code to continue.'**
   String get bodyScanErrorQuota;
+
+  /// No description provided for @bodyScanPaywallTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Body scan access'**
+  String get bodyScanPaywallTitle;
+
+  /// No description provided for @bodyScanPaywallHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy one body scan'**
+  String get bodyScanPaywallHeadline;
+
+  /// No description provided for @bodyScanPaywallBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Each scan costs a store purchase. Premium membership does not include body scans — anyone can buy them separately.'**
+  String get bodyScanPaywallBody;
+
+  /// No description provided for @bodyScanPaywallRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Scans available: {count}'**
+  String bodyScanPaywallRemaining(int count);
+
+  /// No description provided for @bodyScanPaywallBuy.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy 1 scan · {price}'**
+  String bodyScanPaywallBuy(String price);
+
+  /// No description provided for @bodyScanPaywallPriceFallback.
+  ///
+  /// In en, this message translates to:
+  /// **'€7.99'**
+  String get bodyScanPaywallPriceFallback;
+
+  /// No description provided for @bodyScanPaywallStoreUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'The store product is not available on this device yet. You can still redeem a code below.'**
+  String get bodyScanPaywallStoreUnavailable;
+
+  /// No description provided for @bodyScanPaywallCodeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Have a free code?'**
+  String get bodyScanPaywallCodeTitle;
+
+  /// No description provided for @bodyScanPaywallCodeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Coaches and trials can unlock scans with a code. Enter it here.'**
+  String get bodyScanPaywallCodeBody;
+
+  /// No description provided for @bodyScanPaywallCodeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'CODE'**
+  String get bodyScanPaywallCodeHint;
+
+  /// No description provided for @bodyScanPaywallRedeem.
+  ///
+  /// In en, this message translates to:
+  /// **'Redeem code'**
+  String get bodyScanPaywallRedeem;
+
+  /// No description provided for @bodyScanPaywallLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load scan access. Pull to refresh or try again.'**
+  String get bodyScanPaywallLoadFailed;
+
+  /// No description provided for @bodyScanPaywallPurchaseFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase could not be completed. Try again.'**
+  String get bodyScanPaywallPurchaseFailed;
+
+  /// No description provided for @bodyScanPaywallPurchaseOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan unlocked. You now have {count} available.'**
+  String bodyScanPaywallPurchaseOk(int count);
+
+  /// No description provided for @bodyScanPaywallRedeemOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Code accepted. Added {granted} scan(s). You now have {remaining} available.'**
+  String bodyScanPaywallRedeemOk(int granted, int remaining);
+
+  /// No description provided for @bodyScanPaywallRedeemFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'That code could not be redeemed.'**
+  String get bodyScanPaywallRedeemFailed;
+
+  /// No description provided for @bodyScanPaywallOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy or redeem a scan'**
+  String get bodyScanPaywallOpen;
 
   /// No description provided for @bodyScanErrorAge.
   ///

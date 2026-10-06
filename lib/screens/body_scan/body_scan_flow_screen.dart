@@ -10,8 +10,10 @@ import '../../models/body_scan.dart';
 import '../../models/nutrition_profile.dart';
 import '../../providers/nutrition_profile_provider.dart';
 import '../../providers/theme_provider.dart';
+import '../../services/body_scan_photo_prep.dart';
 import '../../services/body_scan_service.dart';
 import '../../widgets/body_scan_sources_citation.dart';
+import 'body_scan_paywall_screen.dart';
 import 'widgets/body_scan_figure.dart';
 import 'widgets/body_silhouette_overlay.dart';
 import 'widgets/phone_level_banner.dart';
@@ -52,11 +54,15 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
 
   Timer? _countdown;
   int _secondsLeft = 0;
+  /// True from shutter press until the resized JPEG is ready. Without this
+  /// the timer ends and the UI looks idle while a 12 MP selfie is processed.
+  bool _processingPhoto = false;
 
   BodyScan? _result;
   BodyScanQuota? _quota;
   String? _error;
   bool _errorIsRetakeable = false;
+  bool _showPaywallCta = false;
 
   @override
   void initState() {
@@ -120,13 +126,19 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
 
       final controller = CameraController(
         lens,
-        // Silhouette accuracy benefits from the extra detail, and two 1080p
-        // JPEGs still fit inside the request body limit.
-        ResolutionPreset.veryHigh,
+        // 720p (1280x720 sensor frame = 720x1280 portrait) is one of the two
+        // sizes Bodygram accepts, and it keeps the capture small enough to
+        // process instantly. Selfie cameras at higher presets save 8-12 MP
+        // frames that took long enough to look like a freeze.
+        ResolutionPreset.high,
         enableAudio: false,
         imageFormatGroup: ImageFormatGroup.jpeg,
       );
       await controller.initialize();
+      try {
+        // Selfie cameras have no flash; "auto" can make takePicture throw.
+        await controller.setFlashMode(FlashMode.off);
+      } catch (_) {}
 
       if (!mounted) {
         await controller.dispose();
@@ -153,7 +165,10 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
     if (camera == null || !camera.value.isInitialized || _secondsLeft > 0) return;
 
     HapticFeedback.lightImpact();
-    setState(() => _secondsLeft = 8);
+    setState(() {
+      _secondsLeft = 8;
+      _error = null;
+    });
 
     _countdown = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (!mounted) {
@@ -180,24 +195,45 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
   Future<void> _capture() async {
     final camera = _camera;
     if (camera == null || !camera.value.isInitialized) return;
-    if (camera.value.isTakingPicture) return;
+    if (camera.value.isTakingPicture || _processingPhoto) return;
+
+    setState(() {
+      _processingPhoto = true;
+      _error = null;
+      _cameraError = null;
+    });
 
     try {
       final file = await camera.takePicture();
-      final bytes = await file.readAsBytes();
+      final raw = await file.readAsBytes();
+
+      // Legal-sized files pass straight through (instant). Only odd sizes
+      // are re-encoded, and a slow or failed re-encode falls back to the
+      // original instead of losing the photo.
+      final bytes = await preparePhotoForUpload(Uint8List.fromList(raw));
       if (!mounted) return;
 
       HapticFeedback.mediumImpact();
       setState(() {
+        _processingPhoto = false;
+        _error = null;
         if (_pose == BodyScanPose.front) {
           _frontPhoto = bytes;
         } else {
           _rightPhoto = bytes;
         }
       });
-    } catch (e) {
+    } catch (e, st) {
+      debugPrint('Body scan capture failed: $e\n$st');
       if (!mounted) return;
-      setState(() => _cameraError = e.toString());
+      final reason = e is CameraException ? (e.code) : e.runtimeType.toString();
+      setState(() {
+        _processingPhoto = false;
+        // The reason is appended so a screenshot from a user's phone tells
+        // us exactly what failed, instead of another vague message.
+        _error =
+            '${AppLocalizations.of(context).bodyScanErrorCaptureFailed} ($reason)';
+      });
     }
   }
 
@@ -239,6 +275,7 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
       setState(() {
         _error = _messageFor(e);
         _errorIsRetakeable = e.isRetakeable;
+        _showPaywallCta = e.error == BodyScanError.quotaExhausted;
         _step = _Step.capture;
         if (e.isRetakeable) {
           _frontPhoto = null;
@@ -253,6 +290,7 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
       setState(() {
         _error = l10n.bodyScanErrorServer;
         _errorIsRetakeable = false;
+        _showPaywallCta = false;
         _step = _Step.capture;
       });
     }
@@ -620,17 +658,41 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
               ),
             ),
 
+          if (_processingPhoto)
+            ColoredBox(
+              color: Colors.black.withValues(alpha: 0.55),
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const CircularProgressIndicator(color: Colors.white),
+                    const SizedBox(height: 16),
+                    Text(
+                      l10n.bodyScanSavingPhoto,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
           SafeArea(
             child: Column(
               children: [
                 _captureHeader(l10n),
                 if (photo == null &&
+                    !_processingPhoto &&
                     camera != null &&
                     camera.value.isInitialized)
                   const PhoneLevelBanner(),
                 const Spacer(),
-                if (_error != null) _captureError(l10n),
-                _captureControls(theme, l10n, photo, bothTaken),
+                if (_error != null && !_processingPhoto) _captureError(l10n),
+                if (!_processingPhoto)
+                  _captureControls(theme, l10n, photo, bothTaken),
               ],
             ),
           ),
@@ -669,6 +731,8 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
                 const SizedBox(height: 4),
                 Text(
                   l10n.bodyScanCaptureHowTo,
+                  maxLines: 6,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Colors.white.withValues(alpha: 0.75),
                     fontSize: 13,
@@ -692,9 +756,44 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.redAccent.withValues(alpha: 0.5)),
       ),
-      child: Text(
-        _error!,
-        style: const TextStyle(color: Colors.white, fontSize: 13, height: 1.4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            _error!,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 13,
+              height: 1.4,
+            ),
+          ),
+          if (_showPaywallCta) ...[
+            const SizedBox(height: 12),
+            FilledButton(
+              onPressed: () async {
+                HapticFeedback.lightImpact();
+                final remaining = await Navigator.of(context).push<int>(
+                  MaterialPageRoute(
+                    builder: (_) => const BodyScanPaywallScreen(),
+                  ),
+                );
+                if (!mounted) return;
+                if (remaining != null && remaining > 0) {
+                  setState(() {
+                    _error = null;
+                    _showPaywallCta = false;
+                  });
+                }
+              },
+              style: FilledButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+                shape: const StadiumBorder(),
+              ),
+              child: Text(l10n.bodyScanPaywallOpen),
+            ),
+          ],
+        ],
       ),
     );
   }
@@ -706,7 +805,9 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
     bool bothTaken,
   ) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+      // Extra bottom room: Samsung's gesture and 3-button bars sit tight to
+      // the last control otherwise.
+      padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -742,50 +843,51 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
               label: _secondsLeft > 0
                   ? l10n.bodyScanCancelTimer
                   : l10n.bodyScanStartTimer,
-              onPressed: _camera == null
+              onPressed: (_camera == null || _processingPhoto)
                   ? null
                   : (_secondsLeft > 0 ? _cancelCountdown : _startCountdown),
             ),
           ] else ...[
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () => setState(() {
-                      if (_pose == BodyScanPose.front) {
-                        _frontPhoto = null;
-                      } else {
-                        _rightPhoto = null;
-                      }
-                    }),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      side: const BorderSide(color: Colors.white54),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: Text(l10n.bodyScanRetake),
+            // Stacked, not side by side: on phones with a large font or
+            // display size two half-width buttons clip their labels.
+            _primaryButton(
+              theme,
+              label: bothTaken
+                  ? l10n.bodyScanGetResults
+                  : l10n.bodyScanNextPose,
+              onPressed: () {
+                if (bothTaken) {
+                  _submit();
+                } else {
+                  setState(() {
+                    _pose = BodyScanPose.right;
+                    _error = null;
+                  });
+                }
+              },
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton(
+                onPressed: () => setState(() {
+                  _error = null;
+                  if (_pose == BodyScanPose.front) {
+                    _frontPhoto = null;
+                  } else {
+                    _rightPhoto = null;
+                  }
+                }),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  side: const BorderSide(color: Colors.white54),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _primaryButton(
-                    theme,
-                    label: bothTaken
-                        ? l10n.bodyScanGetResults
-                        : l10n.bodyScanNextPose,
-                    onPressed: () {
-                      if (bothTaken) {
-                        _submit();
-                      } else {
-                        setState(() => _pose = BodyScanPose.right);
-                      }
-                    },
-                  ),
-                ),
-              ],
+                child: Text(l10n.bodyScanRetake, maxLines: 1),
+              ),
             ),
           ],
         ],
@@ -909,9 +1011,14 @@ class _BodyScanFlowScreenState extends State<BodyScanFlowScreen>
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
-        child: Text(
-          label,
-          style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            label,
+            maxLines: 1,
+            softWrap: false,
+            style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
+          ),
         ),
       ),
     );

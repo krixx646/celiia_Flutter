@@ -1117,6 +1117,7 @@
   "bodyScanCaptureTips": "Close-fitting clothes, plain background, good even light, arms slightly away from your sides.",
   "bodyScanLevelOk": "Phone is upright — hold still",
   "bodyScanLevelTilt": "Straighten the phone so it is upright",
+  "bodyScanSavingPhoto": "Saving photo…",
   "bodyScanPoseFront": "Front",
   "bodyScanPoseRight": "Right side",
   "bodyScanStartTimer": "Start timer",
@@ -1179,9 +1180,58 @@
   "bodyScanErrorQuality": "The photos were too dark or too blurry. Find brighter, even lighting and keep still while the timer runs.",
   "bodyScanErrorPose": "Your pose was not quite right. Stand upright facing the camera, arms slightly away from your sides, then turn fully to your right for the second photo.",
   "bodyScanErrorClothing": "Loose clothing hides your outline. Close-fitting clothes give a usable scan.",
-  "bodyScanErrorPhotoUnknown": "Those photos could not be used. Try again against a plain background in good light.",
+  "bodyScanErrorPhotoUnknown": "Those photos could not be used. Make sure your whole body is inside the outline, stand in good light, then try again.",
+  "bodyScanErrorCaptureFailed": "Could not save that photo. Start the timer and try again.",
   "bodyScanErrorPhotosTooLarge": "Those photos were too large to upload. Try again.",
-  "bodyScanErrorQuota": "You have used your scans for this period. You can scan again once it resets.",
+  "bodyScanErrorQuota": "You have no body scans left. Buy one scan or enter a free code to continue.",
+  "bodyScanPaywallTitle": "Body scan access",
+  "bodyScanPaywallHeadline": "Buy one body scan",
+  "bodyScanPaywallBody": "Each scan costs a store purchase. Premium membership does not include body scans — anyone can buy them separately.",
+  "bodyScanPaywallRemaining": "Scans available: {count}",
+  "@bodyScanPaywallRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bodyScanPaywallBuy": "Buy 1 scan · {price}",
+  "@bodyScanPaywallBuy": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "bodyScanPaywallPriceFallback": "€7.99",
+  "bodyScanPaywallStoreUnavailable": "The store product is not available on this device yet. You can still redeem a code below.",
+  "bodyScanPaywallCodeTitle": "Have a free code?",
+  "bodyScanPaywallCodeBody": "Coaches and trials can unlock scans with a code. Enter it here.",
+  "bodyScanPaywallCodeHint": "CODE",
+  "bodyScanPaywallRedeem": "Redeem code",
+  "bodyScanPaywallLoadFailed": "Could not load scan access. Pull to refresh or try again.",
+  "bodyScanPaywallPurchaseFailed": "Purchase could not be completed. Try again.",
+  "bodyScanPaywallPurchaseOk": "Scan unlocked. You now have {count} available.",
+  "@bodyScanPaywallPurchaseOk": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "bodyScanPaywallRedeemOk": "Code accepted. Added {granted} scan(s). You now have {remaining} available.",
+  "@bodyScanPaywallRedeemOk": {
+    "placeholders": {
+      "granted": {
+        "type": "int"
+      },
+      "remaining": {
+        "type": "int"
+      }
+    }
+  },
+  "bodyScanPaywallRedeemFailed": "That code could not be redeemed.",
+  "bodyScanPaywallOpen": "Buy or redeem a scan",
   "bodyScanErrorAge": "Body scanning is only available to users aged 18 and over.",
   "bodyScanErrorStats": "Check your height, weight, age and sex, then try again.",
   "bodyScanErrorSignedIn": "Please sign in again to scan.",

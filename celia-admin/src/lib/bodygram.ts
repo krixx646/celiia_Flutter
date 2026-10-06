@@ -86,10 +86,16 @@ export type BodygramFailureCategory =
  */
 export function categorizeFailure(code: string): BodygramFailureCategory {
   const lower = code.toLowerCase();
-  if (/(direction|facing|pose|posing|arm|leg|stance)/.test(lower)) return 'pose';
-  if (/(crop|frame|framing|cut|partial|distance|missing|notfound|person|face)/.test(lower))
+  if (/(direction|facing|pose|posing|arm|leg|stance|ankle|shoulder|wrist)/.test(lower))
+    return 'pose';
+  if (
+    /(crop|frame|framing|cut|partial|distance|missing|notfound|person|face|body|silhouette|height|dimension)/.test(
+      lower
+    )
+  ) {
     return 'framing';
-  if (/(blur|dark|light|exposure|resolution|quality|noise|format)/.test(lower))
+  }
+  if (/(blur|dark|light|exposure|resolution|quality|noise|format|jpeg|image)/.test(lower))
     return 'quality';
   if (/(cloth|loose|baggy|garment)/.test(lower)) return 'clothing';
   return 'unknown';

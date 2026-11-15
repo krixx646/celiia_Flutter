@@ -5,12 +5,35 @@ import { groundMealAnalysis } from '@/lib/nutrition/groundMealAnalysis';
 export const runtime = 'nodejs';
 export const maxDuration = 60;
 
+function resolveOpenAiVisionModel(raw: string): string {
+  const model = raw.trim();
+  // Upgrade outdated env values that were previously recommended for this route.
+  if (model === 'gpt-5.6-luna' || model === 'gpt-5-mini') return 'gpt-5.4-mini';
+  return model || 'gpt-5.4-mini';
+}
+
+function resolveOpenAiVisionFallback(raw: string): string {
+  const model = raw.trim();
+  if (model === 'gpt-5.6-luna' || model === 'gpt-5-mini') return 'gpt-6-luna';
+  return model || 'gpt-6-luna';
+}
+
+function usesMaxCompletionTokens(model: string): boolean {
+  return /^(gpt-5|gpt-6)/.test(model);
+}
+
 const FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
 const DEEPSEEK_VISION_ENDPOINT = process.env.DEEPSEEK_VISION_ENDPOINT;
 const DEEPSEEK_VISION_MODEL = process.env.DEEPSEEK_VISION_MODEL;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-const OPENAI_VISION_MODEL = process.env.OPENAI_VISION_MODEL || 'gpt-5.6-luna';
+/** Prefer accuracy-focused mini; remap retired/older Luna ids still set in env. */
+const OPENAI_VISION_MODEL = resolveOpenAiVisionModel(
+  process.env.OPENAI_VISION_MODEL || 'gpt-5.4-mini'
+);
+const OPENAI_VISION_FALLBACK_MODEL = resolveOpenAiVisionFallback(
+  process.env.OPENAI_VISION_FALLBACK_MODEL || 'gpt-6-luna'
+);
 /** Prefer DeepSeek only when explicitly opted in; default is OpenAI-first for speed. */
 const DEEPSEEK_VISION_PREFERRED = process.env.DEEPSEEK_VISION_PREFERRED === 'true';
 const DEEPSEEK_VISION_TIMEOUT_MS = Number(process.env.DEEPSEEK_VISION_TIMEOUT_MS || 6000);
@@ -264,8 +287,10 @@ async function analyzeWithDeepSeek(dataUrl: string): Promise<MealAnalysis> {
 }
 
 function openAiVisionModels() {
-  // Luna first (cost). Keep a single older mini as last-resort fallback only.
-  return Array.from(new Set([OPENAI_VISION_MODEL, 'gpt-5-mini'].filter(Boolean)));
+  // gpt-5.4-mini first (accuracy). gpt-6-luna as cheaper last-resort fallback.
+  return Array.from(
+    new Set([OPENAI_VISION_MODEL, OPENAI_VISION_FALLBACK_MODEL].filter(Boolean))
+  );
 }
 
 async function analyzeWithOpenAiModel(
@@ -277,7 +302,6 @@ async function analyzeWithOpenAiModel(
     throw new Error('OPENAI_API_KEY is not configured');
   }
 
-  const isGpt5 = model.startsWith('gpt-5');
   const res = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -287,7 +311,7 @@ async function analyzeWithOpenAiModel(
     body: JSON.stringify({
       model,
       response_format: { type: 'json_object' },
-      ...(isGpt5
+      ...(usesMaxCompletionTokens(model)
         ? { max_completion_tokens: 4096 }
         : { temperature: 0.2, max_tokens: 1600 }),
       messages: [

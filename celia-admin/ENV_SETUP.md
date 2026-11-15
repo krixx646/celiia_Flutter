@@ -38,7 +38,9 @@ DEEPSEEK_TEXT_MODEL=deepseek-v4-pro
 
 # Mobile calorie scanner vision (OpenAI-first by default)
 OPENAI_API_KEY=...
-OPENAI_VISION_MODEL=gpt-5.6-luna
+# Primary: stronger mini for food/label accuracy. Fallback: cheaper Luna.
+OPENAI_VISION_MODEL=gpt-5.4-mini
+OPENAI_VISION_FALLBACK_MODEL=gpt-6-luna
 # Optional DeepSeek vision. Only tried first when preferred=true; otherwise OpenAI-first with DeepSeek as fallback.
 # DEEPSEEK_API_KEY=...
 # DEEPSEEK_VISION_ENDPOINT=...

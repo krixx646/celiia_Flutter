@@ -667,6 +667,7 @@
   "scannerButtonLogging": "Enregistrement",
   "scannerButtonLogMeal": "Enregistrer le repas",
   "scannerNoClearFood": "Aucun aliment clairement détecté pour le moment. Essayez avec un meilleur éclairage ou rapprochez-vous.",
+  "scannerReviewLowConfidence": "Faible confiance — vérifiez les aliments et les portions avant d'enregistrer.",
   "scannerErrorCameraPermission": "L’autorisation d’utiliser la caméra est nécessaire pour scanner les repas.",
   "scannerErrorBackendMissing": "Le système de scan des calories n’est pas encore configuré.",
   "scannerErrorApiKeyInvalid": "La clé API OpenAI utilisée pour scanner les calories est invalide. Remplacez-la dans l’environnement backend, redéployez, puis réessayez.",

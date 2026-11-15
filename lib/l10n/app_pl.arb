@@ -640,6 +640,7 @@
   "scannerButtonLogging": "Zapisywanie",
   "scannerButtonLogMeal": "Zapisz posiłek",
   "scannerNoClearFood": "Nie wykryto jeszcze wyraźnie produktu. Spróbuj lepszego oświetlenia lub przybliż aparat.",
+  "scannerReviewLowConfidence": "Niska pewność — sprawdź produkty i porcje przed zapisaniem.",
   "scannerErrorCameraPermission": "Do skanowania posiłków potrzebne jest pozwolenie na korzystanie z aparatu.",
   "scannerErrorBackendMissing": "Backend skanera kalorii nie jest jeszcze skonfigurowany.",
   "scannerErrorApiKeyInvalid": "Klucz API OpenAI do skanowania kalorii jest nieprawidłowy. Zastąp go w środowisku backendu, wdróż ponownie i spróbuj jeszcze raz.",

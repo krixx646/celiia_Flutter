@@ -640,6 +640,7 @@
   "scannerButtonLogging": "दर्ज हो रहा है",
   "scannerButtonLogMeal": "भोजन दर्ज करें",
   "scannerNoClearFood": "अभी कोई स्पष्ट भोजन नहीं मिला। बेहतर रोशनी में कोशिश करें या पास जाएँ।",
+  "scannerReviewLowConfidence": "कम विश्वास — लॉग करने से पहले आइटम और मात्रा जाँचें।",
   "scannerErrorCameraPermission": "भोजन स्कैन करने के लिए कैमरा अनुमति आवश्यक है।",
   "scannerErrorBackendMissing": "कैलोरी स्कैनर का बैकएंड अभी कॉन्फ़िगर नहीं है।",
   "scannerErrorApiKeyInvalid": "कैलोरी स्कैनिंग के लिए OpenAI API कुंजी अमान्य है। इसे बैकएंड एनवायरनमेंट में बदलें, फिर से डिप्लॉय करें और दोबारा कोशिश करें।",

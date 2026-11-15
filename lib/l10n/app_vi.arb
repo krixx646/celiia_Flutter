@@ -640,6 +640,7 @@
   "scannerButtonLogging": "Đang ghi nhận",
   "scannerButtonLogMeal": "Ghi nhận bữa ăn",
   "scannerNoClearFood": "Chưa phát hiện rõ món ăn. Hãy thử nơi có ánh sáng tốt hơn hoặc đưa máy ảnh lại gần.",
+  "scannerReviewLowConfidence": "Độ tin cậy thấp — hãy xem lại món và khẩu phần trước khi ghi nhận.",
   "scannerErrorCameraPermission": "Cần cấp quyền máy ảnh để quét bữa ăn.",
   "scannerErrorBackendMissing": "Backend quét calo chưa được cấu hình.",
   "scannerErrorApiKeyInvalid": "Khóa API OpenAI dùng để quét calo không hợp lệ. Hãy thay khóa trong môi trường backend, triển khai lại rồi thử lại.",

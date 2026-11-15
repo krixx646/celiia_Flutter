@@ -321,6 +321,7 @@
   "scannerButtonLogging": "Guardando",
   "scannerButtonLogMeal": "Registrar comida",
   "scannerNoClearFood": "Aún no se detecta comida con claridad. Prueba con más luz o acércate.",
+  "scannerReviewLowConfidence": "Poca confianza — revisa los alimentos y las porciones antes de registrar.",
   "scannerErrorCameraPermission": "Se necesita permiso de cámara para escanear comidas.",
   "scannerErrorBackendMissing": "El servidor del escáner de calorías aún no está configurado.",
   "scannerErrorApiKeyInvalid": "La clave de API de OpenAI para el escaneo de calorías no es válida. Reemplázala en el entorno del servidor, vuelve a desplegar e inténtalo de nuevo.",

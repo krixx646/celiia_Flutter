@@ -640,6 +640,7 @@
   "scannerButtonLogging": "Registrando",
   "scannerButtonLogMeal": "Registrar refeição",
   "scannerNoClearFood": "Nenhum alimento identificado com clareza. Tente melhorar a iluminação ou se aproximar.",
+  "scannerReviewLowConfidence": "Baixa confiança — revise os itens e as porções antes de registrar.",
   "scannerErrorCameraPermission": "É necessário permitir o acesso à câmera para digitalizar refeições.",
   "scannerErrorBackendMissing": "O sistema de digitalização de calorias ainda não está configurado.",
   "scannerErrorApiKeyInvalid": "A chave da API da OpenAI para digitalização de calorias é inválida. Substitua-a no ambiente do backend, faça o deploy novamente e tente outra vez.",

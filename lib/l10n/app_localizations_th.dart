@@ -57,12 +57,10 @@ class AppLocalizationsTh extends AppLocalizations {
   String get errorCanceled => 'ยกเลิกการดำเนินการแล้ว';
 
   @override
-  String get errorTooManyRequests =>
-      'ดำเนินการบ่อยเกินไป โปรดรอสักครู่แล้วลองอีกครั้ง';
+  String get errorTooManyRequests => 'ดำเนินการบ่อยเกินไป โปรดรอสักครู่แล้วลองอีกครั้ง';
 
   @override
-  String get errorNetwork =>
-      'โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ตแล้วลองอีกครั้ง';
+  String get errorNetwork => 'โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ตแล้วลองอีกครั้ง';
 
   @override
   String get errorBadCredentials => 'อีเมลหรือรหัสผ่านไม่ถูกต้อง';
@@ -71,8 +69,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get errorEmailInUse => 'อีเมลนี้ถูกใช้งานแล้ว ลองเข้าสู่ระบบแทน';
 
   @override
-  String get errorWeakPassword =>
-      'โปรดใช้รหัสผ่านที่รัดกุมกว่านี้แล้วลองอีกครั้ง';
+  String get errorWeakPassword => 'โปรดใช้รหัสผ่านที่รัดกุมกว่านี้แล้วลองอีกครั้ง';
 
   @override
   String get errorInvalidEmail => 'โปรดป้อนอีเมลที่ถูกต้อง';
@@ -84,41 +81,34 @@ class AppLocalizationsTh extends AppLocalizations {
   String get errorNotSignedIn => 'โปรดเข้าสู่ระบบแล้วลองอีกครั้ง';
 
   @override
-  String get errorDeleteAccount =>
-      'เราไม่สามารถลบบัญชีของคุณได้ โปรดลองอีกครั้ง';
+  String get errorDeleteAccount => 'เราไม่สามารถลบบัญชีของคุณได้ โปรดลองอีกครั้ง';
 
   @override
   String get errorNoConversation => 'เริ่มแชตใหม่เพื่อดำเนินการต่อ';
 
   @override
-  String get errorNoPlayableVideos =>
-      'ยังไม่มีวิดีโอที่เล่นได้สำหรับกิจวัตรนี้';
+  String get errorNoPlayableVideos => 'ยังไม่มีวิดีโอที่เล่นได้สำหรับกิจวัตรนี้';
 
   @override
-  String get errorLoadRoutines =>
-      'ไม่สามารถโหลดกิจวัตรได้ในขณะนี้ โปรดลองอีกครั้ง';
+  String get errorLoadRoutines => 'ไม่สามารถโหลดกิจวัตรได้ในขณะนี้ โปรดลองอีกครั้ง';
 
   @override
-  String get errorLoadSavedRoutines =>
-      'ไม่สามารถโหลดกิจวัตรที่บันทึกไว้ได้ในขณะนี้ โปรดลองอีกครั้ง';
+  String get errorLoadSavedRoutines => 'ไม่สามารถโหลดกิจวัตรที่บันทึกไว้ได้ในขณะนี้ โปรดลองอีกครั้ง';
 
   @override
-  String get errorGenerateRoutine =>
-      'ไม่สามารถสร้างกิจวัตรได้ในขณะนี้ โปรดลองอีกครั้ง';
+  String get errorGenerateRoutine => 'ไม่สามารถสร้างกิจวัตรได้ในขณะนี้ โปรดลองอีกครั้ง';
 
   @override
   String get errorLoadChats => 'ไม่สามารถโหลดแชตที่บันทึกไว้ได้ในขณะนี้';
 
   @override
-  String get errorCeliaUnavailable =>
-      'Celia ไม่พร้อมใช้งานในขณะนี้ โปรดลองอีกครั้ง';
+  String get errorCeliaUnavailable => 'Celia ไม่พร้อมใช้งานในขณะนี้ โปรดลองอีกครั้ง';
 
   @override
   String get errorOpenConversation => 'ไม่สามารถเปิดบทสนทนานี้ได้';
 
   @override
-  String get errorDeleteConversation =>
-      'ไม่สามารถลบบทสนทนานี้ได้ โปรดลองอีกครั้ง';
+  String get errorDeleteConversation => 'ไม่สามารถลบบทสนทนานี้ได้ โปรดลองอีกครั้ง';
 
   @override
   String get errorSignIn => 'ไม่สามารถเข้าสู่ระบบได้ โปรดลองอีกครั้ง';
@@ -127,34 +117,28 @@ class AppLocalizationsTh extends AppLocalizations {
   String get errorCreateAccount => 'ไม่สามารถสร้างบัญชีได้ โปรดลองอีกครั้ง';
 
   @override
-  String get errorSendResetEmail =>
-      'ไม่สามารถส่งอีเมลรีเซ็ตรหัสผ่านได้ โปรดลองอีกครั้ง';
+  String get errorSendResetEmail => 'ไม่สามารถส่งอีเมลรีเซ็ตรหัสผ่านได้ โปรดลองอีกครั้ง';
 
   @override
-  String get errorSendVerificationEmail =>
-      'ไม่สามารถส่งอีเมลยืนยันได้ โปรดลองอีกครั้ง';
+  String get errorSendVerificationEmail => 'ไม่สามารถส่งอีเมลยืนยันได้ โปรดลองอีกครั้ง';
 
   @override
-  String get errorGoogleSignIn =>
-      'เข้าสู่ระบบด้วย Google ไม่สำเร็จ โปรดลองอีกครั้ง';
+  String get errorGoogleSignIn => 'เข้าสู่ระบบด้วย Google ไม่สำเร็จ โปรดลองอีกครั้ง';
 
   @override
-  String get errorAppleSignIn =>
-      'เข้าสู่ระบบด้วย Apple ไม่สำเร็จ โปรดลองอีกครั้ง';
+  String get errorAppleSignIn => 'เข้าสู่ระบบด้วย Apple ไม่สำเร็จ โปรดลองอีกครั้ง';
 
   @override
   String get errorRefreshNutrition => 'ไม่สามารถรีเฟรชข้อมูลโภชนาการได้';
 
   @override
-  String get errorLoadNutritionProfile =>
-      'ไม่สามารถโหลดโปรไฟล์โภชนาการของคุณได้';
+  String get errorLoadNutritionProfile => 'ไม่สามารถโหลดโปรไฟล์โภชนาการของคุณได้';
 
   @override
   String get startupErrorTitle => 'ไม่สามารถเปิดแอปได้';
 
   @override
-  String get startupErrorBody =>
-      'โปรดปิดแล้วเปิดแอปอีกครั้ง หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุน';
+  String get startupErrorBody => 'โปรดปิดแล้วเปิดแอปอีกครั้ง หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุน';
 
   @override
   String get authTagline => 'เพื่อนคู่ใจด้านฟิตเนสของคุณ';
@@ -259,8 +243,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get nameSetupTitle => 'ให้ Celia เรียกคุณว่าอะไรดี?';
 
   @override
-  String get nameSetupBody =>
-      'เราจะใช้ชื่อของคุณทั่วทั้งแอป เพื่อให้คำแนะนำเหมาะกับคุณมากยิ่งขึ้น';
+  String get nameSetupBody => 'เราจะใช้ชื่อของคุณทั่วทั้งแอป เพื่อให้คำแนะนำเหมาะกับคุณมากยิ่งขึ้น';
 
   @override
   String get nameSetupSaveFailed => 'บันทึกชื่อของคุณไม่ได้ โปรดลองอีกครั้ง';
@@ -284,8 +267,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get homeUpNext => 'รายการถัดไป';
 
   @override
-  String get homeNoUpcoming =>
-      'ยังไม่มีตารางฝึกที่กำลังจะมาถึง\nสร้างใหม่หรือเลือกดูจากคลัง';
+  String get homeNoUpcoming => 'ยังไม่มีตารางฝึกที่กำลังจะมาถึง\nสร้างใหม่หรือเลือกดูจากคลัง';
 
   @override
   String get homeChatWithCelia => 'แชทกับ Celia';
@@ -345,8 +327,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get chatListening => 'กำลังฟัง…';
 
   @override
-  String get chatMicDenied =>
-      'ต้องอนุญาตให้เข้าถึงไมโครโฟนเพื่อพูดคุยกับ Celia';
+  String get chatMicDenied => 'ต้องอนุญาตให้เข้าถึงไมโครโฟนเพื่อพูดคุยกับ Celia';
 
   @override
   String get chatSpeechUnavailable => 'อุปกรณ์นี้ไม่รองรับการรู้จำเสียงพูด';
@@ -393,8 +374,7 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get chatEmptySubtitle =>
-      'ถามเกี่ยวกับการฝึก อาหาร หรือความคืบหน้าของคุณ';
+  String get chatEmptySubtitle => 'ถามเกี่ยวกับการฝึก อาหาร หรือความคืบหน้าของคุณ';
 
   @override
   String chatLoggedToday(int calories) {
@@ -461,8 +441,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get activityCheckingProgress => 'กำลังตรวจสอบความคืบหน้าของคุณ';
 
   @override
-  String get activityCheckingNutrition =>
-      'กำลังตรวจสอบสิ่งที่คุณรับประทานวันนี้';
+  String get activityCheckingNutrition => 'กำลังตรวจสอบสิ่งที่คุณรับประทานวันนี้';
 
   @override
   String get activityReviewingMeals => 'กำลังทบทวนมื้ออาหารล่าสุดของคุณ';
@@ -547,8 +526,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get routineNoVideoForStep => 'ไม่มีวิดีโอสำหรับขั้นตอนนี้';
 
   @override
-  String get routineVideoProcessing =>
-      'วิดีโอยังอยู่ระหว่างการประมวลผล โปรดลองอีกครั้งภายหลัง';
+  String get routineVideoProcessing => 'วิดีโอยังอยู่ระหว่างการประมวลผล โปรดลองอีกครั้งภายหลัง';
 
   @override
   String get routineMissingPlaybackUrl => 'ไม่มี URL สำหรับเล่นวิดีโอนี้';
@@ -680,8 +658,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get generateSheetPrompt => 'คุณต้องการออกกำลังกายแบบไหน';
 
   @override
-  String get generateSheetHint =>
-      'เช่น \"ยืดเหยียดสั้น ๆ ตอนเช้าเพื่อปลุกร่างกาย\" หรือ \"ฝึกความแข็งแรงทั่วร่างกายสำหรับผู้เริ่มต้น\"';
+  String get generateSheetHint => 'เช่น \"ยืดเหยียดสั้น ๆ ตอนเช้าเพื่อปลุกร่างกาย\" หรือ \"ฝึกความแข็งแรงทั่วร่างกายสำหรับผู้เริ่มต้น\"';
 
   @override
   String get generateSheetDuration => 'ระยะเวลา';
@@ -723,12 +700,10 @@ class AppLocalizationsTh extends AppLocalizations {
   String get guidedNoExercises => 'โปรแกรมนี้ยังไม่มีท่าออกกำลังกาย';
 
   @override
-  String get guidedStartFailed =>
-      'ไม่สามารถเริ่มการออกกำลังกายนี้ได้ในขณะนี้ โปรดลองอีกครั้ง';
+  String get guidedStartFailed => 'ไม่สามารถเริ่มการออกกำลังกายนี้ได้ในขณะนี้ โปรดลองอีกครั้ง';
 
   @override
-  String get guidedSaveFailed =>
-      'ไม่สามารถบันทึกการออกกำลังกายนี้ได้ แตะลองอีกครั้งเพื่ออัปเดตสตรีคของคุณ';
+  String get guidedSaveFailed => 'ไม่สามารถบันทึกการออกกำลังกายนี้ได้ แตะลองอีกครั้งเพื่ออัปเดตสตรีคของคุณ';
 
   @override
   String guidedOfReps(int count) {
@@ -789,8 +764,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get playerNoVideosInRoutine => 'ไม่พบวิดีโอที่เล่นได้ในโปรแกรมนี้';
 
   @override
-  String get playerLoadRoutineFailed =>
-      'ไม่สามารถโหลดโปรแกรมนี้ได้ในขณะนี้ โปรดลองอีกครั้ง';
+  String get playerLoadRoutineFailed => 'ไม่สามารถโหลดโปรแกรมนี้ได้ในขณะนี้ โปรดลองอีกครั้ง';
 
   @override
   String playerStepLoadFailedSkipping(String title) {
@@ -803,8 +777,7 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get playerSaveCompletionFailed =>
-      'ไม่สามารถบันทึกการทำเสร็จได้ แตะลองอีกครั้งเพื่ออัปเดตสตรีคของคุณ';
+  String get playerSaveCompletionFailed => 'ไม่สามารถบันทึกการทำเสร็จได้ แตะลองอีกครั้งเพื่ออัปเดตสตรีคของคุณ';
 
   @override
   String playerStepPreviewSubtitle(String duration) {
@@ -815,8 +788,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get playerNoVideosReady => 'โปรแกรมนี้ยังไม่มีวิดีโอพร้อมเล่น';
 
   @override
-  String get playerPlaybackFailed =>
-      'ไม่สามารถเล่นวิดีโอนี้ได้ในขณะนี้ โปรดลองอีกครั้ง';
+  String get playerPlaybackFailed => 'ไม่สามารถเล่นวิดีโอนี้ได้ในขณะนี้ โปรดลองอีกครั้ง';
 
   @override
   String get libraryTabCurated => 'คัดสรร';
@@ -831,12 +803,10 @@ class AppLocalizationsTh extends AppLocalizations {
   String get clubSheetTitle => 'Join The Fit Club';
 
   @override
-  String get clubSheetBody =>
-      'The club has its own app, where members meet and follow the community.';
+  String get clubSheetBody => 'The club has its own app, where members meet and follow the community.';
 
   @override
-  String get clubSheetNote =>
-      'This is an early version and will be replaced by the full club app soon. It opens in your browser.';
+  String get clubSheetNote => 'This is an early version and will be replaced by the full club app soon. It opens in your browser.';
 
   @override
   String get clubOpenButton => 'Open the club';
@@ -848,15 +818,13 @@ class AppLocalizationsTh extends AppLocalizations {
   String get updateAvailableTitle => 'Update available';
 
   @override
-  String get updateAvailableBody =>
-      'A newer version of Celia is ready. Update to get the latest improvements.';
+  String get updateAvailableBody => 'A newer version of Celia is ready. Update to get the latest improvements.';
 
   @override
   String get updateRequiredTitle => 'Update required';
 
   @override
-  String get updateRequiredBody =>
-      'This version of Celia is no longer supported. Please update to continue.';
+  String get updateRequiredBody => 'This version of Celia is no longer supported. Please update to continue.';
 
   @override
   String get updateNow => 'Update';
@@ -865,15 +833,13 @@ class AppLocalizationsTh extends AppLocalizations {
   String get updateLater => 'Later';
 
   @override
-  String get updateOpenFailed =>
-      'Could not start the update. Please try again.';
+  String get updateOpenFailed => 'Could not start the update. Please try again.';
 
   @override
   String get libraryTabHowTo => 'How to';
 
   @override
-  String get libraryHowToIntro =>
-      'Type an exercise, or a series like \"dumbbell chest and triceps\", to see how to do it properly with full demonstrations.';
+  String get libraryHowToIntro => 'Type an exercise, or a series like \"dumbbell chest and triceps\", to see how to do it properly with full demonstrations.';
 
   @override
   String get libraryHowToSearchHint => 'e.g. dumbbell row, or back and biceps';
@@ -901,8 +867,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get howToUpNextBadge => 'Up next';
 
   @override
-  String get howToChooseNextHint =>
-      'Tap an exercise to choose what plays next.';
+  String get howToChooseNextHint => 'Tap an exercise to choose what plays next.';
 
   @override
   String get howToSeriesDone => 'Series complete';
@@ -1024,8 +989,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get nutritionSetGoalsTitle => 'ตั้งเป้าหมายโภชนาการรายวัน';
 
   @override
-  String get nutritionSetGoalsBody =>
-      'เพิ่มน้ำหนัก ส่วนสูง อายุ และเพศของคุณ เพื่อให้ Celia คำนวณจำนวนแคลอรีและสารอาหารที่ควรบริโภคในแต่ละวัน';
+  String get nutritionSetGoalsBody => 'เพิ่มน้ำหนัก ส่วนสูง อายุ และเพศของคุณ เพื่อให้ Celia คำนวณจำนวนแคลอรีและสารอาหารที่ควรบริโภคในแต่ละวัน';
 
   @override
   String get nutritionSetUpGoals => 'ตั้งเป้าหมาย';
@@ -1145,43 +1109,37 @@ class AppLocalizationsTh extends AppLocalizations {
   String get scannerButtonLogMeal => 'บันทึกมื้ออาหาร';
 
   @override
-  String get scannerNoClearFood =>
-      'ยังตรวจไม่พบอาหารที่ชัดเจน ลองเพิ่มแสงหรือขยับเข้าใกล้อีกนิด';
+  String get scannerNoClearFood => 'ยังตรวจไม่พบอาหารที่ชัดเจน ลองเพิ่มแสงหรือขยับเข้าใกล้อีกนิด';
 
   @override
-  String get scannerErrorCameraPermission =>
-      'ต้องอนุญาตให้เข้าถึงกล้องเพื่อสแกนมื้ออาหาร';
+  String get scannerReviewLowConfidence => 'ความมั่นใจต่ำ — ตรวจรายการและปริมาณก่อนบันทึก';
 
   @override
-  String get scannerErrorBackendMissing =>
-      'ยังไม่ได้ตั้งค่าระบบเบื้องหลังสำหรับสแกนแคลอรี';
+  String get scannerErrorCameraPermission => 'ต้องอนุญาตให้เข้าถึงกล้องเพื่อสแกนมื้ออาหาร';
 
   @override
-  String get scannerErrorApiKeyInvalid =>
-      'คีย์ OpenAI API สำหรับสแกนแคลอรีไม่ถูกต้อง โปรดเปลี่ยนคีย์ในสภาพแวดล้อมของระบบเบื้องหลัง ปรับใช้ใหม่ แล้วลองอีกครั้ง';
+  String get scannerErrorBackendMissing => 'ยังไม่ได้ตั้งค่าระบบเบื้องหลังสำหรับสแกนแคลอรี';
 
   @override
-  String get scannerErrorApiKeyMissing =>
-      'ต้องใช้คีย์ OpenAI API สำหรับสแกนแคลอรี โปรดเพิ่มคีย์ใน Vercel ปรับใช้ใหม่ แล้วลองอีกครั้ง';
+  String get scannerErrorApiKeyInvalid => 'คีย์ OpenAI API สำหรับสแกนแคลอรีไม่ถูกต้อง โปรดเปลี่ยนคีย์ในสภาพแวดล้อมของระบบเบื้องหลัง ปรับใช้ใหม่ แล้วลองอีกครั้ง';
 
   @override
-  String get scannerErrorQuotaExhausted =>
-      'เครดิต OpenAI สำหรับสแกนแคลอรีหมดแล้ว โปรดเพิ่มเครดิต API หรือเพิ่มวงเงินเรียกเก็บเงิน แล้วลองอีกครั้ง';
+  String get scannerErrorApiKeyMissing => 'ต้องใช้คีย์ OpenAI API สำหรับสแกนแคลอรี โปรดเพิ่มคีย์ใน Vercel ปรับใช้ใหม่ แล้วลองอีกครั้ง';
 
   @override
-  String get scannerErrorTimeout =>
-      'Celia ต้องใช้เวลาวิเคราะห์มื้ออาหารนี้มากขึ้น ถือกล้องให้นิ่งแล้วสแกนอีกครั้ง';
+  String get scannerErrorQuotaExhausted => 'เครดิต OpenAI สำหรับสแกนแคลอรีหมดแล้ว โปรดเพิ่มเครดิต API หรือเพิ่มวงเงินเรียกเก็บเงิน แล้วลองอีกครั้ง';
+
+  @override
+  String get scannerErrorTimeout => 'Celia ต้องใช้เวลาวิเคราะห์มื้ออาหารนี้มากขึ้น ถือกล้องให้นิ่งแล้วสแกนอีกครั้ง';
 
   @override
   String get scannerErrorNotSignedIn => 'โปรดเข้าสู่ระบบก่อนสแกนมื้ออาหาร';
 
   @override
-  String get scannerErrorMealTableMissing =>
-      'ตารางบันทึกมื้ออาหารยังไม่พร้อมใช้งาน แต่ผลการสแกนยังคงอยู่';
+  String get scannerErrorMealTableMissing => 'ตารางบันทึกมื้ออาหารยังไม่พร้อมใช้งาน แต่ผลการสแกนยังคงอยู่';
 
   @override
-  String get scannerErrorGeneric =>
-      'Celia ยังวิเคราะห์มื้ออาหารนี้ไม่ได้ ถือกล้องให้นิ่ง จัดอาหารให้อยู่ตรงกลาง แล้วสแกนอีกครั้ง';
+  String get scannerErrorGeneric => 'Celia ยังวิเคราะห์มื้ออาหารนี้ไม่ได้ ถือกล้องให้นิ่ง จัดอาหารให้อยู่ตรงกลาง แล้วสแกนอีกครั้ง';
 
   @override
   String nutritionGrams(String grams) {
@@ -1211,8 +1169,7 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get nutritionNeedsOneItem =>
-      'มื้ออาหารต้องมีรายการอาหารอย่างน้อยหนึ่งรายการ';
+  String get nutritionNeedsOneItem => 'มื้ออาหารต้องมีรายการอาหารอย่างน้อยหนึ่งรายการ';
 
   @override
   String get nutritionMealUpdated => 'อัปเดตมื้ออาหารแล้ว';
@@ -1226,8 +1183,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get nutritionDeleteMealTitle => 'ลบมื้ออาหารหรือไม่?';
 
   @override
-  String get nutritionDeleteMealBody =>
-      'การดำเนินการนี้จะลบมื้ออาหารออกจากประวัติโภชนาการของคุณ';
+  String get nutritionDeleteMealBody => 'การดำเนินการนี้จะลบมื้ออาหารออกจากประวัติโภชนาการของคุณ';
 
   @override
   String get nutritionDeleteMeal => 'ลบมื้ออาหาร';
@@ -1247,22 +1203,19 @@ class AppLocalizationsTh extends AppLocalizations {
   String get nutritionLoadFailed => 'ไม่สามารถโหลดมื้ออาหารได้';
 
   @override
-  String get nutritionLoadFailedBody =>
-      'ดึงเพื่อรีเฟรชหรือตรวจสอบการเชื่อมต่อแบ็กเอนด์';
+  String get nutritionLoadFailedBody => 'ดึงเพื่อรีเฟรชหรือตรวจสอบการเชื่อมต่อแบ็กเอนด์';
 
   @override
   String get nutritionNoMeals => 'ยังไม่มีการบันทึกมื้ออาหาร';
 
   @override
-  String get nutritionNoMealsBody =>
-      'สแกนมื้ออาหารแรกของคุณ แล้ว Celia จะสร้างประวัติโภชนาการให้';
+  String get nutritionNoMealsBody => 'สแกนมื้ออาหารแรกของคุณ แล้ว Celia จะสร้างประวัติโภชนาการให้';
 
   @override
   String get progressToday => 'วันนี้';
 
   @override
-  String get progressSetGoals =>
-      'ตั้งเป้าหมายโภชนาการเพื่อปลดล็อกการติดตามแคลอรีและสารอาหารหลัก';
+  String get progressSetGoals => 'ตั้งเป้าหมายโภชนาการเพื่อปลดล็อกการติดตามแคลอรีและสารอาหารหลัก';
 
   @override
   String progressOfTarget(int target) {
@@ -1369,8 +1322,7 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get onboardingTargetsReady =>
-      'เป้าหมายโภชนาการประจำวันของคุณพร้อมแล้ว เลือกวิธีเริ่มต้นที่ต้องการ';
+  String get onboardingTargetsReady => 'เป้าหมายโภชนาการประจำวันของคุณพร้อมแล้ว เลือกวิธีเริ่มต้นที่ต้องการ';
 
   @override
   String get onboardingWeightKg => 'น้ำหนัก (kg)';
@@ -1406,26 +1358,22 @@ class AppLocalizationsTh extends AppLocalizations {
   String get nutritionSetupTitle => 'เป้าหมายโภชนาการประจำวัน';
 
   @override
-  String get nutritionSetupBody =>
-      'บอกข้อมูลร่างกายของคุณแก่ Celia เพื่อให้เธอคำนวณแคลอรีและสารอาหารหลักประจำวันให้';
+  String get nutritionSetupBody => 'บอกข้อมูลร่างกายของคุณแก่ Celia เพื่อให้เธอคำนวณแคลอรีและสารอาหารหลักประจำวันให้';
 
   @override
   String get nutritionSetupGender => 'เพศ';
 
   @override
-  String get nutritionSetupFootnote =>
-      'Celia ใช้น้ำหนัก ส่วนสูง อายุ และเพศของคุณเพื่อประมาณเป้าหมายแคลอรีและสารอาหารหลักประจำวัน โดยอิงจากระดับกิจกรรมปานกลาง';
+  String get nutritionSetupFootnote => 'Celia ใช้น้ำหนัก ส่วนสูง อายุ และเพศของคุณเพื่อประมาณเป้าหมายแคลอรีและสารอาหารหลักประจำวัน โดยอิงจากระดับกิจกรรมปานกลาง';
 
   @override
   String get nutritionSourcesTitle => 'เป้าหมายเหล่านี้คำนวณอย่างไร';
 
   @override
-  String get nutritionSourcesBody =>
-      'แคลอรี่รายวันใช้สมการพลังงานขณะพัก Mifflin–St Jeor พร้อมปัจจัยกิจกรรมทางกายระดับปานกลาง (ประมาณ 1.55) โปรตีนประมาณใกล้ 1.8 กรัมต่อกก. น้ำหนักตัวสำหรับผู้ใหญ่ที่ออกกำลังกาย ไขมันตั้งไว้ใกล้ 25% ของแคลอรี่ และคาร์โบไฮเดรตเติมส่วนที่เหลือ — อยู่ในช่วงคำแนะนำด้านโภชนาการทั่วไป';
+  String get nutritionSourcesBody => 'แคลอรี่รายวันใช้สมการพลังงานขณะพัก Mifflin–St Jeor พร้อมปัจจัยกิจกรรมทางกายระดับปานกลาง (ประมาณ 1.55) โปรตีนประมาณใกล้ 1.8 กรัมต่อกก. น้ำหนักตัวสำหรับผู้ใหญ่ที่ออกกำลังกาย ไขมันตั้งไว้ใกล้ 25% ของแคลอรี่ และคาร์โบไฮเดรตเติมส่วนที่เหลือ — อยู่ในช่วงคำแนะนำด้านโภชนาการทั่วไป';
 
   @override
-  String get nutritionSourcesDisclaimer =>
-      'ตัวเลขเหล่านี้เป็นเพียงการประมาณเพื่อสุขภาพทั่วไป ไม่ใช่การวินิจฉัย การสั่งยา หรือทดแทนคำแนะนำจากแพทย์หรือนักโภชนาการที่ผ่านการรับรอง';
+  String get nutritionSourcesDisclaimer => 'ตัวเลขเหล่านี้เป็นเพียงการประมาณเพื่อสุขภาพทั่วไป ไม่ใช่การวินิจฉัย การสั่งยา หรือทดแทนคำแนะนำจากแพทย์หรือนักโภชนาการที่ผ่านการรับรอง';
 
   @override
   String get nutritionSetupSave => 'บันทึกเป้าหมาย';
@@ -1481,8 +1429,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get profileDeleteAccountConfirmTitle => 'ลบบัญชีของคุณหรือไม่?';
 
   @override
-  String get profileDeleteAccountConfirmBody =>
-      'การดำเนินการนี้จะลบบัญชีและข้อมูลทั้งหมดของคุณอย่างถาวร รวมถึงรูทีนที่บันทึกไว้ บันทึกมื้ออาหาร และประวัติแชท ไม่สามารถยกเลิกได้';
+  String get profileDeleteAccountConfirmBody => 'การดำเนินการนี้จะลบบัญชีและข้อมูลทั้งหมดของคุณอย่างถาวร รวมถึงรูทีนที่บันทึกไว้ บันทึกมื้ออาหาร และประวัติแชท ไม่สามารถยกเลิกได้';
 
   @override
   String get profileDeleteAccountPasswordPrompt => 'ใส่รหัสผ่านเพื่อยืนยัน';
@@ -1518,16 +1465,13 @@ class AppLocalizationsTh extends AppLocalizations {
   String get profileStatWorkouts => 'การออกกำลังกาย';
 
   @override
-  String get streakDayOneStarted =>
-      'เริ่มวันที่ 1 แล้ว — กลับมาอีกครั้งพรุ่งนี้เพื่อสร้างสตรีคต่อ';
+  String get streakDayOneStarted => 'เริ่มวันที่ 1 แล้ว — กลับมาอีกครั้งพรุ่งนี้เพื่อสร้างสตรีคต่อ';
 
   @override
-  String get streakRebuild =>
-      'เมื่อวานคุณยังแอ็กทีฟอยู่ — บันทึกมื้ออาหารหรือออกกำลังกายให้เสร็จวันนี้เพื่อสร้างสตรีคต่อ';
+  String get streakRebuild => 'เมื่อวานคุณยังแอ็กทีฟอยู่ — บันทึกมื้ออาหารหรือออกกำลังกายให้เสร็จวันนี้เพื่อสร้างสตรีคต่อ';
 
   @override
-  String get streakStart =>
-      'บันทึกมื้ออาหารหรือออกกำลังกายให้เสร็จเพื่อเริ่มสตรีคแอ็กทีฟของคุณ';
+  String get streakStart => 'บันทึกมื้ออาหารหรือออกกำลังกายให้เสร็จเพื่อเริ่มสตรีคแอ็กทีฟของคุณ';
 
   @override
   String streakLongRun(int days) {
@@ -1561,8 +1505,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get editProfileName => 'ชื่อ';
 
   @override
-  String get editProfileFootnote =>
-      'การเปลี่ยนแปลงจะบันทึกไว้ในบัญชีของคุณและแสดงบนหน้าหลัก/โปรไฟล์';
+  String get editProfileFootnote => 'การเปลี่ยนแปลงจะบันทึกไว้ในบัญชีของคุณและแสดงบนหน้าหลัก/โปรไฟล์';
 
   @override
   String get editProfileSaveFailed => 'อัปเดตโปรไฟล์ไม่ได้ โปรดลองอีกครั้ง';
@@ -1586,8 +1529,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get insightStartFuelingTitle => 'เริ่มเติมพลังวันนี้';
 
   @override
-  String get insightStartFuelingBody =>
-      'คุณยังเหลืองบแคลอรีเต็มจำนวน สแกนหรือบันทึกมื้อแรกเพื่อให้เป็นไปตามเป้าหมาย';
+  String get insightStartFuelingBody => 'คุณยังเหลืองบแคลอรีเต็มจำนวน สแกนหรือบันทึกมื้อแรกเพื่อให้เป็นไปตามเป้าหมาย';
 
   @override
   String get insightAboveTargetTitle => 'เกินเป้าหมายวันนี้';
@@ -1625,8 +1567,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get insightWeeklyRhythmTitle => 'สร้างจังหวะประจำสัปดาห์';
 
   @override
-  String get insightWeeklyRhythmBody =>
-      'บันทึกมื้ออาหารตลอดสัปดาห์ เพื่อให้ Celia มองเห็นรูปแบบและแนะนำคุณได้ดียิ่งขึ้น';
+  String get insightWeeklyRhythmBody => 'บันทึกมื้ออาหารตลอดสัปดาห์ เพื่อให้ Celia มองเห็นรูปแบบและแนะนำคุณได้ดียิ่งขึ้น';
 
   @override
   String get insightWeeklyTrendTitle => 'แนวโน้มรายสัปดาห์';
@@ -1665,47 +1606,40 @@ class AppLocalizationsTh extends AppLocalizations {
   String get bodyScanConsentTitle => 'ก่อนเริ่มสแกน';
 
   @override
-  String get bodyScanConsentBody =>
-      'การสแกนร่างกายจะประเมินองค์ประกอบร่างกายของคุณจากภาพถ่ายสองภาพ นี่คือสิ่งที่จะเกิดขึ้นกับภาพเหล่านั้น';
+  String get bodyScanConsentBody => 'การสแกนร่างกายจะประเมินองค์ประกอบร่างกายของคุณจากภาพถ่ายสองภาพ นี่คือสิ่งที่จะเกิดขึ้นกับภาพเหล่านั้น';
 
   @override
   String get bodyScanConsentPhotosTitle => 'ภาพถ่ายสองภาพที่คุณถ่ายเอง';
 
   @override
-  String get bodyScanConsentPhotosBody =>
-      'ภาพหนึ่งหันหน้าเข้ากล้อง อีกภาพถ่ายจากด้านขวาของคุณ สวมเสื้อผ้าที่กระชับพอดีเพื่อให้เห็นโครงร่างชัดเจน';
+  String get bodyScanConsentPhotosBody => 'ภาพหนึ่งหันหน้าเข้ากล้อง อีกภาพถ่ายจากด้านขวาของคุณ สวมเสื้อผ้าที่กระชับพอดีเพื่อให้เห็นโครงร่างชัดเจน';
 
   @override
   String get bodyScanConsentProcessingTitle => 'วิเคราะห์โดย Bodygram';
 
   @override
-  String get bodyScanConsentProcessingBody =>
-      'ภาพถ่ายของคุณจะถูกส่งไปยังผู้ให้บริการสแกนของเรา Bodygram เพื่อประเมินสัดส่วนร่างกายของคุณ และจะไม่ถูกนำไปใช้เพื่อวัตถุประสงค์อื่น';
+  String get bodyScanConsentProcessingBody => 'ภาพถ่ายของคุณจะถูกส่งไปยังผู้ให้บริการสแกนของเรา Bodygram เพื่อประเมินสัดส่วนร่างกายของคุณ และจะไม่ถูกนำไปใช้เพื่อวัตถุประสงค์อื่น';
 
   @override
   String get bodyScanConsentStorageTitle => 'ภาพถ่ายของคุณจะไม่ถูกจัดเก็บ';
 
   @override
-  String get bodyScanConsentStorageBody =>
-      'Celia จะไม่เก็บภาพเหล่านั้นไว้ ระบบจะบันทึกเฉพาะค่าที่วัดได้จากการสแกนไว้ในบัญชี และเมื่อคุณลบบัญชี ข้อมูลเหล่านี้จะถูกลบด้วย';
+  String get bodyScanConsentStorageBody => 'Celia จะไม่เก็บภาพเหล่านั้นไว้ ระบบจะบันทึกเฉพาะค่าที่วัดได้จากการสแกนไว้ในบัญชี และเมื่อคุณลบบัญชี ข้อมูลเหล่านี้จะถูกลบด้วย';
 
   @override
   String get bodyScanConsentAgeTitle => 'คุณต้องมีอายุ 18 ปีขึ้นไป';
 
   @override
-  String get bodyScanConsentAgeBody =>
-      'การสแกนร่างกายไม่พร้อมให้บริการสำหรับผู้ที่อายุต่ำกว่า 18 ปี';
+  String get bodyScanConsentAgeBody => 'การสแกนร่างกายไม่พร้อมให้บริการสำหรับผู้ที่อายุต่ำกว่า 18 ปี';
 
   @override
-  String get bodyScanConsentAgree =>
-      'ฉันเข้าใจและยินยอมให้วิเคราะห์ภาพถ่ายของฉัน';
+  String get bodyScanConsentAgree => 'ฉันเข้าใจและยินยอมให้วิเคราะห์ภาพถ่ายของฉัน';
 
   @override
   String get bodyScanStatsTitle => 'ยืนยันข้อมูลของคุณ';
 
   @override
-  String get bodyScanStatsBody =>
-      'ข้อมูลเหล่านี้จะถูกนำไปใช้โดยตรงในการประเมิน ดังนั้นน้ำหนักที่ไม่เป็นปัจจุบันอาจทำให้ผลลัพธ์คลาดเคลื่อน';
+  String get bodyScanStatsBody => 'ข้อมูลเหล่านี้จะถูกนำไปใช้โดยตรงในการประเมิน ดังนั้นน้ำหนักที่ไม่เป็นปัจจุบันอาจทำให้ผลลัพธ์คลาดเคลื่อน';
 
   @override
   String get bodyScanStatsHeight => 'ส่วนสูง';
@@ -1720,8 +1654,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get bodyScanStatsSex => 'เพศ';
 
   @override
-  String get bodyScanStatsSexNote =>
-      'โมเดลการสแกนสร้างขึ้นจากกลุ่มอ้างอิงเพียงสองกลุ่ม เลือกกลุ่มที่ใกล้เคียงกับร่างกายของคุณมากกว่า ตัวเลือกนี้มีผลต่อการประเมิน ไม่ได้มีผลต่อวิธีที่ Celia ปฏิบัติต่อคุณ';
+  String get bodyScanStatsSexNote => 'โมเดลการสแกนสร้างขึ้นจากกลุ่มอ้างอิงเพียงสองกลุ่ม เลือกกลุ่มที่ใกล้เคียงกับร่างกายของคุณมากกว่า ตัวเลือกนี้มีผลต่อการประเมิน ไม่ได้มีผลต่อวิธีที่ Celia ปฏิบัติต่อคุณ';
 
   @override
   String get bodyScanStatsFemale => 'หญิง';
@@ -1730,23 +1663,19 @@ class AppLocalizationsTh extends AppLocalizations {
   String get bodyScanStatsMale => 'ชาย';
 
   @override
-  String get bodyScanStatsInvalid =>
-      'กรอกส่วนสูง น้ำหนัก และอายุที่ถูกต้อง คุณต้องมีอายุ 18 ปีขึ้นไปจึงจะสแกนได้';
+  String get bodyScanStatsInvalid => 'กรอกส่วนสูง น้ำหนัก และอายุที่ถูกต้อง คุณต้องมีอายุ 18 ปีขึ้นไปจึงจะสแกนได้';
 
   @override
   String get bodyScanCaptureFrontTitle => 'หันหน้าเข้ากล้อง';
 
   @override
-  String get bodyScanCaptureRightTitle =>
-      'หันไปทางซ้าย ให้ด้านขวาหันเข้าหากล้อง';
+  String get bodyScanCaptureRightTitle => 'หันไปทางซ้าย ให้ด้านขวาหันเข้าหากล้อง';
 
   @override
-  String get bodyScanCaptureHowTo =>
-      'ตั้งโทรศัพท์ของคุณให้ห่างประมาณ 3 ม. ถอยหลังจนร่างกายทั้งตัวอยู่ในกรอบ จากนั้นเริ่มจับเวลา';
+  String get bodyScanCaptureHowTo => 'ตั้งโทรศัพท์ของคุณให้ห่างประมาณ 3 ม. ถอยหลังจนร่างกายทั้งตัวอยู่ในกรอบ จากนั้นเริ่มจับเวลา';
 
   @override
-  String get bodyScanCaptureTips =>
-      'สวมเสื้อผ้าที่กระชับพอดี ใช้พื้นหลังเรียบ แสงสว่างสม่ำเสมอ และวางแขนห่างจากลำตัวเล็กน้อย';
+  String get bodyScanCaptureTips => 'สวมเสื้อผ้าที่กระชับพอดี ใช้พื้นหลังเรียบ แสงสว่างสม่ำเสมอ และวางแขนห่างจากลำตัวเล็กน้อย';
 
   @override
   String get bodyScanLevelOk => 'Phone is upright — hold still';
@@ -1782,15 +1711,13 @@ class AppLocalizationsTh extends AppLocalizations {
   String get bodyScanProcessingTitle => 'กำลังวิเคราะห์การสแกนของคุณ';
 
   @override
-  String get bodyScanProcessingBody =>
-      'กำลังประเมินสัดส่วนร่างกายของคุณ ขั้นตอนนี้ใช้เวลาสูงสุดหนึ่งนาที';
+  String get bodyScanProcessingBody => 'กำลังประเมินสัดส่วนร่างกายของคุณ ขั้นตอนนี้ใช้เวลาสูงสุดหนึ่งนาที';
 
   @override
   String get bodyScanResultTitle => 'การสแกนร่างกายของคุณ';
 
   @override
-  String get bodyScanResultSubtitle =>
-      'ประเมินจากภาพถ่ายของคุณ เหมาะสำหรับใช้ติดตามแนวโน้มการเปลี่ยนแปลงในระยะยาว';
+  String get bodyScanResultSubtitle => 'ประเมินจากภาพถ่ายของคุณ เหมาะสำหรับใช้ติดตามแนวโน้มการเปลี่ยนแปลงในระยะยาว';
 
   @override
   String get bodyScanBodyFat => 'ไขมันในร่างกาย';
@@ -1862,8 +1789,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get bodyScanEmptyTitle => 'ดูว่าร่างกายของคุณเปลี่ยนแปลงอย่างไร';
 
   @override
-  String get bodyScanEmptyBody =>
-      'ภาพถ่ายสองภาพช่วยประมาณไขมันในร่างกาย มวลไร้ไขมัน และสัดส่วนสำคัญต่าง ๆ ของคุณ โดยแสดงบนภาพวาดร่างกายที่ใช้เปรียบเทียบการเปลี่ยนแปลงในระยะยาวได้';
+  String get bodyScanEmptyBody => 'ภาพถ่ายสองภาพช่วยประมาณไขมันในร่างกาย มวลไร้ไขมัน และสัดส่วนสำคัญต่าง ๆ ของคุณ โดยแสดงบนภาพวาดร่างกายที่ใช้เปรียบเทียบการเปลี่ยนแปลงในระยะยาวได้';
 
   @override
   String get bodyScanLatestTitle => 'การสแกนล่าสุด';
@@ -1878,8 +1804,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get bodyScanRescanCta => 'สแกนอีกครั้ง';
 
   @override
-  String get bodyScanRescanHint =>
-      'องค์ประกอบร่างกายเปลี่ยนแปลงอย่างช้า ๆ การสแกนประมาณเดือนละครั้งให้ผลเปรียบเทียบที่มีความหมายที่สุด';
+  String get bodyScanRescanHint => 'องค์ประกอบร่างกายเปลี่ยนแปลงอย่างช้า ๆ การสแกนประมาณเดือนละครั้งให้ผลเปรียบเทียบที่มีความหมายที่สุด';
 
   @override
   String bodyScanDeltaSinceLast(String value) {
@@ -1893,51 +1818,40 @@ class AppLocalizationsTh extends AppLocalizations {
   String get bodyScanSourcesTitle => 'คำนวณอย่างไร';
 
   @override
-  String get bodyScanSourcesBody =>
-      'ภาพถ่ายของคุณจะถูกใช้เพื่อประมาณรูปร่างร่างกาย จากนั้นจะประมาณไขมันในร่างกายและมวลไร้ไขมันจากรูปร่างดังกล่าวร่วมกับส่วนสูง น้ำหนัก อายุ และเพศของคุณ มวลไร้ไขมันครอบคลุมกล้ามเนื้อ น้ำ อวัยวะ และกระดูกโดยรวม ไม่ใช่โปรตีนเพียงอย่างเดียว';
+  String get bodyScanSourcesBody => 'ภาพถ่ายของคุณจะถูกใช้เพื่อประมาณรูปร่างร่างกาย จากนั้นจะประมาณไขมันในร่างกายและมวลไร้ไขมันจากรูปร่างดังกล่าวร่วมกับส่วนสูง น้ำหนัก อายุ และเพศของคุณ มวลไร้ไขมันครอบคลุมกล้ามเนื้อ น้ำ อวัยวะ และกระดูกโดยรวม ไม่ใช่โปรตีนเพียงอย่างเดียว';
 
   @override
-  String get bodyScanDisclaimer =>
-      'ข้อมูลเหล่านี้เป็นค่าประมาณ ไม่ใช่การวัดทางการแพทย์ งานวิจัยเกี่ยวกับวิธีนี้รายงานค่าคลาดเคลื่อนเฉลี่ยประมาณ 3.5% ของไขมันในร่างกายเมื่อเทียบกับการสแกน DXA ทางคลินิก และความสอดคล้องในการติดตามการเปลี่ยนแปลงนั้นน้อยกว่าการอ่านค่าเพียงครั้งเดียว ไม่ใช้เพื่อการวินิจฉัยโรค โปรดปรึกษาผู้เชี่ยวชาญด้านสุขภาพเกี่ยวกับการตัดสินใจด้านสุขภาพ';
+  String get bodyScanDisclaimer => 'ข้อมูลเหล่านี้เป็นค่าประมาณ ไม่ใช่การวัดทางการแพทย์ งานวิจัยเกี่ยวกับวิธีนี้รายงานค่าคลาดเคลื่อนเฉลี่ยประมาณ 3.5% ของไขมันในร่างกายเมื่อเทียบกับการสแกน DXA ทางคลินิก และความสอดคล้องในการติดตามการเปลี่ยนแปลงนั้นน้อยกว่าการอ่านค่าเพียงครั้งเดียว ไม่ใช้เพื่อการวินิจฉัยโรค โปรดปรึกษาผู้เชี่ยวชาญด้านสุขภาพเกี่ยวกับการตัดสินใจด้านสุขภาพ';
 
   @override
-  String get bodyScanErrorCameraPermission =>
-      'Celia ต้องเข้าถึงกล้องเพื่อสแกนร่างกายของคุณ';
+  String get bodyScanErrorCameraPermission => 'Celia ต้องเข้าถึงกล้องเพื่อสแกนร่างกายของคุณ';
 
   @override
   String get bodyScanErrorNoCamera => 'อุปกรณ์นี้ไม่มีกล้องที่พร้อมใช้งาน';
 
   @override
-  String get bodyScanErrorFraming =>
-      'ต้องเห็นร่างกายของคุณทั้งตัวในกรอบภาพ ขยับโทรศัพท์ออกห่างและตรวจสอบให้แน่ใจว่ามองเห็นทั้งศีรษะและเท้า';
+  String get bodyScanErrorFraming => 'ต้องเห็นร่างกายของคุณทั้งตัวในกรอบภาพ ขยับโทรศัพท์ออกห่างและตรวจสอบให้แน่ใจว่ามองเห็นทั้งศีรษะและเท้า';
 
   @override
-  String get bodyScanErrorQuality =>
-      'ภาพถ่ายมืดหรือเบลอเกินไป หาบริเวณที่มีแสงสว่างสม่ำเสมอมากขึ้น และอยู่นิ่ง ๆ ขณะตัวจับเวลาทำงาน';
+  String get bodyScanErrorQuality => 'ภาพถ่ายมืดหรือเบลอเกินไป หาบริเวณที่มีแสงสว่างสม่ำเสมอมากขึ้น และอยู่นิ่ง ๆ ขณะตัวจับเวลาทำงาน';
 
   @override
-  String get bodyScanErrorPose =>
-      'ท่าทางของคุณยังไม่ถูกต้องนัก ยืนตัวตรงหันหน้าเข้ากล้อง กางแขนออกจากลำตัวเล็กน้อย แล้วหมุนตัวไปทางขวาจนหันด้านข้างเต็มที่สำหรับภาพที่สอง';
+  String get bodyScanErrorPose => 'ท่าทางของคุณยังไม่ถูกต้องนัก ยืนตัวตรงหันหน้าเข้ากล้อง กางแขนออกจากลำตัวเล็กน้อย แล้วหมุนตัวไปทางขวาจนหันด้านข้างเต็มที่สำหรับภาพที่สอง';
 
   @override
-  String get bodyScanErrorClothing =>
-      'เสื้อผ้าหลวมบดบังรูปร่างของคุณ เสื้อผ้าที่กระชับพอดีจะช่วยให้สแกนได้';
+  String get bodyScanErrorClothing => 'เสื้อผ้าหลวมบดบังรูปร่างของคุณ เสื้อผ้าที่กระชับพอดีจะช่วยให้สแกนได้';
 
   @override
-  String get bodyScanErrorPhotoUnknown =>
-      'ไม่สามารถใช้ภาพถ่ายเหล่านั้นได้ ลองอีกครั้งโดยมีฉากหลังเรียบและแสงสว่างเพียงพอ';
+  String get bodyScanErrorPhotoUnknown => 'ไม่สามารถใช้ภาพถ่ายเหล่านั้นได้ ลองอีกครั้งโดยมีฉากหลังเรียบและแสงสว่างเพียงพอ';
 
   @override
-  String get bodyScanErrorCaptureFailed =>
-      'Could not save that photo. Start the timer and try again.';
+  String get bodyScanErrorCaptureFailed => 'Could not save that photo. Start the timer and try again.';
 
   @override
-  String get bodyScanErrorPhotosTooLarge =>
-      'ภาพถ่ายเหล่านั้นมีขนาดใหญ่เกินกว่าจะอัปโหลดได้ ลองอีกครั้ง';
+  String get bodyScanErrorPhotosTooLarge => 'ภาพถ่ายเหล่านั้นมีขนาดใหญ่เกินกว่าจะอัปโหลดได้ ลองอีกครั้ง';
 
   @override
-  String get bodyScanErrorQuota =>
-      'คุณใช้การสแกนสำหรับช่วงเวลานี้ครบแล้ว คุณจะสแกนได้อีกครั้งเมื่อโควตารีเซ็ต';
+  String get bodyScanErrorQuota => 'คุณใช้การสแกนสำหรับช่วงเวลานี้ครบแล้ว คุณจะสแกนได้อีกครั้งเมื่อโควตารีเซ็ต';
 
   @override
   String get bodyScanPaywallTitle => 'Body scan access';
@@ -1946,8 +1860,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get bodyScanPaywallHeadline => 'Buy one body scan';
 
   @override
-  String get bodyScanPaywallBody =>
-      'Each scan costs a store purchase. Premium membership does not include body scans — anyone can buy them separately.';
+  String get bodyScanPaywallBody => 'Each scan costs a store purchase. Premium membership does not include body scans — anyone can buy them separately.';
 
   @override
   String bodyScanPaywallRemaining(int count) {
@@ -1963,15 +1876,13 @@ class AppLocalizationsTh extends AppLocalizations {
   String get bodyScanPaywallPriceFallback => '€7.99';
 
   @override
-  String get bodyScanPaywallStoreUnavailable =>
-      'The store product is not available on this device yet. You can still redeem a code below.';
+  String get bodyScanPaywallStoreUnavailable => 'The store product is not available on this device yet. You can still redeem a code below.';
 
   @override
   String get bodyScanPaywallCodeTitle => 'Have a free code?';
 
   @override
-  String get bodyScanPaywallCodeBody =>
-      'Coaches and trials can unlock scans with a code. Enter it here.';
+  String get bodyScanPaywallCodeBody => 'Coaches and trials can unlock scans with a code. Enter it here.';
 
   @override
   String get bodyScanPaywallCodeHint => 'CODE';
@@ -1980,12 +1891,10 @@ class AppLocalizationsTh extends AppLocalizations {
   String get bodyScanPaywallRedeem => 'Redeem code';
 
   @override
-  String get bodyScanPaywallLoadFailed =>
-      'Could not load scan access. Pull to refresh or try again.';
+  String get bodyScanPaywallLoadFailed => 'Could not load scan access. Pull to refresh or try again.';
 
   @override
-  String get bodyScanPaywallPurchaseFailed =>
-      'Purchase could not be completed. Try again.';
+  String get bodyScanPaywallPurchaseFailed => 'Purchase could not be completed. Try again.';
 
   @override
   String bodyScanPaywallPurchaseOk(int count) {
@@ -2004,12 +1913,10 @@ class AppLocalizationsTh extends AppLocalizations {
   String get bodyScanPaywallOpen => 'Buy or redeem a scan';
 
   @override
-  String get bodyScanErrorAge =>
-      'การสแกนร่างกายเปิดให้บริการเฉพาะผู้ใช้อายุ 18 ปีขึ้นไป';
+  String get bodyScanErrorAge => 'การสแกนร่างกายเปิดให้บริการเฉพาะผู้ใช้อายุ 18 ปีขึ้นไป';
 
   @override
-  String get bodyScanErrorStats =>
-      'ตรวจสอบส่วนสูง น้ำหนัก อายุ และเพศของคุณ แล้วลองอีกครั้ง';
+  String get bodyScanErrorStats => 'ตรวจสอบส่วนสูง น้ำหนัก อายุ และเพศของคุณ แล้วลองอีกครั้ง';
 
   @override
   String get bodyScanErrorSignedIn => 'โปรดลงชื่อเข้าใช้อีกครั้งเพื่อสแกน';
@@ -2018,16 +1925,13 @@ class AppLocalizationsTh extends AppLocalizations {
   String get bodyScanErrorUnavailable => 'การสแกนร่างกายไม่พร้อมใช้งานในขณะนี้';
 
   @override
-  String get bodyScanErrorNetwork =>
-      'ไม่สามารถเชื่อมต่อ Celia ได้ ตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง';
+  String get bodyScanErrorNetwork => 'ไม่สามารถเชื่อมต่อ Celia ได้ ตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง';
 
   @override
-  String get bodyScanErrorServer =>
-      'เกิดข้อผิดพลาดกับการสแกนของคุณ โปรดลองอีกครั้ง';
+  String get bodyScanErrorServer => 'เกิดข้อผิดพลาดกับการสแกนของคุณ โปรดลองอีกครั้ง';
 
   @override
-  String get bodyScanErrorLoadHistory =>
-      'ไม่สามารถโหลดการสแกนก่อนหน้าของคุณได้';
+  String get bodyScanErrorLoadHistory => 'ไม่สามารถโหลดการสแกนก่อนหน้าของคุณได้';
 
   @override
   String get profileBodyScan => 'การสแกนร่างกาย';
@@ -2071,23 +1975,19 @@ class AppLocalizationsTh extends AppLocalizations {
   String get obConsentTitle => 'Before we start';
 
   @override
-  String get obConsentBody =>
-      'Celia builds your nutrition, training and coaching plans from what you tell us here. You can change any answer later in your profile.';
+  String get obConsentBody => 'Celia builds your nutrition, training and coaching plans from what you tell us here. You can change any answer later in your profile.';
 
   @override
   String get obDisclaimerTitle => 'Not medical advice';
 
   @override
-  String get obDisclaimerBody =>
-      'Celia is a wellbeing coach, not a doctor. It does not diagnose, treat or prescribe. Speak to a health professional before changing your diet or training if you are pregnant, injured, or managing a medical condition.';
+  String get obDisclaimerBody => 'Celia is a wellbeing coach, not a doctor. It does not diagnose, treat or prescribe. Speak to a health professional before changing your diet or training if you are pregnant, injured, or managing a medical condition.';
 
   @override
-  String get obAcceptTerms =>
-      'I accept the Terms & Conditions and the Privacy Policy';
+  String get obAcceptTerms => 'I accept the Terms & Conditions and the Privacy Policy';
 
   @override
-  String get obAcceptDisclaimer =>
-      'I understand Celia does not provide medical advice';
+  String get obAcceptDisclaimer => 'I understand Celia does not provide medical advice';
 
   @override
   String get obConsentRequired => 'Please accept both to continue';
@@ -2096,8 +1996,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get obPhysicalTitle => 'Your body';
 
   @override
-  String get obPhysicalBody =>
-      'Used to estimate how much energy you burn at rest.';
+  String get obPhysicalBody => 'Used to estimate how much energy you burn at rest.';
 
   @override
   String get obBmrTitle => 'Estimated basal metabolism';
@@ -2108,15 +2007,13 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get obBmrExplainer =>
-      'Mifflin–St Jeor formula. Your daily target adds your activity and your goal on top of this.';
+  String get obBmrExplainer => 'Mifflin–St Jeor formula. Your daily target adds your activity and your goal on top of this.';
 
   @override
   String get obGoalTitle => 'Your main goal';
 
   @override
-  String get obGoalBody =>
-      'This decides whether your plan runs at a deficit, at maintenance, or at a surplus.';
+  String get obGoalBody => 'This decides whether your plan runs at a deficit, at maintenance, or at a surplus.';
 
   @override
   String get obGoalLoseWeight => 'Lose weight';
@@ -2161,12 +2058,10 @@ class AppLocalizationsTh extends AppLocalizations {
   String get obAllergiesLabel => 'Food allergies';
 
   @override
-  String get obEatingDisorderQuestion =>
-      'Have you ever been treated for an eating disorder?';
+  String get obEatingDisorderQuestion => 'Have you ever been treated for an eating disorder?';
 
   @override
-  String get obEatingDisorderWhy =>
-      'If yes, Celia keeps your calories at maintenance instead of suggesting a deficit, and avoids weight-focused language.';
+  String get obEatingDisorderWhy => 'If yes, Celia keeps your calories at maintenance instead of suggesting a deficit, and avoids weight-focused language.';
 
   @override
   String get obNutritionMode => 'Who plans your meals?';
@@ -2342,8 +2237,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get obNotificationsTitle => 'Notifications';
 
   @override
-  String get obNotificationsBody =>
-      'Choose what you want to hear about. You can change this any time.';
+  String get obNotificationsBody => 'Choose what you want to hear about. You can change this any time.';
 
   @override
   String get obNotifyMeals => 'Meal reminders';
@@ -2361,15 +2255,13 @@ class AppLocalizationsTh extends AppLocalizations {
   String get obNotifyCoach => 'Messages from Celia';
 
   @override
-  String get obNotificationsPending =>
-      'We are saving your choices now. Reminders start arriving when delivery is switched on in a coming update.';
+  String get obNotificationsPending => 'We are saving your choices now. Reminders start arriving when delivery is switched on in a coming update.';
 
   @override
   String get obWearablesTitle => 'Connect a wearable';
 
   @override
-  String get obWearablesBody =>
-      'Optional. Tell us what you use and we will connect it as soon as support is ready.';
+  String get obWearablesBody => 'Optional. Tell us what you use and we will connect it as soon as support is ready.';
 
   @override
   String get obWearableNone => 'Not now';
@@ -2395,8 +2287,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get obSummaryCoaching => 'Coaching';
 
   @override
-  String get obSummaryEditLater =>
-      'You can change any of this later in your profile.';
+  String get obSummaryEditLater => 'You can change any of this later in your profile.';
 
   @override
   String get obFirstRecommendation => 'Your first step today';
@@ -2417,8 +2308,7 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get obRecoCheckIn =>
-      'Take five minutes to check in with how you feel.';
+  String get obRecoCheckIn => 'Take five minutes to check in with how you feel.';
 
   @override
   String get obEquipmentMode => 'Do you train with equipment?';
@@ -2433,8 +2323,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get obEquipmentWhich => 'What do you have?';
 
   @override
-  String get obEquipmentRequired =>
-      'Choose bodyweight or pick at least one item';
+  String get obEquipmentRequired => 'Choose bodyweight or pick at least one item';
 
   @override
   String get obEquipDumbbell => 'Dumbbells';

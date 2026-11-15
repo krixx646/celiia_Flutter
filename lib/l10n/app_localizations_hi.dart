@@ -1165,6 +1165,10 @@ class AppLocalizationsHi extends AppLocalizations {
       'अभी कोई स्पष्ट भोजन नहीं मिला। बेहतर रोशनी में कोशिश करें या पास जाएँ।';
 
   @override
+  String get scannerReviewLowConfidence =>
+      'कम विश्वास — लॉग करने से पहले आइटम और मात्रा जाँचें।';
+
+  @override
   String get scannerErrorCameraPermission =>
       'भोजन स्कैन करने के लिए कैमरा अनुमति आवश्यक है।';
 

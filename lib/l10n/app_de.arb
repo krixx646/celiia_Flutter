@@ -640,6 +640,7 @@
   "scannerButtonLogging": "Wird protokolliert",
   "scannerButtonLogMeal": "Mahlzeit protokollieren",
   "scannerNoClearFood": "Noch kein eindeutiges Lebensmittel erkannt. Sorge für besseres Licht oder gehe näher heran.",
+  "scannerReviewLowConfidence": "Geringe Sicherheit — prüfe die Einträge und Mengen vor dem Speichern.",
   "scannerErrorCameraPermission": "Die Kameraberechtigung wird zum Scannen von Mahlzeiten benötigt.",
   "scannerErrorBackendMissing": "Das Backend für den Kalorienscanner ist noch nicht eingerichtet.",
   "scannerErrorApiKeyInvalid": "Der OpenAI-API-Schlüssel für das Kalorienscannen ist ungültig. Ersetze ihn in der Backend-Umgebung, führe ein erneutes Deployment durch und versuche es dann erneut.",

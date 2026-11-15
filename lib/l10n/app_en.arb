@@ -696,6 +696,7 @@
   "scannerButtonLogging": "Logging",
   "scannerButtonLogMeal": "Log Meal",
   "scannerNoClearFood": "No clear food detected yet. Try better lighting or move closer.",
+  "scannerReviewLowConfidence": "Low confidence — review the items and portions before logging.",
   "scannerErrorCameraPermission": "Camera permission is needed to scan meals.",
   "scannerErrorBackendMissing": "Calorie scanner backend is not configured yet.",
   "scannerErrorApiKeyInvalid": "The OpenAI API key for calorie scanning is invalid. Replace it in the backend environment, redeploy, then try again.",

@@ -640,6 +640,7 @@
   "scannerButtonLogging": "Mencatat",
   "scannerButtonLogMeal": "Catat Makanan",
   "scannerNoClearFood": "Belum ada makanan yang terdeteksi dengan jelas. Coba gunakan pencahayaan yang lebih baik atau mendekat.",
+  "scannerReviewLowConfidence": "Kepercayaan rendah — tinjau item dan porsi sebelum mencatat.",
   "scannerErrorCameraPermission": "Izin kamera diperlukan untuk memindai makanan.",
   "scannerErrorBackendMissing": "Backend pemindai kalori belum dikonfigurasi.",
   "scannerErrorApiKeyInvalid": "Kunci API OpenAI untuk pemindaian kalori tidak valid. Ganti di lingkungan backend, lakukan deploy ulang, lalu coba lagi.",

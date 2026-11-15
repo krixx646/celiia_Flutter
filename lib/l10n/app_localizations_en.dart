@@ -1158,6 +1158,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'No clear food detected yet. Try better lighting or move closer.';
 
   @override
+  String get scannerReviewLowConfidence =>
+      'Low confidence — review the items and portions before logging.';
+
+  @override
   String get scannerErrorCameraPermission =>
       'Camera permission is needed to scan meals.';
 

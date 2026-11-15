@@ -1124,6 +1124,9 @@ class AppLocalizationsKo extends AppLocalizations {
       '아직 음식이 명확하게 감지되지 않았어요. 조명을 개선하거나 더 가까이 이동해 보세요.';
 
   @override
+  String get scannerReviewLowConfidence => '신뢰도가 낮습니다. 기록하기 전에 항목과 양을 확인하세요.';
+
+  @override
   String get scannerErrorCameraPermission => '식사를 스캔하려면 카메라 권한이 필요해요.';
 
   @override

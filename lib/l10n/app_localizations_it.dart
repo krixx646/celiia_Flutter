@@ -1169,6 +1169,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato ancora rilevato alcun alimento chiaramente. Prova a migliorare l\'illuminazione o ad avvicinarti.';
 
   @override
+  String get scannerReviewLowConfidence =>
+      'Bassa confidenza — controlla gli alimenti e le porzioni prima di registrare.';
+
+  @override
   String get scannerErrorCameraPermission =>
       'È necessaria l\'autorizzazione della fotocamera per scansionare i pasti.';
 

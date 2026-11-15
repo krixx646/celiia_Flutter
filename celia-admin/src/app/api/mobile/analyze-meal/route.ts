@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createRemoteJWKSet, jwtVerify } from 'jose';
+import { groundMealAnalysis } from '@/lib/nutrition/groundMealAnalysis';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -10,6 +11,9 @@ const DEEPSEEK_VISION_ENDPOINT = process.env.DEEPSEEK_VISION_ENDPOINT;
 const DEEPSEEK_VISION_MODEL = process.env.DEEPSEEK_VISION_MODEL;
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const OPENAI_VISION_MODEL = process.env.OPENAI_VISION_MODEL || 'gpt-5.6-luna';
+/** Prefer DeepSeek only when explicitly opted in; default is OpenAI-first for speed. */
+const DEEPSEEK_VISION_PREFERRED = process.env.DEEPSEEK_VISION_PREFERRED === 'true';
+const DEEPSEEK_VISION_TIMEOUT_MS = Number(process.env.DEEPSEEK_VISION_TIMEOUT_MS || 6000);
 
 const FIREBASE_JWKS = createRemoteJWKSet(
   new URL('https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com')
@@ -104,14 +108,14 @@ function extractJson(text: string) {
 function buildPrompt() {
   return `You are Celia's nutrition vision analyst.
 
-Analyze every visible food item, fruit, drink, plate, or meal component in the image and estimate calories/macros. Return ONLY valid JSON:
+Identify every visible edible item (including brand/packaged groceries when the label is readable). Return ONLY valid JSON:
 {
   "title": "Short meal name",
   "summary": "One sentence summary",
   "confidence": 0.0,
   "items": [
     {
-      "name": "Food name",
+      "name": "Food or brand+product name",
       "servingGrams": 100,
       "calories": 150,
       "proteinGrams": 10,
@@ -126,12 +130,22 @@ Analyze every visible food item, fruit, drink, plate, or meal component in the i
 }
 
 Rules:
-- Estimate visible food only. If there are multiple foods or plates, return multiple items.
-- Use normalized box coordinates from 0 to 1 for the upright image when you can locate an item; omit box if uncertain.
-- Do not invent food outside the frame. Split clearly separate foods into separate items.
-- If the image is unclear or contains no food, return an empty items array, total confidence under 0.35, and a helpful warning.
-- Calories and macros must be numeric estimates, not strings.
-- Be conservative and honest about uncertainty.`;
+- Identify visible food only. Split clearly separate foods into separate items.
+- Prefer common dish/product names. For packaged goods, use the brand + product name from the label when readable.
+- If unsure of a brand/product, use a generic name and set confidence <= 0.45.
+- Estimate servingGrams from visible portion (plate/hand scale). Be conservative.
+- Do not invent food outside the frame. Omit non-food objects.
+- If unclear or no food, return empty items, confidence under 0.35, and a helpful warning.
+- Calories/macros must be numeric. Set confidence honestly (do not inflate).
+- Macros may be approximate; a nutrition reference may refine them server-side.`;
+}
+
+function finalizeAnalysis(analysis: MealAnalysis): MealAnalysis {
+  const grounded = groundMealAnalysis(analysis);
+  return {
+    ...grounded,
+    provider: analysis.provider,
+  };
 }
 
 function normalizeAnalysis(raw: unknown, provider: MealAnalysis['provider']): MealAnalysis {
@@ -155,6 +169,7 @@ function normalizeAnalysis(raw: unknown, provider: MealAnalysis['provider']): Me
           }
         : undefined;
 
+      // Missing confidence defaults low so vague guesses do not look trustworthy.
       return {
         name,
         servingGrams: safeNumber(item.servingGrams, 0, 0),
@@ -162,7 +177,7 @@ function normalizeAnalysis(raw: unknown, provider: MealAnalysis['provider']): Me
         proteinGrams: safeNumber(item.proteinGrams, 0, 0),
         carbsGrams: safeNumber(item.carbsGrams, 0, 0),
         fatGrams: safeNumber(item.fatGrams, 0, 0),
-        confidence: safeNumber(item.confidence, 0.5, 0, 1),
+        confidence: safeNumber(item.confidence, 0.35, 0, 1),
         notes: item.notes ? String(item.notes) : undefined,
         box: box && box.width > 0 && box.height > 0 ? box : undefined,
       };
@@ -183,11 +198,16 @@ function normalizeAnalysis(raw: unknown, provider: MealAnalysis['provider']): Me
     ? obj.warnings.map(String).filter(Boolean)
     : ['Estimated from image; confirm portions for accuracy.'];
 
+  const avgItemConfidence =
+    items.length > 0
+      ? items.reduce((sum, item) => sum + item.confidence, 0) / items.length
+      : 0.2;
+
   return {
     title: String(obj.title || (items.length ? 'Estimated Meal' : 'No meal detected')),
     provider,
     summary: String(obj.summary || 'Estimated from the camera image.'),
-    confidence: safeNumber(obj.confidence, items.length ? 0.6 : 0.2, 0, 1),
+    confidence: safeNumber(obj.confidence, items.length ? avgItemConfidence : 0.2, 0, 1),
     totalCalories: Math.round(totals.calories),
     totalProteinGrams: Math.round(totals.protein * 10) / 10,
     totalCarbsGrams: Math.round(totals.carbs * 10) / 10,
@@ -202,32 +222,45 @@ async function analyzeWithDeepSeek(dataUrl: string): Promise<MealAnalysis> {
     throw new Error('DeepSeek vision is not configured');
   }
 
-  const res = await fetch(DEEPSEEK_VISION_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${DEEPSEEK_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: DEEPSEEK_VISION_MODEL,
-      image_url: dataUrl,
-      prompt: buildPrompt(),
-      mode: 'analyze',
-      output_format: 'json',
-    }),
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), DEEPSEEK_VISION_TIMEOUT_MS);
 
-  const text = await res.text();
-  if (!res.ok) {
-    throw new Error(`DeepSeek vision failed (${res.status}): ${text.slice(0, 500)}`);
+  try {
+    const res = await fetch(DEEPSEEK_VISION_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${DEEPSEEK_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: DEEPSEEK_VISION_MODEL,
+        image_url: dataUrl,
+        prompt: buildPrompt(),
+        mode: 'analyze',
+        output_format: 'json',
+      }),
+    });
+
+    const text = await res.text();
+    if (!res.ok) {
+      throw new Error(`DeepSeek vision failed (${res.status}): ${text.slice(0, 500)}`);
+    }
+
+    const jsonText = extractJson(text);
+    if (!jsonText) {
+      throw new Error('DeepSeek vision returned no JSON');
+    }
+
+    return normalizeAnalysis(JSON.parse(jsonText), 'deepseek');
+  } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new Error(`DeepSeek vision timed out after ${DEEPSEEK_VISION_TIMEOUT_MS}ms`);
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
   }
-
-  const jsonText = extractJson(text);
-  if (!jsonText) {
-    throw new Error('DeepSeek vision returned no JSON');
-  }
-
-  return normalizeAnalysis(JSON.parse(jsonText), 'deepseek');
 }
 
 function openAiVisionModels() {
@@ -235,7 +268,11 @@ function openAiVisionModels() {
   return Array.from(new Set([OPENAI_VISION_MODEL, 'gpt-5-mini'].filter(Boolean)));
 }
 
-async function analyzeWithOpenAiModel(dataUrl: string, model: string): Promise<MealAnalysis> {
+async function analyzeWithOpenAiModel(
+  dataUrl: string,
+  model: string,
+  detail: 'auto' | 'low' | 'high' = 'auto'
+): Promise<MealAnalysis> {
   if (!OPENAI_API_KEY) {
     throw new Error('OPENAI_API_KEY is not configured');
   }
@@ -258,7 +295,7 @@ async function analyzeWithOpenAiModel(dataUrl: string, model: string): Promise<M
           role: 'user',
           content: [
             { type: 'text', text: buildPrompt() },
-            { type: 'image_url', image_url: { url: dataUrl, detail: 'high' } },
+            { type: 'image_url', image_url: { url: dataUrl, detail } },
           ],
         },
       ],
@@ -290,7 +327,20 @@ async function analyzeWithOpenAi(dataUrl: string): Promise<MealAnalysis> {
 
   for (const model of openAiVisionModels()) {
     try {
-      return await analyzeWithOpenAiModel(dataUrl, model);
+      // First pass uses auto detail for speed; retry same model at high if empty/low confidence.
+      let analysis = await analyzeWithOpenAiModel(dataUrl, model, 'auto');
+      if (analysis.items.length === 0 || analysis.confidence < 0.4) {
+        try {
+          const retry = await analyzeWithOpenAiModel(dataUrl, model, 'high');
+          if (retry.items.length > 0 && retry.confidence >= analysis.confidence) {
+            analysis = retry;
+          }
+        } catch (retryError) {
+          const message = retryError instanceof Error ? retryError.message : String(retryError);
+          console.warn(`[analyze-meal] high-detail retry skipped (${model}):`, message);
+        }
+      }
+      return analysis;
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       errors.push(message);
@@ -299,6 +349,17 @@ async function analyzeWithOpenAi(dataUrl: string): Promise<MealAnalysis> {
   }
 
   throw new Error(errors.join(' | ') || 'OpenAI vision failed');
+}
+
+async function tryDeepSeek(dataUrl: string): Promise<MealAnalysis | null> {
+  if (!hasDeepSeekVisionConfig()) return null;
+  try {
+    return await analyzeWithDeepSeek(dataUrl);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.warn('[analyze-meal] DeepSeek vision skipped:', message);
+    return null;
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -314,19 +375,27 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing image' }, { status: 400 });
     }
 
-    if (hasDeepSeekVisionConfig()) {
-      try {
-        const analysis = await analyzeWithDeepSeek(dataUrl);
-        return NextResponse.json({ analysis, userId: user.uid });
-      } catch {
-        // Fall through to OpenAI Vision when a configured DeepSeek vision endpoint is unavailable.
+    // OpenAI-first by default. DeepSeek only when preferred, with a hard timeout.
+    if (DEEPSEEK_VISION_PREFERRED) {
+      const deepSeek = await tryDeepSeek(dataUrl);
+      if (deepSeek) {
+        return NextResponse.json({ analysis: finalizeAnalysis(deepSeek), userId: user.uid });
       }
     }
 
     try {
       const analysis = await analyzeWithOpenAi(dataUrl);
-      return NextResponse.json({ analysis, userId: user.uid });
+      return NextResponse.json({ analysis: finalizeAnalysis(analysis), userId: user.uid });
     } catch (openAiError) {
+      // Last resort: DeepSeek if configured and OpenAI failed.
+      const deepSeekFallback = await tryDeepSeek(dataUrl);
+      if (deepSeekFallback) {
+        return NextResponse.json({
+          analysis: finalizeAnalysis(deepSeekFallback),
+          userId: user.uid,
+        });
+      }
+
       const message = openAiError instanceof Error ? openAiError.message : String(openAiError);
       console.error('[analyze-meal] OpenAI vision failed:', message);
       const missingKey = message.includes('OPENAI_API_KEY');

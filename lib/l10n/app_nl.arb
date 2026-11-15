@@ -640,6 +640,7 @@
   "scannerButtonLogging": "Loggen",
   "scannerButtonLogMeal": "Maaltijd loggen",
   "scannerNoClearFood": "Er is nog geen duidelijk voedingsmiddel gedetecteerd. Zorg voor betere belichting of houd de camera dichterbij.",
+  "scannerReviewLowConfidence": "Lage betrouwbaarheid — controleer items en porties vóór het loggen.",
   "scannerErrorCameraPermission": "Cameratoegang is nodig om maaltijden te scannen.",
   "scannerErrorBackendMissing": "De backend voor de caloriescanner is nog niet geconfigureerd.",
   "scannerErrorApiKeyInvalid": "De OpenAI API-sleutel voor het scannen van calorieën is ongeldig. Vervang deze in de backendomgeving, implementeer opnieuw en probeer het nogmaals.",

@@ -36,9 +36,15 @@ DEEPSEEK_TEXT_MODEL=deepseek-v4-pro
 # so generated routines prefer a real video per exercise when one exists.
 # SUSPEND_REAL_VIDEOS=true
 
-# Mobile calorie scanner vision fallback
+# Mobile calorie scanner vision (OpenAI-first by default)
 OPENAI_API_KEY=...
 OPENAI_VISION_MODEL=gpt-5.6-luna
+# Optional DeepSeek vision. Only tried first when preferred=true; otherwise OpenAI-first with DeepSeek as fallback.
+# DEEPSEEK_API_KEY=...
+# DEEPSEEK_VISION_ENDPOINT=...
+# DEEPSEEK_VISION_MODEL=...
+# DEEPSEEK_VISION_PREFERRED=false
+# DEEPSEEK_VISION_TIMEOUT_MS=6000
 # Workout voice coaching (OpenAI TTS). tts-1 is cheap and low-latency for counts.
 OPENAI_TTS_MODEL=tts-1
 OPENAI_TTS_VOICE=nova

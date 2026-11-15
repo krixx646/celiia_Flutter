@@ -640,6 +640,7 @@
   "scannerButtonLogging": "记录中",
   "scannerButtonLogMeal": "记录餐食",
   "scannerNoClearFood": "尚未检测到清晰的食物。请改善光线或靠近一些。",
+  "scannerReviewLowConfidence": "置信度较低 — 记录前请核对食物与份量。",
   "scannerErrorCameraPermission": "扫描餐食需要相机权限。",
   "scannerErrorBackendMissing": "卡路里扫描后端尚未配置。",
   "scannerErrorApiKeyInvalid": "用于卡路里扫描的 OpenAI API 密钥无效。请在后端环境中替换密钥，重新部署后再试。",

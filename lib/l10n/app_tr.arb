@@ -640,6 +640,7 @@
   "scannerButtonLogging": "Kaydediliyor",
   "scannerButtonLogMeal": "Öğünü Kaydet",
   "scannerNoClearFood": "Henüz net bir yiyecek algılanmadı. Daha iyi aydınlatmayı dene veya biraz yaklaş.",
+  "scannerReviewLowConfidence": "Düşük güven — kaydetmeden önce öğeleri ve porsiyonları gözden geçirin.",
   "scannerErrorCameraPermission": "Öğünleri taramak için kamera izni gerekiyor.",
   "scannerErrorBackendMissing": "Kalori tarayıcısının arka ucu henüz yapılandırılmadı.",
   "scannerErrorApiKeyInvalid": "Kalori taraması için kullanılan OpenAI API anahtarı geçersiz. Arka uç ortamında değiştir, yeniden dağıt ve tekrar dene.",

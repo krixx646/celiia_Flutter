@@ -1123,6 +1123,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get scannerNoClearFood => '食品をまだはっきり検出できません。明るい場所で試すか、カメラを近づけてください。';
 
   @override
+  String get scannerReviewLowConfidence => '信頼度が低いです。記録前に食品と分量を確認してください。';
+
+  @override
   String get scannerErrorCameraPermission => '食事をスキャンするにはカメラの許可が必要です。';
 
   @override

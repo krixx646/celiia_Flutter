@@ -1164,6 +1164,10 @@ class AppLocalizationsId extends AppLocalizations {
       'Belum ada makanan yang terdeteksi dengan jelas. Coba gunakan pencahayaan yang lebih baik atau mendekat.';
 
   @override
+  String get scannerReviewLowConfidence =>
+      'Kepercayaan rendah — tinjau item dan porsi sebelum mencatat.';
+
+  @override
   String get scannerErrorCameraPermission =>
       'Izin kamera diperlukan untuk memindai makanan.';
 

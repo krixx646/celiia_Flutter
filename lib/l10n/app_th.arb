@@ -640,6 +640,7 @@
   "scannerButtonLogging": "กำลังบันทึก",
   "scannerButtonLogMeal": "บันทึกมื้ออาหาร",
   "scannerNoClearFood": "ยังตรวจไม่พบอาหารที่ชัดเจน ลองเพิ่มแสงหรือขยับเข้าใกล้อีกนิด",
+  "scannerReviewLowConfidence": "ความมั่นใจต่ำ — ตรวจรายการและปริมาณก่อนบันทึก",
   "scannerErrorCameraPermission": "ต้องอนุญาตให้เข้าถึงกล้องเพื่อสแกนมื้ออาหาร",
   "scannerErrorBackendMissing": "ยังไม่ได้ตั้งค่าระบบเบื้องหลังสำหรับสแกนแคลอรี",
   "scannerErrorApiKeyInvalid": "คีย์ OpenAI API สำหรับสแกนแคลอรีไม่ถูกต้อง โปรดเปลี่ยนคีย์ในสภาพแวดล้อมของระบบเบื้องหลัง ปรับใช้ใหม่ แล้วลองอีกครั้ง",

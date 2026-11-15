@@ -640,6 +640,7 @@
   "scannerButtonLogging": "Registrazione in corso",
   "scannerButtonLogMeal": "Registra pasto",
   "scannerNoClearFood": "Non è stato ancora rilevato alcun alimento chiaramente. Prova a migliorare l'illuminazione o ad avvicinarti.",
+  "scannerReviewLowConfidence": "Bassa confidenza — controlla gli alimenti e le porzioni prima di registrare.",
   "scannerErrorCameraPermission": "È necessaria l'autorizzazione della fotocamera per scansionare i pasti.",
   "scannerErrorBackendMissing": "Il backend dello scanner delle calorie non è ancora configurato.",
   "scannerErrorApiKeyInvalid": "La chiave API OpenAI per la scansione delle calorie non è valida. Sostituiscila nell'ambiente del backend, esegui nuovamente il deploy e riprova.",

@@ -640,6 +640,7 @@
   "scannerButtonLogging": "جارٍ التسجيل",
   "scannerButtonLogMeal": "تسجيل الوجبة",
   "scannerNoClearFood": "لم يتم اكتشاف طعام واضح بعد. جرّب إضاءة أفضل أو اقترب أكثر.",
+  "scannerReviewLowConfidence": "ثقة منخفضة — راجع العناصر والكميات قبل التسجيل.",
   "scannerErrorCameraPermission": "يلزم السماح باستخدام الكاميرا لمسح الوجبات.",
   "scannerErrorBackendMissing": "لم تتم تهيئة خادم ماسح السعرات بعد.",
   "scannerErrorApiKeyInvalid": "مفتاح OpenAI API المستخدم لمسح السعرات غير صالح. استبدله في بيئة الخادم، ثم أعد النشر وحاول مرة أخرى.",

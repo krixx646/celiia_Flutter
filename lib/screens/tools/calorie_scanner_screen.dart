@@ -11,6 +11,7 @@ import '../../providers/nutrition_profile_provider.dart';
 import '../../providers/nutrition_tracker_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/calorie_scanner_service.dart';
+import '../../services/meal_scan_photo_prep.dart';
 import 'nutrition_profile_setup_screen.dart';
 import 'nutrition_screen.dart';
 
@@ -89,7 +90,8 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
       );
       final controller = CameraController(
         camera,
-        ResolutionPreset.high,
+        // Medium + client compress is enough for vision and much faster to upload.
+        ResolutionPreset.medium,
         enableAudio: false,
         imageFormatGroup: ImageFormatGroup.jpeg,
       );
@@ -134,13 +136,20 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
 
     try {
       final file = await controller.takePicture();
-      final bytes = await file.readAsBytes();
+      final rawBytes = await file.readAsBytes();
+      final bytes = await prepareMealScanPhotoForUpload(rawBytes);
       final analysis = await _scannerService.analyzeMealImage(jpegBytes: bytes);
       if (!mounted) return;
+      final needsReview =
+          analysis.items.isNotEmpty && analysis.confidence < 0.55;
       setState(() {
         _analysis = analysis;
         _isQuotaBlocked = false;
-        _error = analysis.items.isEmpty ? l10n.scannerNoClearFood : null;
+        _error = analysis.items.isEmpty
+            ? l10n.scannerNoClearFood
+            : needsReview
+            ? l10n.scannerReviewLowConfidence
+            : null;
       });
     } catch (e) {
       if (!mounted) return;
@@ -224,11 +233,18 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
       builder: (context) {
         final l10n = AppLocalizations.of(context);
         final theme = context.watch<ThemeProvider>();
+        final mq = MediaQuery.of(context);
+        final navBottom = [
+          mq.viewPadding.bottom,
+          mq.padding.bottom,
+          mq.systemGestureInsets.bottom,
+        ].fold<double>(0, (max, v) => v > max ? v : max);
+        final navFloor = navBottom < 34 ? 34.0 : navBottom;
         return Padding(
           padding: EdgeInsets.only(
             left: 16,
             right: 16,
-            bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+            bottom: mq.viewInsets.bottom + navFloor + 16,
           ),
           child: Container(
             padding: const EdgeInsets.all(20),
@@ -239,6 +255,7 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
             ),
             child: SafeArea(
               top: false,
+              bottom: false,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -374,22 +391,40 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
     super.dispose();
   }
 
+  /// Samsung One UI (gesture + 3-button nav) often under-reports SafeArea when
+  /// the window is edge-to-edge. Take the largest system inset and keep a
+  /// floor so Log Meal never sits under the home indicator / nav bar.
+  double _samsungSafeBottomInset(BuildContext context) {
+    final mq = MediaQuery.of(context);
+    final reported = [
+      mq.viewPadding.bottom,
+      mq.padding.bottom,
+      mq.systemGestureInsets.bottom,
+    ].fold<double>(0, (max, v) => v > max ? v : max);
+    // Thin gesture bars can report ~0–24; 3-button bars report ~48+.
+    return reported < 34 ? 34.0 : reported;
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = context.watch<ThemeProvider>();
     final analysis = _analysis;
+    final bottomSafe = _samsungSafeBottomInset(context);
 
     return Scaffold(
       backgroundColor: Colors.black,
+      // Keep action row stable if IME opens from a nested sheet/route.
+      resizeToAvoidBottomInset: false,
       body: Stack(
         fit: StackFit.expand,
         children: [
           _buildCameraLayer(theme),
           _buildScanOverlay(l10n, theme, analysis),
           SafeArea(
+            bottom: false,
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.fromLTRB(20, 20, 20, 16 + bottomSafe),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -398,9 +433,19 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
                     const SizedBox(height: 16),
                     _buildErrorPill(theme, _error!),
                   ],
-                  const Spacer(),
-                  if (analysis != null) _buildMealCard(l10n, theme, analysis),
-                  const SizedBox(height: 16),
+                  if (analysis != null) ...[
+                    const SizedBox(height: 16),
+                    // Card scrolls; action row stays pinned above the nav bar.
+                    Expanded(
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: _buildMealCard(l10n, theme, analysis),
+                      ),
+                    ),
+                  ] else
+                    const Spacer(),
+                  const SizedBox(height: 12),
                   _buildBottomActions(l10n, theme, analysis),
                 ],
               ),
@@ -799,20 +844,22 @@ class _CalorieScannerScreenState extends State<CalorieScannerScreen>
               ),
               if (analysis.items.isNotEmpty) ...[
                 const SizedBox(height: 14),
-                ...analysis.items
-                    .take(6)
-                    .map((item) => _buildFoodRow(l10n, theme, item)),
-                if (analysis.items.length > 6)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text(
-                      l10n.scannerMoreItems(analysis.items.length - 6),
-                      style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.64),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                // Full list — parent SingleChildScrollView keeps Log Meal pinned.
+                ...analysis.items.map(
+                  (item) => _buildFoodRow(l10n, theme, item),
+                ),
+              ],
+              if (analysis.confidence < 0.55 && analysis.items.isNotEmpty) ...[
+                const SizedBox(height: 10),
+                Text(
+                  l10n.scannerReviewLowConfidence,
+                  style: TextStyle(
+                    color: theme.accentOrange.withValues(alpha: 0.92),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    height: 1.35,
                   ),
+                ),
               ],
               if (analysis.warnings.isNotEmpty) ...[
                 const SizedBox(height: 10),

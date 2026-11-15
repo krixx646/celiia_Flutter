@@ -640,6 +640,7 @@
   "scannerButtonLogging": "記録中",
   "scannerButtonLogMeal": "食事を記録",
   "scannerNoClearFood": "食品をまだはっきり検出できません。明るい場所で試すか、カメラを近づけてください。",
+  "scannerReviewLowConfidence": "信頼度が低いです。記録前に食品と分量を確認してください。",
   "scannerErrorCameraPermission": "食事をスキャンするにはカメラの許可が必要です。",
   "scannerErrorBackendMissing": "カロリースキャナーのバックエンドがまだ設定されていません。",
   "scannerErrorApiKeyInvalid": "カロリースキャン用のOpenAI APIキーが無効です。バックエンド環境のキーを置き換えて再デプロイし、もう一度お試しください。",

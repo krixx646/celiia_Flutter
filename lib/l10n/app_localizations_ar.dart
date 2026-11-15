@@ -1151,6 +1151,10 @@ class AppLocalizationsAr extends AppLocalizations {
       'لم يتم اكتشاف طعام واضح بعد. جرّب إضاءة أفضل أو اقترب أكثر.';
 
   @override
+  String get scannerReviewLowConfidence =>
+      'ثقة منخفضة — راجع العناصر والكميات قبل التسجيل.';
+
+  @override
   String get scannerErrorCameraPermission =>
       'يلزم السماح باستخدام الكاميرا لمسح الوجبات.';
 

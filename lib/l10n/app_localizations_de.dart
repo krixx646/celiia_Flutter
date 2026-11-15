@@ -1178,6 +1178,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Noch kein eindeutiges Lebensmittel erkannt. Sorge für besseres Licht oder gehe näher heran.';
 
   @override
+  String get scannerReviewLowConfidence =>
+      'Geringe Sicherheit — prüfe die Einträge und Mengen vor dem Speichern.';
+
+  @override
   String get scannerErrorCameraPermission =>
       'Die Kameraberechtigung wird zum Scannen von Mahlzeiten benötigt.';
 

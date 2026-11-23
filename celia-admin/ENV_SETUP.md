@@ -50,6 +50,15 @@ OPENAI_VISION_FALLBACK_MODEL=gpt-6-luna
 # Workout voice coaching (OpenAI TTS). tts-1 is cheap and low-latency for counts.
 OPENAI_TTS_MODEL=tts-1
 OPENAI_TTS_VOICE=nova
+
+# Celia Avatar & Chat Voice (Google Gemini API — paid tier recommended)
+GEMINI_API_KEY=...
+# Optional overrides (defaults shown):
+# GEMINI_TTS_MODEL=gemini-3.8-flash-tts
+# GEMINI_TTS_VOICE=Sulafat
+# GEMINI_TTS_STYLE=warm, encouraging, and natural
+# GEMINI_STT_MODEL=gemini-3.5-transcribe
+
 FIREBASE_PROJECT_ID=...
 
 # Body Scan (Bodygram Platform)

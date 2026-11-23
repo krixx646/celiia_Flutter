@@ -67,6 +67,75 @@ export async function GET() {
       );
     }
 
+    // Also prove Sulafat TTS works (short phrase, discard audio).
+    const ttsModel =
+      process.env.GEMINI_TTS_MODEL?.trim() || 'gemini-3.8-flash-tts';
+    const ttsVoice = process.env.GEMINI_TTS_VOICE?.trim() || 'Sulafat';
+    const ttsRes = await fetch(
+      'https://generativelanguage.googleapis.com/v1beta/interactions',
+      {
+        method: 'POST',
+        headers: {
+          'x-goog-api-key': key,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: ttsModel,
+          store: false,
+          input: [
+            {
+              type: 'user_input',
+              content: [{ type: 'text', text: 'Hi.' }],
+            },
+          ],
+          response_format: { type: 'audio' },
+          generation_config: {
+            speech_config: [{ voice: ttsVoice }],
+          },
+        }),
+      }
+    );
+    const ttsJson = (await ttsRes.json().catch(() => ({}))) as {
+      error?: { message?: string };
+      steps?: Array<{
+        type?: string;
+        content?: Array<{ type?: string; data?: string }>;
+      }>;
+    };
+
+    let hasAudio = false;
+    for (const step of ttsJson.steps ?? []) {
+      if (step.type !== 'model_output') continue;
+      for (const part of step.content ?? []) {
+        if (part.type === 'audio' && typeof part.data === 'string' && part.data) {
+          hasAudio = true;
+        }
+      }
+    }
+
+    if (!ttsRes.ok || ttsJson.error || !hasAudio) {
+      return NextResponse.json(
+        {
+          ok: false,
+          keyConfigured: true,
+          keyLen,
+          looksLikeGoogleKey,
+          geminiHttp: res.status,
+          modelsOk: true,
+          ttsHttp: ttsRes.status,
+          ttsOk: false,
+          ttsModel,
+          ttsVoice,
+          error:
+            ttsJson.error?.message ||
+            (!hasAudio
+              ? 'TTS returned no audio'
+              : `TTS HTTP ${ttsRes.status}`),
+        },
+        { status: 502 }
+      );
+    }
+
     return NextResponse.json({
       ok: true,
       keyConfigured: true,
@@ -74,6 +143,10 @@ export async function GET() {
       looksLikeGoogleKey,
       geminiHttp: res.status,
       modelsOk: true,
+      ttsHttp: ttsRes.status,
+      ttsOk: true,
+      ttsModel,
+      ttsVoice,
     });
   } catch (err) {
     return NextResponse.json(

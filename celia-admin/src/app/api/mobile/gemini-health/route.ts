@@ -69,7 +69,7 @@ export async function GET() {
 
     // Also prove Sulafat TTS works (short phrase, discard audio).
     const ttsModel =
-      process.env.GEMINI_TTS_MODEL?.trim() || 'gemini-3.8-flash-tts';
+      process.env.GEMINI_TTS_MODEL?.trim() || 'gemini-3.8-flash-lite-tts';
     const ttsVoice = process.env.GEMINI_TTS_VOICE?.trim() || 'Sulafat';
     const ttsRes = await fetch(
       'https://generativelanguage.googleapis.com/v1beta/interactions',

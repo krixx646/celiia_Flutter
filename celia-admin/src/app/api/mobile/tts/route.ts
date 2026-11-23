@@ -8,7 +8,7 @@ export const maxDuration = 30;
 const GEMINI_INTERACTIONS_URL =
   'https://generativelanguage.googleapis.com/v1beta/interactions';
 
-const DEFAULT_TTS_MODEL = 'gemini-3.8-flash-tts';
+const DEFAULT_TTS_MODEL = 'gemini-3.8-flash-lite-tts';
 const DEFAULT_TTS_VOICE = 'Sulafat';
 const DEFAULT_TTS_STYLE = 'warm, encouraging, and natural';
 
